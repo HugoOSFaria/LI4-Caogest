@@ -73,16 +73,16 @@ namespace CaoGest.src
         {
             string query = "INSERT INTO tableinfo (name, age) VALUES('John Smith', '33')";
 
-            //open connection
+      
             if (this.OpenConnection() == true)
             {
-                //create command and assign the query and connection from the constructor
+               
                 MySqlCommand cmd = new MySqlCommand(query, connection);
 
-                //Execute command
+             
                 cmd.ExecuteNonQuery();
 
-                //close connection
+               
                 this.CloseConnection();
             }
         }
@@ -95,17 +95,17 @@ namespace CaoGest.src
             //Open connection
             if (this.OpenConnection() == true)
             {
-                //create mysql command
+                
                 MySqlCommand cmd = new MySqlCommand();
-                //Assign the query using CommandText
+         
                 cmd.CommandText = query;
-                //Assign the connection using Connection
+              
                 cmd.Connection = connection;
 
-                //Execute query
+                
                 cmd.ExecuteNonQuery();
 
-                //close connection
+               
                 this.CloseConnection();
             }
         }
