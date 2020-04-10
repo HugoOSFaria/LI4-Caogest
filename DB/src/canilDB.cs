@@ -372,6 +372,7 @@ namespace CaoGest.src
                         subList.Add(z.ToString());
                         bool w = (bool)dataReader["Esterilizacao"];
                         subList.Add(w.ToString());
+                        subList.Add((string)dataReader["Porte"]);
                         list.Add(subList);
                         i++;
 
@@ -395,6 +396,76 @@ namespace CaoGest.src
             catch (System.ArgumentOutOfRangeException) { }
             catch (System.InvalidCastException) { }
             return list;
+        }
+
+        public static bool containsKey(string key){
+            try{
+                DbConnect dB = new DbConnect();
+                string query = "SELECT Email FROM Canil WHERE Email = '" + (String)key +"'";
+
+                //open connection
+                if (dB.OpenConnection() == true){
+                    //create command and assign the query and connection from the constructor
+                    MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
+
+                    String res = null;
+
+                    //Execute command
+                    MySqlDataReader dataReader = cmd.ExecuteNonQuery();
+                    while (dataReader.Read()){
+                        res = (string)dataReader["Email"];
+                    }
+                    //cmd.ExecuteScalar();
+                
+                    dataReader.Close();
+                    //close connection
+                    dB.CloseConnection();
+                
+                    if (res == query){
+                        return true;
+                    }
+                    else return false;
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException) { };
+            return false;
+        }
+        public static bool valPass(string key, string value)
+        {
+            try
+            {
+                DbConnect dB = new DbConnect();
+                string query = "SELECT Password FROM Canil WHERE Email = '" + (String)key + "'";
+
+                //open connection
+                if (dB.OpenConnection() == true)
+                {
+                    //create command and assign the query and connection from the constructor
+                    MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
+
+                    String res = null;
+
+                    //Execute command
+                    MySqlDataReader dataReader = cmd.ExecuteNonQuery();
+                    while (dataReader.Read())
+                    {
+                        res = (string)dataReader["Password"];
+                    }
+                    //cmd.ExecuteScalar();
+
+                    dataReader.Close();
+                    //close connection
+                    dB.CloseConnection();
+
+                    if (res == value)
+                    {
+                        return true;
+                    }
+                    else return false;
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException) { };
+            return false;
         }
     }
 }
