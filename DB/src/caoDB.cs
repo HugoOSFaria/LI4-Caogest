@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 
+
 namespace CaoGest.src
 {
-    public class canilDB
+    class caoDB
     {
-         //---------------------------------------------------------------------INSERTS-----------------------------------------------------------------------
-        //Insere um novo canil
-        public static void insereCanil(string email, string nib, string nome, int capacidadeOcupada, int capacidadeTotal, string password, string distrito, string rua, string localidade,string contacto)
+        public static void insereCao(int idcao,string nome,string sexo,string descricao,int estado,string raca,string cor,string canilemail,int idade,int esterilizacao,string porte)
         {
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "INSERT INTO Canil (Email,NIB,Nome,CapacidadeOcupada,CapacidadeTotal,Password,Distrito,Rua,Localidade,Contacto) VALUES (" + "'" + email + "'" + ", " + "'" + nib + "'" + ", " + "'" + nome + "'" + "," + capacidadeOcupada + ", " + capacidadeTotal + ", " + "'" + password + "'" + ", " + "'" + distrito + "'" + ", " + "'" + rua + "'" + "," + "'" + localidade + "'" +","+ "'"+contacto+"'"+")";
-
+                string query = "INSERT INTO Cao (idCao,Nome,Sexo,Descricao,Estado,Raça,Cor,Canil_Email,Idade,Esterilizacao,Porte) " +
+                    "VALUES ("  + idcao + ", " + "'" + nome + "'" + ", " + "'" + sexo + "'" + "," + "'"+ descricao + "'"+", " + estado + ", " + "'" + raca + "'" + ", " + "'" + cor + "'" + ","+"'"+canilemail+"'"+"," + idade + "," + esterilizacao+ "," + "'" + porte + "'" + ")";
                 //open connection
                 if (dB.OpenConnection() == true)
                 {
@@ -37,68 +35,41 @@ namespace CaoGest.src
 
         }
 
-        //---------------------------------------------------------------------UPDATES-----------------------------------------------------------------------
+
+        public static void insereFoto(int idF, string path,int id)
+        {
+            try
+            {
+                DbConnect dB = new DbConnect();
+                string query = "INSERT INTO Fotografia VALUES(" + idF + ","+ "'" + path + "'"+"," + id + ")";
+                Console.Write(query);
+                //open connection
+                if (dB.OpenConnection() == true)
+                {
+                    //create command and assign the query and connection from the constructor
+                    MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
+
+                    //Execute command
+                    cmd.ExecuteNonQuery();
+                    //cmd.ExecuteScalar();
+
+                    //close connection
+                    dB.CloseConnection();
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException) { };
+
+        }
+
 
 
         //UPDATE capacidade Total 
-        public static void updateCapacidadeT(string email, int capacidadeTot)
+        public static void updateIdade(int id, int idade)
         {
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "UPDATE Canil SET CapacidadeTotal="+capacidadeTot+" WHERE Canil.Email="+"'"+email+"'";
-
-                //open connection
-                if (dB.OpenConnection() == true)
-                {
-                    //create command and assign the query and connection from the constructor
-                    MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
-
-                    //Execute command
-                    cmd.ExecuteNonQuery();
-                    //cmd.ExecuteScalar();
-
-                    //close connection
-                    dB.CloseConnection();
-                }
-            }
-            catch (MySql.Data.MySqlClient.MySqlException) { };
-
-        }
-
-        //UPDATE capacidade Ocupada
-        public static void updateCapacidadeO(string email, int capacidadeOcup)
-        {
-            try
-            {
-                DbConnect dB = new DbConnect();
-                string query = "UPDATE Canil SET CapacidadeOcupada=" + capacidadeOcup + " WHERE Canil.Email=" + "'" + email + "'";
-
-                //open connection
-                if (dB.OpenConnection() == true)
-                {
-                    //create command and assign the query and connection from the constructor
-                    MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
-
-                    //Execute command
-                    cmd.ExecuteNonQuery();
-                    //cmd.ExecuteScalar();
-
-                    //close connection
-                    dB.CloseConnection();
-                }
-            }
-            catch (MySql.Data.MySqlClient.MySqlException) { };
-
-        }
-
-        //UPDATE Password
-        public static void updatePass(string email, string newPass)
-        {
-            try
-            {
-                DbConnect dB = new DbConnect();
-                string query = "UPDATE Canil SET Password=" +"'"+newPass+"'"+ " WHERE Canil.Email=" + "'" + email + "'";
+                string query = "UPDATE Cao SET Idade=" + idade + " WHERE Cao.IdCao=" + id ;
 
                 //open connection
                 if (dB.OpenConnection() == true)
@@ -119,13 +90,13 @@ namespace CaoGest.src
         }
 
 
-        //UPDATE Contacto
-        public static void updateContacto(string email, string newContacto)
+        public static void updateDescricao(int id, string descricao)
         {
             try
-            {   
+            {
+
                 DbConnect dB = new DbConnect();
-                string query = "UPDATE Canil SET Contacto=" + "'" + newContacto + "'" + " WHERE Canil.Email=" + "'" + email + "'";
+                string query = "UPDATE Cao SET Descricao=" + "'"+descricao+"'" + " WHERE Cao.IdCao=" + id;
 
                 //open connection
                 if (dB.OpenConnection() == true)
@@ -145,15 +116,64 @@ namespace CaoGest.src
 
         }
 
-        //---------------------------------------------------------------------DELETS-----------------------------------------------------------------------
+        public static void updateEstado(int id, int estado)
+        {
+            try
+            {
 
-        //DELETE Canil
-        public static void deleteCanil(string email)
+                DbConnect dB = new DbConnect();
+                string query = "UPDATE Cao SET Estado=" + estado + " WHERE Cao.IdCao=" + id;
+
+                //open connection
+                if (dB.OpenConnection() == true)
+                {
+                    //create command and assign the query and connection from the constructor
+                    MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
+
+                    //Execute command
+                    cmd.ExecuteNonQuery();
+                    //cmd.ExecuteScalar();
+
+                    //close connection
+                    dB.CloseConnection();
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException) { };
+
+        }
+
+        public static void updateEsterilizacao(int id, int esterilizacao)
+        {
+            try
+            {
+
+                DbConnect dB = new DbConnect();
+                string query = "UPDATE Cao SET Esterilizacao=" + esterilizacao + " WHERE Cao.IdCao=" + id;
+
+                //open connection
+                if (dB.OpenConnection() == true)
+                {
+                    //create command and assign the query and connection from the constructor
+                    MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
+
+                    //Execute command
+                    cmd.ExecuteNonQuery();
+                    //cmd.ExecuteScalar();
+
+                    //close connection
+                    dB.CloseConnection();
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException) { };
+
+        }
+
+        public static void deleteCao(int id)
         {
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "DELETE FROM Canil WHERE Email="+"'"+email+"'";
+                string query = "DELETE FROM Cao WHERE idCao=" + id;
 
                 //open connection
                 if (dB.OpenConnection() == true)
@@ -174,67 +194,13 @@ namespace CaoGest.src
         }
 
 
-        //---------------------------------------------------------------------SELECTS-----------------------------------------------------------------------
-
-        //Select statement
-
-            public static List<string> SelectCanil(string email)
-            {
+        public static List<string> SelectCao(int id)
+        {
             DbConnect dB = new DbConnect();
-            string query = "SELECT * FROM Canil WHERE Email="+"'"+email+"'";
-
-                //Create a list to store the result
-                List<string> list = new List<string>();
-                //Open connection
-                if (dB.OpenConnection() == true)
-                {
-                    //Create Command
-                    MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
-                    //Create a data reader and Execute the command
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                    //Read the data and store them in the list
-                    while (dataReader.Read())
-                    {
-                    list.Add((string)dataReader["NIB"]);
-                    list.Add((string)dataReader["NOME"]);
-                    int x= (int)dataReader["CapacidadeOcupada"];
-                    list.Add(x.ToString());
-                    int y= (int)dataReader["CapacidadeTotal"];
-                    list.Add(y.ToString());
-                    list.Add((string)dataReader["Password"]);
-                    list.Add((string)dataReader["Distrito"]);
-                    list.Add((string)dataReader["Rua"]);
-                    list.Add((string)dataReader["Localidade"]);
-                    list.Add((string)dataReader["Contacto"]);             
-
-                }
-
-                    //close Data Reader
-                    dataReader.Close();
-
-                    //close Connection
-                    dB.CloseConnection();
-
-                    //return list to be displayed
-                    return list;
-                }
-                else
-                {
-                    return list;
-                }
-            }
-        /*  COM LISTA
-        //Retorna os identificadores de parcerias de um determinado canil
-        public static List<String> SelectParcerias(string email)
-        {
-            List<String> list = new List<String>();
-            try { 
-            DbConnect dB = new DbConnect();
-            string query = "SELECT * from Parceria JOIN Canil_has_Parceria ON Parceria_Identificacao=Identificacao WHERE Canil_Email=" + "'" + email + "'";
+            string query = "SELECT * FROM Cao WHERE idCao=" +id;
 
             //Create a list to store the result
-
+            List<string> list = new List<string>();
             //Open connection
             if (dB.OpenConnection() == true)
             {
@@ -243,19 +209,27 @@ namespace CaoGest.src
                 //Create a data reader and Execute the command
                 MySqlDataReader dataReader = cmd.ExecuteReader();
 
-                int i = 0;
                 //Read the data and store them in the list
                 while (dataReader.Read())
                 {
+                    
+                    int x = (int)dataReader["idCao"];
+                    list.Add(x.ToString());
+                    list.Add((string)dataReader["Nome"]);
+                    list.Add((string)dataReader["Sexo"]);
+                    list.Add((string)dataReader["Descricao"]);
+                    int y = (int)dataReader["Estado"];
+                    list.Add(y.ToString());
+                    list.Add((string)dataReader["Raça"]);
+                    list.Add((string)dataReader["Cor"]);
+                    list.Add((string)dataReader["Canil_Email"]);
+                    int z = (int)dataReader["Idade"];
+                    list.Add(z.ToString());
+                    bool w = (bool)dataReader["Esterilizacao"];
+                    list.Add(w.ToString());
+                    list.Add((string)dataReader["Porte"]);                 
 
-                        int x = (int)dataReader["Identificacao"];
-                        list.Add(x.ToString());
-                        list.Add((string)dataReader["Nome"]);
-                        list.Add((string)dataReader["Url"]);
-                        list.Add((string)dataReader["PathLogo"]);
-                        i++;
-
-                    }
+                }
 
                 //close Data Reader
                 dataReader.Close();
@@ -270,29 +244,21 @@ namespace CaoGest.src
             {
                 return list;
             }
-}
-            catch (System.ArgumentOutOfRangeException) { }
-            return list;
         }
-    */
 
 
-
-
-        //Retorna os identificadores de parcerias de um determinado canil (COM LISTA DE LISTAS)
-        public static List<List<String>> SelectParcerias(string email)
+        public static List<List<String>> pesquisaCaesCanil(string raca, int idade, char sexo, string cor, char porte, string emailC)
         {
-       
-            List<List<String>> list = new List<List<String>>();            
+            List<List<String>> list = new List<List<String>>();
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "SELECT * from Parceria JOIN Canil_has_Parceria ON Parceria_Identificacao=Identificacao WHERE Canil_Email=" + "'" + email + "'";
+                string query = "SELECT * from Cao WHERE idCao=idCao AND Raça=" + "'" + raca + "'" + "AND Idade=" + "'" + idade + "'" + "AND Sexo=" + "'" + sexo + "'" + "AND cor=" + "'" + cor + "'" + "AND Porte=" + "'" + porte + "'" + "AND CAnil_Email=" + "'" + emailC + "'";
 
                 //Open connection
                 if (dB.OpenConnection() == true)
                 {
-                    
+
                     //Create Command
                     MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
                     //Create a data reader and Execute the command
@@ -303,11 +269,22 @@ namespace CaoGest.src
                     while (dataReader.Read())
                     {
                         List<String> subList = new List<String>();
-                        int x = (int)dataReader["Identificacao"];
+                        int x = (int)dataReader["IdCao"];
                         subList.Add(x.ToString());
                         subList.Add((string)dataReader["Nome"]);
-                        subList.Add((string)dataReader["Url"]);
-                        subList.Add((string)dataReader["PathLogo"]);
+                        subList.Add((string)dataReader["Sexo"]);
+                        subList.Add((string)dataReader["Descricao"]);
+                        int y = (int)dataReader["Estado"];
+                        subList.Add(y.ToString());
+                        subList.Add((string)dataReader["Raça"]);
+                        subList.Add((string)dataReader["Cor"]);
+                        DateTime d = (DateTime)dataReader["DataAdocao"];
+                        subList.Add(d.ToString());
+                        int z = (int)dataReader["Idade"];
+                        subList.Add(z.ToString());
+                        bool w = (bool)dataReader["Esterilizacao"];
+                        subList.Add(w.ToString());
+                        subList.Add((string)dataReader["Porte"]);
                         list.Add(subList);
                         i++;
 
@@ -329,19 +306,17 @@ namespace CaoGest.src
                 }
             }
             catch (System.ArgumentOutOfRangeException) { }
+            catch (System.InvalidCastException) { }
             return list;
         }
 
-
-        //Retorna os 
-        public static List<List<String>> SelectCaes(string email)
+        public static List<List<String>> pesquisaCaes(string raca, int idade, char sexo, string cor, char porte)
         {
-
             List<List<String>> list = new List<List<String>>();
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "SELECT * from Cao JOIN Canil ON Canil_Email=Email WHERE Email=" + "'" + email + "'";
+                string query = "SELECT * from Cao WHERE idCao=idCao AND Raça=" + "'" + raca + "'" + "AND Idade=" + "'" + idade + "'" + "AND Sexo=" + "'" + sexo + "'" + "AND cor=" + "'" + cor + "'" + "AND Porte=" + "'" + porte + "'";
 
                 //Open connection
                 if (dB.OpenConnection() == true)
@@ -355,8 +330,8 @@ namespace CaoGest.src
                     int i = 0;
                     //Read the data and store them in the list
                     while (dataReader.Read())
-                    {                       
-                        List<String> subList = new List<String>();                      
+                    {
+                        List<String> subList = new List<String>();
                         int x = (int)dataReader["IdCao"];
                         subList.Add(x.ToString());
                         subList.Add((string)dataReader["Nome"]);
@@ -397,12 +372,12 @@ namespace CaoGest.src
             return list;
         }
 
-        public static bool containsKey(string key)
+        public static bool containsKey(int key)
         {
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "SELECT COUNT(*) FROM Canil WHERE Email = '" + key + "'";
+                string query = "SELECT COUNT(*) FROM Cao WHERE idCao =" +key;
 
                 //open connection
                 if (dB.OpenConnection() == true)
@@ -426,44 +401,44 @@ namespace CaoGest.src
             catch (MySql.Data.MySqlClient.MySqlException) { };
             return false;
         }
-        public static bool valPass(string key, string value)
+
+        public static List<string> getFotografias(int id)
         {
-            try
+            DbConnect dB = new DbConnect();
+            string query = "SELECT * FROM Fotografia WHERE Cao_idCao=" + id;
+
+            //Create a list to store the result
+            List<string> list = new List<string>();
+            //Open connection
+            if (dB.OpenConnection() == true)
             {
-                DbConnect dB = new DbConnect();
-                string query = "SELECT Password FROM Canil WHERE Email = '" + (String)key + "'";
+                //Create Command
+                MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
+                //Create a data reader and Execute the command
+                MySqlDataReader dataReader = cmd.ExecuteReader();
 
-                //open connection
-                if (dB.OpenConnection() == true)
+                //Read the data and store them in the list
+                while (dataReader.Read())
                 {
-                    //create command and assign the query and connection from the constructor
-                    MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
 
-                    String res = null;
-
-                    //Execute command
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-                    while (dataReader.Read())
-                    {
-                        res = (string)dataReader["Password"];
-                    }
-                    //cmd.ExecuteScalar();
-
-                    dataReader.Close();
-                    //close connection
-                    dB.CloseConnection();
-
-                    if (res == value)
-                    {
-                        return true;
-                    }
-                    else return false;
+                    int x = (int)dataReader["idFotografia"];
+                    list.Add(x.ToString());
+                    list.Add((string)dataReader["Path"]);
                 }
+
+                //close Data Reader 
+                dataReader.Close();
+
+                //close Connection
+                dB.CloseConnection();
+
+                //return list to be displayed
+                return list;
             }
-            catch (MySql.Data.MySqlClient.MySqlException) { };
-            return false;
+            else
+            {
+                return list;
+            }
         }
     }
 }
-
-
