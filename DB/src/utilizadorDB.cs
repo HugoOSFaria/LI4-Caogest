@@ -192,8 +192,103 @@ namespace CaoGest.src
             return false;
         }
 
-       
+        public static List<String> getFavoritos(string email)
+        {
 
-       
+            List<String> list = new List<String>();
+            try
+            {
+                DbConnect dB = new DbConnect();
+                string query = "SELECT * from Favoritos WHERE Utilizador_Email=" + "'" + email + "'";
+                Console.Write(query + '\n');
+
+                //Open connection
+                if (dB.OpenConnection() == true)
+                {
+
+                    //Create Command
+                    MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
+                    //Create a data reader and Execute the command
+                    MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                    
+                    //Read the data and store them in the list
+                    while (dataReader.Read())
+                    {
+                        int x = (int)dataReader["Cao_idCao"];
+                        list.Add(x.ToString());
+
+
+                    }
+
+                    //close Data Reader
+                    dataReader.Close();
+
+                    //close Connection
+                    dB.CloseConnection();
+
+                    //return list to be displayed
+                    return list;
+                }
+                else
+                {
+                    return list;
+                }
+            }
+            catch (System.ArgumentOutOfRangeException) { }
+            catch (System.InvalidCastException) { }
+            return list;
+        }
+
+
+        public static List<String> selectFavoritos(string email)
+        {
+
+            List<String> list = new List<String>();
+            try
+            {
+                DbConnect dB = new DbConnect();
+                string query = "SELECT * from Favoritos WHERE Utilizador_Email=" + "'" + email + "'";
+                Console.Write(query + '\n');
+
+                //Open connection
+                if (dB.OpenConnection() == true)
+                {
+
+                    //Create Command
+                    MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
+                    //Create a data reader and Execute the command
+                    MySqlDataReader dataReader = cmd.ExecuteReader();
+
+
+                    //Read the data and store them in the list
+                    while (dataReader.Read())
+                    {
+                        int x = (int)dataReader["Cao_idCao"];
+                        list.Add(x.ToString());
+
+
+                    }
+
+                    //close Data Reader
+                    dataReader.Close();
+
+                    //close Connection
+                    dB.CloseConnection();
+
+                    //return list to be displayed
+                    return list;
+                }
+                else
+                {
+                    return list;
+                }
+            }
+            catch (System.ArgumentOutOfRangeException) { }
+            catch (System.InvalidCastException) { }
+            return list;
+        }
+
+
     }
 }

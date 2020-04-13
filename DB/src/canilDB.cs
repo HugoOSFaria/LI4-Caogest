@@ -279,7 +279,7 @@ namespace CaoGest.src
 
 
 
-        //Retorna os identificadores de parcerias de um determinado canil (COM LISTA DE LISTAS)
+       
         public static List<List<String>> SelectParcerias(string email)
         {
        
