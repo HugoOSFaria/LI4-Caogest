@@ -10,7 +10,7 @@ namespace CaoGest.src
     class horarioDB
     {
 
-        public static void registaHorario( DateTime inicio, DateTime fim,string emailUser, string emailCanil)
+        public static void registaHorario( DateTime inicio, DateTime fim,string emailCanil, string emailUser)
         {
             try
             {
@@ -18,8 +18,8 @@ namespace CaoGest.src
                 string sqlFormattedDateF = fim.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
                 DbConnect dB = new DbConnect();
-                string query = "INSERT INTO HCU VALUES ('"+sqlFormattedDateI+"'"+"," +"'"+ sqlFormattedDateF +"'"+","+"'"+emailUser+"'"+","+"'"+emailCanil+"'"+")";
-               
+                string query = "INSERT INTO Horario_has_Utilizador VALUES ('"+sqlFormattedDateI+"'"+"," +"'"+ sqlFormattedDateF +"'"+","+"'"+emailCanil+"'"+","+"'"+emailUser+"'"+")";
+
 
                 //open connection
                 if (dB.OpenConnection() == true)
@@ -47,8 +47,7 @@ namespace CaoGest.src
                 string sqlFormattedDateF = fim.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
                 DbConnect dB = new DbConnect();
-                string query = "INSERT  INTO  Horario VALUES ("+ "'" + sqlFormattedDateI + "'" + "," + "'" + sqlFormattedDateF + "'" +","+ "'" +emailC+"'"+","+limite+ ")";
-                
+                string query = "INSERT  INTO  Horario VALUES ("+ "'" + sqlFormattedDateI + "'" + "," + "'" + sqlFormattedDateF + "'" +","+limite+","+ "'" +emailC+"'"+ ")";
 
                 //open connection
                 if (dB.OpenConnection() == true)
@@ -127,5 +126,38 @@ namespace CaoGest.src
           
             return list;
         }
+
+        public static void deleteHorario(DateTime inicio,DateTime fim,string emailCanil)
+        {
+            try
+            {
+                DbConnect dB = new DbConnect();
+
+                string sqlFormattedDateI = inicio.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                string sqlFormattedDateF = fim.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
+                string query = "DELETE FROM Horario_has_Utilizador WHERE Horario_DataInicio=" + "'" + sqlFormattedDateI + "'" + "AND Horario_DataFim=" + "'" + sqlFormattedDateF + "'";
+                string query2 = "DELETE FROM Horario WHERE Canil_Email=" + "'" + emailCanil + "'" + "AND DataInicio=" + "'" + sqlFormattedDateI + "'" + "AND DataFim=" + "'" + sqlFormattedDateF + "'";
+                Console.Write(query2);
+                //open connection
+                if (dB.OpenConnection() == true)
+                {
+                    //create command and assign the query and connection from the constructor
+                    MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
+                    MySqlCommand cmd2 = new MySqlCommand(query2, dB.getConnection());
+
+                    //Execute command
+                    cmd.ExecuteNonQuery();
+                    cmd2.ExecuteNonQuery();
+
+                    //close connection
+                    dB.CloseConnection();
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException) { };
+
+        }
+
+        
     }
 }
