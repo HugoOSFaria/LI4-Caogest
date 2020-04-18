@@ -17,9 +17,9 @@ namespace LI4BackEnd
         private string rua;
         private int capacidadeOcupada;
         private int capacidadeTotal;
-        private List<Cao> caes;
+        private Dictionary<string, Cao> caes;
         private List<DateTime> horarios;
-        private List<User> voluntarios;
+        private Dictionary<string, User> voluntarios;
 
         // Declarador por omissão
         public Canil()
@@ -34,13 +34,14 @@ namespace LI4BackEnd
             capacidadeOcupada = 0;
             capacidadeTotal = 0;
             nome = "";
-            caes = new List<Cao>();
+            caes = new Dictionary<string, Cao>();
             horarios = new List<DateTime>();
-            voluntarios = new List<User>();
+            voluntarios = new Dictionary<string, User>();
         }
 
         // Declarador por parâmetros
-        public Canil(string mail, string pword, string nome, string distr, string reg, string local, string ru, int capOc, int capTot, List<Cao> cs, List<DateTime> hor, List<User> vol)
+        public Canil(string mail, string pword, string nome, string distr, string reg, string local, string ru, int capOc, int capTot, 
+                     Dictionary<string, Cao> cs, List<DateTime> hor, Dictionary<string, User> vol)
         {
             password = new string(pword);
             email = new string(mail);
@@ -51,20 +52,20 @@ namespace LI4BackEnd
             nome = new string(nome);
             capacidadeTotal = capTot;
             capacidadeOcupada = capOc;
-            caes = new List<Cao>();
-            foreach(Cao c in cs)
+            caes = new Dictionary<string, Cao>();
+            foreach(KeyValuePair<string, Cao> c in cs)
             {
-                caes.Add(new Cao(c));
+                caes.Add(c.Key, new Cao(c.Value));
             }
             horarios = new List<DateTime>();
             foreach(DateTime d in hor)
             {
                 horarios.Add(new DateTime(d.Year, d.Month, d.Day));
             }
-            voluntarios = new List<User>();
-            foreach(User u in vol)
+            voluntarios = new Dictionary<string, User>();
+            foreach(KeyValuePair<string, User> u in vol)
             {
-                voluntarios.Add(new User(u));
+                voluntarios.Add(u.Key, new User(u.Value));
             }
 
         }
@@ -81,20 +82,20 @@ namespace LI4BackEnd
             nome = c.getNome();
             capacidadeOcupada = c.getCapacidadeOcupada();
             capacidadeTotal = c.getCapacidadeTotal();
-            caes = new List<Cao>();
-            foreach (Cao cao in c.getCaes())
+            caes = new Dictionary<string, Cao>();
+            foreach (KeyValuePair<string, Cao> cao in c.getCaes())
             {
-                caes.Add(new Cao(cao));
+                caes.Add(cao.Key, new Cao(cao.Value));
             }
             horarios = new List<DateTime>();
             foreach (DateTime d in c.getHorarios())
             {
                 horarios.Add(new DateTime(d.Year, d.Month, d.Day));
             }
-            voluntarios = new List<User>();
-            foreach (User u in c.getVoluntarios())
+            voluntarios = new Dictionary<string, User>();
+            foreach (KeyValuePair<string, User> u in c.getVoluntarios())
             {
-                voluntarios.Add(new User(u));
+                voluntarios.Add(u.Key, new User(u.Value));
             }
         }
 
@@ -155,12 +156,12 @@ namespace LI4BackEnd
             return capTot;
         }
 
-        public List<Cao> getCaes()
+        public Dictionary<string, Cao> getCaes()
         {
-            List<Cao> cs = new List<Cao>();
-            foreach (Cao c in caes)
+            Dictionary<string, Cao> cs = new Dictionary<string, Cao>();
+            foreach (KeyValuePair<string, Cao> c in caes)
             {
-                cs.Add(new Cao(c));
+                cs.Add(c.Key, new Cao(c.Value));
             }
             return cs;
 
@@ -177,12 +178,12 @@ namespace LI4BackEnd
             return dat;
         }
 
-        public List<User> getVoluntarios()
+        public Dictionary<string, User> getVoluntarios()
         {
-            List<User> vols = new List<User>();
-            foreach (User u in voluntarios)
+            Dictionary<string, User> vols = new Dictionary<string, User>();
+            foreach (KeyValuePair<string, User> u in voluntarios)
             {
-                vols.Add(new User(u));
+                vols.Add(u.Key, new User(u.Value));
             }
             return vols;
         }
@@ -240,12 +241,12 @@ namespace LI4BackEnd
             capacidadeTotal = capTot;
         }
 
-        public void setCaes(List<Cao> cs)
+        public void setCaes(Dictionary<string, Cao> cs)
         {
-            caes = new List<Cao>();
-            foreach(Cao c in cs)
+            caes = new Dictionary<string, Cao>();
+            foreach(KeyValuePair<string, Cao> c in cs)
             {
-                caes.Add(new Cao(c));
+                caes.Add(c.Key, new Cao(c.Value));
             }
         }
 
@@ -258,12 +259,12 @@ namespace LI4BackEnd
             }
         }
 
-        public void setVoluntarios(List<User> vols)
+        public void setVoluntarios(Dictionary<string, User> vols)
         {
-            voluntarios = new List<User>();
-            foreach(User u in vols)
+            voluntarios = new Dictionary<string, User>();
+            foreach(KeyValuePair<string, User> u in vols)
             {
-                voluntarios.Add(new User(u));
+                voluntarios.Add(u.Key, new User(u.Value));
             }
         }
 
@@ -281,7 +282,8 @@ namespace LI4BackEnd
         }
 
         // Cria uma string compatível com json contendo informação relativa a um utilizador;
-        public string saveCanil(string mail, string pword, string name, string distr, string reg, string local, string ru, int capOc, int capTot, List<Cao> cs, List<DateTime> d, List<User> vols)
+        public string saveCanil(string mail, string pword, string name, string distr, string reg, string local, string ru, int capOc, int capTot, 
+                                Dictionary<string, Cao> cs, List<DateTime> d, Dictionary<string, User> vols)
         {
             // Criação de um Canil com os dados do canil pretendido para escrita posterior
             Canil canil = new Canil(mail, pword, name, distr, reg, local, ru, capOc, capTot, cs, d, vols);

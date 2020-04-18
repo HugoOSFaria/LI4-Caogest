@@ -16,7 +16,7 @@ namespace LI4BackEnd
         private string localidade;
         private string rua;
         private string cc;
-        private List<Cao> favoritos;
+        private Dictionary<string, Cao> favoritos;
 
         // Declarador por omissão
         public User()
@@ -29,11 +29,11 @@ namespace LI4BackEnd
             regiao = "";
             localidade = "";
             rua = "";
-            favoritos = new List<Cao>();
+            favoritos = new Dictionary<string, Cao>();
         }
 
         // Declarador por parâmetros
-        public User(string mail, string pword, DateTime d_nasc, string distr, string reg, string local, string ru, string cartao, List<Cao> favs)
+        public User(string mail, string pword, DateTime d_nasc, string distr, string reg, string local, string ru, string cartao, Dictionary<string, Cao> favs)
         {
             password = new string(pword);
             email = new string(mail);
@@ -43,10 +43,10 @@ namespace LI4BackEnd
             regiao = new string(reg);
             localidade = new string(local);
             rua = new string(ru);
-            favoritos = new List<Cao>();
-            foreach(Cao c in favs)
+            favoritos = new Dictionary<string, Cao>();
+            foreach(KeyValuePair<string, Cao> c in favs)
             {
-                favoritos.Add(new Cao(c));
+                favoritos.Add(c.Key, new Cao(c.Value));
             }
 
         }
@@ -62,10 +62,10 @@ namespace LI4BackEnd
             regiao = u.getRegiao();
             localidade = u.getLocalidade();
             rua = u.getRua();
-            favoritos = new List<Cao>();
-            foreach(Cao c in u.getFavoritos())
+            favoritos = new Dictionary<string, Cao>();
+            foreach(KeyValuePair<string, Cao> c in u.getFavoritos())
             {
-                favoritos.Add(new Cao(c));
+                favoritos.Add(c.Key, new Cao(c.Value));
             }
         }
 
@@ -119,12 +119,12 @@ namespace LI4BackEnd
             return cartao;
         }
 
-        public List<Cao> getFavoritos()
+        public Dictionary<string, Cao> getFavoritos()
         {
-            List<Cao> favs = new List<Cao>();
-            foreach(Cao c in favoritos)
+            Dictionary<string, Cao> favs = new Dictionary<string, Cao>();
+            foreach(KeyValuePair<string, Cao> c in favoritos)
             {
-                favs.Add(new Cao(c));
+                favs.Add(c.Key, new Cao(c.Value));
             }
             return favs;
         }
@@ -170,12 +170,12 @@ namespace LI4BackEnd
             cc = new string(cartao);
         }
 
-        public void setFavoritos(List<Cao> favs)
+        public void setFavoritos(Dictionary<string, Cao> favs)
         {
-            favoritos = new List<Cao>();
-            foreach(Cao c in favs)
+            favoritos = new Dictionary<string, Cao>();
+            foreach(KeyValuePair<string, Cao> c in favs)
             {
-                favoritos.Add(c);
+                favoritos.Add(c.Key, new Cao(c.Value));
             }
         }
 
@@ -193,7 +193,7 @@ namespace LI4BackEnd
         }
 
         // Cria uma string compatível com json contendo informação relativa a um utilizador;
-        public string saveUser(string mail, string pword, DateTime d_nasc, string distr, string reg, string local, string ru, string cartao, List<Cao> favs)
+        public string saveUser(string mail, string pword, DateTime d_nasc, string distr, string reg, string local, string ru, string cartao, Dictionary<string, Cao> favs)
         {
             // Criação de um User com os dados do utilizador pretendido para escrita posterior
             User user = new User(mail, pword, d_nasc, distr, reg, local, ru, cartao, favs);

@@ -136,7 +136,7 @@ namespace LI4BackEnd
         }
 
         // Métodos de conversão de e para objecto/JSon
-        public Mensagem loadMensagem(string filename)
+        public void loadMensagem(string filename)
         {
             Mensagem msg = new Mensagem();
 
@@ -144,7 +144,12 @@ namespace LI4BackEnd
             // Nota: nomes de atributos em json devem ser iguais aos nomes dos atributos do objeto java;
             msg = JsonConvert.DeserializeObject<Mensagem>(filename);
 
-            return msg;
+            this.setCanis(msg.getCanis());
+
+            this.setUtilizadores(msg.getUtilizadores());
+
+            this.setCaes(msg.getCaes());
+
         }
 
         // Cria uma string compatível com json contendo informação relativa a uma mensagem;
