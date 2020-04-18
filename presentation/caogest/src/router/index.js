@@ -18,12 +18,28 @@ const routes = [
     component: () => import('../views/About.vue')
   },
   {
+    path: '/about',
+    name: 'AboutKennel',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/AboutKennel.vue')
+  },
+  {
     path: '/faqs',
     name: 'FAQs',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import('../views/FAQs.vue')
+  },
+  {
+    path: '/faqskennel',
+    name: 'FAQsKennel',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/FAQsKennel.vue')
   },
   {
     path: '/antesdeadotar',
@@ -40,6 +56,30 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import('../views/Donations.vue')
+  },
+  {
+    path: '/donations',
+    name: 'DonativosKennel',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/DonationsKennel.vue')
+  },
+  {
+    path: '/adoptionrequest',
+    name: 'AdoptionRequest',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/AdoptionRequest.vue')
+  },
+  {
+    path: '/schedule',
+    name: 'Schedule',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/ScheduleKennel.vue')
   },
   {
     path: '/mainpage',
@@ -112,6 +152,30 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import('../views/Preferences.vue')
+  },
+  {
+    path: '/preferencesKennel',
+    name: 'PreferencesKennel',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/PreferencesKennel.vue')
+  },
+  {
+    path: '/partnerships',
+    name: 'Partnerships',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Partnerships.vue')
+  },
+  {
+    path: '/voluntarios',
+    name: 'Voluntarios',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Volunteers.vue')
   }
 
 ]

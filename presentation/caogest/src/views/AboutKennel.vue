@@ -1,6 +1,6 @@
 <template>
     <div id = "about" class = "About">
-        <Navbar/>
+        <NavbarKennel/>
         
         <About/>
           
@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import Navbar from '../components/Navbar.vue'
+import NavbarKennel from '../components/NavbarKennel.vue'
 import Footer from '../components/Footer.vue'
 import About from '../components/About.vue'
 export default {
-    components: {   Navbar, 
+    components: {   NavbarKennel, 
                     Footer,
                     About }
 }
