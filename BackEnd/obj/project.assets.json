@@ -3879,11 +3879,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\thech\\source\\repos\\LI4BackEnd\\LI4BackEnd.csproj",
+      "projectUniqueName": "C:\\Users\\thech\\Desktop\\MIEI\\LI4-G4-T4\\BackEnd\\LI4BackEnd.csproj",
       "projectName": "LI4BackEnd",
-      "projectPath": "C:\\Users\\thech\\source\\repos\\LI4BackEnd\\LI4BackEnd.csproj",
+      "projectPath": "C:\\Users\\thech\\Desktop\\MIEI\\LI4-G4-T4\\BackEnd\\LI4BackEnd.csproj",
       "packagesPath": "C:\\Users\\thech\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\thech\\source\\repos\\LI4BackEnd\\obj\\",
+      "outputPath": "C:\\Users\\thech\\Desktop\\MIEI\\LI4-G4-T4\\BackEnd\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "w8Mt4cECGn5AQxM6eE5Myt8QfQwsWrGJ7gHjvYT8HFWp3Lr71UozHWiItdU4sRFeFxmLj+bn4xcQnlyap4XHlQ==",
+  "dgSpecHash": "aL3RMEnFifaiK4bt7sCGZZk42UE+PnWvSA7L2qweDG0+NqLXlR0TNe07xlIBBJvbylx8Vu2WWEt/KE4+Odgkqw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\thech\\source\\repos\\LI4BackEnd\\LI4BackEnd.csproj",
+  "projectFilePath": "C:\\Users\\thech\\Desktop\\MIEI\\LI4-G4-T4\\BackEnd\\LI4BackEnd.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\thech\\.nuget\\packages\\microsoft.azure.documentdb\\2.10.1\\microsoft.azure.documentdb.2.10.1.nupkg.sha512",
     "C:\\Users\\thech\\.nuget\\packages\\microsoft.codecoverage\\16.4.0\\microsoft.codecoverage.16.4.0.nupkg.sha512",
