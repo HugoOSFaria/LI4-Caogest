@@ -1,0 +1,21 @@
+<template>
+    <div id = "adoptionRequest" class = "Adoption Request">
+        <NavbarKennel/>
+        <v-card flat height= "80" color = "white"></v-card>
+        <v-container>
+        <AdoptionRequest/>
+        <Footer/>
+        </v-container>
+    </div>
+</template>
+
+<script>
+import NavbarKennel from '../components/NavbarKennel.vue'
+import Footer from '../components/Footer.vue'
+import AdoptionRequest from '../components/AdoptionRequest.vue'
+export default {
+    components: { NavbarKennel, 
+                  Footer,
+                  AdoptionRequest}
+}
+</script>
