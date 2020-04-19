@@ -111,14 +111,14 @@
                                     <div class="info-label headline">Distrito</div>
                                 </v-col>
                                 <v-col>
-                                    <v-text-field 
-                                        rounded 
-                                        outlined 
-                                        flat 
-                                        color = "grey lighten-1"  
-                                        required 
-                                        placeholder="Introduza o concelho onde se localiza o canil"
-                                    ></v-text-field>
+                                    <v-select 
+                                        color = "grey"
+                                        name="input-7-1"
+                                        flat outlined 
+                                        placeholder="Selecione o distrito onde reside"
+                                        :items="distritos"
+                                        rounded
+                                    ></v-select>
                                 </v-col>
                             </v-row>
                            
@@ -133,9 +133,8 @@
                                         flat 
                                         color = "grey lighten-1"  
                                         required 
-                                        hint = "0000-000"
                                         persistent-hint
-                                        placeholder="Introduza o código postal"
+                                        placeholder="0000-000"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -205,114 +204,72 @@
                             </v-row>
                             
                             <v-row>
-                                <v-col cols="2">
+                                <v-col cols="6">
                                     <div class="info-label headline">Horário de Funcionamento</div>
                                 </v-col>
+                                
+                            </v-row>
+                                    
+                            <v-row>
+                                <v-col cols = "2">
+                                    <div class = "info-label"> Segunda-feira</div>
+                                </v-col>
                                 <v-col>
-                                    <v-text-field 
-                                        rounded 
-                                        outlined 
-                                        flat 
-                                        color = "grey lighten-1"  
-                                        required 
-                                        placeholder="Segunda-feira"
-                                    ></v-text-field>
+                                    <AddHorario/>
+                                </v-col>
+                            </v-row>
+
+                            <v-row>
+                                <v-col cols = "2">
+                                    <div class = "info-label"> Terça-feira</div>
+                                </v-col>
+                                <v-col>
+                                    <AddHorario/>
+                                </v-col>
+                            </v-row>
+
+                            <v-row>
+                                <v-col cols = "2">
+                                    <div class = "info-label"> Quarta-feira</div>
+                                </v-col>
+                                <v-col>
+                                    <AddHorario/>
+                                </v-col>
+                            </v-row>
+                                
+                            <v-row>
+                                <v-col cols = "2">
+                                    <div class = "info-label"> Quinta-feira</div>
+                                </v-col>
+                                <v-col>
+                                    <AddHorario/>
                                 </v-col>
                             </v-row>
                             
                             <v-row>
-                                <v-col cols="2">
-                                    <div class="info-label"></div>
+                                <v-col cols = "2">
+                                    <div class = "info-label"> Sexta-feira</div>
                                 </v-col>
                                 <v-col>
-                                    <v-text-field 
-                                        rounded 
-                                        outlined 
-                                        flat 
-                                        color = "grey lighten-1"  
-                                        required 
-                                        placeholder="Terça-feira"
-                                    ></v-text-field>
+                                    <AddHorario/>
                                 </v-col>
                             </v-row>
-                            
+
                             <v-row>
-                                <v-col cols="2">
-                                    <div class="info-label"></div>
+                                <v-col cols = "2">
+                                    <div class = "info-label"> Sábado</div>
                                 </v-col>
                                 <v-col>
-                                    <v-text-field 
-                                        rounded 
-                                        outlined 
-                                        flat 
-                                        color = "grey lighten-1"  
-                                        required 
-                                        placeholder="Quarta-feira"
-                                    ></v-text-field>
+                                    <AddHorario/>
                                 </v-col>
                             </v-row>
-                           
+
                             <v-row>
-                                <v-col cols="2">
-                                    <div class="info-label"></div>
+                                <v-col cols = "2">
+                                    <div class = "info-label"> Domingo</div>
                                 </v-col>
                                 <v-col>
-                                    <v-text-field 
-                                        rounded 
-                                        outlined 
-                                        flat 
-                                        color = "grey lighten-1"  
-                                        required 
-                                        placeholder="Quinta-feira"
-                                    ></v-text-field>
-                                </v-col>
-                            </v-row>
-                           
-                            <v-row>
-                                <v-col cols="2">
-                                    <div class="info-label"></div>
-                                </v-col>
-                                <v-col>
-                                    <v-text-field 
-                                        rounded 
-                                        outlined 
-                                        flat 
-                                        color = "grey lighten-1"  
-                                        required 
-                                        placeholder="Sexta-feira"
-                                    ></v-text-field>
-                                </v-col>
-                            </v-row>
-                            
-                            <v-row>
-                                <v-col cols="2">
-                                    <div class="info-label"></div>
-                                </v-col>
-                                <v-col>
-                                    <v-text-field 
-                                        rounded 
-                                        outlined 
-                                        flat 
-                                        color = "grey lighten-1"  
-                                        required 
-                                        placeholder="Sábado"
-                                    ></v-text-field>
-                                </v-col>
-                            </v-row>
-                            
-                            <v-row>
-                                <v-col cols="2">
-                                    <div class="info-label"></div>
-                                </v-col>
-                                <v-col>
-                                    <v-text-field 
-                                        rounded 
-                                        outlined 
-                                        flat 
-                                        color = "grey lighten-1"  
-                                        required 
-                                        placeholder="Domingo"
-                                    ></v-text-field>
+                                    <AddHorario/>
                                 </v-col>
                             </v-row>
                             
@@ -353,14 +310,39 @@
 </template>
 
 <script>
+import AddHorario from '../components/AddHorario.vue'
 
 export default {
     data () {
       return {
         show1: false, 
-        password: 'Password'
+        password: 'Password',
+        distritos: [
+            'Angra do Heroísmo',
+            'Aveiro',
+            'Beja',
+            'Braga',
+            'Bragança',
+            'Castelo Branco',
+            'Coimbra',
+            'Évora',
+            'Faro',
+            'Funchal',
+            'Guarda',
+            'Horta',
+            'Leiria',
+            'Lisboa',
+            'Ponta Delgada',
+            'Portalegre',
+            'Porto',
+            'Santarém',
+            'Setúbal',
+            'Viana do Castelo',
+            'Viseu',
+        ] 
       }
-    }
+    }, 
+    components: {AddHorario}
 }
 </script>
 

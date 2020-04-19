@@ -108,6 +108,18 @@
                                     </v-menu>
                                     </v-col>
                                 </v-row>
+
+                                <v-row>
+                                    <v-col cols="2">
+                                        <div class="info-label headline">Sexo</div>
+                                    </v-col>
+                                    <v-col>
+                                        <v-radio-group row>
+                                            <v-radio label="Masculino" :value="true"></v-radio>
+                                            <v-radio label="Feminino" :value="false"></v-radio>
+                                        </v-radio-group>
+                                    </v-col>
+                                </v-row>
                                 
                                 <v-row>
                                     <v-col cols="2">
@@ -140,6 +152,22 @@
                                         ></v-text-field>
                                     </v-col>
                                 </v-row>
+
+                                 <v-row>
+                                    <v-col cols="2">
+                                        <div class="info-label headline">Distrito</div>
+                                    </v-col>
+                                    <v-col>
+                                    <v-select 
+                                        color = "grey"
+                                        name="input-7-1"
+                                        flat outlined 
+                                        placeholder="Selecione o distrito onde reside"
+                                        :items="distritos"
+                                        rounded
+                                    ></v-select>
+                                 </v-col>
+                                </v-row>
                              
                                 <v-row>
                                     <v-col cols="2">
@@ -153,8 +181,7 @@
                                         persistent-hint
                                         color="grey lighten-1"
                                         required
-                                        hint="0000-000"
-                                        placeholder="Introduza o seu código postal"
+                                        placeholder="0000-000"
                                         ></v-text-field>
                                     </v-col>
                                 </v-row>
@@ -200,8 +227,31 @@
 export default {
   data: () => ({
         show1: false, 
-        password: 'Password'
-   
+        password: 'Password',
+        distritos: [
+            'Angra do Heroísmo',
+            'Aveiro',
+            'Beja',
+            'Braga',
+            'Bragança',
+            'Castelo Branco',
+            'Coimbra',
+            'Évora',
+            'Faro',
+            'Funchal',
+            'Guarda',
+            'Horta',
+            'Leiria',
+            'Lisboa',
+            'Ponta Delgada',
+            'Portalegre',
+            'Porto',
+            'Santarém',
+            'Setúbal',
+            'Viana do Castelo',
+            'Viseu',
+        ] 
+    
   }),
 };
 </script>
