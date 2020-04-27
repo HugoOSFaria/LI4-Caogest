@@ -34,7 +34,7 @@ namespace LI4BackEnd
                 byte[] bytesServidor = new byte[512];
 
                 // conversão da mensagem numa string jSon
-                string jSonServer = mensagemServidor.saveMensagem(mensagemServidor.getTipo(), mensagemServidor.getCanis(), mensagemServidor.getUtilizadores(), mensagemServidor.getCaes());
+                string jSonServer = mensagemServidor.saveMensagem(mensagemServidor.getTipo(), mensagemServidor.getDadosJson());
 
                 // Conversão de string para array de bytes
                 bytesServidor = Encoding.Default.GetBytes(jSonServer);
