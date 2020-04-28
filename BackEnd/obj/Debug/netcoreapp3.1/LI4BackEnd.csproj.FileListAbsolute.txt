@@ -90,3 +90,7 @@ C:\Users\thech\source\repos\LI4BackEnd\obj\Debug\netcoreapp3.1\LI4BackEnd.Assemb
 C:\Users\thech\source\repos\LI4BackEnd\obj\Debug\netcoreapp3.1\LI4BackEnd.AssemblyInfo.cs
 C:\Users\thech\source\repos\LI4BackEnd\obj\Debug\netcoreapp3.1\LI4BackEnd.csproj.CopyComplete
 C:\Users\thech\source\repos\LI4BackEnd\obj\Debug\netcoreapp3.1\LI4BackEnd.genruntimeconfig.cache
+C:\Users\thech\Desktop\MIEI\LI4-G4-T4\BackEnd\obj\Debug\netcoreapp3.1\LI4BackEnd.csprojAssemblyReference.cache
+C:\Users\thech\Desktop\MIEI\LI4-G4-T4\BackEnd\obj\Debug\netcoreapp3.1\LI4BackEnd.csproj.CoreCompileInputs.cache
+C:\Users\thech\Desktop\MIEI\LI4-G4-T4\BackEnd\obj\Debug\netcoreapp3.1\LI4BackEnd.AssemblyInfoInputs.cache
+C:\Users\thech\Desktop\MIEI\LI4-G4-T4\BackEnd\obj\Debug\netcoreapp3.1\LI4BackEnd.AssemblyInfo.cs
