@@ -15,9 +15,9 @@ namespace CaoGest.src
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "INSERT INTO Cao (idCao,Nome,Sexo,Descricao,Estado,Raça,Cor,Canil_Email,Idade,Esterilizacao,Porte) " +
+                string query = "INSERT INTO Cao (idCao,Nome,Sexo,Descricao,Estado,Raca,Cor,Canil_Email,Idade,Esterilizacao,Porte) " +
                     "VALUES ("  + idcao + ", " + "'" + nome + "'" + ", " + "'" + sexo + "'" + "," + "'"+ descricao + "'"+", " + estado + ", " + "'" + raca + "'" + ", " + "'" + cor + "'" + ","+"'"+canilemail+"'"+"," + idade + "," + esterilizacao+ "," + "'" + porte + "'" + ")";
-                //open connection
+                    //open connection
                 if (dB.OpenConnection() == true)
                 {
                     //create command and assign the query and connection from the constructor
@@ -220,7 +220,7 @@ namespace CaoGest.src
                     list.Add((string)dataReader["Descricao"]);
                     int y = (int)dataReader["Estado"];
                     list.Add(y.ToString());
-                    list.Add((string)dataReader["Raça"]);
+                    list.Add((string)dataReader["Raca"]);
                     list.Add((string)dataReader["Cor"]);
                     list.Add((string)dataReader["Canil_Email"]);
                     int z = (int)dataReader["Idade"];
@@ -253,7 +253,7 @@ namespace CaoGest.src
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "SELECT * from Cao WHERE idCao=idCao AND Raça=" + "'" + raca + "'" + "AND Idade=" + "'" + idade + "'" + "AND Sexo=" + "'" + sexo + "'" + "AND cor=" + "'" + cor + "'" + "AND Porte=" + "'" + porte + "'" + "AND CAnil_Email=" + "'" + emailC + "'";
+                string query = "SELECT * from Cao WHERE idCao=idCao AND Raca=" + "'" + raca + "'" + "AND Idade=" + "'" + idade + "'" + "AND Sexo=" + "'" + sexo + "'" + "AND cor=" + "'" + cor + "'" + "AND Porte=" + "'" + porte + "'" + "AND CAnil_Email=" + "'" + emailC + "'";
 
                 //Open connection
                 if (dB.OpenConnection() == true)
@@ -276,7 +276,7 @@ namespace CaoGest.src
                         subList.Add((string)dataReader["Descricao"]);
                         int y = (int)dataReader["Estado"];
                         subList.Add(y.ToString());
-                        subList.Add((string)dataReader["Raça"]);
+                        subList.Add((string)dataReader["Raca"]);
                         subList.Add((string)dataReader["Cor"]);
                         DateTime d = (DateTime)dataReader["DataAdocao"];
                         subList.Add(d.ToString());
@@ -310,14 +310,38 @@ namespace CaoGest.src
             return list;
         }
 
-        public static List<List<String>> pesquisaCaes(string raca, int idade, char sexo, string cor, char porte)
+        public static List<int> pesquisaCaes(string sexo, string porte,List<string> cor,int idade,string raca,string distrito)
         {
-            List<List<String>> list = new List<List<String>>();
+            List<int> list = new List<int>();
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "SELECT * from Cao WHERE idCao=idCao AND Raça=" + "'" + raca + "'" + "AND Idade=" + "'" + idade + "'" + "AND Sexo=" + "'" + sexo + "'" + "AND cor=" + "'" + cor + "'" + "AND Porte=" + "'" + porte + "'";
+                string querySexo = "";
+                string queryPorte = "";
+                string queryCor = "";
+                string queryIdade = "";
+                string queryRaca = "";
+                string queryDistrito = "";
 
+                if (!(sexo.Equals("NA")))
+                 querySexo = " AND Sexo='" + sexo + "'";
+                if(!(porte.Equals("NA")))
+                 queryPorte = " AND Porte='" + porte + "'";
+                if (cor.Count != 0) {
+                    queryCor = " AND Cor='" + cor[0] + "'";
+                    for (int i = 1; i < cor.Count; i++)
+                    {
+                        queryCor = queryCor + "OR Cor='" + cor[i] + "'";
+                    } }
+                if(idade!=-1)
+                 queryIdade = " AND Idade=" + idade.ToString();
+                if(!(raca.Equals("NA")))
+                 queryRaca = " AND Raca='" + raca + "'";
+                if(!(distrito.Equals("NA")))
+                 queryDistrito = " And Canil.Distrito='" + distrito + "'";
+
+                string query = "SELECT idCao FROM Cao JOIN Canil ON Canil_Email=Email WHERE idCao>=-2 "+querySexo+queryPorte+queryCor+queryIdade+queryRaca+queryDistrito;
+                Console.Write(query);
                 //Open connection
                 if (dB.OpenConnection() == true)
                 {
@@ -327,29 +351,11 @@ namespace CaoGest.src
                     //Create a data reader and Execute the command
                     MySqlDataReader dataReader = cmd.ExecuteReader();
 
-                    int i = 0;
                     //Read the data and store them in the list
                     while (dataReader.Read())
                     {
-                        List<String> subList = new List<String>();
                         int x = (int)dataReader["IdCao"];
-                        subList.Add(x.ToString());
-                        subList.Add((string)dataReader["Nome"]);
-                        subList.Add((string)dataReader["Sexo"]);
-                        subList.Add((string)dataReader["Descricao"]);
-                        int y = (int)dataReader["Estado"];
-                        subList.Add(y.ToString());
-                        subList.Add((string)dataReader["Raça"]);
-                        subList.Add((string)dataReader["Cor"]);
-                        DateTime d = (DateTime)dataReader["DataAdocao"];
-                        subList.Add(d.ToString());
-                        int z = (int)dataReader["Idade"];
-                        subList.Add(z.ToString());
-                        bool w = (bool)dataReader["Esterilizacao"];
-                        subList.Add(w.ToString());
-                        list.Add(subList);
-                        i++;
-
+                        list.Add(x);
 
                     }
 
