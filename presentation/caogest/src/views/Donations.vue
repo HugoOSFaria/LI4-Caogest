@@ -2,7 +2,7 @@
     <div id = "donations" class = "Donativos">
         <Navbar/>
          <v-card> 
-            <v-img src='../assets/donations.png'>
+            <v-img src='../assets/ask.png'>
                 <v-card flat height= "400" max-width="800" color = "transparent"></v-card>
                 <v-row class="fill-height"
                        align="center"

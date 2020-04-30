@@ -1,8 +1,7 @@
 <template>
   <div id="adoptionrequest">
-    <v-card flat height="80" color="white"></v-card>
-    <p class="my-5 display-2 font-weight-bold text-center">Pedidos de Adoção</p>
-    <v-card flat height="40" color="white"></v-card>
+   
+    <v-card flat height="100" color="white"></v-card>
 
     <v-container class="my-5">
 
@@ -43,7 +42,7 @@
             <div>{{ project.due }}</div>
           </v-flex>
           <v-flex xs2 sm4 md2>
-               <v-chip :color="project_status(project.status)" class="black--text caption my-2">{{project.status}}</v-chip> 
+               <v-chip :color="project_status(project.status)" class="black--text caption my-2" to="/pedidoAdocaoCanil">{{project.status}}</v-chip> 
             <div>
             </div>
           </v-flex>

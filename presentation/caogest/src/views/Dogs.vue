@@ -84,7 +84,7 @@
                                         :items="itemsporte"
                                         label="Porte"
                                     ></v-select>
-                                    <v-text-field flat color = "grey" name="input-7-1" outlined label="Localidade" ></v-text-field>
+                                    <v-text-field flat color = "grey" name="input-7-1" outlined label="Distrito" ></v-text-field>
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
@@ -106,17 +106,18 @@ import Dog from '../components/Dog.vue'
 export default {
     data: () => ({             
         itemssexo: [ 
+            '- Selecionar -',
             'Macho',
             'Fêmea',
-            'Ambos',
         ],
         itemsporte: [ 
+            '- Selecionar -',
             'Pequeno',
             'Médio',
             'Grande',
-            'Todos',
         ], 
         itemscor: [
+            '- Selecionar -',
             'Amarelo',
             'Azul',
             'Branco',
@@ -128,7 +129,6 @@ export default {
             'Malhado',
             'Preto',
             'Vermelho',
-            'Todas',
         ],
         items: [
         {

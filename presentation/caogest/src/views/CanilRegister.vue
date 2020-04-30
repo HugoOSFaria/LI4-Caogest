@@ -294,7 +294,27 @@
                                 <v-col cols = "12" md = "8">
                                     <v-row justify= "end">
                                         <v-btn class="ma-6" x-large rounded color = "deep-orange lighten-4" to = "/">Cancelar</v-btn>
-                                        <v-btn class = "ma-6" x-large rounded color = "deep-orange lighten-4">Registar</v-btn>
+                                        <v-btn class = "ma-6" x-large rounded color = "deep-orange lighten-4" @click="snackbar = true">Registar</v-btn>
+                                            <v-snackbar
+                                                v-model="snackbar"
+                                                multi-line = "true"
+                                                class = "bottom"
+                                                color = "green"
+                                                timeout = "10000"
+                                            >
+                                                Pedido de Registo enviado com sucesso
+                                                <v-btn
+                                                icon
+                                                dark
+                                                text
+                                                @click="snackbar = false"
+                                                to='/'
+                                                >
+                                                Sair
+                                                <v-icon right>close</v-icon>
+                                                
+                                                </v-btn>
+                                            </v-snackbar>
                                     </v-row>
                                 </v-col>
                             </v-row>
@@ -317,6 +337,7 @@ export default {
       return {
         show1: false, 
         password: 'Password',
+        snackbar: false,
         distritos: [
             'Angra do Heroísmo',
             'Aveiro',

@@ -173,7 +173,7 @@
                         <v-row align="center">
                             <v-col class="grow">Tem a certeza de que pretende remover a sua conta? Todos os dados serão perdidos, pelo que é uma ação irreversível.</v-col>
                             <v-col class="shrink">
-                            <v-btn>Remover</v-btn>
+                            <v-btn to='/'>Remover</v-btn>
                             </v-col>
                         </v-row>
                     </v-alert>

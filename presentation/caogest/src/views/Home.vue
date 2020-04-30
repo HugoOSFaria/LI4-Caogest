@@ -16,6 +16,9 @@
                 label="Email" 
                 type="email"
                 name="email"
+                v-model="form.email"
+                prepend-icon="email"
+               
                 outlined
               />
               <v-text-field
@@ -23,14 +26,16 @@
                 dark 
                 color="white" 
                 rounded 
+                prepend-icon="lock"
                 outlined   
-                append-icon="lock"
+                v-model="form.password"
                 name="password"
                 label="Password"
                 type="password"
+                
                 required
               />
-              <v-btn depressed class="ma-2 headline" dark color = "transparent" to = "/mainpage"> Entrar </v-btn>
+              <v-btn depressed class="ma-2 headline" dark color = "transparent" type="submit" to="/mainpage"> Entrar </v-btn>
               
               <v-dialog v-model="dialog" persistent max-width="350">
                 <template v-slot:activator="{ on }">
@@ -80,12 +85,18 @@
 
 <script>
 // @ is an alias to /src
+//const lhost = require("@/config/global").host;
+//import axios from "axios";
 
 export default {
+  name: "login",
   data (){
     return {
-      email: "",
-      password: "",
+      form:{
+        email: "",
+        password: "",
+      },
+      
       dialog: false
     }
   }

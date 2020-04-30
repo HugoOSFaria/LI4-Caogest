@@ -194,6 +194,7 @@ export default {
 </script>
 
 <style scoped>
+
 .card-heading {
   font-size: x-large;
   font-weight: bold;

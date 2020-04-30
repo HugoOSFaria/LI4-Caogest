@@ -1,11 +1,14 @@
 <template>
     <div id = "adoptionRequest" class = "Adoption Request">
         <NavbarKennel/>
+         <v-card> 
+            <v-img src='../assets/pedidosadocaocanil.png'></v-img>
+         </v-card>
         <v-card flat height= "80" color = "white"></v-card>
         <v-container>
-        <AdoptionRequest/>
-        <Footer/>
+            <AdoptionRequest/>
         </v-container>
+                <Footer/>
     </div>
 </template>
 

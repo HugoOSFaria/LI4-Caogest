@@ -21,13 +21,13 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                <v-list-item-title>Nome Utilizador</v-list-item-title>
+                <v-list-item-title>Administrador</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
 
         <v-divider></v-divider>
 
-        <v-list nav> 
+        <v-list nav > 
             <v-list-item 
                 v-for="item in items"
                 :key="item.title"
@@ -65,13 +65,11 @@ export default {
         return {
             drawer: true,
             items: [
-            { title: 'Página Inicial', icon: 'dashboard', route: '/mainpage'},
-            { title: 'Sobre', icon: 'info', route: '/sobre' },
-            { title: 'Antes de Adotar', icon: 'announcement', route: '/antesdeadotar'},
-            { title: 'Donativos', icon: 'payment', route: '/donativos'},
+            { title: 'Pedidos de Registo', icon: 'archive', route: '/mainpageadmin'},
+            { title: 'Pedidos de Adoção', icon: 'description', route: '/adoptionrequestadmin'},
+            { title: 'Donativos Realizados', icon: 'payment', route: '/donativosrealizados'},
             { title: 'Cães', icon: 'pets', route: '/dogs' },
             { title: 'Canis', icon: 'house', route: '/kennels' },
-            { title: 'FAQs', icon: 'help', route: '/faqs' }
             ],
         }
     }

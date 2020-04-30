@@ -27,7 +27,7 @@
 
         <v-divider></v-divider>
 
-        <v-list nav two-line> 
+        <v-list nav> 
             <v-list-item 
                 v-for="item in items"
                 :key="item.title"
@@ -35,12 +35,13 @@
                 link
             >
                 <v-list-item-icon>
-                    <v-icon>{{ item.icon }}</v-icon>
+                    <v-icon class = "ma-2">{{ item.icon }}</v-icon>
                 </v-list-item-icon>
 
                 <v-list-item-content>
                     <v-list-item-title>{{ item.title }}</v-list-item-title>
                 </v-list-item-content>
+                <v-card height = "20" flat></v-card>
             </v-list-item>
         </v-list>
         <template v-slot:append>
@@ -64,9 +65,9 @@ export default {
         return {
             drawer: true,
             items: [
-            { title: 'Home', icon: 'dashboard', route: '/mainpagekennel'}, 
+            { title: 'Página Inicial', icon: 'dashboard', route: '/mainpagekennel'}, 
             { title: 'Pedidos de Adoção', icon: 'description', route: '/adoptionrequest'},
-            { title: 'Sobre', icon: 'info', route: '/about' },
+            { title: 'Sobre', icon: 'info', route: '/sobre1' },
             { title: 'Donativos', icon: 'payment', route: '/donations'},
             { title: 'Horários', icon: 'schedule', route: '/schedule' },
             { title: 'Voluntários', icon: 'people', route: '/voluntarios' },

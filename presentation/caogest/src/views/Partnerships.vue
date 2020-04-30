@@ -12,49 +12,33 @@
 
         <v-card flat class = "mx-auto" height= "200" color = "white"></v-card>
 
-        <div>
+       <v-container>
             <v-row>
-                <v-col cols="12" sm="6" offset-sm="3">
-                    <v-container fluid>
-                        <v-item-group
-                            v-model="selected"
-                            multiple
-                        >
+                <v-col v-for="item in items" :key = "item.nome" cols="12" md="4" >
+                    <v-card
+                        color="white"
+                        class="d-flex align-center"
+                        dark
+                        flat
+                        height="600"
+                    >
+                        <v-col>
                             <v-row>
-                                <v-col
-                                    v-for="n in 9"
-                                    :key="n"
-                                    class="d-flex child-flex"
-                                    cols="4"
-                                >
-                                    <v-card flat tile>
-                                        <v-item v-slot:default="{ active, toggle }">
-                                            <v-img
-                                                :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-                                                :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-                                                aspect-ratio="1"
-                                                class="grey lighten-2"
-                                                @click="toggle"
-                                            >
-                                                <template v-slot:placeholder>
-                                                    <v-row class="fill-height ma-0" align="center" justify="center">
-                                                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                                                    </v-row>
-                                                </template>  
-
-                                            </v-img>
-                                        </v-item>
-                                        <v-card-actions class="justify-center">
-                                            <!-- URL PARCERIAS -->
-                                        </v-card-actions>
-                                    </v-card>
-                                </v-col>
+                                <v-img max-height = "300" src = "../assets/alturacao.png" contain></v-img>
                             </v-row>
-                        </v-item-group>
-                    </v-container>
+                            
+                            <v-card flat height= "30" color = "white"></v-card>
+                            
+                            <v-row align = "center" justify = "center">
+                                <v-btn class = "display-1" text light >{{item.nome}}</v-btn>
+                            </v-row>
+
+                            <v-card flat height= "30" color = "white"></v-card>
+                        </v-col>
+                    </v-card>
                 </v-col>
             </v-row>
-        </div>
+        </v-container>
         <Footer/>
     </div>
 </template>
@@ -64,6 +48,27 @@ import NavbarKennel from '../components/NavbarKennel.vue'
 import Footer from '../components/Footer.vue'
  
 export default {
+    data: () => ({             
+        items: [
+        {
+          src: '../assets/alturacao.png',
+          nome: 'Parceria1',
+        },
+        {
+          src: '../assets/behaviour.png',
+          nome: 'Parceria2',
+        },
+        {
+          src: '../assets/pets.png',
+          nome: 'Parceria3',
+        },
+        {
+          src: '../assets/sad2.png',
+          nome: 'Parceria4',
+        },
+      ],
+      selected: [],   
+    }),
     components: {
                 NavbarKennel, 
                 Footer

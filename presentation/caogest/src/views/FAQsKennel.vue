@@ -1,9 +1,7 @@
 <template>
     <div id = "faqskennel" class = "FAQsKennel">
         <NavbarKennel/>
-        
         <FAQs/>
-        
         <Footer/>
     </div>
 </template>

@@ -45,9 +45,63 @@
                 </v-row>
             </v-carousel-item>
         </v-carousel>
+
+        <v-container fluid>
+
+            <AdoptionRequest/>
     
-        <v-container>
-        <AdoptionRequest/>
+            <v-card flat height="100" color="white"></v-card>
+            <p class="my-5 display-2 font-weight-bold text-center">Os meus cães favoritos</p>
+            <v-card flat height="40" color="white"></v-card>
+
+            <div>
+            <v-row align = "center" justify = "center">
+                <v-col >
+                    <v-container fluid>
+                        <v-item-group
+                            v-model="selected"
+                            multiple
+                        >
+                            <v-row>
+                                <v-col
+                                    v-for="n in 9"
+                                    :key="n"
+                                    class="d-flex child-flex"
+                                    cols="4"
+                                >
+                                    <v-card flat tile>
+                                        <v-item v-slot:default="{ active, toggle }">
+                                            <v-img
+                                                :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
+                                                :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+                                                aspect-ratio="1"
+                                                class="grey lighten-2"
+                                                @click="toggle"
+                                            >
+                                                <template v-slot:placeholder>
+                                                    <v-row class="fill-height ma-0" align="center" justify="center">
+                                                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                                                    </v-row>
+                                                </template>  
+                                                <v-btn icon dark>
+                                                    <v-icon large>
+                                                        {{ active ? 'mdi-heart-outline' : 'mdi-heart' }}
+                                                    </v-icon>
+                                                </v-btn>
+
+                                            </v-img>
+                                        </v-item>
+                                    <v-card-actions class="justify-center">
+                                        <Dog/>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-col>
+                        </v-row>
+                    </v-item-group>
+                </v-container>
+                </v-col>
+            </v-row>
+            </div>
         </v-container>
         <Footer/>
     </div>
@@ -56,7 +110,8 @@
 <script>
 import Navbar from '../components/Navbar.vue'
 import Footer from '../components/Footer.vue'
-import AdoptionRequest from '../components/AdoptionRequest.vue'
+import AdoptionRequest from '../components/AdoptionRequestUser.vue'
+import Dog from '../components/Dog.vue'
 export default {
     data () {
       return {
@@ -85,6 +140,7 @@ export default {
     },
     components: { Navbar, 
                   Footer,
-                  AdoptionRequest}
+                  AdoptionRequest, 
+                  Dog}
 }
 </script>
