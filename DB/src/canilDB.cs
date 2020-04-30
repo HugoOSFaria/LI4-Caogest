@@ -10,23 +10,27 @@ namespace CaoGest.src
 {
     public class canilDB
     {
-         //---------------------------------------------------------------------INSERTS-----------------------------------------------------------------------
+        //---------------------------------------------------------------------INSERTS-----------------------------------------------------------------------
         //Insere um novo canil
-        public static void insereCanil(string email, string nib, string nome, int capacidadeOcupada, int capacidadeTotal, string password, string distrito, string rua, string localidade,string contacto)
+        public static void insereCanil(string email, string nib, string nome, int capacidadeOcupada, int capacidadeTotal, string password, string distrito, string rua, string localidade, string contacto)
         {
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "INSERT INTO Canil (Email,NIB,Nome,CapacidadeOcupada,CapacidadeTotal,Password,Distrito,Rua,Localidade,Contacto) VALUES (" + "'" + email + "'" + ", " + "'" + nib + "'" + ", " + "'" + nome + "'" + "," + capacidadeOcupada + ", " + capacidadeTotal + ", " + "'" + password + "'" + ", " + "'" + distrito + "'" + ", " + "'" + rua + "'" + "," + "'" + localidade + "'" +","+ "'"+contacto+"'"+")";
+                string query = "INSERT INTO User Values (" + "'" + email + "'" + "," + "'" + password + "'" + "," + 1 + ")";
+                string query2 = "INSERT INTO Canil (User_Email,NIB,Nome,CapacidadeOcupada,CapacidadeTotal,Distrito,Rua,Localidade,Contacto) VALUES (" + "'" + email + "'" + ", " + "'" + nib + "'" + ", " + "'" + nome + "'" + "," + capacidadeOcupada + ", " + capacidadeTotal + ", " + "'" + distrito + "'" + ", " + "'" + rua + "'" + "," + "'" + localidade + "'" + "," + "'" + contacto + "'" + ")";
 
                 //open connection
                 if (dB.OpenConnection() == true)
                 {
                     //create command and assign the query and connection from the constructor
                     MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
+                    MySqlCommand cmd2 = new MySqlCommand(query2, dB.getConnection());
+
 
                     //Execute command
                     cmd.ExecuteNonQuery();
+                    cmd2.ExecuteNonQuery();
                     //cmd.ExecuteScalar();
 
                     //close connection
@@ -40,13 +44,13 @@ namespace CaoGest.src
         //---------------------------------------------------------------------UPDATES-----------------------------------------------------------------------
 
 
-        //UPDATE capacidade Total 
+        //UPDATE capacidade Total
         public static void updateCapacidadeT(string email, int capacidadeTot)
         {
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "UPDATE Canil SET CapacidadeTotal="+capacidadeTot+" WHERE Canil.Email="+"'"+email+"'";
+                string query = "UPDATE Canil SET CapacidadeTotal="+capacidadeTot+" WHERE User_Email="+"'"+email+"'";
 
                 //open connection
                 if (dB.OpenConnection() == true)
@@ -72,7 +76,7 @@ namespace CaoGest.src
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "UPDATE Canil SET CapacidadeOcupada=" + capacidadeOcup + " WHERE Canil.Email=" + "'" + email + "'";
+                string query = "UPDATE Canil SET CapacidadeOcupada=" + capacidadeOcup + " WHERE User_Email=" + "'" + email + "'";
 
                 //open connection
                 if (dB.OpenConnection() == true)
@@ -123,9 +127,9 @@ namespace CaoGest.src
         public static void updateContacto(string email, string newContacto)
         {
             try
-            {   
+            {
                 DbConnect dB = new DbConnect();
-                string query = "UPDATE Canil SET Contacto=" + "'" + newContacto + "'" + " WHERE Canil.Email=" + "'" + email + "'";
+                string query = "UPDATE Canil SET Contacto=" + "'" + newContacto + "'" + " WHERE User_Email=" + "'" + email + "'";
 
                 //open connection
                 if (dB.OpenConnection() == true)
@@ -153,16 +157,19 @@ namespace CaoGest.src
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "DELETE FROM Canil WHERE Email="+"'"+email+"'";
+                string query = "DELETE FROM Canil WHERE User_Email="+"'"+email+"'";
+                string query2 = "DELETE FROM User WHERE Email=" + "'" + email + "'";
 
                 //open connection
                 if (dB.OpenConnection() == true)
                 {
                     //create command and assign the query and connection from the constructor
                     MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
+                    MySqlCommand cmd2 = new MySqlCommand(query2, dB.getConnection());
 
                     //Execute command
                     cmd.ExecuteNonQuery();
+                    cmd2.ExecuteNonQuery();
                     //cmd.ExecuteScalar();
 
                     //close connection
@@ -176,49 +183,36 @@ namespace CaoGest.src
 
         //---------------------------------------------------------------------SELECTS-----------------------------------------------------------------------
 
-        //Select statement
-
-            public static List<string> SelectCanil(string email)
+        //Select statement - Canil
+        public static List<string> SelectCanil(string email)
             {
             DbConnect dB = new DbConnect();
-            string query = "SELECT * FROM Canil WHERE Email="+"'"+email+"'";
-
+            string query = "SELECT * FROM Canil WHERE User_Email="+"'"+email+"'";
                 //Create a list to store the result
                 List<string> list = new List<string>();
                 //Open connection
-                if (dB.OpenConnection() == true)
-                {
-                    //Create Command
+                if (dB.OpenConnection() == true)  {
+                    //Create Comma
                     MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
                     //Create a data reader and Execute the command
                     MySqlDataReader dataReader = cmd.ExecuteReader();
-
                     //Read the data and store them in the list
-                    while (dataReader.Read())
-                    {
+                    while (dataReader.Read())  {
                     list.Add((string)dataReader["NIB"]);
                     list.Add((string)dataReader["NOME"]);
-                    int x= (int)dataReader["CapacidadeOcupada"];
-                    list.Add(x.ToString());
-                    int y= (int)dataReader["CapacidadeTotal"];
-                    list.Add(y.ToString());
-                    list.Add((string)dataReader["Password"]);
+                    int x= (int)dataReader["CapacidadeOcupada"];  list.Add(x.ToString());
+                    int y= (int)dataReader["CapacidadeTotal"];  list.Add(y.ToString());
                     list.Add((string)dataReader["Distrito"]);
                     list.Add((string)dataReader["Rua"]);
                     list.Add((string)dataReader["Localidade"]);
-                    list.Add((string)dataReader["Contacto"]);             
-
+                    list.Add((string)dataReader["Contacto"]);
                 }
-
                     //close Data Reader
                     dataReader.Close();
-
                     //close Connection
                     dB.CloseConnection();
-
                     //return list to be displayed
-                    return list;
-                }
+                    return list;    }
                 else
                 {
                     return list;
@@ -229,7 +223,7 @@ namespace CaoGest.src
         public static List<String> SelectParcerias(string email)
         {
             List<String> list = new List<String>();
-            try { 
+            try {
             DbConnect dB = new DbConnect();
             string query = "SELECT * from Parceria JOIN Canil_has_Parceria ON Parceria_Identificacao=Identificacao WHERE Canil_Email=" + "'" + email + "'";
 
@@ -279,20 +273,20 @@ namespace CaoGest.src
 
 
 
-       
+
         public static List<List<String>> SelectParcerias(string email)
         {
-       
-            List<List<String>> list = new List<List<String>>();            
+
+            List<List<String>> list = new List<List<String>>();
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "SELECT * from Parceria JOIN Canil_has_Parceria ON Parceria_Identificacao=Identificacao WHERE Canil_Email=" + "'" + email + "'";
+                string query = "SELECT * from Parceria JOIN Canil_has_Parceria ON Parceria_Identificacao=Identificacao WHERE Canil_User_Email=" + "'" + email + "'";
 
                 //Open connection
                 if (dB.OpenConnection() == true)
                 {
-                    
+
                     //Create Command
                     MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
                     //Create a data reader and Execute the command
@@ -333,7 +327,7 @@ namespace CaoGest.src
         }
 
 
-        //Retorna os 
+        //Retorna os
         public static List<List<String>> SelectCaes(string email)
         {
 
@@ -341,7 +335,8 @@ namespace CaoGest.src
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "SELECT * from Cao JOIN Canil ON Canil_Email=Email WHERE Email=" + "'" + email + "'";
+                string query = "SELECT * from Cao JOIN Canil ON User_Email=Canil_User_Email WHERE User_Email=" + "'" + email + "'";
+                Console.Write(query+"\n"    );
 
                 //Open connection
                 if (dB.OpenConnection() == true)
@@ -355,19 +350,20 @@ namespace CaoGest.src
                     int i = 0;
                     //Read the data and store them in the list
                     while (dataReader.Read())
-                    {                       
-                        List<String> subList = new List<String>();                      
+                    {
+                        List<String> subList = new List<String>();
                         int x = (int)dataReader["IdCao"];
                         subList.Add(x.ToString());
-                        subList.Add((string)dataReader["Nome"]);
-                        subList.Add((string)dataReader["Sexo"]);
+                        subList.Add((string)dataReader["Nome"]);                       
+                        bool x1 = (bool)dataReader["Sexo"];
+                        subList.Add(x1.ToString());                        
                         subList.Add((string)dataReader["Descricao"]);
                         int y = (int)dataReader["Estado"];
                         subList.Add(y.ToString());
-                        subList.Add((string)dataReader["Raça"]);
+                        subList.Add((string)dataReader["Raca"]);
                         subList.Add((string)dataReader["Cor"]);
-                        DateTime d = (DateTime)dataReader["DataAdocao"];
-                        subList.Add(d.ToString());
+                       // DateTime d = (DateTime)dataReader["DataAdocao"];
+                        //subList.Add(d.ToString());
                         int z = (int)dataReader["Idade"];
                         subList.Add(z.ToString());
                         bool w = (bool)dataReader["Esterilizacao"];
@@ -389,6 +385,7 @@ namespace CaoGest.src
                 }
                 else
                 {
+
                     return list;
                 }
             }
@@ -402,7 +399,7 @@ namespace CaoGest.src
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "SELECT COUNT(*) FROM Canil WHERE Email = '" + key + "'";
+                string query = "SELECT COUNT(*) FROM User WHERE Email = '" + key + "'";
 
                 //open connection
                 if (dB.OpenConnection() == true)
@@ -426,12 +423,13 @@ namespace CaoGest.src
             catch (MySql.Data.MySqlClient.MySqlException) { };
             return false;
         }
+
         public static bool valPass(string key, string value)
         {
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "SELECT Password FROM Canil WHERE Email = '" + (String)key + "'";
+                string query = "SELECT Password FROM User WHERE Email = '" + key + "'";
 
                 //open connection
                 if (dB.OpenConnection() == true)
@@ -465,5 +463,3 @@ namespace CaoGest.src
         }
     }
 }
-
-
