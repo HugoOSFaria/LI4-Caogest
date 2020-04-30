@@ -10,25 +10,29 @@ namespace CaoGest.src
     public class utilizadorDB
     {
         //-----------------------------------------------------------------------------------INSERT---------------------------------------------------------------------------
-        public static void insereUser(string email, string nome, string password, DateTime nasc, string distrito, string rua, string localidade, string cc,string sexo)
+        public static void insereUser(string email, string nome, string password, DateTime nasc, string distrito, string rua, string localidade, string cc,int sexo,string contacto)
         {
             try
             {
                 DbConnect dB = new DbConnect();
                 string sqlFormattedDate = nasc.ToString("yyyy-MM-dd HH:mm:ss.fff");
                 //  Console.Write(email+","+nome+","+password+","+distrito+","+rua+","+localidade+","+cc+","+sexo+'\n');
-                // Console.Write(nasc);
-                string query = "INSERT INTO Utilizador (Email,Nome,Password,Data_de_Nascimento,Distrito,Rua,Localidade,CC,Sexo) VALUES (" + "'" + email + "'" + ", " + "'" + nome + "'" + ", " + "'" + password + "'" + ", " + "'" + sqlFormattedDate + "'" + ", " + "'" + distrito + "'" + "," + "'" + rua + "'" + "," + "'" + localidade + "'" + "," + "'" + cc + "'"  + ","+"'"+sexo+"'"+")";
-                Console.Write(query);
+               
+                string query = "INSERT INTO User VALUES ('" + email + "'" + "," + "'" + password + "'" + "," + 1 +")";
+                string query2 = "INSERT INTO Utilizador (User_Email,Nome,Data_de_Nascimento,Distrito,Rua,Localidade,CC,Sexo,Contacto) VALUES (" + "'" + email + "'" + ", " + "'" + nome + "'" + "," + "'" + sqlFormattedDate + "'" + ", " + "'" + distrito + "'" + "," + "'" + rua + "'" + "," + "'" + localidade + "'" + "," + "'" + cc + "'"  + ","+sexo+","+"'"+contacto+"'"+")";
+               // Console.Write(query2);
                 //open connection
                 if (dB.OpenConnection() == true)
                 {
                     //create command and assign the query and connection from the constructor
                     MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
+                    MySqlCommand cmd1 = new MySqlCommand(query2, dB.getConnection());
+
+
 
                     //Execute command
                     cmd.ExecuteNonQuery();
-                    //cmd.ExecuteScalar();
+                    cmd1.ExecuteNonQuery();
 
                     //close connection
                     dB.CloseConnection();
@@ -48,17 +52,18 @@ namespace CaoGest.src
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "DELETE FROM Utilizador WHERE Email=" + "'" + email + "'";
-
+                string query = "DELETE FROM User WHERE Email=" + "'" + email + "'";
+                string query2 = "DELETE FROM Utilizador WHERE User_Email = '" + email + "'";
+                Console.Write(query);
                 //open connection
                 if (dB.OpenConnection() == true)
                 {
                     //create command and assign the query and connection from the constructor
                     MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
-
+                    MySqlCommand cmd1 = new MySqlCommand(query2, dB.getConnection());
                     //Execute command
+                    cmd1.ExecuteNonQuery();
                     cmd.ExecuteNonQuery();
-                    //cmd.ExecuteScalar();
 
                     //close connection
                     dB.CloseConnection();
@@ -76,7 +81,7 @@ namespace CaoGest.src
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "UPDATE Utilizador SET Password=" + "'" + newPass + "'" + " WHERE Utilizador.Email=" + "'" + email + "'";
+                string query = "UPDATE User SET Password=" + "'" + newPass + "'" + " WHERE Email=" + "'" + email + "'";
 
                 //open connection
                 if (dB.OpenConnection() == true)
@@ -96,23 +101,27 @@ namespace CaoGest.src
 
         }
 
-        //UPDATE Email
+        /*/UPDATE Email
         public static void updateEmail(string email, string newContacto)
         {
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "UPDATE Utilizador SET Email=" + "'" + newContacto + "'" + " WHERE Utilizador.Email=" + "'" + email + "'";
+                string query = "UPDATE User SET Email=" + "'" + newContacto + "'" + " WHERE Email=" + "'" + email + "'";
+                string query2 = "UPDATE Utilizador SET User_Email='" + newContacto + "'" + " WHERE User_Email='" + email + "'";
+                Console.Write(query);
 
                 //open connection
                 if (dB.OpenConnection() == true)
                 {
                     //create command and assign the query and connection from the constructor
                     MySqlCommand cmd = new MySqlCommand(query, dB.getConnection());
+                    MySqlCommand cmd1 = new MySqlCommand(query2, dB.getConnection());
+
 
                     //Execute command
+                    cmd1.ExecuteNonQuery();
                     cmd.ExecuteNonQuery();
-                    //cmd.ExecuteScalar();
 
                     //close connection
                     dB.CloseConnection();
@@ -121,6 +130,7 @@ namespace CaoGest.src
             catch (MySql.Data.MySqlClient.MySqlException) { };
 
         }
+        */
 
         //---------------------------------------------------------------------SELECTS-----------------------------------------------------------------------
 
@@ -129,7 +139,7 @@ namespace CaoGest.src
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "SELECT COUNT(*) FROM Utilizador WHERE Email = '" +key + "'";
+                string query = "SELECT COUNT(*) FROM User WHERE Email = '" +key + "'";
 
                 //open connection
                 if (dB.OpenConnection() == true)
@@ -159,7 +169,7 @@ namespace CaoGest.src
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "SELECT Password FROM Utilizador WHERE Email = '" + (String)key + "'";
+                string query = "SELECT Password FROM User WHERE Email = '" + (String)key + "'";
 
                 //open connection
                 if (dB.OpenConnection() == true)
@@ -199,7 +209,7 @@ namespace CaoGest.src
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "SELECT * from Favoritos WHERE Utilizador_Email=" + "'" + email + "'";
+                string query = "SELECT * from Favoritos WHERE Utilizador_User_Email=" + "'" + email + "'";
                 Console.Write(query + '\n');
 
                 //Open connection
@@ -248,7 +258,7 @@ namespace CaoGest.src
             try
             {
                 DbConnect dB = new DbConnect();
-                string query = "SELECT * from Favoritos WHERE Utilizador_Email=" + "'" + email + "'";
+                string query = "SELECT * from Favoritos WHERE Utilizador_User_Email=" + "'" + email + "'";
                 Console.Write(query + '\n');
 
                 //Open connection
