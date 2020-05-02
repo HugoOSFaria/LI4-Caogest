@@ -79,7 +79,7 @@
 
 <script>
 import NavbarKennel from '../components/NavbarKennel.vue'
-import Footer from '../components/Footer.vue'
+import Footer from '../components/FooterKennel.vue'
 
 export default {
   data() {

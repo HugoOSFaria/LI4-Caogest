@@ -1,20 +1,14 @@
 <template>
-    <div id = "requestkennel" class = "Request Kennel">
-        <NavbarAdmin/>
-        <v-card flat height = "100"></v-card>
-        <PedidosAdocao/>
-        <Footer/>
-    </div>
-</template> 
+    <PedidosAdocao :id="$route.params.id"/>
+</template>
 
 <script>
-import NavbarAdmin from '../components/NavbarAdmin.vue'
-import Footer from '../components/Footer.vue'
-import PedidosAdocao from '../components/PedidosAdocao.vue'
-  export default {
-        components: { NavbarAdmin, 
-                      Footer, 
-                      PedidosAdocao, 
-        }
+// @ is an alias to /src
+import PedidosAdocao from '@/components/PedidosAdocao.vue'
+export default {
+  name: 'PedidoAdocaoAdmin',
+  components: {
+    PedidosAdocao
   }
-</script>     
+}
+</script>

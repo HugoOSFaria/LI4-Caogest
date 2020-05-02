@@ -1,136 +1,180 @@
 <template>
-    <v-layout row wrap>
+    <div v-if="!this.loaded">
+        Loading...
+    </div>
+    <v-card class="ma-4" v-else>
+        <v-card-title class="indigo darken-4 white--text" dark>
+            <span class="headline">Filme: "{{ filme.info.titulo }}" ({{id}})</span>
+        </v-card-title>
 
-        <v-flex xs6>
-            <v-text-field
-                    append-icon="search"
-                    label="Filter"
-                    single-line
-                    hide-details
-                    @input="filterSearch"
-            ></v-text-field>
-        </v-flex>
+        <v-card-text>
+            <v-container>
+            <v-row>
+                <v-col cols="2">
+                <div class="info-label">Resumo</div>
+                </v-col>
+                <v-col>
+                <div class="info-content">{{ filme.info.res }}</div>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col cols="2">
+                <div class="info-label">Data</div>
+                </v-col>
+                <v-col>
+                <div class="info-content">{{ filme.info.data }}</div>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col cols="2">
+                <div class="info-label">Língua</div>
+                </v-col>
+                <v-col>
+                <div class="info-content">{{ filme.info.lingua }}</div>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col cols="2">
+                <div class="info-label">Duração (minutos)</div>
+                </v-col>
+                <v-col>
+                <div class="info-content">{{ filme.info.duracao }}</div>
+                </v-col>
+            </v-row>
 
-        <v-flex xs6>
-            <v-select
-                    :items="authors"
-                    label="Author"
-                    @change="filterAuthor"
-            ></v-select>
-        </v-flex>
+            <v-row>
+                <v-col cols="2">
+                <div class="info-label">Índice de Popularidade</div>
+                </v-col>
+                <v-col>
+                <div class="info-content">{{ filme.info.pop }}</div>
+                </v-col>
+            </v-row>
 
+            <v-row v-if="filme.atores && filme.atores.length > 0">
+                <v-col cols="2">
+                <div class="info-label">Atores</div>
+                </v-col>
+                <v-col>
+                    <div class="info-content">
+                        <ul>
+                            <li 
+                                v-for="ator in filme.atores"
+                                :key="ator.idAtor"
+                            >
+                                <a href="#">{{ ator.anome }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </v-col>
+            </v-row>
 
-        <v-flex xs12>
+            <v-row v-if="filme.generos && filme.generos.length > 0">
+                <v-col cols="2">
+                <div class="info-label">Géneros</div>
+                </v-col>
+                <v-col>
+                    <div class="info-content">
+                        <ul>
+                            <li 
+                                v-for="genero in filme.generos"
+                                :key="genero.idGenero"
+                            >
+                                <a href="#">{{ genero.gnome }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </v-col>
+            </v-row>
 
+            <v-row v-if="filme.linguas && filme.linguas.length > 0">
+                <v-col cols="2">
+                <div class="info-label">Línguas</div>
+                </v-col>
+                <v-col>
+                    <div class="info-content">
+                        <ul>
+                            <li 
+                                v-for="lingua in filme.linguas"
+                                :key="lingua.l"
+                            >
+                                <a href="#">{{ lingua.l }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </v-col>
+            </v-row>
 
-            <v-data-table
-                    :headers="headers"
-                    :items="rows"
-                    item-key="name"
+            <v-row v-if="filme.personagens && filme.personagens.length > 0">
+                <v-col cols="2">
+                <div class="info-label">Personagens</div>
+                </v-col>
+                <v-col>
+                    <div class="info-content">
+                        <ul>
+                            <li 
+                                v-for="personagem in filme.personagens"
+                                :key="personagem.idPersonagem"
+                            >
+                                <a href="#">{{ personagem.pnome }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </v-col>
+            </v-row>
+            </v-container>
+        </v-card-text>
 
-                    :search="filters"
-                    :custom-filter="customFilter"
-            >
-                <template slot="headers" slot-scope="props">
-                    <tr>
-                        <th v-for="header in props.headers" :key="header.text">
-                            {{ header.text }}
-                        </th>
-                    </tr>
-                </template>
-
-                <template slot="items" slot-scope="props">
-                    <tr>
-                        <td>{{ props.item.name }}</td>
-                        <td>{{ props.item.added_by }}</td>
-                    </tr>
-                </template>
-
-            </v-data-table>
-
-        </v-flex>
-
-
-    </v-layout>
+        <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="$router.go(-1)">voltar</v-btn>
+        </v-card-actions>
+    </v-card>
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      filters: {
-        search: '',
-        added_by: '',
-      },
-      authors: ['Admin', 'Editor'],
-      headers: [
-        {
-          text: 'Names',
-          align: 'left',
-          value: 'name',
-          sortable: false
-        },
-        {
-          text: 'Item addad by',
-          value: 'added_by',
-          align: 'left',
-          sortable: false
-        }
-      ],
-      rows: [
-        {
-          name: 'Marcelo Tosco',
-          added_by: 'admin'
-        },
-        {
-          name: 'Carlos Campos',
-          added_by: 'admin'
-        },
-        {
-          name: 'Luis Gonzalez',
-          added_by: 'Editor'
-        },
-        {
-          name: 'Keopx',
-          added_by: 'Editor'
-        },
-        {
-          name: 'Marco Marocchi',
-          added_by: 'Admin'
-        },
-      ]
-    }),
-    methods: {
-      customFilter(items, filters, filter, headers) {
-        // Init the filter class.
-        const cf = new this.$MultiFilters(items, filters, filter, headers);
-        cf.registerFilter('search', function (searchWord, items) {
-          if (searchWord.trim() === '') return items;
-          return items.filter(item => {
-            return item.name.toLowerCase().includes(searchWord.toLowerCase());
-          }, searchWord);
-        });
-        cf.registerFilter('added_by', function (added_by, items) {
-          if (added_by.trim() === '') return items;
-          return items.filter(item => {
-            return item.added_by.toLowerCase() === added_by.toLowerCase();
-          }, added_by);
-        });
-        // Its time to run all created filters.
-        // Will be executed in the order thay were defined.
-        return cf.runFilters();
-      },
-      /**
-       * Handler when user input something at the "Filter" text field.
-       */
-      filterSearch(val) {
-        this.filters = this.$MultiFilters.updateFilters(this.filters, {search: val});
-      },
-      /**
-       * Handler when user  select some author at the "Author" select.
-       */
-      filterAuthor(val) {
-        this.filters = this.$MultiFilters.updateFilters(this.filters, {added_by: val});
-      },
+import axios from 'axios'
+const lhost = require("@/config/global").host;
+export default {
+  name: 'Consulta Filme',
+  props: ['id'], 
+  data: () => ({
+    footer_props: {
+      "items-per-page-text": "Mostrar",
+      "items-per-page-options": [10, 20, 50, 100, -1],
+      "items-per-page-all-text": "Todos"
+    }, 
+  filme: {},
+  loaded: false
+  }),
+  created: async function(){
+    try {
+      let response = await axios.get(lhost + "/filmes/" + this.id);
+      this.filme = response.data
+      this.loaded = true;
+    } 
+    catch (e) {
+      return e;
     }
-  };
+  },
+  methods: {
+    
+  }
+}
 </script>
+
+<style>
+.info-label {
+  color: indigo;
+  padding: 5px;
+  font-weight: 400;
+  width: 100%;
+  background-color: #e0f2f1;
+  font-weight: bold;
+}
+.info-content {
+  padding: 5px;
+  width: 100%;
+  border: 1px solid #1a237e;
+}
+</style>

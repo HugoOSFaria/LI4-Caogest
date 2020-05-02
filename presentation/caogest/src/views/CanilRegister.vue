@@ -293,8 +293,8 @@
                             <v-row justify = "end">
                                 <v-col cols = "12" md = "8">
                                     <v-row justify= "end">
-                                        <v-btn class="ma-6" x-large rounded color = "deep-orange lighten-4" to = "/">Cancelar</v-btn>
-                                        <v-btn class = "ma-6" x-large rounded color = "deep-orange lighten-4" @click="snackbar = true">Registar</v-btn>
+                                        <v-btn class="ma-6" x-large color = "deep-orange lighten-4" to = "/">Cancelar</v-btn>
+                                        <v-btn class = "ma-6" x-large color = "deep-orange lighten-4" @click="snackbar = true">Registar</v-btn>
                                             <v-snackbar
                                                 v-model="snackbar"
                                                 multi-line = "true"

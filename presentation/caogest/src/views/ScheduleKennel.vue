@@ -60,7 +60,7 @@
 
 <script>
 import NavbarKennel from '../components/NavbarKennel.vue'
-import Footer from '../components/Footer.vue'
+import Footer from '../components/FooterKennel.vue'
 import EditarHorario from '../components/EditarHorario.vue'
 
 export default {

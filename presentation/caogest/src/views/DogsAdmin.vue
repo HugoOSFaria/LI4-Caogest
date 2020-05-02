@@ -7,8 +7,8 @@
         <v-card flat height= "100" color = "white"></v-card>
         
         <div>
-            <v-row >
-                <v-col cols="12" sm="6" offset-sm="2" >
+            <v-row>
+                <v-col cols="12" sm="6" offset-sm="2">
                     <v-container fluid>
                         <v-item-group
                             v-model="selected"
@@ -16,10 +16,11 @@
                         >
                             <v-row>
                                 <v-col
+                                    v-for="item in items"
+                                    :key="item.nome"
                                     class="d-flex child-flex"
                                     cols="4"
-                                    v-for="item in items"
-                                    :key="item.nome">
+                                >
                                     <v-card flat tile>
                                         <v-item v-slot:default="{ active, toggle }">
                                             <v-img
@@ -44,7 +45,7 @@
                                         <v-card-actions class="justify-center">
                                             <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
                                                 <template v-slot:activator="{on}">
-                                                    <v-btn text v-on="on" @click="editDog(props.item.idCao)"> {{item.nome}} </v-btn>  
+                                                    <v-btn text v-on="on"> {{item.nome}} </v-btn>  
                                                 </template>
                                                 <v-card class = "ma-2" flat>
                                                     <v-toolbar height = "100" color="deep-orange lighten-4">
@@ -61,9 +62,6 @@
                                                             <v-card flat color = "white" class = "mx-auto" height = "800" width = "900"> 
                                                                 <v-img height = "800" width = "800" src='../assets/example.jpg'></v-img> 
                                                                 <v-card flat color = "white" height = "100"></v-card>
-                                                                <v-row>
-                                                                    <v-btn x-large height = "100" class = "display-2" color = "deep-orange lighten-5" to='/adoptionform'> Quero Adotar! </v-btn>
-                                                                </v-row>
                                                             </v-card>
                                                         </v-col>
 
@@ -122,11 +120,13 @@
                                                 </v-card>
                                             </v-dialog>
                                         </v-card-actions>
-                                    </v-card>
-                                </v-col>
-                            </v-row>
-                        </v-item-group>
-                    </v-container>      
+                                </v-card>
+                            </v-col>
+                        </v-row>
+                    </v-item-group>
+                </v-container>
+               
+                       
                 </v-col>
                 <v-spacer></v-spacer>
                 <v-col cols = "3">
@@ -177,7 +177,7 @@
 import axios from 'axios'
 const lhost = require("@/config/global").host;
 
-import Navbar from '../components/Navbar.vue'
+import Navbar from '../components/NavbarAdmin.vue'
 import Footer from '../components/Footer.vue'
 
 export default {
@@ -209,7 +209,6 @@ export default {
             'Vermelho',
         ],
         items: [],
-        itemsd: [],
       selected: [],   
     }),
     components: {   Navbar, 
@@ -224,12 +223,6 @@ export default {
         catch (e) {
         return e;
         }
-    },   
-    methods:{
-         editDog(id){
-              this.dialog=true;
-              this.editedDid=id;
-           }
-         }  
+    },         
 }
 </script>

@@ -239,7 +239,7 @@
 
 <script>
 import NavbarKennel from '../components/NavbarKennel.vue'
-import Footer from '../components/Footer.vue'
+import Footer from '../components/FooterKennel.vue'
 import NameChange from '../components/NameChange.vue'
 import AddressChange from '../components/AddressChange.vue'
 import PasswordChange from '../components/PasswordChange.vue'

@@ -136,6 +136,7 @@ export default {
           'Fourth',
           'Fifth',
         ],
+        selected: []
       }
     },
     components: { Navbar, 

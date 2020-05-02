@@ -1,5 +1,5 @@
 <template>
-    <div id = "faqskennel" class = "FAQsKennel">
+    <div id = "faqsadmin" class = "FAQsAdmin">
         <NavbarKennel/>
         <FAQs/>
         <Footer/>
@@ -8,8 +8,8 @@
 
 
 <script>
-import NavbarKennel from '../components/NavbarKennel.vue'
-import Footer from '../components/FooterKennel.vue'
+import NavbarKennel from '../components/NavbarAdmin.vue'
+import Footer from '../components/FooterAdmin.vue'
 import FAQs from '../components/FAQs.vue'
  
 export default {

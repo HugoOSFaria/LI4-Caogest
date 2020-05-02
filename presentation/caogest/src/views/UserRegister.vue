@@ -7,12 +7,12 @@
   <v-row class="ma-2">
     <v-col>
       <v-card flat>
-        <!-- Header -->
+
         <v-app-bar flat height=100px color="deep-orange lighten-4">
           <v-toolbar-title class="card-heading">Registar Utilizador</v-toolbar-title>
         </v-app-bar>
         <v-card flat height= "80" color = "white"></v-card>
-        <!-- Content -->
+
             <v-container grid-list-md text-xl-left>
                 <v-layout row wrap>
                 <v-flex xs12>
@@ -91,6 +91,7 @@
                          
                                     <v-col>
                                     <v-menu
+                                        ref="menu2"
                                         v-model="menu2"
                                         :close-on-content-click="false"
                                         transition="scale-transition"
@@ -105,13 +106,13 @@
                                             placeholder="YYYY/MM/DD"
                                             flat
                                             color = "grey lighten-1" 
-                                            v-model="date"
-                                            persistent-hint
-                                            readonly
+                                            v-model="form.data_de_nascimento"
+                                            readonly=""
+                                            @blur="date = parseDate(dateFormatted)"
                                             v-on="on"
                                         ></v-text-field>
                                         </template>
-                                        <v-date-picker v-model="date" no-title @input="menu2 = false"></v-date-picker>
+                                        <v-date-picker v-model="date" no-title @input="menu2 = false" :max="dateCurrent"></v-date-picker>
                                     </v-menu>
                                     </v-col>
  
@@ -123,8 +124,8 @@
                                     </v-col>
                                     <v-col>
                                         <v-radio-group row v-model="form.sexo" name="sexo" type="sexo">
-                                            <v-radio label="Masculino" :value="true"></v-radio>
-                                            <v-radio label="Feminino" :value="false"></v-radio>
+                                            <v-radio label="Masculino" value="Masculino"></v-radio>
+                                            <v-radio label="Feminino" value="Feminino"></v-radio>
                                         </v-radio-group>
                                     </v-col>
                                 </v-row>
@@ -211,8 +212,8 @@
                             <v-row justify = "end">
                                 <v-col cols = "12" md = "8">
                                     <v-row justify= "end">
-                                        <v-btn class="ma-6" type="submit" x-large rounded color = "deep-orange lighten-4" @click="cancelar">Cancelar</v-btn>
-                                        <v-btn class = "ma-6" type="submit" x-large rounded color = "deep-orange lighten-4" @click="registarUtilizador">Registar</v-btn>
+                                        <v-btn class="ma-6" type="submit" x-large color = "deep-orange lighten-4" @click="cancelar">Cancelar</v-btn>
+                                        <v-btn class = "ma-6" type="submit" x-large color = "deep-orange lighten-4" @click="registarUtilizador">Registar</v-btn>
                                     </v-row>
                                 </v-col>
                             </v-row>
@@ -228,14 +229,14 @@
                                 <v-btn flat @click="fecharSnackbar">Fechar</v-btn>
                             </v-snackbar>
                         </v-card>
-                                </v-form>
+                        </v-form>
                     </v-flex>
                 </v-layout>
             </v-container>    
         </v-card>
+  
     </v-col>
   </v-row>
-  <p> {{JSON.stringify(this.form)}}</p>
   </div>
 </template>
 
@@ -245,8 +246,10 @@ const lhost = require("@/config/global").host;
 
 export default {
     name: "signup",
-    data: () => ({
+    data: ur => ({
         date: new Date().toISOString().substr(0, 10),
+        dateCurrent: new Date().toISOString().substr(0, 10),
+        dateFormatted: ur.formatDate(new Date().toISOString().substr(0, 10)),
         menu2: false,
         show1: false, 
         password: 'Password',
@@ -289,7 +292,7 @@ export default {
             localidade: "", 
             cc: "", 
             distrito: "", 
-            data_de_nascimento:"1999-04-13T00:00:00", 
+            data_de_nascimento:"", 
             sexo:"",
         }, 
         snackbar: false, 
@@ -309,7 +312,7 @@ export default {
             rua: this.form.rua,
             localidade: this.form.localidade,
             distrito: this.form.distrito,
-            data_de_nascimento: this.form.data_de_nascimento,
+            data_de_nascimento: this.form.date,
             sexo: this.form.sexo,
             cc: this.form.cc,
             password: this.form.password,
@@ -331,11 +334,34 @@ export default {
     },
     fecharSnackbar() {
       this.snackbar = false;
-      if (this.done == true) this.$router.push("/");
+      //if (this.done == true) this.$router.push("/");
     },
     cancelar() {
       this.$router.push("/");
+    },
+    formatDate(date) {
+      if (!date) return null;
+      const [year, month, day] = date.split("-");
+      return `${year}-${month}-${day}`;
+    },
+    parseDate(date) {
+      if (!date) return null;
+      const [year, month, day] = date.split("/");
+      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+    },
+  },
+  computed: {
+    computedDateFormatted() {
+      return this.formatDate(this.date);
     }
+  },
+  watch: {
+    date() {
+      this.form.data_de_nascimento = this.formatDate(this.date);
+    }
+  },
+  created: function() {
+    this.form.data_de_nascimento = this.dateFormatted;
   }
 };
 </script>

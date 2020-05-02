@@ -33,6 +33,10 @@
                                             flat 
                                             color = "grey lighten-1" 
                                             required 
+                                            v-model="form.nome"
+                                            :rules="regraNome"
+                                            name="nome"
+                                            type="nome"
                                         ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -51,6 +55,10 @@
                                             flat 
                                             color = "grey lighten-1" 
                                             required 
+                                            v-model="form.raça"
+                                            :rules="regraRaça"
+                                            name="raça"
+                                            type="raça"
                                         ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -67,6 +75,10 @@
                                         flat  
                                         color = "grey lighten-1"  
                                         required 
+                                        v-model="form.idade"
+                                        :rules="regraIdade"
+                                        name="idade"
+                                        type="idade"
                                 ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -79,12 +91,15 @@
                                 <v-col>
                                     <v-select 
                                         color = "grey"
-                                        name="input-7-1"
                                         flat outlined 
                                         placeholder="Selecione a cor"
                                         :items="itemscor"
                                         multiple
                                         rounded
+                                        v-model="form.cor"
+                                        :rules="regraCor"
+                                        name="cor"
+                                        type="cor"
                                     ></v-select>
                                  </v-col>
                             </v-row>
@@ -97,11 +112,14 @@
                                 <v-col>
                                     <v-select 
                                         color = "grey"
-                                        name="input-7-1"
                                         flat outlined 
                                         placeholder="Selecione o porte"
                                         :items="itemsporte"
                                         rounded
+                                        v-model="form.porte"
+                                        :rules="regraPorte"
+                                        name="porte"
+                                        type="porte"
                                     ></v-select>
                                  </v-col>
                             </v-row>
@@ -111,9 +129,9 @@
                                     <div class="info-label headline">Sexo</div>
                                 </v-col>
                                 <v-col>
-                                    <v-radio-group row>
-                                        <v-radio label="Macho" :value="true"></v-radio>
-                                        <v-radio label="Fêmea" :value="false"></v-radio>
+                                    <v-radio-group v-model="form.sexo" :rules="regraSexo" name="sexo" type="sexo" row>
+                                        <v-radio label="Macho" value="Macho"></v-radio>
+                                        <v-radio label="Fêmea" value="Fêmea"></v-radio>
                                     </v-radio-group>
                                 </v-col>
                             </v-row>
@@ -123,9 +141,9 @@
                                     <div class="info-label headline">Esterilizado</div>
                                 </v-col>
                                 <v-col>
-                                    <v-radio-group row>
-                                        <v-radio label="Sim" :value="true"></v-radio>
-                                        <v-radio label="Não" :value="false"></v-radio>
+                                    <v-radio-group v-model="form.esterilizacao" :rules="regraEsterilizacao" name="esterilizacao" type="esterilizacao" row>
+                                        <v-radio label="Sim" value="Sim"></v-radio>
+                                        <v-radio label="Não" value="Não"></v-radio>
                                     </v-radio-group>
                                 </v-col>
                             </v-row>    
@@ -136,6 +154,9 @@
                                 </v-col>
                                 <v-col>
                                     <v-textarea
+                                        v-model="form.descricao"
+                                        name="descricao"
+                                        type="descricao"
                                         flat
                                         outlined
                                         rounded
@@ -150,8 +171,8 @@
                         <v-row justify = "end">
                             <v-col cols = "12" md = "8">
                                 <v-row justify= "end">
-                                    <v-btn class="ma-6" x-large rounded color = "deep-orange lighten-4" to = "/mainpagekennel">Cancelar</v-btn>
-                                    <v-btn class = "ma-6" x-large rounded color = "deep-orange lighten-4">Registar</v-btn>
+                                    <v-btn class="ma-6" x-large color = "deep-orange lighten-4" to="/mainpagekennel" >Cancelar</v-btn>
+                                    <v-btn class = "ma-6" x-large color = "deep-orange lighten-4" @click="registarCao" >Registar</v-btn>
                                 </v-row>
                             </v-col>
                         </v-row>
@@ -163,6 +184,7 @@
       </v-card>
     </v-col>
   </v-row>
+   <p> {{JSON.stringify(this.form)}}</p>
   </div>
 </template>
 
@@ -170,6 +192,7 @@
 
 
 export default {
+    name: "signupdog",
     data: () => ({  
         itemsporte: [ 
             'Pequeno',
@@ -188,8 +211,27 @@ export default {
             'Malhado',
             'Preto',
             'Vermelho',
-        ] 
-    }),  
+        ],
+        regraNome: [v => !!v || "Nome obrigatório."],
+        regraRaça:[v => !!v || "Raça obrigatória."], 
+        regraIdade: [v => !!v || "Idade obrigatória."],
+        regraSexo: [v => !!v || "Género obrigatório."],
+        regraEsterilizacao: [v => !!v || "Esterilização obrigatória."],
+        regraCor: [v => !!v || "Cor obrigatória."],
+        regraPorte: [v => !!v || "Porte obrigatório."],
+        form: {
+            nome: "",
+            raça: "", 
+            idade: 0, 
+            sexo: "", 
+            esterilizacao: "", 
+            cor: "", 
+            porte: "", 
+            descricao:"",
+            estado: 1,
+        },  
+    }), 
+ 
 }
 </script>
 

@@ -20,7 +20,7 @@
 
                         <v-tooltip top>
                             <template v-slot:activator="{ on }">
-                                <v-btn class = "ma-2" text @click="sortBy('canil')" v-on="on">
+                                <v-btn class = "ma-2" text @click="sortByNome('canil_user_email')" v-on="on">
                                     <v-icon left small>pets</v-icon>    
                                     <span class = "caption text-lowercase">Por canil</span>
                                 </v-btn>  
@@ -43,19 +43,19 @@
                     <v-layout row wrap class="pa-7 donativo">
                     <v-flex xs4 sm3>
                         <div class="caption grey--text">Nome Donatário</div>
-                        <div>{{ donativo.nome }}</div>
+                        <div>{{ donativo.utilizador_user_email }}</div>
                     </v-flex>
                     <v-flex xs4 sm3>
                         <div class="caption grey--text">Nome Canil</div>
-                        <div>{{ donativo.canil }}</div>
-                    </v-flex>
-                    <v-flex xs4 sm3>
-                        <div class="caption grey--text">Data</div>
-                        <div>{{ donativo.data }}</div>
+                        <div>{{ donativo.canil_user_email }}</div>
                     </v-flex>
                     <v-flex xs4 sm3>
                         <div class="caption grey--text">Valor do Donativo</div>
                         <div>{{ donativo.valor }}</div>
+                    </v-flex>
+                    <v-flex xs4 sm3>
+                        <div class="caption grey--text">Data do Donativo</div>
+                        <div>{{ donativo.data }}</div>
                     </v-flex>
                     </v-layout>
                     <v-divider></v-divider>
@@ -69,19 +69,21 @@
 import NavbarAdmin from '../components/NavbarAdmin.vue'
 import Footer from '../components/Footer.vue'
 
+import axios from 'axios'
+const lhost = require("@/config/global").host;
+
 export default {
+
   data() {
     return {
-      donativos: [
-        { nome: 'João Sousa', canil: 'Canil1', data: '10th Jan 2010', valor: 1500},
-        { nome: 'Maria Alves', canil: 'Patinhas Canil', data: '15th Feb 2018', valor: 200},
-        { nome: 'Vitor Fonseca', canil: 'Canil 213', data: '4th Dec 2019', valor: 10},
-        { nome: 'Cristina Martins', canil: 'Canil Ajuda', data: '27th Aug 2019', valor: 35},
-      ]
+      donativos: [],
     };
   },
   methods: {
     sortBy(prop){
+          this.donativos.sort((a,b) => a[prop] < b[prop] ? 1 : -1)
+    },
+    sortByNome(prop){
           this.donativos.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
     },
     }, 
@@ -89,6 +91,16 @@ export default {
                 NavbarAdmin, 
                 Footer,
     }, 
+    created: async function(){
+        try {
+        let response = await axios.get(lhost + "/api/Donativos");
+        this.donativos = response.data;
+        this.ready = true;
+        } 
+        catch (e) {
+        return e;
+        }
+    },        
 };
 </script>
 

@@ -14,7 +14,7 @@
 
 <script>
 import NavbarKennel from '../components/NavbarKennel.vue'
-import Footer from '../components/Footer.vue'
+import Footer from '../components/FooterKennel.vue'
 import AdoptionRequest from '../components/AdoptionRequest.vue'
 export default {
     components: { NavbarKennel, 
