@@ -49,8 +49,8 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="ma-6" large rounded color = "deep-orange lighten-4" @click="dialog = false">Cancelar</v-btn>
-                    <v-btn class="ma-6" large rounded color = "deep-orange lighten-4" @click="dialog = false">Confirmar</v-btn>
+                    <v-btn class="ma-6" large color = "deep-orange lighten-4" @click="dialog = false">Cancelar</v-btn>
+                    <v-btn class="ma-6" large color = "deep-orange lighten-4" @click="dialog = false">Confirmar</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>

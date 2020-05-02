@@ -18,7 +18,7 @@
                         <v-col>
                         <v-card flat>
                             <v-row>
-                                <v-btn icon to= "/kennel">
+                                <v-btn icon @click="canil(item)">
                                     <v-icon>pets</v-icon>
                                 </v-btn>
                                 <v-card-title class="headline font-weight-regular">{{ item.nome }}</v-card-title>
@@ -127,6 +127,9 @@ export default {
         updateItemsPerPage (number) {
         this.itemsPerPage = number
         },
+        canil: function(item){
+        this.$router.push("/kennel/" + item.user_email);
+    }
     },
     created: async function(){
     try {

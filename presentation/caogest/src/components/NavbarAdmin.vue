@@ -67,9 +67,11 @@ export default {
             items: [
             { title: 'Pedidos de Registo', icon: 'archive', route: '/mainpageadmin'},
             { title: 'Pedidos de Adoção', icon: 'description', route: '/adoptionrequestadmin'},
+            { title: 'Sobre', icon: 'info', route: '/sobre2' },
             { title: 'Donativos Realizados', icon: 'payment', route: '/donativosrealizados'},
-            { title: 'Cães', icon: 'pets', route: '/dogs' },
-            { title: 'Canis', icon: 'house', route: '/kennels' },
+            { title: 'Cães', icon: 'pets', route: '/dogsadmin' },
+            { title: 'Canis', icon: 'house', route: '/kennelsadmin' },
+            { title: 'FAQs', icon: 'help', route: '/faqsadmin' }
             ],
         }
     }

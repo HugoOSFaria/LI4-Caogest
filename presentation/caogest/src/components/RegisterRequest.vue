@@ -8,7 +8,7 @@
         <v-layout row class="mb-3"> 
             <v-tooltip top>
                 <template v-slot:activator="{ on }">
-                    <v-btn class = "ma-2" text @click="sortBy('title')" v-on="on">
+                    <v-btn class = "ma-2" text @click="sortBy('nome')" v-on="on">
                         <v-icon left small>pets</v-icon>    
                         <span class = "caption text-lowercase">Por nome de canil</span>
                     </v-btn>  
@@ -16,29 +16,30 @@
                 <span>Ordenar pedidos por nome de canil</span> 
             </v-tooltip>
 
-            <v-tooltip top>    
+            <v-tooltip top>
                 <template v-slot:activator="{ on }">
-                    <v-btn class = "ma-2" text @click="sortBy('due')" v-on="on">
-                        <v-icon left small>today</v-icon>    
-                        <span class = "caption text-lowercase">Por data</span>
-                    </v-btn> 
+                    <v-btn class = "ma-2" text @click="sortBy('estado')" v-on="on">
+                        <v-icon left small>pets</v-icon>    
+                        <span class = "caption text-lowercase">Por estado de pedido</span>
+                    </v-btn>  
                 </template>
-                <span>Ordenar pedidos por data de submissão</span>
-            </v-tooltip>    
+                <span>Ordenar pedidos por estado</span> 
+            </v-tooltip>
+
         </v-layout>
 
-      <v-card flat v-for="project in projects" :key="project.title">
-        <v-layout row wrap :class="`pa-7 project ${project.status}`">
+      <v-card flat v-for="pedido in pedidos" :key="pedido.nome">
+        <v-layout row wrap :class="`pa-7 project ${pedido.estado}`">
           <v-flex xs12 md6>
             <div class="caption grey--text">Nome Canil</div>
-            <div>{{ project.title }}</div>
+            <div>{{ pedido.nome }}</div>
           </v-flex>
           <v-flex xs8 md4>
-            <div class="caption grey--text">Data de Submissão</div>
-            <div>{{ project.due }}</div>
+            <div class="caption grey--text">Email Canil</div>
+            <div>{{ pedido.user_email}}</div>
           </v-flex>
           <v-flex xs2 sm4 md2>
-               <v-chip :color="project_status(project.status)" class="black--text caption my-2" to="/pedidoRegisto">{{project.status}}</v-chip> 
+               <v-chip :color="project_status(pedido.estado)" class="black--text caption my-2" @click="pedidoregisto(pedido)">{{pedido.estado}}</v-chip> 
             <div>
             </div>
           </v-flex>
@@ -50,49 +51,53 @@
 </template>
 
 <script>
+import axios from 'axios'
+const lhost = require("@/config/global").host;
+
 export default {
   data() {
     return {
-      projects: [
-        { title: 'Design a new website', due: '1st Jan 2017', status: 'rejeitado'},
-        { title: 'Code up the homepage', due: '10th Jan 2019', status: 'aceite'},
-        { title: 'Design video thumbnails', due: '20th Dec 2018', status: 'pendente'},
-        { title: 'Create a community forum', due: '20th Oct 2018', status: 'expirado'},
-      ]
+      pedidos: [],
     };
   },
   methods: {
     sortBy(prop){
-          this.projects.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
+          this.pedidos.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
     },
-
- project_status(status) {
-        if (status == "aceite") 
-          return "#C5E1A5";
-        else if (status == "pendente") 
-          return "#FFE082";
-        else if (status == "expirado")
-          return "#B39DDB";
-        return "#EF9A9A";
+    project_status(estado) {
+            if (estado == "Aceite") 
+              return "#C5E1A5";
+            else if (estado == "Pendente") 
+              return "#FFE082";
+            return "#EF9A9A";
+    },
+    pedidoregisto: function(pedido){
+      this.$router.push("/pedidoRegisto/" + pedido.user_email);
     }
-    }
+    },
+    created: async function(){
+        try {
+        let response = await axios.get(lhost + "/api/Canis");
+        this.pedidos = response.data;
+        this.ready = true;
+        } 
+        catch (e) {
+        return e;
+        }
+    },  
 };
 </script>
 
 <style>
-.project.aceite {
+.pedido.Aceite {
   border-left: 4px solid #C5E1A5;
 }
 
-.project.pendente {
+.pedido.Pendente {
   border-left: 4px solid #FFE082;
 }
 
-.project.expirado {
-  border-left: 4px solid #B39DDB;
-}
-
-.project.rejeitado {
+.pedido.Rejeitado {
     border-left: 4px solid #EF9A9A;
 }
 
