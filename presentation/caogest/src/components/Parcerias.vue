@@ -58,8 +58,8 @@
 </template>
 
 <script>
-import Navbar from '../components/Navbar.vue'
-import Footer from '../components/Footer.vue'
+import Navbar from '../components/NavbarAdmin.vue'
+import Footer from '../components/FooterAdmin.vue'
 import axios from 'axios'
 const lhost = require("@/config/global").host;
  

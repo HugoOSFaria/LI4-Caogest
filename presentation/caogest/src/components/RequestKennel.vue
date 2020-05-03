@@ -112,13 +112,19 @@
         <v-card flat class = "ma-12">
             <v-row align = "end">
             <v-spacer></v-spacer>
-            <v-btn class="ma-4" x-large color = "deep-orange lighten-4" to="/mainpageadmin">Recusar Registo</v-btn>
-            <v-btn
-                class="ma-4"
-                x-large
-                color="deep-orange lighten-4"
-                to = "/mainpageadmin"
-            >Aceitar Registo</v-btn>
+            <v-btn v-if="canil.estado === 'Pendente'" class="ma-4" x-large color = "deep-orange lighten-4" to="/mainpageadmin">
+                Recusar Registo
+            </v-btn>
+            <v-btn v-else class="ma-4" x-large disabled>
+                Recusar Registo
+            </v-btn>
+             <v-btn v-if="canil.estado === 'Pendente'" class="ma-4" x-large color = "deep-orange lighten-4" to="/mainpageadmin">
+                Aceitar Registo
+            </v-btn>
+            <v-btn v-else class="ma-4" x-large disabled>
+                Aceitar Registo
+            </v-btn>
+           
             </v-row>
         </v-card>
         <Footer/>

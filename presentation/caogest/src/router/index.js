@@ -207,6 +207,14 @@ const routes = [
     component: () => import('../views/Kennel.vue')
   },
   {
+    path: '/kenneladmin/:id',
+    name: 'KennelAdmin',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/KennelAdmin.vue')
+  },
+  {
     path: '/preferences',
     name: 'Preferences',
     // route level code-splitting
@@ -231,6 +239,14 @@ const routes = [
     component: () => import('../views/Partnerships.vue')
   },
   {
+    path: '/parcerias/:id',
+    name: 'Partnerships',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Parcerias.vue')
+  },
+  {
     path: '/voluntarios',
     name: 'Voluntarios',
     // route level code-splitting
@@ -253,6 +269,14 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import('../views/Informations.vue')
+  },
+  {
+    path: '/informations/:id',
+    name: 'Informations',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Informacoes.vue')
   },
   {
     path: '/pedidoRegisto/:id',

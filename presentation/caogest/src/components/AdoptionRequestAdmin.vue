@@ -3,9 +3,9 @@
 
     <v-card flat height="200" color="white"></v-card>
 
-    <v-container class="my-5">
+    <v-container class="my-5" >
 
-        <v-layout row class="mb-3"> 
+        <v-layout row class="mb-1"> 
             <v-tooltip top>
                 <template v-slot:activator="{ on }">
                     <v-btn class = "ma-2" text @click="sortBy('utilizador_user_email')" v-on="on">
@@ -39,27 +39,23 @@
 
       <v-card flat v-for="pedido in pedidos" :key="pedido.nPedido">
         <v-layout row wrap :class="`pa-7 project ${pedidos.status}`">
-          <v-flex xs4 sm6 md2>
-            <div class="caption grey--text">Número Pedido</div>
-            <div>{{ pedido.nPedido}}</div>
-          </v-flex>
-          <v-flex xs4 sm6 md2>
+          <v-flex xs4 md2>
             <div class="caption grey--text">Nome Utilizador</div>
             <div>{{ pedido.utilizador_user_email }}</div>
           </v-flex>
-          <v-flex xs4 sm6 md2>
+          <v-flex xs8 md4>
             <div class="caption grey--text">Nome Canil</div>
             <div>{{ pedido.nome_Canil }}</div>
           </v-flex>
-          <v-flex xs4 sm6 md2>
+          <v-flex xs8 md2>
             <div class="caption grey--text">Nome Cão</div>
             <div>{{ pedido.cao_idCao }}</div>
           </v-flex>
-          <v-flex xs4 sm6 md2>
+          <v-flex xs8 md2>
             <div class="caption grey--text">Data de Submissão</div>
-            <div>{{ pedido.data }}</div>
+            <div class="method">{{date(pedido.data)}}</div>
           </v-flex>
-          <v-flex xs2 sm4 md2>
+          <v-flex xs2 md2>
                <v-chip :color="project_status(pedido.estado)" class="black--text caption my-2" @click="pedidoadocao(pedido)">{{pedido.estado}}</v-chip> 
             <div>
             </div>
@@ -73,7 +69,7 @@
 </template>
 
 <script>
-
+import moment from 'moment/moment';
 import axios from 'axios'
 const lhost = require("@/config/global").host;
 
@@ -102,8 +98,13 @@ export default {
     },  
     pedidoadocao: function(pedido){
       this.$router.push("/pedidoAdocaoadmin/" + pedido.nPedido);
-    },  
+    }, 
+    date: function (date) {
+      return moment(date).locale("pt").format('LL');
+    }
   },
+
+
   created: async function(){
     try {
       let response = await axios.get(lhost + "/api/Adocoes");

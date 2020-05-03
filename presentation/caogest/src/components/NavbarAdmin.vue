@@ -71,6 +71,7 @@ export default {
             { title: 'Donativos Realizados', icon: 'payment', route: '/donativosrealizados'},
             { title: 'Cães', icon: 'pets', route: '/dogsadmin' },
             { title: 'Canis', icon: 'house', route: '/kennelsadmin' },
+            { title: 'Entre em Contacto', icon:'question_answer'},
             { title: 'FAQs', icon: 'help', route: '/faqsadmin' }
             ],
         }

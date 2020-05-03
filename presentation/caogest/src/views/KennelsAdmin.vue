@@ -40,8 +40,8 @@
 
 <script>
 import Navbar from '../components/NavbarAdmin.vue'
-import Footer from '../components/Footer.vue'
-import Kennels from '../components/Kennels.vue'
+import Footer from '../components/FooterAdmin.vue'
+import Kennels from '../components/KennelsAdmin.vue'
 export default {
     components: {   Navbar, 
                     Footer,
