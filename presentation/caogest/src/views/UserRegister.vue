@@ -108,7 +108,7 @@
                                             color = "grey lighten-1" 
                                             v-model="form.data_de_nascimento"
                                             readonly=""
-                                            @blur="date = parseDate(dateFormatted)"
+                                            
                                             v-on="on"
                                         ></v-text-field>
                                         </template>
@@ -208,6 +208,26 @@
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
+
+                             <v-row>
+                                <v-col cols="2">
+                                <div class="info-label headline">Contacto</div>
+                                </v-col>
+                                <v-col>
+                                <v-text-field 
+                                        rounded 
+                                        outlined 
+                                        flat 
+                                        color = "grey lighten-1"  
+                                        required 
+                                        placeholder="Introduza o seu contacto"
+                                        v-model="form.contacto"
+                                        :rules="regraContacto"
+                                        name="contacto"
+                                        type="contacto"
+                                    ></v-text-field>
+                                </v-col>
+                            </v-row>
                                 <v-card flat height= "20" color = "white"></v-card>
                             <v-row justify = "end">
                                 <v-col cols = "12" md = "8">
@@ -245,7 +265,7 @@ import axios from 'axios'
 const lhost = require("@/config/global").host;
 
 export default {
-    name: "signup",
+    name: "UserRegister",
     data: ur => ({
         date: new Date().toISOString().substr(0, 10),
         dateCurrent: new Date().toISOString().substr(0, 10),
@@ -284,6 +304,7 @@ export default {
         regraCC: [v => !!v || "Número de Cartão de Cidadão obrigatório."],
         regraLocalidade: [v => !!v || "Concelho obrigatório."],
         regraData: [v => !!v || "Data de Nascimento obrigatória."],
+        regraContacto: [v => !!v || "Contacto obrigatória."],
         form: {
             nome: "",
             email: "", 
@@ -294,6 +315,8 @@ export default {
             distrito: "", 
             data_de_nascimento:"", 
             sexo:"",
+            contacto:"",
+            tipo: 1,
         }, 
         snackbar: false, 
         color: "", 
@@ -306,16 +329,28 @@ export default {
       if (this.$refs.form.validate()) {
         alert(JSON.stringify(this.form));
         axios
+          .post(lhost + "/api/Users", {
+            email: this.form.email, 
+            password: this.form.password,
+            tipo: this.form.tipo,
+          })
+          .then( resposta => 
+            alert("success" + resposta)
+          )
+          .catch(function(err) {
+            alert(err);
+          });
+        axios
           .post(lhost + "/api/Utilizadors", {
+            user_email: this.form.email,
             nome: this.form.nome,
-            email: this.form.email,
+            data_de_nascimento: this.form.date,
+            distrito: this.form.distrito,
             rua: this.form.rua,
             localidade: this.form.localidade,
-            distrito: this.form.distrito,
-            data_de_nascimento: this.form.date,
-            sexo: this.form.sexo,
             cc: this.form.cc,
-            password: this.form.password,
+            sexo: this.form.sexo,
+            contacto: this.form.contacto
           })
           .then( resposta =>
             alert("sucess" + resposta)
@@ -343,11 +378,6 @@ export default {
       if (!date) return null;
       const [year, month, day] = date.split("-");
       return `${year}-${month}-${day}`;
-    },
-    parseDate(date) {
-      if (!date) return null;
-      const [year, month, day] = date.split("/");
-      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
     },
   },
   computed: {
