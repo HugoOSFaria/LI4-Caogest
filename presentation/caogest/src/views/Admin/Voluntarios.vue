@@ -1,0 +1,133 @@
+<template>
+    <div id = "volunteers" class = "Volunteers">
+        <NavbarAdmin/>
+        <v-card> 
+            <v-img src='@/assets/voluntarios.png'></v-img>
+        </v-card>
+        <v-card flat height= "200" max-width="800" color = "transparent"></v-card>
+        <v-container class="my-5">
+            <v-layout row class="mb-3"> 
+                <v-tooltip top>
+                    <template v-slot:activator="{ on }">
+                        <v-btn 
+                            class = "ma-2" 
+                            text 
+                            @click="sortByNome('nomeUser')" 
+                            v-on="on"
+                        >
+                            <v-icon 
+                                left 
+                                small
+                            >person
+                            </v-icon>    
+                                <span 
+                                    class = "headline caption text-lowercase"
+                                >Por nome
+                                </span>
+                        </v-btn>  
+                    </template>
+                    <span>Ordenar voluntários por nome</span> 
+                </v-tooltip>
+
+                <v-tooltip top>
+                    <template v-slot:activator="{ on }">
+                        <v-btn 
+                            class = "ma-2" 
+                            text 
+                            @click="sortByNome('nomeCanil')" 
+                            v-on="on"
+                        >
+                            <v-icon 
+                                left 
+                                small
+                            >pets
+                            </v-icon>    
+                            <span 
+                                class = "headline caption text-lowercase"
+                            >Por canil
+                            </span>
+                        </v-btn>  
+                    </template>
+                    <span>Ordenar voluntários por canil </span> 
+                </v-tooltip>
+            </v-layout>
+
+                <v-card flat v-for="voluntario in voluntarios" :key="voluntario.nome">
+                     <v-layout row wrap :class="`pa-7 project ${voluntario.sexo}`">
+                    <v-flex xs4 sm3>
+                        <div class="caption grey--text">Nome</div>
+                        <div class = "headline">{{ voluntario.nomeUser }}</div>
+                    </v-flex>
+                    <v-flex xs4 sm3>
+                        <div class="caption grey--text">Email</div>
+                        <div class = "headline">{{ voluntario.mailUser}}</div>
+                    </v-flex>
+                    <v-flex xs4 sm4>
+                        <div class="caption grey--text">Nome Canil</div>
+                        <div class = "headline">{{ voluntario.nomeCanil }}</div>
+                    </v-flex>
+                    <v-flex xs4 sm2>
+                        <div class="caption grey--text">Data de Nascimento</div>
+                        <div class="method headline">{{date(voluntario.data_de_nascimento)}}</div>
+                    </v-flex>
+                    
+                    </v-layout>
+                    <v-divider></v-divider>
+                </v-card>
+                </v-container>
+        <Footer/>
+    </div>
+</template>
+
+<script>
+import moment from 'moment/moment';
+import NavbarAdmin from '@/components/NavbarFooter/NavbarAdmin.vue'
+import Footer from '@/components/NavbarFooter/FooterAdmin.vue'
+
+import axios from 'axios'
+const lhost = require("@/config/global").host;
+
+export default {
+
+    data() {
+        return {
+        voluntarios: [],
+        };
+    },
+    methods: {
+        sortByNome(prop){
+            this.voluntarios.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
+        },
+        date: function (date) {
+        return moment(date).locale("pt").format('LL');
+        }
+    }, 
+     components: {
+                NavbarAdmin, 
+                Footer,
+    }, 
+    created: async function(){
+        try {
+            let response = await axios.get(lhost + "/api/Voluntarios");
+            this.voluntarios = response.data;
+            this.ready = true;
+        } 
+        catch (e) {
+        return e;
+        }
+    },        
+};
+</script>
+
+
+<style>
+.voluntario.Feminino {
+  border-left: 4px solid rgb(240, 200, 219);
+}
+
+.voluntario.Masculino {
+  border-left: 4px solid rgb(158, 210, 232);
+}
+
+
+</style>

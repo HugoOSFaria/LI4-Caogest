@@ -35,7 +35,7 @@
                 
                 required
               />
-              <v-btn depressed class="ma-2 headline" dark color = "transparent" type="submit" to="/mainpage"> Entrar </v-btn>
+              <v-btn depressed class="ma-2 headline" dark color = "transparent" type="submit" to="/pagina/utilizador"> Entrar </v-btn>
               
               <v-dialog v-model="dialog" persistent max-width="350">
                 <template v-slot:activator="{ on }">
@@ -46,11 +46,11 @@
                   <v-card flat color = "transparent">
                     <v-card-text>
                       <div>
-                        <v-btn x-large depressed class="ma-4 headline" dark color = "transparent" to = "/userregister">Registar Utilizador</v-btn>
+                        <v-btn x-large depressed class="ma-4 headline" dark color = "transparent" to = "/registar/utilizador">Registar Utilizador</v-btn>
                       </div>
 
                       <div>
-                        <v-btn x-large depressed class="ma-4 headline" dark color = "transparent" to = "/kennelregister">Registar Canil</v-btn>
+                        <v-btn x-large depressed class="ma-4 headline" dark color = "transparent" to = "/registar/canil">Registar Canil</v-btn>
                       </div>
 
                       <div>

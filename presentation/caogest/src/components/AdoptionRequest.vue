@@ -42,7 +42,7 @@
             <div>{{ project.due }}</div>
           </v-flex>
           <v-flex xs2 sm4 md2>
-               <v-chip :color="project_status(project.status)" class="black--text caption my-2" to="/pedidoAdocaoCanil">{{project.status}}</v-chip> 
+               <v-chip :color="project_status(project.status)" class="black--text caption my-2" to="/pedido/adocao/canil">{{project.status}}</v-chip> 
             <div>
             </div>
           </v-flex>

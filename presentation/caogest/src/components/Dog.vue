@@ -20,7 +20,7 @@
                             <v-img height = "800" width = "800" src='../assets/example.jpg'></v-img> 
                             <v-card flat color = "white" height = "100"></v-card>
                             <v-row>
-                                <v-btn x-large height = "100" class = "display-2" color = "deep-orange lighten-5" to='/adoptionform'> Quero Adotar! </v-btn>
+                                <v-btn x-large height = "100" class = "display-2" color = "deep-orange lighten-5" to='/formulario/adocao'> Quero Adotar! </v-btn>
                             </v-row>
                         </v-card>
                     </v-col>

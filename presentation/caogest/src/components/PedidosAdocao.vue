@@ -1,6 +1,5 @@
 <template>
     <div>
-        <NavbarAdmin/>
         <v-card flat height = "100" color = "brown lighten-5">
             <v-row>
                 <v-card-text class = "display-2 black--text text-center">
@@ -15,7 +14,7 @@
             <v-row>
                 <v-col>
                     <v-card flat color = "white" class = "mx-auto" height = "800" width = "900"> 
-                         <v-img height = "800" width = "800" src='../assets/example.jpg'></v-img> 
+                         <v-img height = "800" width = "800" src='@/assets/example.jpg'></v-img> 
                     </v-card>
                 </v-col>
                 <v-col>
@@ -101,13 +100,10 @@
                 </v-col>
             </v-row>
         </v-card>
-        <Footer/>
     </div>
 </template>
 
 <script>
-import NavbarAdmin from '../components/NavbarAdmin.vue'
-import Footer from '../components/Footer.vue'
 
 import axios from 'axios'
 const lhost = require("@/config/global").host;
@@ -116,17 +112,12 @@ export default {
     data: () => ({
         pedido: {},
     }),
-    name: 'PedidoAdocaoAdmin',
+    name: 'PedidoAdocao',
     props: ['id'], 
-    components: { NavbarAdmin, 
-                  Footer, 
-    },
     created: async function(){
         try {
             let response = await axios.get(lhost + "/api/Adocoes/" + this.id);
-
             this.pedido = response.data;
-
             this.ready = true;
         } 
         catch (e) {

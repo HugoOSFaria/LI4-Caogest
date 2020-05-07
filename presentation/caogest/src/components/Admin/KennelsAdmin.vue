@@ -128,7 +128,7 @@ export default {
         this.itemsPerPage = number
         },
         canil: function(item){
-        this.$router.push("/canil/" + item.email);
+        this.$router.push("/canil/admin/" + item.email);
     }
     },
     created: async function(){

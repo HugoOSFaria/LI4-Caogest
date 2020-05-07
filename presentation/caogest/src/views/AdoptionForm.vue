@@ -291,7 +291,7 @@
                 </v-row>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="ma-6 headline" x-large color = "deep-orange lighten-4" to="/dogs">Cancelar</v-btn>
+                    <v-btn class="ma-6 headline" x-large color = "deep-orange lighten-4" to="/caes">Cancelar</v-btn>
                     <v-btn
                         class="ma-6 headline"
                         x-large
@@ -306,7 +306,7 @@
 </template>
 
 <script>
-import Termos from '../components/TermosECondicoes.vue'
+import Termos from '../components/Infos/TermosECondicoes.vue'
 export default {
     components: {
                 Termos}

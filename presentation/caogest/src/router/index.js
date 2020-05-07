@@ -15,23 +15,23 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/About.vue')
+    component: () => import('../views/Infos/About.vue')
   },
   {
-    path: '/sobre1',
+    path: '/sobre/canil',
     name: 'AboutKennel',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/AboutKennel.vue')
+    component: () => import('../views/Infos/AboutKennel.vue')
   },
   {
-    path: '/sobre2',
+    path: '/sobre/admin',
     name: 'AboutAdmin',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/AboutAdmin.vue')
+    component: () => import('../views/Infos/AboutAdmin.vue')
   },
   {
     path: '/faqs',
@@ -39,23 +39,23 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/FAQs.vue')
+    component: () => import('../views/Infos/FAQs.vue')
   },
   {
-    path: '/faqskennel',
+    path: '/faqs/canil',
     name: 'FAQsKennel',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/FAQsKennel.vue')
+    component: () => import('../views/Infos/FAQsKennel.vue')
   },
   {
-    path: '/faqsadmin',
+    path: '/faqs/admin',
     name: 'FAQsAdmin',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/FAQsAdmin.vue')
+    component: () => import('../views/Infos/FAQsAdmin.vue')
   },
   {
     path: '/antesdeadotar',
@@ -63,7 +63,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/BeforeAdopting.vue')
+    component: () => import('../views/Infos/BeforeAdopting.vue')
   },
   {
     path: '/donativos',
@@ -71,95 +71,95 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/Donations.vue')
+    component: () => import('../views/Infos/Donations.vue')
   },
   {
-    path: '/donations',
+    path: '/donativos/canil',
     name: 'DonativosKennel',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/DonationsKennel.vue')
+    component: () => import('../views/Canil/DonationsKennel.vue')
   },
   {
-    path: '/donativosrealizados',
+    path: '/donativos/admin',
     name: 'Donativosrealizados',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/DonationsAdmin.vue')
+    component: () => import('../views/Admin/DonationsAdmin.vue')
   },
   {
-    path: '/adoptionrequest',
+    path: '/pedido/adocao/canil',
     name: 'AdoptionRequest',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/AdoptionRequest.vue')
+    component: () => import('../views/Canil/AdoptionRequest.vue')
   },
   {
-    path: '/adoptionrequestadmin',
+    path: '/pedido/adocao/admin',
     name: 'AdoptionRequestAdmin',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/AdoptionRequestAdmin.vue')
+    component: () => import('../views/Admin/AdoptionRequestAdmin.vue')
   },
   {
-    path: '/schedule',
+    path: '/horario/canil',
     name: 'Schedule',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/ScheduleKennel.vue')
+    component: () => import('../views/Canil/ScheduleKennel.vue')
   },
   {
-    path: '/mainpage',
+    path: '/pagina/utilizador',
     name: 'Main Page',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/HomeUser.vue')
+    component: () => import('../views/Utilizador/HomeUser.vue')
   },
   {
-    path: '/mainpagekennel',
-    name: 'Main Page Kennel',
+    path: '/pagina/canil',
+    name: 'MainPageKennel',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/HomeKennel.vue')
+    component: () => import('../views/Canil/HomeKennel.vue')
   },
   {
-    path: '/mainpageadmin',
+    path: '/pagina/admin',
     name: 'Main Page Admin',
-    component: () => import(/* webpackChunkName: "about" */ '../views/HomeAdmin.vue')
+    component: () => import('../views/Admin/HomeAdmin.vue')
   },
   {
-    path: '/userregister',
+    path: '/registar/utilizador',
     name: 'User Register',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/UserRegister.vue')
+    component: () => import('../views/RegistoUsers/UserRegister.vue')
   },
   {
-    path: '/kennelregister',
+    path: '/registar/canil',
     name: 'Kennel Register',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/CanilRegister.vue')
+    component: () => import('../views/RegistoUsers/CanilRegister.vue')
   },
   {
-    path: '/dogregister',
+    path: '/registar/cao',
     name: 'Dog Register',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/DogRegister.vue')
+    component: () => import('../views/Canil/DogRegister.vue')
   },
   {
-    path: '/adoptionform',
+    path: '/formulario/adocao',
     name: 'Adoption Form',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -167,100 +167,108 @@ const routes = [
     component: () => import('../views/AdoptionForm.vue')
   },
   {
-    path: '/dogs',
+    path: '/caes',
     name: 'Dogs',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/Dogs.vue')
+    component: () => import('../views/Utilizador/Dogs.vue')
   },
   {
-    path: '/dogsadmin',
+    path: '/caes/admin',
     name: 'DogsAdmin',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/DogsAdmin.vue')
+    component: () => import('../views/Admin/DogsAdmin.vue')
   },
   {
-    path: '/kennels',
+    path: '/canis',
     name: 'Kennels',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/Kennels.vue')
+    component: () => import('../views/Utilizador/Kennels.vue')
   },
   {
-    path: '/kennelsadmin',
+    path: '/canis/admin',
     name: 'KennelsAdmin',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/KennelsAdmin.vue')
+    component: () => import('../views/Admin/KennelsAdmin.vue')
   },
   {
-    path: '/kennel/:id',
+    path: '/canil/:id',
     name: 'Kennel',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/Kennel.vue')
+    component: () => import('../views/Utilizador/Kennel.vue')
   },
   {
-    path: '/kenneladmin/:id',
+    path: '/canil/admin/:id',
     name: 'KennelAdmin',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/KennelAdmin.vue')
+    component: () => import('../views/Admin/KennelAdmin.vue')
   },
   {
-    path: '/preferences',
+    path: '/preferencias',
     name: 'Preferences',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/Preferences.vue')
+    component: () => import('../views/Utilizador/Preferences.vue')
   },
   {
-    path: '/preferencesKennel',
+    path: '/preferencias/canil',
     name: 'PreferencesKennel',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/PreferencesKennel.vue')
+    component: () => import('../views/Canil/PreferencesKennel.vue')
   },
   {
-    path: '/partnerships/:id',
+    path: '/parcerias/:id',
     name: 'Parcerias',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/Partnerships.vue')
+    component: () => import('../views/Canil/Partnerships.vue')
   },
   {
-    path: '/parcerias/:id',
+    path: '/parcerias/admin/:id',
     name: 'Partnerships',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/Parcerias.vue')
+    component: () => import('../views/Admin/Parcerias.vue')
   },
   {
-    path: '/voluntarios',
+    path: '/voluntarios/canil',
+    name: 'VoluntariosCanil',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Canil/Volunteers.vue')
+  },
+  {
+    path: '/voluntarios/admin',
     name: 'Voluntarios',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/Volunteers.vue')
+    component: () => import('../views/Admin/Voluntarios.vue')
   },
   {
-    path: '/registahorario',
+    path: '/regista/horario',
     name: 'RegistaHorario',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/RegistaHorario.vue')
+    component: () => import('../views/Utilizador/RegistaHorario.vue')
   },
   {
     path: '/informacoes/:id',
@@ -268,55 +276,55 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/Informations.vue')
+    component: () => import('../views/Canil/Informations.vue')
   },
   {
-    path: '/informations/:id',
+    path: '/informacoes/admin/:id',
     name: 'Informations',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/Informacoes.vue')
+    component: () => import('../views/Admin/Informacoes.vue')
   },
   {
-    path: '/pedidoRegisto/:id',
+    path: '/pedido/registo/:id',
     name: 'PedidoRegisto',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/RequestKennel.vue')
+    component: () => import('../views/Canil/RequestKennel.vue')
   },
   {
-    path: '/pedidoAdocaoadmin/:id',
+    path: '/pedido/adocao/admin/:id',
     name: 'PedidoAdocaoAdmin',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/PedidosAdocao.vue')
+    component: () => import('../views/Admin/PedidosAdocao.vue')
   },
   {
-    path: '/pedidoAdocao',
+    path: '/pedido/adocao',
     name: 'PedidoAdocao',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/PedidosAdocaoUser.vue')
+    component: () => import('../views/Utilizador/PedidosAdocaoUser.vue')
   },
   {
-    path: '/pedidoAdocaoCanil',
+    path: '/pedido/adocao/canil',
     name: 'PedidoAdocaoCanil',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/PedidosAdocaoCanil.vue')
+    component: () => import('../views/Canil/PedidosAdocaoCanil.vue')
   },
   {
-    path: '/teste',
-    name: 'teste',
+    path: '/entre/contacto',
+    name: 'EntreEmContacto',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/test.vue')
+    component: () => import('../views/Admin/EntreEmContacto.vue')
   },
 
 

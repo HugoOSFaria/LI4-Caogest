@@ -1,0 +1,320 @@
+<template>
+  <div id="entreemcontacto" class="entreemcontacto">
+    <NavbarAdmin />
+    <v-card>
+      <v-img src="@/assets/entreemcontacto.png"></v-img>
+    </v-card>
+    <v-card flat height="150" color="white"></v-card>
+
+    <v-container max-witdh="5000">
+      <v-tabs
+        centered
+        v-model="tab"
+        background-color="brown lighten-5"
+        color="brown darken-5"
+        height="100"
+        grow
+      >
+        <v-tab>
+          Mensagens
+          <v-badge
+            :content="messages"
+            :value="messages"
+            color="deep-orange darken-4"
+            overlap
+          >
+            <v-icon right large>mdi-email</v-icon>
+          </v-badge>
+        </v-tab>
+        <v-tab>
+          Eliminadas
+          <v-badge
+            :content="deleted"
+            :value="deleted"
+            color="deep-orange darken-4"
+            overlap
+          >
+            <v-icon right large>delete</v-icon>
+          </v-badge>
+        </v-tab>
+        <v-tab>
+          Enviadas
+          <v-icon right large>send</v-icon>
+        </v-tab>
+      </v-tabs>
+      <v-card max-witdh="5000" flat>
+        <v-tabs-items v-model="tab">
+          <v-tab-item>
+            <v-list two-line color="brown lighten-5">
+              <v-list-item-group
+                v-model="selected"
+                multiple
+                active-class="brown--text"
+              >
+                <v-list-item
+                  color="dark lighten-4"
+                  v-for="obj in sugestoesl"
+                  :key="obj.id"
+                  @click="openDialog(obj)"
+                >
+                  <v-list-item-content>
+                    <v-list-item-title
+                      class="display-1"
+                      v-text="obj.nome"
+                    ></v-list-item-title>
+                    <v-list-item-subtitle
+                      class=" headline text--primary"
+                      v-text="obj.motivo"
+                    ></v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-tab-item>
+          <v-tab-item>
+            <v-list two-line color="brown lighten-5">
+              <v-list-item
+                color="dark lighten-4"
+                v-for="obj in sugestoesl"
+                :key="obj.id"
+              >
+                <v-list-item-content>
+                  <v-list-item-title
+                    class="display-1"
+                    v-text="obj.nome"
+                  ></v-list-item-title>
+                  <v-list-item-subtitle
+                    class=" headline text--primary"
+                    v-text="obj.motivo"
+                  ></v-list-item-subtitle>
+                </v-list-item-content>
+
+                <v-list-item-action>
+                  <v-btn icon>
+                    <v-icon large color="grey">restore_from_trash</v-icon>
+                  </v-btn>
+                </v-list-item-action>
+              </v-list-item>
+            </v-list>
+          </v-tab-item>
+          <v-tab-item>
+            <v-list two-line color="brown lighten-5">
+              <v-list-item
+                color="brown darken-4"
+                v-for="obj in sugestoesl"
+                :key="obj.id"
+              >
+                <v-list-item-content>
+                  <v-list-item-title
+                    class="display-1"
+                    v-text="obj.nome"
+                  ></v-list-item-title>
+                  <v-list-item-subtitle
+                    class=" headline text--primary"
+                    v-text="obj.motivo"
+                  ></v-list-item-subtitle>
+                </v-list-item-content>
+
+                <v-list-item-action>
+                  <v-list-item-action-text
+                    v-text="obj.sugestoes"
+                  ></v-list-item-action-text>
+                  <v-btn icon>
+                    <v-icon large color="grey">delete</v-icon>
+                  </v-btn>
+                </v-list-item-action>
+              </v-list-item>
+            </v-list>
+          </v-tab-item>
+        </v-tabs-items>
+      </v-card>
+    </v-container>
+
+    <v-dialog v-model="dialog" max-width="1500">
+      <v-card>
+        <v-card-title class="display-2 ma-2 pt-12">{{
+          this.motivo
+        }}</v-card-title>
+
+        <v-card-subtitle class = "display-1 ma-2 pb-12"> {{ this.nome }} </v-card-subtitle>
+
+        <v-card-text class = "headline ma-2"> {{ this.sugestoes }} </v-card-text>
+
+        <v-card-actions>
+
+          <v-btn
+            color="red"
+            outlined
+            x-large
+            class = "ma-4 "
+            @click="dialog = false"
+          >
+            Apagar
+          </v-btn>
+
+          <v-spacer></v-spacer>
+          
+          <v-btn
+            color="brown darken-4"
+            outlined
+            x-large
+            class = "ma-4"
+            @click="dialog = false"
+          >
+            Fechar
+          </v-btn>
+
+          <v-btn
+            color="brown darken-4"
+            dark
+            x-large
+            class = "ma-4"
+            @click="openDialog1()"
+          >
+            Responder
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+     <v-dialog v-model="dialog1" max-width="1500">
+      <v-card>
+        <v-card flat color = "brown darken-4" dark>
+          <v-card-title class="display-2 ma-2 pt-12">
+          Enviar Resposta
+          </v-card-title>
+        </v-card>
+
+        <v-text-field 
+          readonly 
+          class = "headline ma-12"
+          color="brown darken-4"
+          label="De"
+          value="CãoGest"
+        >
+        </v-text-field>
+
+         <v-text-field 
+          label="Para"
+          class = "headline ma-12"
+          color="brown darken-4"
+          readonly
+          :value = "this.nome"
+        > 
+        </v-text-field>
+       
+        <v-card flat class = "ma-8">
+          <v-card-text
+            class = "display-1"
+            color="brown darken-4"
+          > {{ this.sugestoes }}
+          </v-card-text>
+        </v-card>
+
+        <v-textarea
+          label="Mensagem"
+          color="brown darken-4"
+          class = "headline ma-12"
+          rows="4"
+          auto-grow
+        >
+        </v-textarea>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          
+          <v-btn
+            color="brown darken-4"
+            outlined
+            x-large
+            class = "ma-4"
+            @click="dialog1 = false"
+          >
+            Cancelar
+          </v-btn>
+
+          <v-btn
+            color="brown darken-4"
+            dark
+            x-large
+            class = "ma-4"
+            @click="dialog1 = false"
+          >
+            Enviar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <Footer />
+  </div>
+</template>
+
+<script>
+
+import NavbarAdmin from "@/components/NavbarFooter/NavbarAdmin.vue";
+import Footer from "@/components/NavbarFooter/FooterAdmin.vue";
+
+import axios from 'axios'
+const lhost = require("@/config/global").host;
+
+export default {
+  props: ["sugestao"],
+  data() {
+    return {
+      selected: [],
+      dialog: false,
+      dialog1: false,
+      sugestoesl: [],
+      tab: null,
+      messages: 0,
+      deleted: 0,
+      motivo: "",
+      sugestoes: "",
+      nome: "",
+      estado: "",
+    };
+  },
+  methods: {
+    openDialog: function(dados){
+      this.motivo = dados.motivo;
+      this.sugestoes = dados.sugestoes;
+      this.nome = dados.nome;
+      this.estado = dados.estado;
+      this.dialog = true;
+      if(this.estado === 'Lida'){
+        this.messages++; 
+        this.estado = 'Não Lida';
+      }
+      else{
+        this.messages--; 
+        this.estado = 'Lida';
+      }
+    },
+    openDialog1: function(){
+      this.dialog = false;
+      this.dialog1 = true;
+    },
+    myFunction: function () {		
+    this.messages = this.sugestoesl.length;
+    }
+  },
+
+  components: {
+    NavbarAdmin,
+    Footer
+  },
+  created: async function(){
+        try {
+            let response = await axios.get(lhost + "/api/Sugestoes");
+            this.sugestoesl = response.data;
+            this.ready = true;
+        } 
+        catch (e) {
+        return e;
+        }
+    },    
+
+};
+</script>
+
+<style></style>

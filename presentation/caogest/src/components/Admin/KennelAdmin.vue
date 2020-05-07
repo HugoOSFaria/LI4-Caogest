@@ -15,7 +15,7 @@
                     </v-col>
                     <v-spacer></v-spacer>
                     <v-col>
-                        <v-btn class="ma-6 headline" x-large color = "brown lighten-4" to="/regista/horario">Horário Voluntários</v-btn>
+                        <v-btn class="ma-6 headline" x-large color = "brown lighten-4" to="/registahorario">Horário Voluntários</v-btn>
                     </v-col>
                     <v-spacer></v-spacer>
                     <v-col>
@@ -57,12 +57,6 @@
                                                         <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                                                     </v-row>
                                                 </template>  
-                                                <v-btn icon dark>
-                                                    <v-icon large>
-                                                        {{ active ? 'mdi-heart' : 'mdi-heart-outline' }}
-                                                    </v-icon>
-                                                </v-btn>
-
                                             </v-img>
                                         </v-item>
                                     <v-card-actions class="justify-center">
@@ -122,9 +116,9 @@
 </template>
 
 <script>
-import Navbar from '../components/NavbarFooter/Navbar.vue'
-import Footer from '../components/NavbarFooter/Footer.vue'
-import Dog from '../components/Dog.vue'
+import Navbar from '@/components/NavbarFooter/NavbarAdmin.vue'
+import Footer from '@/components/NavbarFooter/FooterAdmin.vue'
+import Dog from '@/components/Dog.vue'
 
 import axios from 'axios'
 const lhost = require("@/config/global").host;
@@ -160,7 +154,7 @@ export default {
         canil: {},
         selected: [],   
     }),
-    name: 'Kennel',
+    name: 'KennelsAdmin',
     props: ['id'], 
     components: {   Navbar, 
                     Footer,
@@ -177,10 +171,10 @@ export default {
     }, 
     methods: {
         informacoes: function(canil){
-            this.$router.push("/informacoes/" + canil.email);
+            this.$router.push("/informacoes/admin/" + canil.email);
         }, 
         parcerias: function(canil){
-            this.$router.push("/parcerias/" + canil.email);
+            this.$router.push("/parcerias/admin/" + canil.email);
         }, 
     }                
             

@@ -1,5 +1,5 @@
 <template>
-    <div id = "informations" class = "informations">
+    <div id = "informacoes" class = "informacoes">
         <Navbar/>
 
             <v-card flat height= "60" color = "white"></v-card>
@@ -148,8 +148,8 @@
 </template>
 
 <script>
-import Navbar from '../components/NavbarFooter/Navbar.vue'
-import Footer from '../components/NavbarFooter/Footer.vue'
+import Navbar from '@/components/NavbarFooter/NavbarAdmin.vue'
+import Footer from '@/components/NavbarFooter/FooterAdmin.vue'
 import axios from 'axios'
 const lhost = require("@/config/global").host;
 
@@ -157,7 +157,7 @@ export default {
     data: () => ({
         canil: {},
     }),
-    name: 'Informacoes',
+    name: 'Informations',
     props: ['id'], 
     components: { Navbar, 
                   Footer, 

@@ -2,7 +2,7 @@
     <div id = "partnerships" class = "Partnerships">
         <Navbar/>
         <v-card> 
-            <v-img src='../assets/parcerias.png'></v-img> 
+            <v-img src='@/assets/parcerias.png'></v-img> 
         </v-card>
         <v-card flat height= "100" color = "white"></v-card>
         
@@ -58,8 +58,8 @@
 </template>
 
 <script>
-import Navbar from '../components/NavbarFooter/Navbar.vue'
-import Footer from '../components/NavbarFooter/Footer.vue'
+import Navbar from '@/components/NavbarFooter/NavbarAdmin.vue'
+import Footer from '@/components/NavbarFooter/FooterAdmin.vue'
 import axios from 'axios'
 const lhost = require("@/config/global").host;
  
