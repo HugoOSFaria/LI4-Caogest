@@ -332,7 +332,7 @@ export default {
             password: this.form.password,
             tipo: this.form.tipo,
             nome: this.form.nome,
-            data_de_nascimento: this.form.date,
+            data_de_nascimento: this.form.data_de_nascimento,
             distrito: this.form.distrito,
             rua: this.form.rua,
             localidade: this.form.localidade,
@@ -377,7 +377,8 @@ export default {
   },
   created: function() {
     this.form.data_de_nascimento = this.dateFormatted;
-  }
+  }, 
+
 };
 </script>
 

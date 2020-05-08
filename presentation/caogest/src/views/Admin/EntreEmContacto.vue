@@ -7,6 +7,17 @@
     <v-card flat height="150" color="white"></v-card>
 
     <v-container max-witdh="5000">
+      <v-layout row class="mb-1"> 
+            <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                    <v-btn class = "ma-2" text @click="sortBy('data')" v-on="on">
+                        <v-icon left small>schedule</v-icon>    
+                        <span class = "caption text-lowercase">Por data</span>
+                    </v-btn>  
+                </template>
+                <span>Ordenar mensagens por data</span> 
+            </v-tooltip>
+      </v-layout>
       <v-tabs
         centered
         v-model="tab"
@@ -67,6 +78,10 @@
                       v-text="obj.motivo"
                     ></v-list-item-subtitle>
                   </v-list-item-content>
+                  <v-list-item-action>
+                  <v-list-item-action-text> {{date(obj.data)}}
+                  </v-list-item-action-text>
+                </v-list-item-action>
                 </v-list-item>
               </v-list-item-group>
             </v-list>
@@ -90,6 +105,8 @@
                 </v-list-item-content>
 
                 <v-list-item-action>
+                  <v-list-item-action-text> {{date(obj.data)}}
+                  </v-list-item-action-text>
                   <v-btn icon>
                     <v-icon large color="grey">restore_from_trash</v-icon>
                   </v-btn>
@@ -116,9 +133,8 @@
                 </v-list-item-content>
 
                 <v-list-item-action>
-                  <v-list-item-action-text
-                    v-text="obj.sugestoes"
-                  ></v-list-item-action-text>
+                  <v-list-item-action-text> {{date(obj.data)}}
+                  </v-list-item-action-text>
                   <v-btn icon>
                     <v-icon large color="grey">delete</v-icon>
                   </v-btn>
@@ -253,7 +269,7 @@
 
 import NavbarAdmin from "@/components/NavbarFooter/NavbarAdmin.vue";
 import Footer from "@/components/NavbarFooter/FooterAdmin.vue";
-
+import moment from 'moment/moment';
 import axios from 'axios'
 const lhost = require("@/config/global").host;
 
@@ -272,6 +288,7 @@ export default {
       sugestoes: "",
       nome: "",
       estado: "",
+      data: "",
     };
   },
   methods: {
@@ -280,6 +297,7 @@ export default {
       this.sugestoes = dados.sugestoes;
       this.nome = dados.nome;
       this.estado = dados.estado;
+      this.data = dados.data;
       this.dialog = true;
       if(this.estado === 'Lida'){
         this.messages++; 
@@ -294,9 +312,12 @@ export default {
       this.dialog = false;
       this.dialog1 = true;
     },
-    myFunction: function () {		
-    this.messages = this.sugestoesl.length;
-    }
+    date: function (date) {
+      return moment(date).locale("pt").fromNow();
+    },
+    sortBy(prop){
+          this.sugestoesl.sort((a,b) => a[prop] < b[prop] ? 1 : -1)
+    },
   },
 
   components: {
