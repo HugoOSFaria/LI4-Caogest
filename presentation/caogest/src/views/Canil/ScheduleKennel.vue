@@ -64,6 +64,7 @@ import Footer from '@/components/NavbarFooter/FooterKennel.vue'
 import EditarHorario from '@/components/EditarDados/EditarHorario.vue'
 
 export default {
+    name: 'Horario',
     data: () => ({             
          items: [
             { dia: 'Segunda-feira', hora: '14h-16h', voluntarios: 1}, 

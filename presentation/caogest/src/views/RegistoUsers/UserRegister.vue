@@ -326,6 +326,7 @@ export default {
     async registarUtilizador() {
       if (this.$refs.form.validate()) {
         alert(JSON.stringify(this.form));
+        
         await axios
           .post(lhost + "/api/Utilizadors", {
             email: this.form.email,

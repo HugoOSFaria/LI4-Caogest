@@ -53,7 +53,7 @@
             </v-layout>
 
                 <v-card flat v-for="voluntario in voluntarios" :key="voluntario.nome">
-                     <v-layout row wrap :class="`pa-7 project ${voluntario.sexo}`">
+                     <v-layout row wrap :class="`pa-7 voluntario ${voluntario.sexo}`">
                     <v-flex xs4 sm3>
                         <div class="caption grey--text">Nome</div>
                         <div class = "headline">{{ voluntario.nomeUser }}</div>
@@ -74,7 +74,22 @@
                     </v-layout>
                     <v-divider></v-divider>
                 </v-card>
-                </v-container>
+                <v-btn
+                    v-scroll="onScroll"
+                    x-large
+                    v-show="fab"
+                    fab
+                    depressed
+                    fixed
+                    bottom
+                    right
+                    class = "ma-6"
+                    color="deep-orange lighten-4"
+                    @click="toTop"
+                >
+                    <v-icon>keyboard_arrow_up</v-icon>
+                </v-btn>    
+            </v-container>
         <Footer/>
     </div>
 </template>
@@ -92,6 +107,7 @@ export default {
     data() {
         return {
         voluntarios: [],
+        fab:false,
         };
     },
     methods: {
@@ -100,7 +116,15 @@ export default {
         },
         date: function (date) {
         return moment(date).locale("pt").format('LL');
-        }
+        },
+        onScroll (e) {
+            if (typeof window === 'undefined') return
+            const top = window.pageYOffset ||   e.target.scrollTop || 0
+            this.fab = top > 20
+        },
+        toTop () {
+        this.$vuetify.goTo(0)
+        },
     }, 
      components: {
                 NavbarAdmin, 

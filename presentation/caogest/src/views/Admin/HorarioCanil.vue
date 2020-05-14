@@ -4,7 +4,7 @@
 
 <script>
 // @ is an alias to /src
-import Horario from '@/components/Utilizador/RegistaHorario.vue'
+import Horario from '@/components/Admin/HorarioCanil.vue'
 export default {
   name: 'HorarioCanil',
   components: {

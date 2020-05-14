@@ -8,33 +8,36 @@
       <v-row align = "center" justify = "center">
           <v-card color = "transparent" flat width = "600">
             <v-card-text class="justify-center">
-              <v-text-field 
-                class = "headline"
-                dark 
-                color="white" 
-                rounded 
-                label="Email" 
-                type="email"
-                name="email"
-                v-model="form.email"
-                prepend-icon="email"
-               
-                outlined
-              />
-              <v-text-field
-                class = "headline"
-                dark 
-                color="white" 
-                rounded 
-                prepend-icon="lock"
-                outlined   
-                v-model="form.password"
-                name="password"
-                label="Password"
-                type="password"
-                
-                required
-              />
+               <v-form ref="form" lazy-validation>
+                <v-text-field 
+                  class = "headline"
+                  dark 
+                  color="white" 
+                  rounded 
+                  label="Email" 
+                  type="email"
+                  name="email"
+                  v-model="form.email"
+                  prepend-icon="email"
+                  :rules="regraEmail"
+                  outlined
+                  required 
+                />
+                <v-text-field
+                  class = "headline"
+                  dark 
+                  color="white" 
+                  rounded 
+                  prepend-icon="lock"
+                  outlined   
+                  v-model="form.password"
+                  :rules="regraPassword"
+                  name="password"
+                  label="Password"
+                  type="password"
+                  required
+                />
+              </v-form>
               <v-btn depressed class="ma-2 headline" dark color = "transparent" type="submit" to="/pagina/utilizador"> Entrar </v-btn>
               
               <v-dialog v-model="dialog" persistent max-width="350">
@@ -96,7 +99,8 @@ export default {
         email: "",
         password: "",
       },
-      
+      regraEmail: [ v => !!v || "Email obrigatório."],
+      regraPassword: [v => !!v || "Palavra-passe obrigatória."],
       dialog: false
     }
   }

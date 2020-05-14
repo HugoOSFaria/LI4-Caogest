@@ -49,8 +49,23 @@
                             </v-layout>
                             <v-divider></v-divider>
                         </v-card>
-                    </v-container>
-                <Footer/>    
+                        <v-btn
+                            v-scroll="onScroll"
+                            x-large
+                            v-show="fab"
+                            fab
+                            depressed
+                            fixed
+                            bottom
+                            right
+                            class = "ma-6"
+                            color="deep-orange lighten-4"
+                            @click="toTop"
+                        >
+                            <v-icon>keyboard_arrow_up</v-icon>
+                        </v-btn>
+            </v-container>
+        <Footer/>    
     </div>
 </template>
 
@@ -60,7 +75,8 @@ import Footer from '@/components/NavbarFooter/FooterKennel.vue'
 export default {
   data() {
     return {
-      voluntarios: [
+        fab:false, 
+        voluntarios: [
         { nome: 'Rute Beatriz', idade: 20, morada: 'Rua da Amoreira, Palmeira, Braga', contacto: '911191911'},
         { nome: 'Ricardo Pereira', idade: 35, morada: 'Rua da Porta, Palmeira, Braga', contacto: '923412921'},
         { nome: 'Maria Moreira', idade: 42, morada: 'Rua da Taberna, S.Vitor, Braga', contacto: '930031343'},
@@ -72,8 +88,16 @@ export default {
   methods: {
     sortBy(prop){
           this.voluntarios.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
-    }
-    }, 
+    },
+    onScroll (e) {
+        if (typeof window === 'undefined') return
+        const top = window.pageYOffset ||   e.target.scrollTop || 0
+        this.fab = top > 20
+    },
+    toTop () {
+        this.$vuetify.goTo(0)
+    },
+  }, 
     components: {NavbarKennel, Footer}
 };
 </script>

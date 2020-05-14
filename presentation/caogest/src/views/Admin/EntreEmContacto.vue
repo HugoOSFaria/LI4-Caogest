@@ -152,7 +152,14 @@
           this.motivo
         }}</v-card-title>
 
-        <v-card-subtitle class = "display-1 ma-2 pb-12"> {{ this.nome }} </v-card-subtitle>
+        <v-card-subtitle 
+          class = "display-1 ma-2 pb-12"> 
+          {{ this.nome }} 
+          <p 
+            class = "headline"> 
+            {{this.user_email}} 
+          </p>
+        </v-card-subtitle>
 
         <v-card-text class = "headline ma-2"> {{ this.sugestoes }} </v-card-text>
 
@@ -215,7 +222,7 @@
           class = "headline ma-12"
           color="brown darken-4"
           readonly
-          :value = "this.nome"
+          :value = "this.user_email "
         > 
         </v-text-field>
        
@@ -261,7 +268,22 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <Footer />
+    <v-btn
+      v-scroll="onScroll"
+      x-large
+      v-show="fab"
+      fab
+      depressed
+      fixed
+      bottom
+      right
+      class = "ma-6"
+      color="deep-orange lighten-4"
+      @click="toTop"
+    >
+      <v-icon>keyboard_arrow_up</v-icon>
+    </v-btn>    
+    <Footer/>
   </div>
 </template>
 
@@ -277,6 +299,7 @@ export default {
   props: ["sugestao"],
   data() {
     return {
+      fab:false,
       selected: [],
       dialog: false,
       dialog1: false,
@@ -289,6 +312,7 @@ export default {
       nome: "",
       estado: "",
       data: "",
+      user_email: "",
     };
   },
   methods: {
@@ -298,6 +322,7 @@ export default {
       this.nome = dados.nome;
       this.estado = dados.estado;
       this.data = dados.data;
+      this.user_email = dados.user_email;
       this.dialog = true;
       if(this.estado === 'Lida'){
         this.messages++; 
@@ -317,6 +342,14 @@ export default {
     },
     sortBy(prop){
           this.sugestoesl.sort((a,b) => a[prop] < b[prop] ? 1 : -1)
+    },
+    onScroll (e) {
+      if (typeof window === 'undefined') return
+      const top = window.pageYOffset ||   e.target.scrollTop || 0
+      this.fab = top > 20
+    },
+    toTop () {
+      this.$vuetify.goTo(0)
     },
   },
 

@@ -4,7 +4,7 @@
 
 <script>
 // @ is an alias to /src
-import Kennel from '@/components/Kennel.vue'
+import Kennel from '@/components/Utilizador/Kennel.vue'
 export default {
   name: 'Kennels',
   components: {
