@@ -148,8 +148,8 @@
 </template>
 
 <script>
-import Navbar from '../components/NavbarFooter/NavbarKennel.vue'
-import Footer from '../components/NavbarFooter/FooterKennel.vue'
+import Navbar from '@/components/NavbarFooter/Navbar.vue'
+import Footer from '@/components/NavbarFooter/Footer.vue'
 import axios from 'axios'
 const lhost = require("@/config/global").host;
 

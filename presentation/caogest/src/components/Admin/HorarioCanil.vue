@@ -1,0 +1,101 @@
+<template>
+    <div id = "schedule" class = "schedule">
+        <Navbar/>
+        <v-card> 
+            <v-img src='@/assets/horários.png'>
+            </v-img>
+        </v-card>
+        <v-card flat height= "100" color = "white"></v-card>
+
+        <v-container>
+
+            <v-card flat height= "100" color = "white"></v-card>
+
+            <v-row>
+                <v-col v-for="hor in horario" :key = "hor.dia" cols="12" md="4" >
+                    <v-card
+                        color="white"
+                        class="d-flex align-center"
+                        dark
+                        
+                        height="400"
+                    >
+                        <v-col>
+                            <v-row>
+                                <v-flex xs12 text-xs-center>
+                                    <div class = "text-center display-1 font-weight-bold black--text">{{dia(hor.dia)}}</div>
+                                </v-flex>
+                            </v-row>
+                            
+                            <v-card flat height= "30" color = "white"></v-card>
+                            
+                            <v-row>
+                                <v-flex xs12 text-xs-center>
+                                    <div class = "text-center headline black--text">{{date(hor.dataInicio)}} - {{date(hor.dataFim)}}</div>
+                                </v-flex>    
+                            </v-row>
+
+                            <v-card flat height= "30" color = "white"></v-card>
+
+                            <v-row align = "center" justify = "center">
+                                    <v-chip color = "deep-orange lighten-4" class = "black--text">
+                                        {{hor.capacidade}} Voluntários
+                                    </v-chip>
+                            </v-row>
+                            
+                        </v-col>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </v-container>
+        <Footer/>
+    </div>
+</template>
+
+<script>
+import Navbar from '@/components/NavbarFooter/NavbarAdmin.vue'
+import Footer from '@/components/NavbarFooter/FooterAdmin.vue'
+
+import moment from 'moment/moment';
+import axios from 'axios'
+const lhost = require("@/config/global").host;
+
+export default {
+    data: () => ({             
+         horario:[] ,
+    }),
+    name: 'HorarioCanil',
+    props: ['id'], 
+    components: { Navbar, 
+                  Footer,
+                },
+    methods: {
+        date: function (date) {
+            return moment(date).locale("pt").format('LT');
+        },
+        dia: function (num) {
+            if(num === 1) return "Segunda-feira"
+            else if (num === 2) return "Terça-feira";
+            else if (num === 3) return "Quarta-feira"; 
+            else if (num === 4) return "Quinta-feira"; 
+            else if (num === 5) return "Sexta-feira"; 
+            else if (num === 6) return "Sábado";
+            return "Domingo";
+        }
+    },
+    computed: {
+        
+    },              
+    
+    created: async function(){
+        try {
+            let response = await axios.get(lhost + "/api/Horarios/" + this.id);
+            this.horario = response.data;
+            this.ready = true;
+        } 
+        catch (e) {
+            return e;
+        }
+    }, 
+}
+</script>

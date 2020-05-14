@@ -49,6 +49,21 @@
         </v-layout>
         <v-divider></v-divider>
       </v-card>
+      <v-btn
+            v-scroll="onScroll"
+            x-large
+            v-show="fab"
+            fab
+            depressed
+            fixed
+            bottom
+            right
+            class = "ma-6"
+            color="deep-orange lighten-4"
+            @click="toTop"
+        >
+            <v-icon>keyboard_arrow_up</v-icon>
+        </v-btn>
     </v-container>
   </div>
 </template>
@@ -57,6 +72,7 @@
 export default {
   data() {
     return {
+      fab:false, 
       projects: [
         { title: 'Design a new website', person: 'The Net Ninja', due: '1st Jan 2017', status: 'rejeitado', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!'},
         { title: 'Code up the homepage', person: 'Chun Li', due: '10th Jan 2019', status: 'aceite', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!'},
@@ -68,6 +84,14 @@ export default {
   methods: {
     sortBy(prop){
           this.projects.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
+    },
+    onScroll (e) {
+        if (typeof window === 'undefined') return
+        const top = window.pageYOffset ||   e.target.scrollTop || 0
+        this.fab = top > 20
+    },
+    toTop () {
+        this.$vuetify.goTo(0)
     },
 
     project_status(status) {

@@ -15,7 +15,7 @@
                     </v-col>
                     <v-spacer></v-spacer>
                     <v-col>
-                        <v-btn class="ma-6 headline" x-large color = "brown lighten-4" @click="horario(canil)">Horário Voluntários</v-btn>
+                        <v-btn class="ma-6 headline" x-large color = "brown lighten-4" @click="horarios(canil)">Horário Voluntários</v-btn>
                     </v-col>
                     <v-spacer></v-spacer>
                     <v-col>
@@ -57,6 +57,12 @@
                                                         <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                                                     </v-row>
                                                 </template>  
+                                                <v-btn icon dark>
+                                                    <v-icon large>
+                                                        {{ active ? 'mdi-heart' : 'mdi-heart-outline' }}
+                                                    </v-icon>
+                                                </v-btn>
+
                                             </v-img>
                                         </v-item>
                                     <v-card-actions class="justify-center">
@@ -131,15 +137,15 @@
 </template>
 
 <script>
-import Navbar from '@/components/NavbarFooter/NavbarAdmin.vue'
-import Footer from '@/components/NavbarFooter/FooterAdmin.vue'
+import Navbar from '@/components/NavbarFooter/Navbar.vue'
+import Footer from '@/components/NavbarFooter/Footer.vue'
 import Dog from '@/components/Dog.vue'
 
 import axios from 'axios'
 const lhost = require("@/config/global").host;
 
 export default {
-    data: () => ({   
+    data: () => ({  
         fab:false,           
         itemssexo: [ 
             'Macho',
@@ -170,7 +176,7 @@ export default {
         canil: {},
         selected: [],   
     }),
-    name: 'KennelsAdmin',
+    name: 'Kennel',
     props: ['id'], 
     components: {   Navbar, 
                     Footer,
@@ -187,14 +193,14 @@ export default {
     }, 
     methods: {
         informacoes: function(canil){
-            this.$router.push("/informacoes/admin/" + canil.email);
+            this.$router.push("/informacoes/utilizador/" + canil.email);
         }, 
         parcerias: function(canil){
-            this.$router.push("/parcerias/admin/" + canil.email);
+            this.$router.push("/parcerias/utilizador/" + canil.email);
         },
-        horario: function(canil){
-            this.$router.push("/horario/admin/canil/" + canil.email);
-        },
+        horarios: function(canil){
+            this.$router.push("/regista/horario/" + canil.email);
+        }, 
         onScroll (e) {
             if (typeof window === 'undefined') return
             const top = window.pageYOffset ||   e.target.scrollTop || 0
@@ -202,7 +208,7 @@ export default {
         },
         toTop () {
             this.$vuetify.goTo(0)
-        }, 
+        },
     }                
             
 }

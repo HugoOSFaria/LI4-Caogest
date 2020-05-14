@@ -16,6 +16,7 @@
             <v-row>
                 <v-col cols="12" sm="8" offset-sm="2" >
                     <v-container fluid>
+                        <v-card class = "display-1 mx-auto text-center"  flat color = "brown lighten-5" v-if="items.length == 0">Este canil não tem nenhum parceiro associado.</v-card>
                         <v-item-group
                             v-model="selected"
                             multiple
@@ -73,16 +74,16 @@
 </template>
 
 <script>
-import Navbar from '@/components/NavbarFooter/NavbarKennel.vue'
-import Footer from '@/components/NavbarFooter/FooterKennel.vue'
+import Navbar from '@/components/NavbarFooter/Navbar.vue'
+import Footer from '@/components/NavbarFooter/Footer.vue'
 import axios from 'axios'
 const lhost = require("@/config/global").host;
  
 export default {
     data: () => ({  
-        items: [],
-        selected: [],  
         fab:false, 
+        items: [],
+        selected: [],   
     }),
     components: {
                 Navbar, 
@@ -90,16 +91,6 @@ export default {
     }, 
     name: 'Parcerias',    
     props: ['id'], 
-    methods:{
-        onScroll (e) {
-            if (typeof window === 'undefined') return
-            const top = window.pageYOffset ||   e.target.scrollTop || 0
-            this.fab = top > 20
-        },
-        toTop () {
-            this.$vuetify.goTo(0)
-        },
-    },
     created: async function(){
         try {
             let response = await axios.get(lhost + "/api/CP/" + this.id);
@@ -110,6 +101,16 @@ export default {
             return e;
         }
     },  
+    methods: {
+        onScroll (e) {
+            if (typeof window === 'undefined') return
+            const top = window.pageYOffset ||   e.target.scrollTop || 0
+            this.fab = top > 20
+        },
+        toTop () {
+            this.$vuetify.goTo(0)
+        },
+    }
     
 }
 </script>

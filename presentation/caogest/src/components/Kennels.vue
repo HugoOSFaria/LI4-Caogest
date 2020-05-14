@@ -85,6 +85,21 @@
                     </v-row>
                     </template>
                 </v-data-iterator>
+                <v-btn
+                    v-scroll="onScroll"
+                    x-large
+                    v-show="fab"
+                    fab
+                    depressed
+                    fixed
+                    bottom
+                    right
+                    class = "ma-6"
+                    color="deep-orange lighten-4"
+                    @click="toTop"
+                >
+                    <v-icon>keyboard_arrow_up</v-icon>
+                </v-btn>
             </v-container>
         </v-app>
     </div>
@@ -98,15 +113,16 @@ const lhost = require("@/config/global").host;
 export default {
     data () {
         return {
-        itemsPerPageArray: [10, 15, 20],
-        search: '',
-        filter: {},
-        sortDesc: false,
-        page: 1,
-        itemsPerPage: 10,
-        sortBy: 'nome',
-        items: [],
-        ready: false
+            fab:false,
+            itemsPerPageArray: [10, 15, 20],
+            search: '',
+            filter: {},
+            sortDesc: false,
+            page: 1,
+            itemsPerPage: 10,
+            sortBy: 'nome',
+            items: [],
+            ready: false
         }
     },
     computed: {
@@ -119,17 +135,25 @@ export default {
     },
     methods: {
         nextPage () {
-        if (this.page + 1 <= this.numberOfPages) this.page += 1
+            if (this.page + 1 <= this.numberOfPages) this.page += 1
         },
         formerPage () {
-        if (this.page - 1 >= 1) this.page -= 1
+            if (this.page - 1 >= 1) this.page -= 1
         },
         updateItemsPerPage (number) {
-        this.itemsPerPage = number
+            this.itemsPerPage = number
         },
         canil: function(item){
-        this.$router.push("/canil/" + item.email);
-    }
+            this.$router.push("/canil/" + item.email);
+        },
+        onScroll (e) {
+            if (typeof window === 'undefined') return
+            const top = window.pageYOffset ||   e.target.scrollTop || 0
+            this.fab = top > 20
+        },
+        toTop () {
+            this.$vuetify.goTo(0)
+        },
     },
     created: async function(){
     try {

@@ -176,6 +176,21 @@
             <v-card-text class="display-2 font-weight-bold"> Quer escrever-nos?</v-card-text>
             <v-card-text class="display-1 font-weight-medium black--text">Pode enviar-nos um e-mail para caogest@gmail.com.</v-card-text>
         </v-card>
+        <v-btn
+            v-scroll="onScroll"
+            x-large
+            v-show="fab"
+            fab
+            depressed
+            fixed
+            bottom
+            right
+            class = "ma-6"
+            color="deep-orange lighten-4"
+            @click="toTop"
+        >
+            <v-icon>keyboard_arrow_up</v-icon>
+        </v-btn>
     </div>
 </template>
 
@@ -185,6 +200,7 @@ export default {
       dialog: false,
       select: null,
       valid: true,
+      fab:false,
       items: [ 
         'Quero fazer um donativo',
         'Quero voluntariar-me para um canil',
@@ -192,6 +208,16 @@ export default {
         'Cuidados com o cão que adotei',
         'Outro',
       ]
-    })
+    }),
+    methods: {
+        onScroll (e) {
+            if (typeof window === 'undefined') return
+            const top = window.pageYOffset ||   e.target.scrollTop || 0
+            this.fab = top > 20
+        },
+        toTop () {
+            this.$vuetify.goTo(0)
+        },
+    }, 
 }
 </script>

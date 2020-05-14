@@ -114,6 +114,14 @@ const routes = [
     component: () => import('../views/Canil/ScheduleKennel.vue')
   },
   {
+    path: '/horario/admin/canil/:id',
+    name: 'HorarioCanil',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Admin/HorarioCanil.vue')
+  },
+  {
     path: '/pagina/utilizador',
     name: 'Main Page',
     // route level code-splitting
@@ -247,6 +255,14 @@ const routes = [
     component: () => import('../views/Admin/Parcerias.vue')
   },
   {
+    path: '/parcerias/utilizador/:id',
+    name: 'Parceria',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Utilizador/Parcerias.vue')
+  },
+  {
     path: '/voluntarios/canil',
     name: 'VoluntariosCanil',
     // route level code-splitting
@@ -263,7 +279,7 @@ const routes = [
     component: () => import('../views/Admin/Voluntarios.vue')
   },
   {
-    path: '/regista/horario',
+    path: '/regista/horario/:id',
     name: 'RegistaHorario',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -285,6 +301,14 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import('../views/Admin/Informacoes.vue')
+  },
+  {
+    path: '/informacoes/utilizador/:id',
+    name: 'Informações',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Utilizador/Informacoes.vue')
   },
   {
     path: '/pedido/registo/:id',
