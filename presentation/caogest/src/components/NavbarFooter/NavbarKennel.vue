@@ -17,7 +17,7 @@
             <v-navigation-drawer app v-model="drawer" class = "white" width = "400">
             <v-list-item two-line>
                 <v-list-item-avatar>
-                <v-icon>account_circle</v-icon>
+                <v-img src="@/assets/canilavatar.png"></v-img>
                 </v-list-item-avatar>
 
                 <v-list-item-content>

@@ -121,22 +121,43 @@
                 <v-card-text>
                     <v-form 
                         ref="form"
-                        v-model="valid"
                         lazy-validation
                     >   
                         <v-card flat class="mx-auto" height = "30" color = "white"></v-card>
-                        <v-text-field color = "grey" flat  name="input-7-1" outlined label="Nome *" required ></v-text-field>
+                        <v-text-field 
+                            color = "grey" 
+                            flat  
+                            name="nome" 
+                            outlined 
+                            label="Nome *" 
+                            required 
+                            v-model="form.nome"
+                            :rules="regraNome"
+                            type="nome"
+                        ></v-text-field>
 
-                        <v-text-field flat color = "grey" name="input-7-1" outlined label="Email *" required></v-text-field>
+                        <v-text-field 
+                            flat 
+                            color = "grey" 
+                            name="email" 
+                            outlined 
+                            label="Email *" 
+                            required
+                            v-model="form.user_email"
+                            :rules="regraEmail"
+                            type="email"
+                        ></v-text-field>
 
-                        <v-select 
+                        <v-select        
                             color = "grey"
-                            name="input-7-1"
+                            name="motivo"
                             flat outlined 
-                            :v-model="select"
+                            v-model="form.motivo"
                             :items="items"
                             label="Motivo do inquérito *"
                             required
+                            :rules="regraMotivo"
+                            type="motivo"
                         ></v-select>
 
                         <v-textarea
@@ -147,6 +168,9 @@
                             placeholder = "Mensagem *"
                             color = "grey lighten-1" 
                             rows = "5"
+                            v-model="form.sugestoes"
+                            :rules="regraMensagem"
+                            type="mensagem"
                         ></v-textarea>
 
                     </v-form>
@@ -157,7 +181,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="ma-6" x-large color = "brown lighten-4" @click="dialog = false">Submeter</v-btn>
+                    <v-btn class="ma-6" type="button" x-large color = "brown lighten-4" @click="enviarSugestao">Submeter</v-btn>
                 </v-card-actions>
             </v-card>
         </v-card>
@@ -191,15 +215,28 @@
         >
             <v-icon>keyboard_arrow_up</v-icon>
         </v-btn>
+         <v-snackbar
+          v-model="snackbar"
+          :color="color"
+          :timeout="timeout"
+          bottom
+          multi-line
+          class = "headline"
+        >
+          {{ text }}
+          <v-btn class = "headline" text @click="fecharSnackbar">Fechar</v-btn>
+        </v-snackbar>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
+const lhost = require("@/config/global").host;
+import moment from 'moment/moment';
+
 export default {
     data: () => ({
-      dialog: false,
       select: null,
-      valid: true,
       fab:false,
       items: [ 
         'Quero fazer um donativo',
@@ -207,7 +244,25 @@ export default {
         'Quero atualizar os meus dados pessoais',
         'Cuidados com o cão que adotei',
         'Outro',
-      ]
+      ],
+      regraNome: [v => !!v || "Nome obrigatório."],
+      regraEmail:[v => !!v || "Email obrigatório."], 
+      regraMotivo: [v => !!v || "Motivo obrigatório."],
+      regraMensagem: [v => !!v || "Mensagem obrigatória."],
+
+      form: {
+            nome: "",
+            user_email: "", 
+            motivo: "", 
+            estado: "Não Lida",
+            sugestoes: "", 
+            data: moment().format()
+        }, 
+        snackbar: false, 
+        color: "", 
+        done: false, 
+        timeout: 4000,
+        text: "", 
     }),
     methods: {
         onScroll (e) {
@@ -217,6 +272,42 @@ export default {
         },
         toTop () {
             this.$vuetify.goTo(0)
+        },
+
+        enviarSugestao: async function(){
+     
+            if (this.$refs.form.validate()) {
+                try{ 
+                var resposta = 
+                    await axios.post(lhost + "/api/Sugestoes", {
+                        user_email: this.form.user_email,
+                        nome: this.form.nome,
+                        motivo: this.form.motivo,
+                        sugestoes: this.form.sugestoes,
+                        data: this.form.data,
+                        estado: this.form.estado,
+                    });
+                    
+                    console.log(JSON.stringify(resposta.data));
+                    this.text = "Sugestão ou comentário enviada com sucesso";
+                    this.color = "success"; 
+                    this.snackbar = true; 
+                }
+                catch(e){
+                    console.log("erro: " + e);
+                    this.text = "Ocorreu um erro, por favor tente mais tarde";
+                    this.color = "warning"; 
+                    this.snackbar = true; 
+                }
+            } else {
+                this.text = "Por favor preencha todos os campos!";
+                this.color = "error";
+                this.snackbar = true;
+                this.done = false;
+            }
+        },
+        fecharSnackbar() {
+            this.snackbar = false;
         },
     }, 
 }

@@ -108,7 +108,6 @@
                                             color = "grey lighten-1" 
                                             v-model="form.data_de_nascimento"
                                             readonly=""
-                                            
                                             v-on="on"
                                         ></v-text-field>
                                         </template>
@@ -232,8 +231,8 @@
                             <v-row justify = "end">
                                 <v-col cols = "12" md = "8">
                                     <v-row justify= "end">
-                                        <v-btn class="ma-6" type="submit" x-large color = "deep-orange lighten-4" @click="cancelar">Cancelar</v-btn>
-                                        <v-btn class = "ma-6" type="submit" x-large color = "deep-orange lighten-4" @click="registarUtilizador">Registar</v-btn>
+                                        <v-btn class="ma-6" type="button" x-large color = "deep-orange lighten-4" @click="cancelar">Cancelar</v-btn>
+                                        <v-btn class = "ma-6" type="button" x-large color = "deep-orange lighten-4" @click="registarUtilizador">Registar</v-btn>
                                     </v-row>
                                 </v-col>
                             </v-row>
@@ -244,15 +243,19 @@
                 </v-layout>
             </v-container>    
         </v-card>
+        <div class="text-center ma-2">
         <v-snackbar
           v-model="snackbar"
           :color="color"
           :timeout="timeout"
-          :top="true"
+          bottom
+          multi-line
+          class = "headline"
         >
           {{ text }}
-          <v-btn text @click="fecharSnackbar">Fechar</v-btn>
+          <v-btn class = "headline" text @click="fecharSnackbar">Fechar</v-btn>
         </v-snackbar>
+        </div>
     </v-col>
   </v-row>
   </div>
@@ -319,34 +322,39 @@ export default {
         snackbar: false, 
         color: "", 
         done: false, 
-        timeout: 4000,
+        timeout: 0,
         text: "", 
     }),
   methods: {
-    async registarUtilizador() {
+      registarUtilizador: async function(){
+     
       if (this.$refs.form.validate()) {
-        alert(JSON.stringify(this.form));
-        
-        await axios
-          .post(lhost + "/api/Utilizadors", {
-            email: this.form.email,
-            password: this.form.password,
-            tipo: this.form.tipo,
-            nome: this.form.nome,
-            data_de_nascimento: this.form.data_de_nascimento,
-            distrito: this.form.distrito,
-            rua: this.form.rua,
-            localidade: this.form.localidade,
-            cc: this.form.cc,
-            sexo: this.form.sexo,
-            contacto: this.form.contacto
-          })
-          .then( resposta =>
-            alert("sucess " + resposta)
-          )
-          .catch(function(err) {
-            alert("error " + err);
-          });
+         try{ 
+          var resposta = 
+            await axios.post(lhost + "/api/Utilizadors", {
+              email: this.form.email,
+              password: this.form.password,
+              tipo: this.form.tipo,
+              nome: this.form.nome,
+              data_de_nascimento: this.form.data_de_nascimento,
+              distrito: this.form.distrito,
+              rua: this.form.rua,
+              localidade: this.form.localidade,
+              cc: this.form.cc,
+              sexo: this.form.sexo,
+              contacto: this.form.contacto
+            }); 
+            console.log(JSON.stringify(resposta.data));
+            this.text = "Canil criado com sucesso!";
+            this.color = "success"; 
+            this.snackbar = true; 
+          }
+          catch(e){
+            console.log("erro: " + e);
+            this.text = "Ocorreu um erro no registo, por favor tente mais tarde!";
+            this.color = "warning"; 
+            this.snackbar = true; 
+          }
       } else {
         this.text = "Por favor preencha todos os campos!";
         this.color = "error";
@@ -356,6 +364,8 @@ export default {
     },
     fecharSnackbar() {
       this.snackbar = false;
+      if(this.color == 'success')
+        this.$router.push("/");
     },
     cancelar() {
       this.$router.push("/");

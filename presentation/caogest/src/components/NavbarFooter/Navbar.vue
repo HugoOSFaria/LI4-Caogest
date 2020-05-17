@@ -17,7 +17,8 @@
             <v-navigation-drawer app v-model="drawer" class = "white" width = "400">
             <v-list-item two-line>
                 <v-list-item-avatar>
-                <v-icon>account_circle</v-icon>
+                    <!-- v-if="id.sexo==="feminino" <v-img src="@/assets/woman.png"></v-img> v-else-->
+                <v-img src="@/assets/man.png"></v-img>
                 </v-list-item-avatar>
 
                 <v-list-item-content>

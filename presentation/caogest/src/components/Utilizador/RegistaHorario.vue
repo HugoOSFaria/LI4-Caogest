@@ -12,7 +12,7 @@
             <v-card flat height= "100" color = "white"></v-card>
 
             <v-row>
-                <v-col v-for="hor in horario" :key = "hor.dia" cols="12" md="4" >
+                <v-col v-for="hor in sortedArray" :key = "hor.dia" cols="12" md="4" >
                     <v-card
                         color="white"
                         class="d-flex align-center"
@@ -89,11 +89,22 @@ export default {
             return "Domingo";
         },
     },
+    computed: {
+        sortedArray: function() {
+            function compare(a, b) {
+            if (a.dia < b.dia)
+                return -1;
+            if (a.dia > b.dia)
+                return 1;
+            return 0;
+            }
 
+            return this.horario.slice(0).sort(compare);
+        }
+    },
     created: async function(){
         try {
             let response = await axios.get(lhost + "/api/Horarios/" + this.id);
-            alert(JSON.stringify(response.data));
             this.horario = response.data;
             this.ready = true;
         } 

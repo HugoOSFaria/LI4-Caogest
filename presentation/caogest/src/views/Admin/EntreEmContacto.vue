@@ -55,6 +55,7 @@
       </v-tabs>
       <v-card max-witdh="5000" flat>
         <v-tabs-items v-model="tab">
+
           <v-tab-item>
             <v-list two-line color="brown lighten-5">
               <v-list-item-group
@@ -64,7 +65,7 @@
               >
                 <v-list-item
                   color="dark lighten-4"
-                  v-for="obj in sugestoesl"
+                  v-for="obj in recebidas"
                   :key="obj.id"
                   @click="openDialog(obj)"
                 >
@@ -82,15 +83,19 @@
                   <v-list-item-action-text> {{date(obj.data)}}
                   </v-list-item-action-text>
                 </v-list-item-action>
+                <v-list-item-icon>
+                  <v-icon :color="obj.estado == 'Não Lida' ? 'brown lighten-1' : 'grey'">chat_bubble</v-icon>
+                </v-list-item-icon>
                 </v-list-item>
               </v-list-item-group>
             </v-list>
           </v-tab-item>
+
           <v-tab-item>
             <v-list two-line color="brown lighten-5">
               <v-list-item
                 color="dark lighten-4"
-                v-for="obj in sugestoesl"
+                v-for="obj in apagadas"
                 :key="obj.id"
               >
                 <v-list-item-content>
@@ -107,7 +112,7 @@
                 <v-list-item-action>
                   <v-list-item-action-text> {{date(obj.data)}}
                   </v-list-item-action-text>
-                  <v-btn icon>
+                  <v-btn icon @click="recuperaMensagem(obj)">
                     <v-icon large color="grey">restore_from_trash</v-icon>
                   </v-btn>
                 </v-list-item-action>
@@ -118,14 +123,15 @@
             <v-list two-line color="brown lighten-5">
               <v-list-item
                 color="brown darken-4"
-                v-for="obj in sugestoesl"
+                v-for="obj in enviadas"
                 :key="obj.id"
               >
                 <v-list-item-content>
-                  <v-list-item-title
-                    class="display-1"
+                  <v-list-item-title 
+                    class="display-1" 
                     v-text="obj.nome"
                   ></v-list-item-title>
+
                   <v-list-item-subtitle
                     class=" headline text--primary"
                     v-text="obj.motivo"
@@ -170,7 +176,7 @@
             outlined
             x-large
             class = "ma-4 "
-            @click="dialog = false"
+            @click="apagaMensagem(this)"
           >
             Apagar
           </v-btn>
@@ -222,7 +228,7 @@
           class = "headline ma-12"
           color="brown darken-4"
           readonly
-          :value = "this.user_email "
+          :value = "this.user_email"
         > 
         </v-text-field>
        
@@ -240,6 +246,7 @@
           class = "headline ma-12"
           rows="4"
           auto-grow
+          v-model="form.sugestoes"
         >
         </v-textarea>
 
@@ -261,7 +268,7 @@
             dark
             x-large
             class = "ma-4"
-            @click="dialog1 = false"
+            @click="enviaMensagem(this)"
           >
             Enviar
           </v-btn>
@@ -284,6 +291,7 @@
       <v-icon>keyboard_arrow_up</v-icon>
     </v-btn>    
     <Footer/>
+
   </div>
 </template>
 
@@ -305,7 +313,7 @@ export default {
       dialog1: false,
       sugestoesl: [],
       tab: null,
-      messages: 0,
+      messages:this.numero,
       deleted: 0,
       motivo: "",
       sugestoes: "",
@@ -313,6 +321,11 @@ export default {
       estado: "",
       data: "",
       user_email: "",
+      form:{
+        sugestoes: "",
+        estado: "Enviada",
+        data: moment().format(),
+      }
     };
   },
   methods: {
@@ -323,14 +336,13 @@ export default {
       this.estado = dados.estado;
       this.data = dados.data;
       this.user_email = dados.user_email;
+      this.id = dados.id;
       this.dialog = true;
       if(this.estado === 'Lida'){
-        this.messages++; 
-        this.estado = 'Não Lida';
+        this.marcaNaoLida();
       }
       else{
-        this.messages--; 
-        this.estado = 'Lida';
+        this.marcaLida();
       }
     },
     openDialog1: function(){
@@ -351,8 +363,128 @@ export default {
     toTop () {
       this.$vuetify.goTo(0)
     },
+    marcaLida: async function(){
+      try{ 
+        var resposta = 
+        await axios.put(lhost + "/api/Sugestoes/" + this.id , {
+          id:this.id, 
+          motivo:this.motivo,
+          sugestoes:this.sugestoes,
+          nome:this.nome,
+          estado:"Lida",
+          data:this.data,
+          user_email: this.user_email,
+        });
+        console.log(JSON.stringify(resposta.data));
+        this.messages--;
+      }
+      catch(e){
+        console.log("erro: " + e); 
+      }
+    },
+    marcaNaoLida: async function(){
+      try{ 
+        var resposta = 
+        await axios.put(lhost + "/api/Sugestoes/" + this.id , {
+          id:this.id, 
+          motivo:this.motivo,
+          sugestoes:this.sugestoes,
+          nome:this.nome,
+          estado:"Não Lida",
+          data:this.data,
+          user_email: this.user_email,
+        });
+        console.log(JSON.stringify(resposta.data));
+        this.messages++;
+      }
+      catch(e){
+        console.log("erro: " + e); 
+      }
+    },
+    apagaMensagem: async function(){
+       try{ 
+        var resposta = 
+        await axios.put(lhost + "/api/Sugestoes/" + this.id , {
+          id:this.id, 
+          motivo:this.motivo,
+          sugestoes:this.sugestoes,
+          nome:this.nome,
+          estado:"Apagada",
+          data:this.data,
+          user_email: this.user_email,
+        });
+        console.log(JSON.stringify(resposta.data));
+      }
+      catch(e){
+        console.log("erro: " + e); 
+      }
+      this.dialog = false;
+    },
+    recuperaMensagem: async function(dados){
+        this.motivo = dados.motivo;
+        this.sugestoes = dados.sugestoes;
+        this.nome = dados.nome;
+        this.estado = dados.estado;
+        this.data = dados.data;
+        this.user_email = dados.user_email;
+        this.id = dados.id;
+        this.estado = dados.estado;
+       try{ 
+        var resposta = 
+        await axios.put(lhost + "/api/Sugestoes/" + this.id , {
+          id:this.id, 
+          motivo:this.motivo,
+          sugestoes:this.sugestoes,
+          nome:this.nome,
+          estado:"Lida",
+          data:this.data,
+          user_email: this.user_email,
+        });
+        console.log(JSON.stringify(resposta.data));
+      }
+      catch(e){
+        console.log("erro: " + e); 
+      }
+    },
+    enviaMensagem: async function(){
+      try{
+        var resposta = 
+          await axios.post(lhost + "/api/Sugestoes", {
+            user_email: this.user_email,
+            nome: this.nome,
+            motivo: this.motivo,
+            sugestoes: this.form.sugestoes,
+            data: this.form.data,
+            estado: this.form.estado,
+          });
+        console.log(JSON.stringify(resposta.data));
+        this.dialog1 = false;
+      }
+      catch(e){
+        console.log("erro: " + e);
+      }
+    },
   },
-
+  computed: {
+    recebidas: function () {
+      return this.sugestoesl.filter(function (sugestao) {
+          return (sugestao.estado === "Não Lida" | sugestao.estado === "Lida")
+      })
+    }, 
+    apagadas: function () {
+      return this.sugestoesl.filter(function (sugestao) {
+          return (sugestao.estado === "Apagada")
+      })
+    }, 
+    enviadas: function () {
+      return this.sugestoesl.filter(function (sugestao) {
+          return (sugestao.estado === "Enviada")
+      })
+    }, 
+    numero: function(){
+      return this.sugestoesl.apagadas().length;
+    }, 
+  },
   components: {
     NavbarAdmin,
     Footer
@@ -366,7 +498,7 @@ export default {
         catch (e) {
         return e;
         }
-    },    
+    },   
 
 };
 </script>

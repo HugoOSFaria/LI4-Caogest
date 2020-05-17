@@ -16,7 +16,8 @@
         <v-container grid-list-md text-xl-left>
             <v-layout row wrap>
               <v-flex xs12>
-                    <v-card ref="form" flat>
+                    <v-card flat>
+                        <v-form ref="form" lazy-validation>
                         <v-card-text>
                             <v-row>
                                 <v-col cols="2">
@@ -33,6 +34,10 @@
                                             color = "grey lighten-1" 
                                             required 
                                             placeholder="Introduza o e-mail do canil"
+                                            v-model="form.email"
+                                            :rules="regraEmail"
+                                            name="email"
+                                            type="email"
                                         ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -45,15 +50,16 @@
                                 </v-col>
                                 <v-col>
                                     <v-text-field 
-                                        rounded 
+                                         rounded 
                                         outlined 
                                         flat  
                                         required
                                         placeholder="Introduza uma palavra-passe"
                                         color = "grey lighten-1" 
-                                        v-model="password"
-                                            :type="show1 ? 'text' : 'password'"
-                                            name="input-10-1" 
+                                        v-model="form.password"
+                                        :rules="regraPassword"
+                                        :type="show1 ? 'text' : 'password'"
+                                        name="password" 
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -70,6 +76,10 @@
                                         color = "grey lighten-1"  
                                         required 
                                         placeholder="Introduza o nome do canil"
+                                        v-model="form.nome"
+                                        :rules="regraNome"
+                                        name="nome"
+                                        type="nome"
                                 ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -86,6 +96,10 @@
                                         color = "grey lighten-1"  
                                         required 
                                         placeholder="Introduza a morada do canil"
+                                        v-model="form.rua"
+                                        :rules="regraRua"
+                                        name="rua"
+                                        type="rua"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -97,11 +111,15 @@
                                 <v-col>
                                     <v-text-field 
                                         rounded 
-                                        outlined 
-                                        flat 
-                                        color = "grey lighten-1"  
-                                        required 
-                                        placeholder="Introduza o concelho onde se localiza o canil"
+                                            outlined 
+                                            flat 
+                                            color = "grey lighten-1"  
+                                            required 
+                                            placeholder="Introduza o concelho onde se localiza o canil"
+                                            v-model="form.localidade"
+                                            :rules="regraLocalidade"
+                                            name="localidade"
+                                            type="localidade"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -113,29 +131,15 @@
                                 <v-col>
                                     <v-select 
                                         color = "grey"
-                                        name="input-7-1"
                                         flat outlined 
                                         placeholder="Selecione o distrito onde reside"
                                         :items="distritos"
                                         rounded
+                                        v-model="form.distrito"
+                                        :rules="regraDistrito"
+                                        name="distrito"
+                                        type="distrito"
                                     ></v-select>
-                                </v-col>
-                            </v-row>
-                           
-                            <v-row>
-                                <v-col cols="2">
-                                    <div class="info-label headline">Código Postal</div>
-                                </v-col>
-                                <v-col>
-                                    <v-text-field 
-                                        rounded 
-                                        outlined 
-                                        flat 
-                                        color = "grey lighten-1"  
-                                        required 
-                                        persistent-hint
-                                        placeholder="0000-000"
-                                    ></v-text-field>
                                 </v-col>
                             </v-row>
                             
@@ -151,13 +155,17 @@
                                         color = "grey lighten-1"  
                                         required 
                                         placeholder="Introduza a capacidade total do canil"
+                                        v-model="form.capacidadeTotal"
+                                        :rules="regraCapacidadeTotal"
+                                        name="capacidadeTotal"
+                                        type="capacidadeTotal"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
                             
                             <v-row>
                                 <v-col cols="2">
-                                    <div class="info-label headline">Capacidade Atual</div>
+                                    <div class="info-label headline">Ocupação Atual</div>
                                 </v-col>
                                 <v-col>
                                     <v-text-field 
@@ -167,6 +175,10 @@
                                         color = "grey lighten-1"  
                                         required 
                                         placeholder="Introduza a capacidade total do canil"
+                                        v-model="form.capacidadeOcupada"
+                                        :rules="regraCapacidadeOcupada"
+                                        name="capacidadeOcupada"
+                                        type="capacidadeOcupada"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -183,6 +195,10 @@
                                         color = "grey lighten-1"  
                                         required 
                                         placeholder="Introduza o NIB do canil"
+                                        v-model="form.nib"
+                                        :rules="regraNIB"
+                                        name="nib"
+                                        type="nib"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -198,7 +214,11 @@
                                         flat 
                                         color = "grey lighten-1"  
                                         required 
-                                        placeholder="Introduza um contacto do canil"
+                                        placeholder="Introduza o seu contacto"
+                                        v-model="form.contacto"
+                                        :rules="regraContacto"
+                                        name="contacto"
+                                        type="contacto"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -215,7 +235,93 @@
                                     <div class = "info-label"> Segunda-feira</div>
                                 </v-col>
                                 <v-col>
-                                    <AddHorario/>
+                                    <v-row>
+                                        <v-col cols = "6">
+                                            <v-menu
+                                                ref="dataInicio1"
+                                                v-model="menu1"
+                                                :close-on-content-click="false"
+                                                :nudge-right="40"
+                                                :return-value.sync="dataInicio1"
+                                                transition="scale-transition"
+                                                offset-y
+                                                max-width="290px"
+                                                min-width="290px"
+                                                >
+                                                <template v-slot:activator="{ on }">
+                                                    <v-text-field
+                                                        :rules="regraHorario"
+                                                        label="Hora Início"
+                                                        prepend-icon="access_time"
+                                                        readonly
+                                                        color = "grey"
+                                                        v-on="on"
+                                                        v-model="form.dataInicio1"
+                                                    ></v-text-field>
+                                                </template>
+                                                    <v-time-picker
+                                                        format="24hr"
+                                                        v-model="form.dataInicio1"
+                                                        full-width
+                                                        color = "brown lighten-2"
+                                                        @click:minute="$refs.dataInicio1.save(dataInicio1)"
+                                                    ></v-time-picker>
+                                            </v-menu>
+                                        </v-col>
+                                     
+                                        <v-col cols = "6">
+                                            <v-menu
+                                                ref="dataFim1"
+                                                v-model="menu2"
+                                                :close-on-content-click="false"
+                                                :nudge-right="40"
+                                                :return-value.sync="dataFim1"
+                                                transition="scale-transition"
+                                                offset-y
+                                                max-width="290px"
+                                                min-width="290px"
+                                                >
+                                                <template v-slot:activator="{ on }">
+                                                    <v-text-field
+                                                        :rules="regraHorario"
+                                                        label="Hora Fim"
+                                                        prepend-icon="access_time"
+                                                        readonly
+                                                        color = "grey"
+                                                        v-on="on"
+                                                        v-model="form.dataFim1"
+                                                    ></v-text-field>
+                                                </template>
+                                                    <v-time-picker
+                                                        format="24hr"
+                                                        v-model="form.dataFim1"
+                                                        full-width
+                                                        color = "brown lighten-2"
+                                                        @click:minute="$refs.dataFim1.save(dataFim1)"
+                                                    ></v-time-picker>
+                                            </v-menu>
+                                        </v-col>    
+                                    </v-row>
+                                </v-col>
+                            </v-row>
+
+                            <v-row>
+                                <v-col cols="2">
+                                    <div class="info-label">Número Voluntários</div>
+                                </v-col>
+                                <v-col>
+                                    <v-text-field 
+                                        rounded 
+                                        outlined 
+                                        flat 
+                                        color = "grey lighten-1"  
+                                        required 
+                                        placeholder="Introduza o número máximo de voluntários para o horário de Segunda-feira"
+                                        v-model="form.capacidade1"
+                                        :rules="regraCapacidade"
+                                        name="capacidade1"
+                                        type="capacidade1"
+                                    ></v-text-field>
                                 </v-col>
                             </v-row>
 
@@ -224,7 +330,93 @@
                                     <div class = "info-label"> Terça-feira</div>
                                 </v-col>
                                 <v-col>
-                                    <AddHorario/>
+                                    <v-row>
+                                        <v-col cols = "6">
+                                            <v-menu
+                                                ref="dataInicio2"
+                                                v-model="menu3"
+                                                :close-on-content-click="false"
+                                                :nudge-right="40"
+                                                :return-value.sync="dataInicio2"
+                                                transition="scale-transition"
+                                                offset-y
+                                                max-width="290px"
+                                                min-width="290px"
+                                                >
+                                                <template v-slot:activator="{ on }">
+                                                    <v-text-field
+                                                        :rules="regraHorario"
+                                                        label="Hora Início"
+                                                        prepend-icon="access_time"
+                                                        readonly
+                                                        color = "grey"
+                                                        v-on="on"
+                                                        v-model="form.dataInicio2"
+                                                    ></v-text-field>
+                                                </template>
+                                                    <v-time-picker
+                                                        format="24hr"
+                                                        v-model="form.dataInicio2"
+                                                        full-width
+                                                        color = "brown lighten-2"
+                                                        @click:minute="$refs.dataInicio2.save(dataInicio2)"
+                                                    ></v-time-picker>
+                                            </v-menu>
+                                        </v-col>
+                                     
+                                        <v-col cols = "6">
+                                            <v-menu
+                                                ref="dataFim2"
+                                                v-model="menu4"
+                                                :close-on-content-click="false"
+                                                :nudge-right="40"
+                                                :return-value.sync="dataFim2"
+                                                transition="scale-transition"
+                                                offset-y
+                                                max-width="290px"
+                                                min-width="290px"
+                                                >
+                                                <template v-slot:activator="{ on }">
+                                                    <v-text-field
+                                                        :rules="regraHorario"
+                                                        label="Hora Fim"
+                                                        prepend-icon="access_time"
+                                                        readonly
+                                                        color = "grey"
+                                                        v-on="on"
+                                                        v-model="form.dataFim2"
+                                                    ></v-text-field>
+                                                </template>
+                                                    <v-time-picker
+                                                        format="24hr"
+                                                        v-model="form.dataFim2"
+                                                        full-width
+                                                        color = "brown lighten-2"
+                                                        @click:minute="$refs.dataFim2.save(dataFim2)"
+                                                    ></v-time-picker>
+                                            </v-menu>
+                                        </v-col>    
+                                    </v-row>
+                                </v-col>
+                            </v-row>
+
+                             <v-row>
+                                <v-col cols="2">
+                                    <div class="info-label">Número Voluntários</div>
+                                </v-col>
+                                <v-col>
+                                    <v-text-field 
+                                        rounded 
+                                        outlined 
+                                        flat 
+                                        color = "grey lighten-1"  
+                                        required 
+                                        placeholder="Introduza o número máximo de voluntários para o horário de Terça-feira"
+                                        v-model="form.capacidade2"
+                                        :rules="regraCapacidade"
+                                        name="capacidade2"
+                                        type="capacidade2"
+                                    ></v-text-field>
                                 </v-col>
                             </v-row>
 
@@ -233,16 +425,188 @@
                                     <div class = "info-label"> Quarta-feira</div>
                                 </v-col>
                                 <v-col>
-                                    <AddHorario/>
+                                    <v-row>
+                                        <v-col cols = "6">
+                                            <v-menu
+                                                ref="dataInicio3"
+                                                v-model="menu5"
+                                                :close-on-content-click="false"
+                                                :nudge-right="40"
+                                                :return-value.sync="dataInicio3"
+                                                transition="scale-transition"
+                                                offset-y
+                                                max-width="290px"
+                                                min-width="290px"
+                                                >
+                                                <template v-slot:activator="{ on }">
+                                                    <v-text-field
+                                                        :rules="regraHorario"
+                                                        label="Hora Início"
+                                                        prepend-icon="access_time"
+                                                        readonly
+                                                        color = "grey"
+                                                        v-on="on"
+                                                        v-model="form.dataInicio3"
+                                                    ></v-text-field>
+                                                </template>
+                                                    <v-time-picker
+                                                        format="24hr"
+                                                        v-model="form.dataInicio3"
+                                                        full-width
+                                                        color = "brown lighten-2"
+                                                        @click:minute="$refs.dataInicio3.save(dataInicio3)"
+                                                    ></v-time-picker>
+                                            </v-menu>
+                                        </v-col>
+                                     
+                                        <v-col cols = "6">
+                                            <v-menu
+                                                ref="dataFim3"
+                                                v-model="menu6"
+                                                :close-on-content-click="false"
+                                                :nudge-right="40"
+                                                :return-value.sync="dataFim3"
+                                                transition="scale-transition"
+                                                offset-y
+                                                max-width="290px"
+                                                min-width="290px"
+                                                >
+                                                <template v-slot:activator="{ on }">
+                                                    <v-text-field
+                                                        :rules="regraHorario"
+                                                        label="Hora Fim"
+                                                        prepend-icon="access_time"
+                                                        readonly
+                                                        color = "grey"
+                                                        v-on="on"
+                                                        v-model="form.dataFim3"
+                                                    ></v-text-field>
+                                                </template>
+                                                    <v-time-picker
+                                                        format="24hr"
+                                                        v-model="form.dataFim3"
+                                                        full-width
+                                                        color = "brown lighten-2"
+                                                        @click:minute="$refs.dataFim3.save(dataFim3)"
+                                                    ></v-time-picker>
+                                            </v-menu>
+                                        </v-col>    
+                                    </v-row>
                                 </v-col>
                             </v-row>
                                 
+                             <v-row>
+                                <v-col cols="2">
+                                    <div class="info-label">Número Voluntários</div>
+                                </v-col>
+                                <v-col>
+                                    <v-text-field 
+                                        rounded 
+                                        outlined 
+                                        flat 
+                                        color = "grey lighten-1"  
+                                        required 
+                                        placeholder="Introduza o número máximo de voluntários para o horário de Quarta-feira"
+                                        v-model="form.capacidade3"
+                                        :rules="regraCapacidade"
+                                        name="capacidade3"
+                                        type="capacidade3"
+                                    ></v-text-field>
+                                </v-col>
+                            </v-row>
+
                             <v-row>
                                 <v-col cols = "2">
                                     <div class = "info-label"> Quinta-feira</div>
                                 </v-col>
                                 <v-col>
-                                    <AddHorario/>
+                                    <v-row>
+                                        <v-col cols = "6">
+                                            <v-menu
+                                                ref="dataInicio4"
+                                                v-model="menu7"
+                                                :close-on-content-click="false"
+                                                :nudge-right="40"
+                                                :return-value.sync="dataInicio4"
+                                                transition="scale-transition"
+                                                offset-y
+                                                max-width="290px"
+                                                min-width="290px"
+                                                >
+                                                <template v-slot:activator="{ on }">
+                                                    <v-text-field
+                                                        :rules="regraHorario"
+                                                        label="Hora Início"
+                                                        prepend-icon="access_time"
+                                                        readonly
+                                                        color = "grey"
+                                                        v-on="on"
+                                                        v-model="form.dataInicio4"
+                                                    ></v-text-field>
+                                                </template>
+                                                    <v-time-picker
+                                                        format="24hr"
+                                                        v-model="form.dataInicio4"
+                                                        full-width
+                                                        color = "brown lighten-2"
+                                                        @click:minute="$refs.dataInicio4.save(dataInicio4)"
+                                                    ></v-time-picker>
+                                            </v-menu>
+                                        </v-col>
+                                     
+                                        <v-col cols = "6">
+                                            <v-menu
+                                                ref="dataFim4"
+                                                v-model="menu8"
+                                                :close-on-content-click="false"
+                                                :nudge-right="40"
+                                                :return-value.sync="dataFim4"
+                                                transition="scale-transition"
+                                                offset-y
+                                                max-width="290px"
+                                                min-width="290px"
+                                                >
+                                                <template v-slot:activator="{ on }">
+                                                    <v-text-field
+                                                        :rules="regraHorario"
+                                                        label="Hora Fim"
+                                                        prepend-icon="access_time"
+                                                        readonly
+                                                        color = "grey"
+                                                        v-on="on"
+                                                        v-model="form.dataFim4"
+                                                    ></v-text-field>
+                                                </template>
+                                                    <v-time-picker
+                                                        format="24hr"
+                                                        v-model="form.dataFim4"
+                                                        full-width
+                                                        color = "brown lighten-2"
+                                                        @click:minute="$refs.dataFim4.save(dataFim4)"
+                                                    ></v-time-picker>
+                                            </v-menu>
+                                        </v-col>    
+                                    </v-row>
+                                </v-col>
+                            </v-row>
+
+                             <v-row>
+                                <v-col cols="2">
+                                    <div class="info-label">Número Voluntários</div>
+                                </v-col>
+                                <v-col>
+                                    <v-text-field 
+                                        rounded 
+                                        outlined 
+                                        flat 
+                                        color = "grey lighten-1"  
+                                        required 
+                                        placeholder="Introduza o número máximo de voluntários para o horário de Quinta-feira"
+                                        v-model="form.capacidade4"
+                                        :rules="regraCapacidade"
+                                        name="capacidade4"
+                                        type="capacidade4"
+                                    ></v-text-field>
                                 </v-col>
                             </v-row>
                             
@@ -251,16 +615,188 @@
                                     <div class = "info-label"> Sexta-feira</div>
                                 </v-col>
                                 <v-col>
-                                    <AddHorario/>
+                                     <v-row>
+                                        <v-col cols = "6">
+                                            <v-menu
+                                                ref="dataInicio5"
+                                                v-model="menu9"
+                                                :close-on-content-click="false"
+                                                :nudge-right="40"
+                                                :return-value.sync="dataInicio5"
+                                                transition="scale-transition"
+                                                offset-y
+                                                max-width="290px"
+                                                min-width="290px"
+                                                >
+                                                <template v-slot:activator="{ on }">
+                                                    <v-text-field
+                                                        :rules="regraHorario"
+                                                        label="Hora Início"
+                                                        prepend-icon="access_time"
+                                                        readonly
+                                                        color = "grey"
+                                                        v-on="on"
+                                                        v-model="form.dataInicio5"
+                                                    ></v-text-field>
+                                                </template>
+                                                    <v-time-picker
+                                                        format="24hr"
+                                                        v-model="form.dataInicio5"
+                                                        full-width
+                                                        color = "brown lighten-2"
+                                                        @click:minute="$refs.dataInicio5.save(dataInicio5)"
+                                                    ></v-time-picker>
+                                            </v-menu>
+                                        </v-col>
+                                     
+                                        <v-col cols = "6">
+                                            <v-menu
+                                                ref="dataFim5"
+                                                v-model="menu10"
+                                                :close-on-content-click="false"
+                                                :nudge-right="40"
+                                                :return-value.sync="dataFim5"
+                                                transition="scale-transition"
+                                                offset-y
+                                                max-width="290px"
+                                                min-width="290px"
+                                                >
+                                                <template v-slot:activator="{ on }">
+                                                    <v-text-field
+                                                        :rules="regraHorario"
+                                                        label="Hora Fim"
+                                                        prepend-icon="access_time"
+                                                        readonly
+                                                        color = "grey"
+                                                        v-on="on"
+                                                        v-model="form.dataFim5"
+                                                    ></v-text-field>
+                                                </template>
+                                                    <v-time-picker  
+                                                        format="24hr"
+                                                        v-model="form.dataFim5"
+                                                        full-width
+                                                        color = "brown lighten-2"
+                                                        @click:minute="$refs.dataFim5.save(dataFim5)"
+                                                    ></v-time-picker>
+                                            </v-menu>
+                                        </v-col>    
+                                    </v-row>
                                 </v-col>
                             </v-row>
 
                             <v-row>
+                                <v-col cols="2">
+                                    <div class="info-label">Número Voluntários</div>
+                                </v-col>
+                                <v-col>
+                                    <v-text-field 
+                                        rounded 
+                                        outlined 
+                                        flat 
+                                        color = "grey lighten-1"  
+                                        required 
+                                        placeholder="Introduza o número máximo de voluntários para o horário de Sexta-feira"
+                                        v-model="form.capacidade5"
+                                        :rules="regraCapacidade"
+                                        name="capacidade5"
+                                        type="capacidade5"
+                                    ></v-text-field>
+                                </v-col>
+                            </v-row>
+
+                           <v-row>
                                 <v-col cols = "2">
                                     <div class = "info-label"> Sábado</div>
                                 </v-col>
                                 <v-col>
-                                    <AddHorario/>
+                                     <v-row>
+                                        <v-col cols = "6">
+                                            <v-menu
+                                                ref="dataInicio6"
+                                                v-model="menu11"
+                                                :close-on-content-click="false"
+                                                :nudge-right="40"
+                                                :return-value.sync="dataInicio6"
+                                                transition="scale-transition"
+                                                offset-y
+                                                max-width="290px"
+                                                min-width="290px"
+                                                >
+                                                <template v-slot:activator="{ on }">
+                                                    <v-text-field
+                                                        :rules="regraHorario"
+                                                        label="Hora Início"
+                                                        prepend-icon="access_time"
+                                                        readonly
+                                                        color = "grey"
+                                                        v-on="on"
+                                                        v-model="form.dataInicio6"
+                                                    ></v-text-field>
+                                                </template>
+                                                    <v-time-picker
+                                                        format="24hr"
+                                                        v-model="form.dataInicio6"
+                                                        full-width
+                                                        color = "brown lighten-2"
+                                                        @click:minute="$refs.dataInicio6.save(dataInicio6)"
+                                                    ></v-time-picker>
+                                            </v-menu>
+                                        </v-col>
+                                     
+                                        <v-col cols = "6">
+                                            <v-menu
+                                                ref="dataFim6"
+                                                v-model="menu12"
+                                                :close-on-content-click="false"
+                                                :nudge-right="40"
+                                                :return-value.sync="dataFim6"
+                                                transition="scale-transition"
+                                                offset-y
+                                                max-width="290px"
+                                                min-width="290px"
+                                                >
+                                                <template v-slot:activator="{ on }">
+                                                    <v-text-field
+                                                        :rules="regraHorario"
+                                                        label="Hora Fim"
+                                                        prepend-icon="access_time"
+                                                        readonly
+                                                        color = "grey"
+                                                        v-on="on"
+                                                        v-model="form.dataFim6"
+                                                    ></v-text-field>
+                                                </template>
+                                                    <v-time-picker  
+                                                        format="24hr"
+                                                        v-model="form.dataFim6"
+                                                        full-width
+                                                        color = "brown lighten-2"
+                                                        @click:minute="$refs.dataFim6.save(dataFim6)"
+                                                    ></v-time-picker>
+                                            </v-menu>
+                                        </v-col>    
+                                    </v-row>
+                                </v-col>
+                            </v-row>
+
+                             <v-row>
+                                <v-col cols="2">
+                                    <div class="info-label">Número Voluntários</div>
+                                </v-col>
+                                <v-col>
+                                    <v-text-field 
+                                        rounded 
+                                        outlined 
+                                        flat 
+                                        color = "grey lighten-1"  
+                                        required 
+                                        placeholder="Introduza o número máximo de voluntários para o horário de Sábado"
+                                        v-model="form.capacidade6"
+                                        :rules="regraCapacidade"
+                                        name="capacidade6"
+                                        type="capacidade6"
+                                    ></v-text-field>
                                 </v-col>
                             </v-row>
 
@@ -269,56 +805,120 @@
                                     <div class = "info-label"> Domingo</div>
                                 </v-col>
                                 <v-col>
-                                    <AddHorario/>
+                                    <v-row>
+                                        <v-col cols = "6">
+                                            <v-menu
+                                                ref="dataInicio7"
+                                                v-model="menu13"
+                                                :close-on-content-click="false"
+                                                :nudge-right="40"
+                                                :return-value.sync="dataInicio7"
+                                                transition="scale-transition"
+                                                offset-y
+                                                max-width="290px"
+                                                min-width="290px"
+                                                >
+                                                <template v-slot:activator="{ on }">
+                                                    <v-text-field
+                                                        :rules="regraHorario"
+                                                        label="Hora Início"
+                                                        prepend-icon="access_time"
+                                                        readonly
+                                                        color = "grey"
+                                                        v-on="on"
+                                                        v-model="form.dataInicio7"
+                                                    ></v-text-field>
+                                                </template>
+                                                    <v-time-picker
+                                                        format="24hr"
+                                                        v-model="form.dataInicio7"
+                                                        full-width
+                                                        color = "brown lighten-2"
+                                                        @click:minute="$refs.dataInicio7.save(dataInicio7)"
+                                                    ></v-time-picker>
+                                            </v-menu>
+                                        </v-col>
+                                     
+                                        <v-col cols = "6">
+                                            <v-menu
+                                                ref="dataFim7"
+                                                v-model="menu14"
+                                                :close-on-content-click="false"
+                                                :nudge-right="40"
+                                                :return-value.sync="dataFim7"
+                                                transition="scale-transition"
+                                                offset-y
+                                                max-width="290px"
+                                                min-width="290px"
+                                                >
+                                                <template v-slot:activator="{ on }">
+                                                    <v-text-field
+                                                        :rules="regraHorario"
+                                                        label="Hora Fim"
+                                                        prepend-icon="access_time"
+                                                        readonly
+                                                        color = "grey"
+                                                        v-on="on"
+                                                        v-model="form.dataFim7"
+                                                    ></v-text-field>
+                                                </template>
+                                                    <v-time-picker
+                                                        format="24hr"
+                                                        v-model="form.dataFim7"
+                                                        full-width
+                                                        color = "brown lighten-2"
+                                                        @click:minute="$refs.dataFim7.save(dataFim7)"
+                                                    ></v-time-picker>
+                                            </v-menu>
+                                        </v-col>    
+                                    </v-row>
+                                </v-col>
+                            </v-row>
+
+                             <v-row>
+                                <v-col cols="2">
+                                    <div class="info-label">Número Voluntários</div>
+                                </v-col>
+                                <v-col>
+                                    <v-text-field 
+                                        rounded 
+                                        outlined 
+                                        flat 
+                                        color = "grey lighten-1"  
+                                        required 
+                                        placeholder="Introduza o número máximo de voluntários para o horário de Domingo"
+                                        v-model="form.capacidade7"
+                                        :rules="regraCapacidade"
+                                        name="capacidade7"
+                                        type="capacidade7"
+                                    ></v-text-field>
                                 </v-col>
                             </v-row>
                             
-                            <v-row>
-                                <v-col cols="2">
-                                    <div class="info-label headline"> Notas Adicionais </div>
-                                </v-col>
-                                <v-col>
-                                    <v-textarea
-                                        flat
-                                        outlined
-                                        rounded
-                                        auto-grow
-                                        placeholder = "Introduza informações que considere relevantes"
-                                        color = "grey lighten-1" 
-                                        rows = "5"
-                                    ></v-textarea>
-                                </v-col>
-                            </v-row>
                             <v-card flat height= "20" color = "white"></v-card>
                             <v-row justify = "end">
                                 <v-col cols = "12" md = "8">
                                     <v-row justify= "end">
-                                        <v-btn class="ma-6" x-large color = "deep-orange lighten-4" to = "/">Cancelar</v-btn>
-                                        <v-btn class = "ma-6" x-large color = "deep-orange lighten-4" @click="snackbar = true">Registar</v-btn>
+                                        <v-btn class="ma-6" type="button" x-large color = "deep-orange lighten-4" @click="cancelar">Cancelar</v-btn>
+                                        <v-btn class = "ma-6" type="button" x-large color = "deep-orange lighten-4" @click="registarCanil">Registar</v-btn>
+                                        <div class="text-center ma-2">
                                             <v-snackbar
                                                 v-model="snackbar"
-                                                multi-line = "true"
-                                                class = "bottom"
-                                                color = "green"
-                                                timeout = "10000"
-                                            >
-                                                Pedido de Registo enviado com sucesso
-                                                <v-btn
-                                                icon
-                                                dark
-                                                text
-                                                @click="snackbar = false"
-                                                to='/'
+                                                :color="color"
+                                                :timeout="timeout"
+                                                bottom
+                                                multi-line
+                                                class = "headline"
                                                 >
-                                                Sair
-                                                <v-icon right>close</v-icon>
-                                                
-                                                </v-btn>
+                                                {{ text }}
+                                                <v-btn class = "headline" text @click="fecharSnackbar">Fechar</v-btn>
                                             </v-snackbar>
+                                        </div>
                                     </v-row>
                                 </v-col>
                             </v-row>
                         </v-card-text>
+                        </v-form>
                     </v-card>
                 </v-flex>
                 </v-layout>
@@ -330,14 +930,43 @@
 </template>
 
 <script>
-import AddHorario from '@/components/AddHorario.vue'
+import axios from 'axios'
+const lhost = require("@/config/global").host;
 
 export default {
+    name: "CanilRegister",
     data () {
       return {
         show1: false, 
         password: 'Password',
-        snackbar: false,
+        dataInicio1: null,
+        dataFim1: null,
+        dataInicio2: null, 
+        dataFim2: null, 
+        dataInicio3: null, 
+        dataFim3: null, 
+        dataInicio4:null, 
+        dataFim4:null, 
+        dataInicio5:null, 
+        dataFim5:null, 
+        dataInicio6:null, 
+        dataFim6:null,
+        dataInicio7:null, 
+        dataFim7:null, 
+        menu1:false, 
+        menu2:false, 
+        menu3:false, 
+        menu4:false, 
+        menu5:false, 
+        menu6:false, 
+        menu7:false, 
+        menu8:false, 
+        menu9:false, 
+        menu10:false, 
+        menu11:false, 
+        menu12:false, 
+        menu13:false, 
+        menu14:false, 
         distritos: [
             'Angra do Heroísmo',
             'Aveiro',
@@ -360,10 +989,129 @@ export default {
             'Setúbal',
             'Viana do Castelo',
             'Viseu',
-        ] 
+        ],
+        dialog: false,
+        regraNome: [v => !!v || "Nome obrigatório."],
+        regraEmail:[v => !!v || "Email obrigatório."], 
+        regraPassword: [v => !!v || "Palavra-passe obrigatória."],
+        regraRua: [v => !!v || "Morada obrigatória."],
+        regraDistrito: [v => !!v || "Distrito obrigatório."],
+        regraNIB: [v => !!v || "Número de Identificação Bancária obrigatório."],
+        regraLocalidade: [v => !!v || "Concelho obrigatório."],
+        regraCapacidadeTotal: [v => !!v || "Capacidade total obrigatória."], 
+        regraCapacidadeOcupada: [v => !!v || "Ocupação atual obrigatória."], 
+        regraContacto: [v => !!v || "Contacto obrigatória."],
+        regraHorario: [v => !!v || "Horários obrigatórios."],
+        regraCapacidade: [v => !!v || "Número de Voluntários obrigatório."],
+        form: {
+            nome: "",
+            email: "", 
+            password: "", 
+            rua: "", 
+            localidade: "", 
+            nib: "", 
+            distrito: "",
+            capacidadeTotal: "",  
+            capcidadeOcupada: "", 
+            contacto:"",
+            dataInicio1:"", 
+            dataFim1:"", 
+            dataInicio2:"", 
+            dataFim2:"", 
+            dataInicio3:"", 
+            dataFim3:"", 
+            dataInicio4:"", 
+            dataFim4:"",
+            dataInicio5:"", 
+            dataFim5:"",
+            dataInicio6:"", 
+            dataFim6:"",
+            dataInicio7:"", 
+            dataFim7:"",
+            capacidade1:"", 
+            capacidade2:"", 
+            capacidade3:"", 
+            capacidade4:"", 
+            capacidade5:"", 
+            capacidade6:"",
+            capacidade7:"", 
+            tipo: 2,
+        }, 
+     
+        snackbar: false, 
+        color: "", 
+        done: false, 
+        timeout: 0,
+        text: "",  
       }
     }, 
-    components: {AddHorario}
+    methods: {
+      registarCanil: async function(){
+      if (this.$refs.form.validate()) {
+         try{ 
+          var resposta = 
+            await axios.post(lhost + "/api/Canis", {
+              email: this.form.email,
+              password: this.form.password,
+              tipo: this.form.tipo,
+              nome: this.form.nome,
+              distrito: this.form.distrito,
+              rua: this.form.rua,
+              localidade: this.form.localidade,
+              nib: this.form.nib,
+              contacto: this.form.contacto, 
+              capacidadeTotal: this.form.capacidadeTotal, 
+              capacidadeOcupada: this.form.capacidadeOcupada, 
+              dataInicio1: this.form.dataInicio1,
+              dataFim1: this.form.dataFim1, 
+              dataInicio2: this.form.dataInicio2,
+              dataFim2: this.form.dataFim2, 
+              dataInicio3: this.form.dataInicio3,
+              dataFim3: this.form.dataFim3, 
+              dataInicio4: this.form.dataInicio4,
+              dataFim4: this.form.dataFim4, 
+              dataInicio5: this.form.dataInicio5,
+              dataFim5: this.form.dataFim5, 
+              dataInicio6: this.form.dataInicio6,
+              dataFim6: this.form.dataFim6, 
+              dataInicio7: this.form.dataInicio7,
+              dataFim7: this.form.dataFim7, 
+              capacidade1:this.form.capacidade1, 
+              capacidade2:this.form.capacidade2, 
+              capacidade3:this.form.capacidade3,  
+              capacidade4:this.form.capacidade4, 
+              capacidade5:this.form.capacidade5, 
+              capacidade6:this.form.capacidade6,
+              capacidade7:this.form.capacidade7, 
+            }); 
+            console.log(JSON.stringify(resposta.data));
+            this.text = "Canil criado com sucesso!";
+            this.color = "success"; 
+            this.snackbar = true; 
+          }
+          catch(e){
+            console.log("erro: " + e);
+            this.text = "Ocorreu um erro no registo, por favor tente mais tarde!";
+            this.color = "warning"; 
+            this.snackbar = true; 
+          }
+
+      } else {
+        this.text = "Por favor preencha todos os campos!";
+        this.color = "error";
+        this.snackbar = true;
+        this.done = false;
+      }
+    },
+    fecharSnackbar() {
+      this.snackbar = false;
+      if(this.color == 'success')
+        this.$router.push("/");
+    },
+    cancelar() {
+      this.$router.push("/");
+    },
+  },
 }
 </script>
 

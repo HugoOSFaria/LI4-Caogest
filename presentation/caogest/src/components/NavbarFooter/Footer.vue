@@ -16,7 +16,7 @@
                 <v-col>
                     <strong class="subheading">Envolva-se</strong>
                     <v-card-actions>
-                        <v-btn text-lowercase class="ma-1" text small>Adotar</v-btn>
+                        <v-btn text-lowercase class="ma-1" text small to="/antesdeadotar">Adotar</v-btn>
                     </v-card-actions>
                     <v-card-actions>
                         <v-btn class="ma-1" text small to= "/donativos">Donativos</v-btn>

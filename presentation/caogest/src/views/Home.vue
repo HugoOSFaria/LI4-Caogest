@@ -1,7 +1,5 @@
 <template>
   <div id = "login" >
-
-
     <v-col cols = "12">
       <v-card height = "300"  color = "transparent" flat></v-card>
       
@@ -38,7 +36,7 @@
                   required
                 />
               </v-form>
-              <v-btn depressed class="ma-2 headline" dark color = "transparent" type="submit" to="/pagina/utilizador"> Entrar </v-btn>
+              <v-btn depressed class="ma-2 headline" dark color = "transparent" to="/pagina/utilizador"> Entrar </v-btn>
               
               <v-dialog v-model="dialog" persistent max-width="350">
                 <template v-slot:activator="{ on }">
@@ -78,10 +76,7 @@
             ></v-img>
           </v-card>
       </v-row>
-
     </v-col>
-
-
   </div>
 </template>
 

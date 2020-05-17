@@ -55,6 +55,7 @@
                                                 </v-btn>
 
                                             </v-img>
+                                 
                                         </v-item>
                                         
                                         <v-row justify="center">
@@ -350,15 +351,16 @@ export default {
             'Vermelho',
         ],
         items: [],
-      selected: [],  
-      nome: "",
-      idade: "",
-      esterilizacao: "", 
-      raca: "", 
-      sexo: "", 
-      cor: "", 
-      porte: "", 
-      descricao: ""
+        selected: [],  
+        nome: "",
+        idade: "",
+        esterilizacao: "", 
+        raca: "", 
+        sexo: "", 
+        cor: "", 
+        porte: "", 
+        descricao: "", 
+        fotos: []
     }),
     components: {   Navbar, 
                     Footer,
@@ -367,6 +369,7 @@ export default {
         try {
         let response = await axios.get(lhost + "/api/Caes");
         this.items = response.data;
+        alert(JSON.stringify(this.items));
         this.ready = true;
         } 
         catch (e) {
@@ -393,6 +396,7 @@ export default {
         toTop () {
             this.$vuetify.goTo(0)
         },
+       
     }  
 }
 </script>

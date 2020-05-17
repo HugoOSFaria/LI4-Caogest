@@ -9,7 +9,7 @@
                 <v-col>
                     <strong class="subheading">Cães</strong>
                     <v-card-actions>
-                    <v-btn class="ma-1" text small to="/canis/admin">Encontrar um cão</v-btn>
+                    <v-btn class="ma-1" text small to="/caes/admin">Encontrar um cão</v-btn>
                     </v-card-actions>
                 </v-col>
 
