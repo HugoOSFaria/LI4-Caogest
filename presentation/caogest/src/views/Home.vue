@@ -36,7 +36,7 @@
                   required
                 />
               </v-form>
-              <v-btn depressed class="ma-2 headline" dark color = "transparent" to="/pagina/utilizador"> Entrar </v-btn>
+              <v-btn depressed class="ma-2 headline" dark color = "transparent" @click="loginUtilizador"> Entrar </v-btn>
               
               <v-dialog v-model="dialog" persistent max-width="350">
                 <template v-slot:activator="{ on }">
@@ -82,7 +82,7 @@
 
 
 <script>
-// @ is an alias to /src
+
 //const lhost = require("@/config/global").host;
 //import axios from "axios";
 
@@ -98,6 +98,9 @@ export default {
       regraPassword: [v => !!v || "Palavra-passe obrigatória."],
       dialog: false
     }
+  }, 
+  methods: {
+    
   }
 
 }

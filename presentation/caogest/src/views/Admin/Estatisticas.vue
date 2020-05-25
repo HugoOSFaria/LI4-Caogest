@@ -39,7 +39,58 @@
                 </v-card>
             </v-flex>
             </v-layout>
+            <v-card height = "100" flat></v-card>
+            <v-layout row wrap>
+                <v-flex full>
+                    <v-card light flat height = "1000">
+                        <v-card-title class = "display-2">Pedidos de Adoção</v-card-title>
+                        <nPedidos :width="700" :height="700"></nPedidos>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+            <v-card height = "50" flat></v-card>
+            <v-layout row wrap>
+                <v-flex full>
+                    <v-card light flat height = "1000">
+                        <v-card-title class = "display-2">Tipos de Utilizadores</v-card-title>
+                        <canisVSusers :width="700" :height="700"></canisVSusers>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+            <v-card height = "50" flat></v-card>
+            <v-layout row wrap>
+                <v-flex full>
+                    <v-card light flat height = "1000">
+                        <v-card-title class = "display-2">Número de Cães Adotados por Porte</v-card-title>
+                        <pedidosPorte :width="700" :height="700"></pedidosPorte>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+            <v-card height = "50" flat></v-card>
+            <v-layout row wrap>
+                <v-flex full>
+                    <v-card light flat height = "1000">
+                        <v-card-title class = "display-2">Número de Cães Adotados por Mês</v-card-title>
+                        <nPedidosMes :width="700" :height="700"></nPedidosMes>
+                    </v-card>
+                </v-flex>
+            </v-layout>
         </v-container>
+        <v-btn
+            v-scroll="onScroll"
+            x-large
+            v-show="fab"
+            fab
+            depressed
+            fixed
+            bottom
+            right
+            class = "ma-6"
+            color="deep-orange lighten-4"
+            @click="toTop"
+        >
+            <v-icon>keyboard_arrow_up</v-icon>
+         </v-btn>   
         <Footer/>
     </div>    
 </template>
@@ -47,6 +98,10 @@
 <script>
 import NavbarAdmin from '@/components/NavbarFooter/NavbarAdmin.vue'
 import Footer from '@/components/NavbarFooter/Footer.vue'
+import nPedidos from '@/components/chart/estadoPedidos'
+import canisVSusers from '@/components/chart/canisVSusers'
+import nPedidosMes from '@/components/chart/nPedidosMes'
+import pedidosPorte from '@/components/chart/pedidosPorte'
 import axios from 'axios'
 const lhost = require("@/config/global").host;
 
@@ -58,6 +113,10 @@ export default {
     props: ['id'], 
     components: { NavbarAdmin, 
                   Footer,
+                  nPedidos,
+                  canisVSusers, 
+                  nPedidosMes,
+                  pedidosPorte
     },
     mounted() {
     this.getNumeroUtilizadores();
@@ -66,6 +125,14 @@ export default {
     this.getNumeroAdocoes();
     },
     methods: {
+        onScroll (e) {
+            if (typeof window === 'undefined') return
+            const top = window.pageYOffset ||   e.target.scrollTop || 0
+            this.fab = top > 20
+        },
+        toTop () {
+            this.$vuetify.goTo(0)
+        },
         async getNumeroUtilizadores() {
         await axios.get(lhost + "/api/Stats/Users")
         .then (
