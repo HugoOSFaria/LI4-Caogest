@@ -23,6 +23,7 @@ namespace trial2.Models
         public string sexo { get; set; }
         public string contacto { get; set; }
         public List<Favoritos> favoritos { get; set; }
+        public int encriptado { get; set; }
     }
 
 

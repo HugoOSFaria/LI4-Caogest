@@ -23,6 +23,7 @@ namespace trial2.Models
         public string localidade { get; set; }
         public string contacto { get; set; }
         public string estado { get; set; }
+        public int encriptado { get; set; }
         //public ICollection<Canil_has_Parceria> parceria { get; set; }
     }
 }

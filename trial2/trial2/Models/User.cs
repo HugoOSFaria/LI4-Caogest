@@ -14,6 +14,7 @@ namespace trial2.Models
         public string email { get; set; }
         public string password { get; set; }
         public int tipo { get; set; }
-        public User() {}
+        public int encriptado { get; set; }
+        public User() { }
     }
 }
