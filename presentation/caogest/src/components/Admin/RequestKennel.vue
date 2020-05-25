@@ -124,6 +124,8 @@ export default {
         try {
             let response = await axios.get(lhost + "/api/Canis/" + this.id);
             this.canil = response.data;
+            this.horario = response.data.horarios;
+            alert(JSON.stringify(this.horario));
             this.ready = true;
         } 
         catch (e) {

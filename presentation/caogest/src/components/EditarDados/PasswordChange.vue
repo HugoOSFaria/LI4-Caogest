@@ -39,7 +39,7 @@
     data: () => ({
       dialog: false,
       show1: false, 
-      password: 'Password'
+      password: ''
     }),
   }
 </script>     

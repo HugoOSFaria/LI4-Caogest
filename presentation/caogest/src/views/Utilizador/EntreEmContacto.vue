@@ -136,6 +136,9 @@
                 <v-list-item-action>
                   <v-list-item-action-text> {{date(obj.data)}}
                   </v-list-item-action-text>
+                  <v-btn icon>
+                    <v-icon large color="grey">delete</v-icon>
+                  </v-btn>
                 </v-list-item-action>
               </v-list-item>
             </v-list>
@@ -171,16 +174,6 @@
             @click="apagaMensagem(this)"
           >
             Apagar
-          </v-btn>
-
-          <v-btn
-            color="red"
-            outlined
-            x-large
-            class = "ma-4 "
-            @click="marcaNaoLida(this)"
-          >
-            Marcar como Não Lida
           </v-btn>
 
           <v-spacer></v-spacer>
@@ -395,7 +388,7 @@ export default {
       estadoU:"", 
       form:{
         sugestoes: "",
-        estado: "Enviada",
+        estadoU: "Enviada",
         data: moment().format(),
       }
     };
@@ -406,28 +399,41 @@ export default {
       this.sugestoes = dados.sugestoes;
       this.nome = dados.nome;
       this.estado = dados.estado;
-      this.estadoU = dados.estadoU;
       this.data = dados.data;
       this.user_email = dados.user_email;
       this.id = dados.id;
+      this.estadoU = dados.estadoU;
       this.dialog = true;
-      if(this.estado === 'Não Lida'){
+      if(this.estadoU === 'Lida'){
+        this.marcaNaoLida();
+      }
+      else{
         this.marcaLida();
-        this.getMensagem();
       }
     },
     openDialog1: function(){
       this.dialog = false;
       this.dialog1 = true;
     },
+    openApagadas: function(dados){
+      this.motivo = dados.motivo;
+      this.sugestoes = dados.sugestoes;
+      this.nome = dados.nome;
+      this.estado = dados.estado;
+      this.data = dados.data;
+      this.estadoU = dados.estadoU;
+      this.user_email = dados.user_email;
+      this.id = dados.id;
+      this.dialog2 = true;
+    },
     openEnviadas: function(dados){
       this.motivo = dados.motivo;
       this.sugestoes = dados.sugestoes;
       this.nome = dados.nome;
       this.estado = dados.estado;
-      this.estadoU = dados.estadoU;
       this.data = dados.data;
       this.user_email = dados.user_email;
+      this.estadoU = dados.estadoU;
       this.id = dados.id;
       this.dialog3 = true;
     },
@@ -453,14 +459,13 @@ export default {
           motivo:this.motivo,
           sugestoes:this.sugestoes,
           nome:this.nome,
-          estado:"Lida",
+          estado:this.estado,
+          estadoU:"Lida",
           data:this.data,
-          estadoU:this.estadoU, 
           user_email: this.user_email,
         });
         console.log(JSON.stringify(resposta.data));
         this.numero--;
-        this.getMensagem();
       }
       catch(e){
         console.log("erro: " + e); 
@@ -474,15 +479,13 @@ export default {
           motivo:this.motivo,
           sugestoes:this.sugestoes,
           nome:this.nome,
-          estado:"Não Lida",
+          estado:this.estado,
           data:this.data,
           user_email: this.user_email,
-          estadoU:this.estadoU,
+          estadoU:"Não Lida",
         });
         console.log(JSON.stringify(resposta.data));
         this.numero++;
-        this.getMensagem();
-        this.dialog=false;
       }
       catch(e){
         console.log("erro: " + e); 
@@ -497,19 +500,17 @@ export default {
           motivo:this.motivo,
           sugestoes:this.sugestoes,
           nome:this.nome,
-          estado:"Apagada",
+          estado:this.estado,
           data:this.data,
           user_email: this.user_email,
-          estadoU:this.estadoU,
+          estadoU: "Apagada",
         });
         console.log(JSON.stringify(resposta.data));
-        this.dialog = false;
-        this.getMensagem();
-        this.dialog3 = false;
       }
       catch(e){
         console.log("erro: " + e); 
       }
+      this.dialog = false;
     },
     recuperaMensagem: async function(dados){
         this.motivo = dados.motivo;
@@ -527,13 +528,12 @@ export default {
           motivo:this.motivo,
           sugestoes:this.sugestoes,
           nome:this.nome,
-          estado:"Lida",
+          estadoU:"Lida",
           data:this.data,
           user_email: this.user_email,
-          estadoU:this.estadoU,
+          estado:this.estado,
         });
         console.log(JSON.stringify(resposta.data));
-        this.getMensagem();
       }
       catch(e){
         console.log("erro: " + e); 
@@ -548,48 +548,37 @@ export default {
             motivo: this.motivo,
             sugestoes: this.form.sugestoes,
             data: this.form.data,
-            estado: this.form.estado,
-            estadoU:"Não Lida",
+            estado: "Não Lida",
+            estadoU: this.form.estadoU,
           });
         console.log(JSON.stringify(resposta.data));
         this.dialog1 = false;
-        this.getMensagem();
       }
       catch(e){
         console.log("erro: " + e);
       }
     },
-    async getMensagem(){
-      try {
-        let response = await axios.get(lhost + "/api/Sugestoes");
-        this.sugestoesl = response.data;
-        this.ready = true;
-      } 
-      catch (e) {
-        return e;
-      }
-    },   
   },
   computed: {
     recebidas: function () {
       return this.sugestoesl.filter(function (sugestao) {
-          return (sugestao.estado === "Não Lida" | sugestao.estado === "Lida")
+          return (sugestao.estadoU === "Não Lida" | sugestao.estadoU === "Lida")
       })
     }, 
     apagadas: function () {
       return this.sugestoesl.filter(function (sugestao) {
-          return (sugestao.estado === "Apagada")
+          return (sugestao.estadoU === "Apagada")
       })
     }, 
     enviadas: function () {
       return this.sugestoesl.filter(function (sugestao) {
-          return (sugestao.estado === "Enviada")
+          return (sugestao.estadoU === "Enviada")
       })
     }, 
     numero:{
       get(){
         return this.sugestoesl.filter(function(sugestao){
-          return (sugestao.estado === "Não Lida")
+          return (sugestao.estadoU === "Não Lida")
         }).length;
       },
       set(value)

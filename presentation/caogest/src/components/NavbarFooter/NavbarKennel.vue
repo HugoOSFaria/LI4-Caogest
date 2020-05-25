@@ -72,7 +72,8 @@ export default {
             { title: 'Horários', icon: 'schedule', route: '/horario/canil' },
             { title: 'Voluntários', icon: 'people', route: '/voluntarios/canil' },
             { title: 'Parcerias', icon: 'group_work', route: '/parcerias/canil' },
-            { title: 'FAQs', icon: 'help', route: '/faqs/canil' }
+            { title: 'FAQs', icon: 'help', route: '/faqs/canil' },
+            { title: 'Entre em Contacto', icon:'question_answer', route: '/entre/contacto/canil'}
             ],
         }
     }

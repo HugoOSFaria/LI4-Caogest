@@ -73,7 +73,8 @@ export default {
             { title: 'Canis', icon: 'house', route: '/canis/admin' },
             { title: 'Voluntários', icon:'accessibility_new', route: '/voluntarios/admin'},
             { title: 'Entre em Contacto', icon:'question_answer', route: '/entre/contacto'},
-            { title: 'FAQs', icon: 'help', route: '/faqs/admin' }
+            { title: 'FAQs', icon: 'help', route: '/faqs/admin' }, 
+            { title: 'Estatísticas', icon: 'equalizer', route: '/estatisticas'}
             ],
         }
     }

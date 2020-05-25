@@ -72,7 +72,8 @@ export default {
             { title: 'Donativos', icon: 'payment', route: '/donativos'},
             { title: 'Cães', icon: 'pets', route: '/caes' },
             { title: 'Canis', icon: 'house', route: '/canis' },
-            { title: 'FAQs', icon: 'help', route: '/faqs' }
+            { title: 'FAQs', icon: 'help', route: '/faqs' },
+            { title: 'Entre em Contacto', icon:'question_answer', route: '/entre/contacto/canil'}
             ],
         }
     }
