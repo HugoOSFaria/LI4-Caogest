@@ -128,6 +128,7 @@ namespace trial2.Controllers
             user.email = canilF.email;
             user.password = canilF.password;
             user.tipo = canilF.tipo;
+            user.encriptado = 1;
 
             await _usersController.PostUser(user);
 
@@ -143,6 +144,7 @@ namespace trial2.Controllers
             canil.localidade = canilF.localidade;
             canil.contacto = canilF.contacto;
             canil.estado = canilF.estado;
+            canil.encriptado = 1;
 
             canil.localidade = Encriptar.Encrypt(canil.localidade, "123abc");
             canil.rua = Encriptar.Encrypt(canil.rua, "1a2b3c");

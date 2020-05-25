@@ -102,6 +102,7 @@ namespace trial2.Controllers
             user.email = utilizadorF.email;
             user.password = utilizadorF.password;
             user.tipo = utilizadorF.tipo;
+            user.encriptado = 1;
 
             await _usersController.PostUser(user);
 
@@ -117,6 +118,7 @@ namespace trial2.Controllers
             utilizador.sexo = utilizadorF.sexo;
             utilizador.contacto = utilizadorF.contacto;
             utilizador.favoritos = null;
+            utilizador.encriptado = 1;
 
             utilizador.localidade = Encriptar.Encrypt(utilizador.localidade, "123abc");
             utilizador.rua = Encriptar.Encrypt(utilizador.rua, "1a2b3c");
