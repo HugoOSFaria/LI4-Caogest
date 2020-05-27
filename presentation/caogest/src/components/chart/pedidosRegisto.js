@@ -1,6 +1,7 @@
-import axios from 'axios'
 const lhost = require("@/config/global").host;
-import { Pie } from "vue-chartjs";
+import axios from "axios";
+
+import {Pie} from "vue-chartjs";
 
 export default {
   extends: Pie,
@@ -8,16 +9,15 @@ export default {
     return {
       info: {
         labels: [
-            "Pequeno",
-            "Medio",
-            "Grande",
-
+          "Aceites",
+          "Pendentes",
+          "Rejeitados",
         ],
         datasets: [
           {
             backgroundColor: [
               "#C5E1A5",
-              "#B39DDB",
+              "#FFE082",
               "#EF9A9A",
             ],
             data: [0, 0, 0]
@@ -31,13 +31,17 @@ export default {
     };
   },
   async mounted() {
-    await axios.get(lhost + "/api/Stats/Pedidos/Cao")
+    await axios.get(lhost + "/api/Stats/Estado")
       .then(res => {
-            this.info.datasets[0].data[0] = res.data[0];
-            this.info.datasets[0].data[1] = res.data[1];
-            this.info.datasets[0].data[2] = res.data[2];
-        
+        this.info.datasets[0].data[0] = res.data[0];
+
+        this.info.datasets[0].data[1] = res.data[1];
+
+        this.info.datasets[0].data[2] = res.data[2];
+
         this.renderChart(this.info, this.options);
+        
+
       })
       .catch(error => console.log(JSON.stringify(error)));
   }

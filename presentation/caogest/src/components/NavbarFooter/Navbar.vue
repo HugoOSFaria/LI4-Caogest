@@ -70,6 +70,7 @@ export default {
             { title: 'Sobre', icon: 'info', route: '/sobre' },
             { title: 'Antes de Adotar', icon: 'announcement', route: '/antesdeadotar'},
             { title: 'Donativos', icon: 'payment', route: '/donativos'},
+            { title: 'Documentos', icon: 'description', route: '/documentos'},
             { title: 'Cães', icon: 'pets', route: '/caes' },
             { title: 'Canis', icon: 'house', route: '/canis' },
             { title: 'FAQs', icon: 'help', route: '/faqs' },
