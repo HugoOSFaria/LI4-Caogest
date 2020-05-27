@@ -43,35 +43,58 @@
             <v-layout row wrap>
                 <v-flex full>
                     <v-card light flat height = "1000">
-                        <v-card-title class = "display-2">Pedidos de Adoção</v-card-title>
-                        <nPedidos :width="700" :height="700"></nPedidos>
+                        <v-card-title class = "display-2">Tipos de Utilizadores</v-card-title>
+                        <v-card flat height= "100"></v-card>
+                        <canisVSusers :width="600" :height="600"></canisVSusers>
                     </v-card>
                 </v-flex>
             </v-layout>
-            <v-card height = "50" flat></v-card>
+
             <v-layout row wrap>
                 <v-flex full>
                     <v-card light flat height = "1000">
-                        <v-card-title class = "display-2">Tipos de Utilizadores</v-card-title>
-                        <canisVSusers :width="700" :height="700"></canisVSusers>
+                        <v-card-title class = "display-2">Pedidos de Registo de Canis</v-card-title>
+                        <v-card flat height= "100"></v-card>
+                        <pedidosRegisto :width="600" :height="600"></pedidosRegisto>
                     </v-card>
                 </v-flex>
             </v-layout>
-            <v-card height = "50" flat></v-card>
+
+            <v-layout row wrap>
+                <v-flex full>
+                    <v-card light flat height = "1000">
+                        <v-card-title class = "display-2">Pedidos de Adoção</v-card-title>
+                        <nPedidos :width="600" :height="600"></nPedidos>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+
             <v-layout row wrap>
                 <v-flex full>
                     <v-card light flat height = "1000">
                         <v-card-title class = "display-2">Número de Cães Adotados por Porte</v-card-title>
-                        <pedidosPorte :width="700" :height="700"></pedidosPorte>
+                        <v-card flat height= "100"></v-card>
+                        <pedidosPorte :width="600" :height="600"></pedidosPorte>
                     </v-card>
                 </v-flex>
             </v-layout>
-            <v-card height = "50" flat></v-card>
+
             <v-layout row wrap>
                 <v-flex full>
                     <v-card light flat height = "1000">
                         <v-card-title class = "display-2">Número de Cães Adotados por Mês</v-card-title>
-                        <nPedidosMes :width="700" :height="700"></nPedidosMes>
+                        <v-card flat height= "100"></v-card>
+                        <nPedidosMes :width="600" :height="600"></nPedidosMes>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+
+            <v-layout row wrap>
+                <v-flex full>
+                    <v-card light flat height = "1000">
+                        <v-card-title class = "display-2">Número de Donativos por Mês</v-card-title>
+                        <v-card flat height= "100"></v-card>
+                        <donativosStats :width="600" :height="600"></donativosStats>
                     </v-card>
                 </v-flex>
             </v-layout>
@@ -102,11 +125,15 @@ import nPedidos from '@/components/chart/estadoPedidos'
 import canisVSusers from '@/components/chart/canisVSusers'
 import nPedidosMes from '@/components/chart/nPedidosMes'
 import pedidosPorte from '@/components/chart/pedidosPorte'
+import pedidosRegisto from '@/components/chart/pedidosRegisto'
+import donativosStats from '@/components/chart/donativosStat'
+
 import axios from 'axios'
 const lhost = require("@/config/global").host;
 
 export default {
     data: () => ({
+        fab:false,
         stats: [],
     }),
     name: 'Estatistica',
@@ -116,7 +143,9 @@ export default {
                   nPedidos,
                   canisVSusers, 
                   nPedidosMes,
-                  pedidosPorte
+                  pedidosPorte,
+                  pedidosRegisto,
+                  donativosStats
     },
     mounted() {
     this.getNumeroUtilizadores();
