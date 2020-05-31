@@ -1,104 +1,24 @@
 <template>
     <div id = "volunteers" class = "Volunteers">
-        <NavbarKennel/>
+        <NavbarKennel :id="$route.params.id"/>
          <v-card> 
             <v-img src='@/assets/voluntarios.png'></v-img>
          </v-card>
-                <v-card flat height= "200" max-width="800" color = "transparent"></v-card>
-                    <v-container class="my-5">
-                        <v-layout row class="mb-3"> 
-                            <v-tooltip top>
-                                <template v-slot:activator="{ on }">
-                                    <v-btn class = "ma-2" text @click="sortBy('nome')" v-on="on">
-                                        <v-icon left small>person</v-icon>    
-                                        <span class = "caption text-lowercase">Por nome de voluntário</span>
-                                    </v-btn>  
-                                </template>
-                                <span>Ordenar voluntários por nome</span> 
-                            </v-tooltip>
-
-                            <v-tooltip top>
-                                <template v-slot:activator="{ on }">
-                                    <v-btn class = "ma-2" text @click="sortBy('idade')" v-on="on">
-                                        <v-icon left small>person</v-icon>    
-                                        <span class = "caption text-lowercase">Por idade de voluntário</span>
-                                    </v-btn>  
-                                </template>
-                                <span>Ordenar voluntários por idade</span> 
-                            </v-tooltip>
-                        </v-layout>
-
-                        <v-card flat v-for="voluntario in voluntarios" :key="voluntario.nome">
-                            <v-layout row wrap :class="`pa-7 voluntario`">
-                            <v-flex xs12 md6>
-                                <div class="caption grey--text">Nome Voluntário</div>
-                                <div>{{ voluntario.nome }}</div>
-                            </v-flex>
-                            <v-flex xs6 sm4 md2>
-                                <div class="caption grey--text">Idade</div>
-                                <div>{{ voluntario.idade }} anos</div>
-                            </v-flex>
-                            <v-flex xs6 sm4 md2>
-                                <div class="caption grey--text">Morada</div>
-                                <div>{{ voluntario.morada }}</div>
-                            </v-flex>
-                            <v-flex xs6 sm4 md2>
-                                <div class="caption grey--text">Contacto</div>
-                                <div>{{ voluntario.contacto}}</div>
-                            </v-flex>
-                            </v-layout>
-                            <v-divider></v-divider>
-                        </v-card>
-                        <v-btn
-                            v-scroll="onScroll"
-                            x-large
-                            v-show="fab"
-                            fab
-                            depressed
-                            fixed
-                            bottom
-                            right
-                            class = "ma-6"
-                            color="deep-orange lighten-4"
-                            @click="toTop"
-                        >
-                            <v-icon>keyboard_arrow_up</v-icon>
-                        </v-btn>
-            </v-container>
-        <Footer/>    
+        <Volunteers :id="$route.params.id"/>
+        <Footer :id="$route.params.id"/>    
     </div>
 </template>
 
 <script>
 import NavbarKennel from '@/components/NavbarFooter/NavbarKennel.vue'
 import Footer from '@/components/NavbarFooter/FooterKennel.vue'
+import Volunteers from '@/components/Volunteers.vue'
 export default {
-  data() {
-    return {
-        fab:false, 
-        voluntarios: [
-        { nome: 'Rute Beatriz', idade: 20, morada: 'Rua da Amoreira, Palmeira, Braga', contacto: '911191911'},
-        { nome: 'Ricardo Pereira', idade: 35, morada: 'Rua da Porta, Palmeira, Braga', contacto: '923412921'},
-        { nome: 'Maria Moreira', idade: 42, morada: 'Rua da Taberna, S.Vitor, Braga', contacto: '930031343'},
-        { nome: 'Fernando Silva', idade: 50, morada: 'Rua da Taberna, Caide, Braga', contacto: '930331353'},
-        { nome: 'Marta Rebelo', idade: 28, morada: 'Rua da Macieira, Celeirós, Braga', contacto: '961234567'},
-      ]
-    };
-  },
-  methods: {
-    sortBy(prop){
-          this.voluntarios.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
-    },
-    onScroll (e) {
-        if (typeof window === 'undefined') return
-        const top = window.pageYOffset ||   e.target.scrollTop || 0
-        this.fab = top > 20
-    },
-    toTop () {
-        this.$vuetify.goTo(0)
-    },
-  }, 
-    components: {NavbarKennel, Footer}
+    components: {
+        NavbarKennel, 
+        Footer, 
+        Volunteers
+    }
 };
 </script>
 

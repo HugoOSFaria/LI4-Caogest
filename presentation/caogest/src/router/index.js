@@ -10,7 +10,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
   },
   {
-    path: '/sobre',
+    path: '/sobre/:id',
     name: 'About',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -18,7 +18,7 @@ const routes = [
     component: () => import('../views/Infos/About.vue')
   },
   {
-    path: '/sobre/canil',
+    path: '/sobre/canil/:id',
     name: 'AboutKennel',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -34,7 +34,7 @@ const routes = [
     component: () => import('../views/Infos/AboutAdmin.vue')
   },
   {
-    path: '/faqs',
+    path: '/faqs/:id',
     name: 'FAQs',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -42,7 +42,7 @@ const routes = [
     component: () => import('../views/Infos/FAQs.vue')
   },
   {
-    path: '/faqs/canil',
+    path: '/faqs/canil/:id',
     name: 'FAQsKennel',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -58,7 +58,7 @@ const routes = [
     component: () => import('../views/Infos/FAQsAdmin.vue')
   },
   {
-    path: '/antesdeadotar',
+    path: '/antesdeadotar/:id',
     name: 'Antes De Adotar',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -66,7 +66,7 @@ const routes = [
     component: () => import('../views/Infos/BeforeAdopting.vue')
   },
   {
-    path: '/donativos',
+    path: '/donativos/:id',
     name: 'Donativos',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -74,7 +74,7 @@ const routes = [
     component: () => import('../views/Infos/Donations.vue')
   },
   {
-    path: '/donativos/canil',
+    path: '/donativos/canil/:id',
     name: 'DonativosKennel',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -90,7 +90,7 @@ const routes = [
     component: () => import('../views/Admin/DonationsAdmin.vue')
   },
   {
-    path: '/pedido/adocao/canil',
+    path: '/pedidos/adocao/canil/:id',
     name: 'AdoptionRequest',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -106,7 +106,7 @@ const routes = [
     component: () => import('../views/Admin/AdoptionRequestAdmin.vue')
   },
   {
-    path: '/horario/canil',
+    path: '/horario/canil/:id',
     name: 'Schedule',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -122,7 +122,7 @@ const routes = [
     component: () => import('../views/Admin/HorarioCanil.vue')
   },
   {
-    path: '/pagina/utilizador',
+    path: '/pagina/utilizador/:id',
     name: 'Main Page',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -130,7 +130,7 @@ const routes = [
     component: () => import('../views/Utilizador/HomeUser.vue')
   },
   {
-    path: '/pagina/canil',
+    path: '/pagina/canil/:id',
     name: 'MainPageKennel',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -159,7 +159,7 @@ const routes = [
     component: () => import('../views/RegistoUsers/CanilRegister.vue')
   },
   {
-    path: '/registar/cao',
+    path: '/registar/cao/:id',
     name: 'Dog Register',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -175,7 +175,7 @@ const routes = [
     component: () => import('../views/AdoptionForm.vue')
   },
   {
-    path: '/caes',
+    path: '/caes/:id',
     name: 'Dogs',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -191,7 +191,7 @@ const routes = [
     component: () => import('../views/Admin/DogsAdmin.vue')
   },
   {
-    path: '/canis',
+    path: '/canis/:id',
     name: 'Kennels',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -223,7 +223,7 @@ const routes = [
     component: () => import('../views/Admin/KennelAdmin.vue')
   },
   {
-    path: '/preferencias',
+    path: '/preferencias/:id',
     name: 'Preferences',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -231,7 +231,7 @@ const routes = [
     component: () => import('../views/Utilizador/Preferences.vue')
   },
   {
-    path: '/preferencias/canil',
+    path: '/preferencias/canil/:id',
     name: 'PreferencesKennel',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -247,7 +247,7 @@ const routes = [
     component: () => import('../views/Admin/Preferencias.vue')
   },
   {
-    path: '/parcerias/:id',
+    path: '/parcerias/canil/:id',
     name: 'Parcerias',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -271,7 +271,7 @@ const routes = [
     component: () => import('../views/Utilizador/Parcerias.vue')
   },
   {
-    path: '/voluntarios/canil',
+    path: '/voluntarios/canil/:id',
     name: 'VoluntariosCanil',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -335,7 +335,7 @@ const routes = [
     component: () => import('../views/Admin/PedidosAdocao.vue')
   },
   {
-    path: '/pedido/adocao',
+    path: '/pedido/adocao/:id',
     name: 'PedidoAdocao',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -343,7 +343,7 @@ const routes = [
     component: () => import('../views/Utilizador/PedidosAdocaoUser.vue')
   },
   {
-    path: '/pedido/adocao/canil',
+    path: '/pedido/adocao/canil/:id',
     name: 'PedidoAdocaoCanil',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -357,6 +357,79 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import('../views/Admin/EntreEmContacto.vue')
+  },
+  {
+    path: '/entre/contacto/canil/:id',
+    name: 'EntreEmContactoCanil',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Canil/EntreEmContacto.vue')
+  },
+
+  {
+    path: '/entre/contacto/utilizador/:id',
+    name: 'EntreEmContactoUtilizador',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Utilizador/EntreEmContacto.vue')
+  },
+  {
+    path: '/estatisticas',
+    name: 'Estatisticas',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Admin/Estatisticas.vue')
+  },
+  {
+    path: '/documentos/:id',
+    name: 'Documentos',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Utilizador/Textos.vue')
+  },
+  {
+    path: '/documentos/direitosanimais',
+    name: 'DireitosAnimais',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Docs/DireitosUser.vue')
+  },
+  {
+    path: '/documentos/esterilizar',
+    name: 'PorquêEsterilizar',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Docs/Esterilizar.vue')
+  },
+  {
+    path: '/documentos/motivos/adotar',
+    name: 'MotivosAdotar',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Docs/Adotar.vue')
+  },
+  {
+    path: '/documentos/treino',
+    name: 'TreinarCao',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Docs/Treinar.vue')
+  },
+  {
+    path: '/documentos/doencas',
+    name: 'DoencasETratamentos',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Docs/Doencas.vue')
   },
 
 

@@ -1,9 +1,9 @@
 <template>
     <div id = "requestkennel" class = "Request Kennel">
-        <Navbar/>
+        <Navbar :id="$route.params.id"/>
         <v-card flat height = "100"></v-card>
-        <PedidosAdocao/>
-        <Footer/>
+        <PedidosAdocao :id="$route.params.id"/>
+        <Footer :id="$route.params.id"/>
     </div>
 </template> 
 

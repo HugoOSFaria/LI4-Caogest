@@ -1,14 +1,14 @@
 <template>
     <div id = "adoptionRequest" class = "Adoption Request">
-        <NavbarKennel/>
+        <NavbarKennel :id="$route.params.id"/>
          <v-card> 
             <v-img src='@/assets/pedidosadocaocanil.png'></v-img>
          </v-card>
         <v-card flat height= "80" color = "white"></v-card>
         <v-container>
-            <AdoptionRequest/>
+            <AdoptionRequest :id="$route.params.id"/>
         </v-container>
-                <Footer/>
+                <Footer :id="$route.params.id"/>
     </div>
 </template>
 

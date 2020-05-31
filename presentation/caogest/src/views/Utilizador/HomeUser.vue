@@ -1,6 +1,6 @@
 <template>
     <div id = "mainpage" class = "Main Page">
-        <Navbar/>
+        <Navbar :id="$route.params.id"/>
     
         <v-carousel
             cycle
@@ -48,7 +48,7 @@
 
         <v-container fluid>
 
-            <AdoptionRequest/>
+            <AdoptionRequest :id="$route.params.id"/>
     
             <v-card flat height="100" color="white"></v-card>
             <p class="my-5 display-2 font-weight-bold text-center">Os meus cães favoritos</p>
@@ -103,14 +103,14 @@
             </v-row>
             </div>
         </v-container>
-        <Footer/>
+        <Footer :id="$route.params.id"/>
     </div>
 </template>
 
 <script>
 import Navbar from '@/components/NavbarFooter/Navbar.vue'
 import Footer from '@/components/NavbarFooter/Footer.vue'
-import AdoptionRequest from '@/components/AdoptionRequestUser.vue'
+import AdoptionRequest from '@/components/Utilizador/AdoptionRequestUser.vue'
 import Dog from '@/components/Dog.vue'
 export default {
     data () {

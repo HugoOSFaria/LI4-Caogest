@@ -548,7 +548,7 @@ export default {
             motivo: this.motivo,
             sugestoes: this.form.sugestoes,
             data: this.form.data,
-            estado: this.form.estado,
+            estado: "Enviada",
             estadoU:"Não Lida",
           });
         console.log(JSON.stringify(resposta.data));

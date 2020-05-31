@@ -1,6 +1,6 @@
 <template>
     <div id = "beforeadopt" class = "Antes De Adotar">
-        <Navbar/>
+        <Navbar :id="$route.params.id"/>
         <v-card> 
             <v-img src='@/assets/beforeadopting.png'>
                 <v-card flat height= "500" max-width="800" color = "transparent"></v-card>
@@ -89,7 +89,7 @@
             </v-card>
 
 
-        <Footer/>
+        <Footer :id="$route.params.id"/>
     </div>
 </template>
 

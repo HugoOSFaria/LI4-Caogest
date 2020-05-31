@@ -1,6 +1,6 @@
 <template>
     <div id = "dogs" class = "Dogs">
-        <Navbar/>
+        <Navbar :id="$route.params.id"/>
         <v-card> 
             <v-img src='@/assets/caes2.png'></v-img> 
         </v-card>
@@ -30,7 +30,7 @@
                                             v-slot:default="{ active, toggle }"
                                         >
                                             <v-img
-                                                src='@/assets/example.jpg'
+                                                :src="require(`@/assets/${getPath(obj)}`)"
                                                 aspect-ratio="1"
                                                 class="grey lighten-2"
                                                 @click="toggle"
@@ -309,7 +309,7 @@
         >
             <v-icon>keyboard_arrow_up</v-icon>
         </v-btn>
-        <Footer/>
+        <Footer :id="$route.params.id"/>
     </div>
 </template>
 
@@ -369,7 +369,6 @@ export default {
         try {
         let response = await axios.get(lhost + "/api/Caes");
         this.items = response.data;
-        alert(JSON.stringify(this.items));
         this.ready = true;
         } 
         catch (e) {
@@ -395,6 +394,9 @@ export default {
         },
         toTop () {
             this.$vuetify.goTo(0)
+        },
+        getPath: function(e) {
+           return e.fotos[0].path
         },
        
     }  

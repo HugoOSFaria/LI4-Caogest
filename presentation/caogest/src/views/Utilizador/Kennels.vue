@@ -1,6 +1,6 @@
 <template>
     <div id = "kennels" class = "kennels">
-        <Navbar/>
+        <Navbar :id="$route.params.id"/>
         <v-card> 
             <v-img src='@/assets/canis2.png'></v-img> 
         </v-card>
@@ -129,7 +129,7 @@
             </v-card>
         </div>
 
-        <Footer/>
+        <Footer :id="$route.params.id"/>
     </div>
 </template>
 

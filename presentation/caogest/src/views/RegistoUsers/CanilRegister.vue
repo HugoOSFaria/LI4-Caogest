@@ -158,7 +158,7 @@
                                         v-model="form.capacidadeTotal"
                                         :rules="regraCapacidadeTotal"
                                         name="capacidadeTotal"
-                                        type="capacidadeTotal"
+                                        type="number"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -178,7 +178,7 @@
                                         v-model="form.capacidadeOcupada"
                                         :rules="regraCapacidadeOcupada"
                                         name="capacidadeOcupada"
-                                        type="capacidadeOcupada"
+                                        type="number"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -198,7 +198,7 @@
                                         v-model="form.nib"
                                         :rules="regraNIB"
                                         name="nib"
-                                        type="nib"
+                                        type="number"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -218,7 +218,7 @@
                                         v-model="form.contacto"
                                         :rules="regraContacto"
                                         name="contacto"
-                                        type="contacto"
+                                        type="number"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -320,7 +320,7 @@
                                         v-model="form.capacidade1"
                                         :rules="regraCapacidade"
                                         name="capacidade1"
-                                        type="capacidade1"
+                                        type="number"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -415,7 +415,7 @@
                                         v-model="form.capacidade2"
                                         :rules="regraCapacidade"
                                         name="capacidade2"
-                                        type="capacidade2"
+                                        type="number"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -510,7 +510,7 @@
                                         v-model="form.capacidade3"
                                         :rules="regraCapacidade"
                                         name="capacidade3"
-                                        type="capacidade3"
+                                        type="number"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -605,7 +605,7 @@
                                         v-model="form.capacidade4"
                                         :rules="regraCapacidade"
                                         name="capacidade4"
-                                        type="capacidade4"
+                                        type="number"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -700,7 +700,7 @@
                                         v-model="form.capacidade5"
                                         :rules="regraCapacidade"
                                         name="capacidade5"
-                                        type="capacidade5"
+                                        type="number"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -795,7 +795,7 @@
                                         v-model="form.capacidade6"
                                         :rules="regraCapacidade"
                                         name="capacidade6"
-                                        type="capacidade6"
+                                        type="number"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -890,7 +890,7 @@
                                         v-model="form.capacidade7"
                                         :rules="regraCapacidade"
                                         name="capacidade7"
-                                        type="capacidade7"
+                                        type="number"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -996,13 +996,13 @@ export default {
         regraPassword: [v => !!v || "Palavra-passe obrigatória."],
         regraRua: [v => !!v || "Morada obrigatória."],
         regraDistrito: [v => !!v || "Distrito obrigatório."],
-        regraNIB: [v => !!v || "Número de Identificação Bancária obrigatório."],
+        regraNIB: [v => !!v || "Introduza um número de identificação bancária válido."],
         regraLocalidade: [v => !!v || "Concelho obrigatório."],
-        regraCapacidadeTotal: [v => !!v || "Capacidade total obrigatória."], 
-        regraCapacidadeOcupada: [v => !!v || "Ocupação atual obrigatória."], 
-        regraContacto: [v => !!v || "Contacto obrigatória."],
+        regraCapacidadeTotal: [v => !!v || "Introduza uma capacidade total válida."], 
+        regraCapacidadeOcupada: [v => !!v || "Introduza uma ocupação atual válida."], 
+        regraContacto: [v => !!v || "Introduza um contacto válido."],
         regraHorario: [v => !!v || "Horários obrigatórios."],
-        regraCapacidade: [v => !!v || "Número de Voluntários obrigatório."],
+        regraCapacidade: [v => !!v || "Introduza um número de voluntários válido."],
         form: {
             nome: "",
             email: "", 

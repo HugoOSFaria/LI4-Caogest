@@ -1,6 +1,6 @@
 <template>
     <div id = "donations" class = "Donativos">
-        <Navbar/>
+        <Navbar :id="$route.params.id"/>
          <v-card> 
             <v-img src='@/assets/ask.png'>
                 <v-card flat height= "400" max-width="800" color = "transparent"></v-card>
@@ -61,7 +61,7 @@
                     </v-row>
                 </v-container>
          </v-card>
-        <Footer/>
+        <Footer :id="$route.params.id"/>
     </div>
 </template>
 

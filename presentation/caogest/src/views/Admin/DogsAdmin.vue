@@ -152,7 +152,7 @@
                         <v-img 
                             height = "800" 
                             width = "800" 
-                            src='@/assets/example.jpg'
+                            :src="require(`@/assets/${getPath(obj)}`)"
                         ></v-img> 
                         <v-card 
                             flat 
@@ -385,6 +385,7 @@ export default {
         toTop () {
         this.$vuetify.goTo(0)
         },
+        
     }  
 }
 </script>

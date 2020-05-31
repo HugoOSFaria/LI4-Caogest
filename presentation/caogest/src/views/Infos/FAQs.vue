@@ -1,10 +1,10 @@
 <template>
     <div id = "faqs" class = "FAQs">
-        <Navbar/>
+        <Navbar :id="$route.params.id"/>
 
-        <FAQs/>
+        <FAQs :id="$route.params.id"/>
         
-        <Footer/>
+        <Footer :id="$route.params.id"/>
     </div>
 </template>
 

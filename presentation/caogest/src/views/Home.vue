@@ -36,7 +36,7 @@
                   required
                 />
               </v-form>
-              <v-btn depressed class="ma-2 headline" dark color = "transparent" @click="loginUtilizador"> Entrar </v-btn>
+              <v-btn depressed class="ma-2 headline" dark color = "transparent" type="submit" @click="loginUtilizador"> Entrar </v-btn>
               
               <v-dialog v-model="dialog" persistent max-width="350">
                 <template v-slot:activator="{ on }">
@@ -63,6 +63,14 @@
               </v-dialog>
 
             </v-card-text>
+            <v-snackbar
+            v-model="snackbar"
+            :timeout="timeout"
+            :color="color"
+            :top="true"
+          >
+            {{ text }}
+          </v-snackbar>
           </v-card>
         </v-row>
 
@@ -83,8 +91,8 @@
 
 <script>
 
-//const lhost = require("@/config/global").host;
-//import axios from "axios";
+const lhost = require("@/config/global").host;
+import axios from "axios";
 
 export default {
   name: "login",
@@ -96,14 +104,56 @@ export default {
       },
       regraEmail: [ v => !!v || "Email obrigatório."],
       regraPassword: [v => !!v || "Palavra-passe obrigatória."],
-      dialog: false
+      dialog: false,
+      snackbar: false,
+      color: "",
+      timeout: 4000,
+      text: "",
+      done: false
     }
   }, 
   methods: {
-    
+    async loginUtilizador() {
+      if (this.$refs.form.validate()) {
+        try{
+          var res = await axios.post(lhost + "/api/Login", {
+            email: this.$data.form.email,
+            password: this.$data.form.password
+          })
+            if (res.data.token != undefined && res.data.nome != undefined){
+              this.$store.commit("guardaTokenUtilizador", res.data.token); 
+              this.$store.commit("guardaNomeUtilizador", res.data.nome); 
+              this.$store.commit("guardaTipoUtilizador", res.data.tipo); 
+              if(res.data.tipo == 0)
+                this.$router.push("/pagina/admin" );
+              if(res.data.tipo == 1)
+                this.$router.push("/pagina/utilizador/" + this.$data.form.email);
+              if(res.data.tipo == 2)
+                this.$router.push("/pagina/canil/" + this.$data.form.email);
+            }
+            else{
+              this.text = "Email ou Palavra-Passe incorretos"; 
+              this.color = "error"; 
+              this.snackbar = true; 
+              this.done = false; 
+            }
+          }
+          catch(e) {
+            this.text = e;
+            this.color = "error";
+            this.snackbar = true;
+            this.done = false;
+            console.log(JSON.stringify(e));
+          }
+        } else {
+          this.text = "Por favor preencha todos os campos!";
+          this.color = "error";
+          this.snackbar = true;
+          this.done = false;
+        }
+      }
+    }
   }
-
-}
 </script>
 
 <style scoped>

@@ -203,7 +203,9 @@
                                         v-model="form.cc"
                                         :rules="regraCC"
                                         name="cc"
-                                        type="cc"
+                                        type="number"
+                                        min = "9"
+                                        max = "9"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -223,7 +225,7 @@
                                         v-model="form.contacto"
                                         :rules="regraContacto"
                                         name="contacto"
-                                        type="contacto"
+                                        type="number"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
