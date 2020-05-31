@@ -21,7 +21,7 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                <v-list-item-title>Nome Utilizador</v-list-item-title>
+                <v-list-item-title>{{this.utilizador.nome}}</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
 
@@ -60,23 +60,48 @@
 </template>
 
 <script>
+const lhost = require("@/config/global").host;
+import axios from "axios";
+
 export default {
+    name: 'Navbar',    
+    props: ['id'], 
     data() {
         return {
             drawer: true,
+            utilizador: {},
             items: [
-            { title: 'Página Inicial', icon: 'dashboard', route: '/pagina/canil'}, 
-            { title: 'Pedidos de Adoção', icon: 'description', route: '/pedido/adocao/canil'},
-            { title: 'Sobre', icon: 'info', route: '/sobre/canil' },
-            { title: 'Donativos', icon: 'payment', route: '/donativos/canil'},
-            { title: 'Horários', icon: 'schedule', route: '/horario/canil' },
-            { title: 'Voluntários', icon: 'people', route: '/voluntarios/canil' },
-            { title: 'Parcerias', icon: 'group_work', route: '/parcerias/canil' },
-            { title: 'FAQs', icon: 'help', route: '/faqs/canil' },
-            { title: 'Entre em Contacto', icon:'question_answer', route: '/entre/contacto/canil'}
+            { title: 'Página Inicial', icon: 'dashboard', route: '/pagina/canil/' + this.id}, 
+            { title: 'Pedidos de Adoção', icon: 'description', route: '/pedidos/adocao/canil/' + this.id},
+            { title: 'Sobre', icon: 'info', route: '/sobre/canil/' + this.id },
+            { title: 'Donativos', icon: 'payment', route: '/donativos/canil/' + this.id},
+            { title: 'Horários', icon: 'schedule', route: '/horario/canil/' + this.id },
+            { title: 'Voluntários', icon: 'people', route: '/voluntarios/canil/' + this.id },
+            { title: 'Parcerias', icon: 'group_work', route: '/parcerias/canil/' + this.id },
+            { title: 'FAQs', icon: 'help', route: '/faqs/canil/' + this.id },
+            { title: 'Entre em Contacto', icon:'question_answer', route: '/entre/contacto/canil/' + this.id}
             ],
         }
-    }
+    },
+    methods: {
+        async logout() {
+            await axios.get(lhost + "/api/Login");
+            this.$router.push("/");
+        }, 
+         preferencias(){
+            this.$router.push("/preferencias/" + this.id);
+        }
+    },
+    created: async function(){
+        try {
+            let response = await axios.get(lhost + "/api/Canis/" + this.id);
+            this.utilizador = response.data;
+            this.ready = true;
+        } 
+        catch (e) {
+            return e;
+        }
+    }, 
 }
 </script>
 
