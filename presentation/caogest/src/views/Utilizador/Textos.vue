@@ -1,103 +1,13 @@
 <template>
     <div>
-        <Navbar :id="$route.params.id"/>
+        <Navbar :id="$route.params.id" />
         <v-card>
             <v-img src="@/assets/informacoesdiversas.png"></v-img>
         </v-card>
 
         <v-card flat height = "100"></v-card>
         
-        <v-card flat width="2000" class="mx-auto" color = "white">
-            <v-row class = "ml-12">
-                <v-col cols = "2">
-                    <v-img max-height = "200" max-width = "200" src="@/assets/direitos.png"></v-img>
-                </v-col>
-                <v-col>
-                    <p class = "display-1 font-weight-medium">Direitos dos Animais</p>
-                    <p class = "headline"> Artigo 1º </p>
-                    <span class = "headline"> 1. Todos os animais nascem iguais perante a vida e têm os mesmos direitos à existência... </span>
-                </v-col>
-                <v-col>     
-                    <v-btn absolute right bottom x-large color ="brown darken-2" dark class = "ma-2 headline" to="/documentos/direitosanimais">Ler</v-btn>
-                </v-col>
-            </v-row>
-            <v-divider inset ></v-divider>
-        </v-card>
-
-        <v-card flat height = "40"></v-card>
-        <v-card flat width="2000" class="mx-auto" color = "white">
-            <v-row class = "ml-12">
-                <v-col cols = "2">
-                    <v-img max-height = "180" max-width = "180" src="@/assets/spay.png"></v-img>
-                </v-col>
-                <v-col>
-                    <p class = "display-1 font-weight-medium">Porquê Esterilizar?</p>
-                    <p class="headline">Porquê Esterilizar?</p>
-                    <span class = "headline"> A reprodução indesejada de animais na Região Autónoma da Madeira é um incómodo problema que carece de solução... </span>
-                </v-col>
-                <v-col>     
-                    <v-btn absolute right bottom x-large color ="brown darken-2" dark class = "ma-2 headline" to="/documentos/esterilizar">Ler</v-btn>
-                </v-col>
-            </v-row>
-            <v-divider inset></v-divider>
-        </v-card>
-        
-        <v-card flat height = "40"></v-card>
-        <v-card flat width="2000" class="mx-auto" color = "white">
-            <v-row class = "ml-12">
-                <v-col cols = "2">
-                    <v-img max-height = "190" max-width = "190" src="@/assets/adoptme.png"></v-img>
-                </v-col>
-                <v-col >
-                    <p class = "display-1 font-weight-medium">Motivos para Adotar Animais Errantes</p>
-                     <p class="headline">Excesso de população animal </p> 
-                    <span class = "headline"> Anualmente milhares de animais de companhia entram em canis e abrigos em todo o país... </span>
-                </v-col>
-                <v-col>     
-                    <v-btn absolute right bottom x-large color ="brown darken-2" dark class = "ma-2 headline" to="/documentos/motivos/adotar">Ler</v-btn>
-                </v-col>
-            </v-row>
-            <v-divider inset></v-divider>
-        </v-card>
-
-        <v-card flat height = "40"></v-card>
-        <v-card flat width="2000" class="mx-auto" color = "white">
-            <v-row class = "ml-12">
-                <v-col cols = "2">
-                    <v-img max-height = "200" max-width = "200" src="@/assets/treino.png"></v-img>
-                </v-col>
-                <v-col >
-                    <p class = "display-1 font-weight-medium">Conselhos para a adoção e treino de hábitos</p>
-                     <p class="headline">Treino de hábitos </p> 
-                    <span class = "headline"> A nossa principal tendência é exagerar nos cuidados dados ao cão, de forma que ele vive mais no nosso colo do que no chão... </span>
-                </v-col>
-                <v-col>     
-                    <v-btn absolute right bottom x-large color ="brown darken-2" dark class = "ma-2 headline" to="/documentos/treino">Ler</v-btn>
-                </v-col>
-            </v-row>
-            <v-divider inset></v-divider>
-        </v-card>
-
-        <v-card flat height = "40"></v-card>
-        <v-card flat width="2000" class="mx-auto" color = "white">
-            <v-row class = "ml-12">
-                <v-col cols = "2">
-                    <v-img max-height = "200" max-width = "200" src="@/assets/doente.png"></v-img>
-                </v-col>
-                <v-col >
-                    <p class = "display-1 font-weight-medium">Doenças e Tratamentos</p>
-                     <p class="headline">Anemia </p> 
-                    <span class = "headline"> Consiste numa diminuição do seu número de glóbulos vermelhos ou do seu constituinte, a hemoglobina... </span>
-                </v-col>
-                <v-col>     
-                    <v-btn absolute right bottom x-large color ="brown darken-2" dark class = "ma-2 headline" to="/documentos/doencas">Ler</v-btn>
-                </v-col>
-            </v-row>
-            <v-divider inset></v-divider>
-        </v-card>
-       
-       
-
+        <Textos :id="$route.params.id" />
         <v-btn
             v-scroll="onScroll"
             x-large
@@ -113,14 +23,17 @@
         >
             <v-icon>keyboard_arrow_up</v-icon>
          </v-btn>  
-        <Footer :id="$route.params.id"/>
+        <Footer :id="$route.params.id" />
     </div>
 </template>
 
 <script>
 import Navbar from '@/components/NavbarFooter/Navbar.vue'
 import Footer from '@/components/NavbarFooter/Footer.vue'
+import Textos from '@/components/Docs/Textos.vue'
   export default {
+      name: "textos", 
+      props:['id'],
         data() {
             return {
                 fab:false,
@@ -128,6 +41,7 @@ import Footer from '@/components/NavbarFooter/Footer.vue'
         },
         components: { Navbar, 
                       Footer, 
+                      Textos,
         }, 
         methods: {
         onScroll (e) {
@@ -138,6 +52,7 @@ import Footer from '@/components/NavbarFooter/Footer.vue'
         toTop () {
             this.$vuetify.goTo(0)
         },
+        
     }
   }
 </script>     

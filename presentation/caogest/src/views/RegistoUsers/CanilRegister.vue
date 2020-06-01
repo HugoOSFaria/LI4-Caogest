@@ -926,6 +926,7 @@
         </v-card>
         </v-col>
     </v-row>
+    <p>{{JSON.stringify(this.form)}}</p>
   </div>
 </template>
 
@@ -1036,6 +1037,7 @@ export default {
             capacidade6:"",
             capacidade7:"", 
             tipo: 2,
+            estado: "Pendente",
         }, 
      
         snackbar: false, 
@@ -1083,6 +1085,7 @@ export default {
               capacidade5:this.form.capacidade5, 
               capacidade6:this.form.capacidade6,
               capacidade7:this.form.capacidade7, 
+              estado:this.form.estado,
             }); 
             console.log(JSON.stringify(resposta.data));
             this.text = "Canil criado com sucesso!";

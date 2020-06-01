@@ -22,7 +22,7 @@
                                 <v-col
                                     class="d-flex child-flex"
                                     cols="4"
-                                    v-for="obj in items"
+                                    v-for="obj in disponiveis"
                                     :key="obj.nome"
                                     >
                                     <v-card flat tile>
@@ -360,6 +360,7 @@ export default {
         cor: "", 
         porte: "", 
         descricao: "", 
+        disponivel: [],  
         fotos: []
     }),
     components: {   Navbar, 
@@ -399,6 +400,13 @@ export default {
            return e.fotos[0].path
         },
        
-    }  
+    },
+    computed: {
+        disponiveis: function () {
+        return this.items.filter(function (disponivel) {
+            return (disponivel.estado !== "Apagado" && disponivel.estado !== "Adotado")
+        })
+        }, 
+    }      
 }
 </script>

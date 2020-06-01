@@ -347,7 +347,7 @@ export default {
               contacto: this.form.contacto
             }); 
             console.log(JSON.stringify(resposta.data));
-            this.text = "Canil criado com sucesso!";
+            this.text = "Utilizador criado com sucesso!";
             this.color = "success"; 
             this.snackbar = true; 
           }

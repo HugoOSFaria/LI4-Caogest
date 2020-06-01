@@ -1,7 +1,7 @@
 <template>
     <div id = "direitos" class = "direitos">
-        <Navbar/>
-        <Direitos/>
+        <Navbar :id="$route.params.id" />
+        <Direitos :id="$route.params.id" />
         <v-btn
             v-scroll="onScroll"
             x-large
@@ -17,7 +17,7 @@
         >
             <v-icon>keyboard_arrow_up</v-icon>
          </v-btn>   
-        <Footer/>
+        <Footer :id="$route.params.id" />
     </div>
 </template>
 
@@ -26,6 +26,8 @@ import Navbar from '@/components/NavbarFooter/Navbar.vue'
 import Footer from '@/components/NavbarFooter/Footer.vue'
 import Direitos from '@/components/Docs/Direitos.vue'
 export default {
+    name:"direitos", 
+    props:['id'],
     data() {
         return {
             fab:false,

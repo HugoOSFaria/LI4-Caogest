@@ -1,10 +1,9 @@
 <template>
-    <div id = "preferences" class = "preferences">
-        <Navbar :id="$route.params.id"/>
+    <div id = "preferencias" class = "preferencias">
+        <Navbar :id="$route.params.id" />
         <v-card flat height= "60" color = "white"></v-card>
-        <Preferencias :id="$route.params.id"/>
-            
-        <Footer :id="$route.params.id"/>
+        <Preferencias :id="$route.params.id" />
+        <Footer :id="$route.params.id" />
     </div>
 </template>
 
@@ -14,7 +13,6 @@ import Footer from '@/components/NavbarFooter/Footer.vue'
 import Preferencias from '@/components/Utilizador/Preferencias.vue'
 
 export default {
-    name: "Preferencias",
     components: {  
         Navbar, 
         Footer, 
