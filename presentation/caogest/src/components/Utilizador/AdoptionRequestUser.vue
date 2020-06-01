@@ -39,7 +39,7 @@
         </v-layout>
 
       <v-card flat height = "100"></v-card>
-      <v-card class = " mx-auto" height = "80" width="2000" flat color = "brown lighten-5" v-if="this.pedidos.length === 0"> 
+      <v-card class = "mx-auto" height = "80" width="2000" flat color = "brown lighten-5" v-if="this.pedidos.length === 0"> 
         <v-card-title class = "display-1 text-center justify-center"> Não existem pedidos de adoção </v-card-title>
         
       </v-card>
@@ -51,7 +51,7 @@
           </v-flex>
           <v-flex xs12 md5>
             <div class="caption grey--text">Nome Canil</div>
-            <div class=" headline">{{ pedido.nome_Utilizador }}</div>
+            <div class=" headline">{{ pedido.nome_Canil }}</div>
           </v-flex>
           <v-flex xs8 md2>
             <div class="caption grey--text">Data de Submissão</div>
@@ -94,7 +94,7 @@
             <v-card flat height = "100" color = "brown lighten-5">
             <v-row>
                 <v-card-text class = "display-2 black--text text-center">
-                    {{individual.utilizador_user_email}} 
+                    {{individual.nome_Utilizador}} 
                     <v-icon>pets</v-icon> 
                     {{individual.cao_idCao}}
                 </v-card-text>
@@ -112,7 +112,7 @@
                     <v-card flat>
                         <v-row>
                             <p class = " display-1 font-weight-bold" color = "grey"> Nome Completo: 
-                                <span class = "display-1 font-weight-regular ">{{individual.utilizador_user_email}}</span>
+                                <span class = "display-1 font-weight-regular ">{{individual.nome_Utilizador}}</span>
                             </p> 
                         </v-row>
                         <v-card flat color = "white" height = "40"></v-card>

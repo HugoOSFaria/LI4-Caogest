@@ -1,17 +1,16 @@
 <template>
+    <div>   
     <div>
-        <div>
-        <v-row>
-            <v-col cols="12" sm="6" offset-sm="2">
-                    <v-btn class="ma-6" x-large color = "brown lighten-4" @click="registarCao()">Registar Cão</v-btn>
+        <v-row align = "center" justify = "center">
+            <v-col>
                     <v-container fluid>
                         <v-item-group
                             v-model="selected"
                             multiple
                         >
                             <v-card flat height = "100"></v-card>
-                            <v-card class = " mx-auto" height = "80" width="2000" flat color = "brown lighten-5" v-if="this.disponiveis.length === 0"> 
-                                <v-card-title class = "display-1 text-center justify-center"> Não existem cães registados neste canil </v-card-title>
+                            <v-card class = " mx-auto" height = "80" width="1770" flat color = "brown lighten-5" v-if="this.disponiveis.length === 0"> 
+                                <v-card-title class = "display-1 text-center justify-center"> Não existem cães favoritos </v-card-title>
                             </v-card>
                             <v-row>
                                 <v-col
@@ -33,7 +32,12 @@
                                                     <v-row class="fill-height ma-0" align="center" justify="center">
                                                         <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                                                     </v-row>
-                                                </template>  
+                                                </template> 
+                                                <v-btn icon dark>
+                                                    <v-icon large>
+                                                        {{ active ? 'mdi-heart-outline' : 'mdi-heart' }}
+                                                    </v-icon>
+                                                </v-btn> 
                                             </v-img>
                                         </v-item>
                                     <v-card-actions class="justify-center">
@@ -50,46 +54,6 @@
                         </v-row>
                     </v-item-group>
                 </v-container>      
-                </v-col>
-                <v-spacer></v-spacer>
-
-                <v-col cols = "3">
-                    <v-row>
-                        <v-card flat>
-                            <v-card-text align = "start" justify= "end" >
-                                <v-card-text class="display-2 font-weight-bold black--text">Pesquisar Cães</v-card-text>
-                                <v-card flat height= "50" color = "white"></v-card>
-                                    <v-text-field flat color = "grey" name="input-7-1" outlined label="Raça" ></v-text-field>
-                                    <v-select 
-                                        color = "grey"
-                                        name="input-7-1"
-                                        flat outlined 
-                                        :items="itemscor"
-                                        label="Cor"
-                                    ></v-select>
-                                    <v-select 
-                                        color = "grey"
-                                        name="input-7-1"
-                                        flat outlined 
-                                        :items="itemssexo"
-                                        label="Género"
-                                    ></v-select>
-                                    <v-text-field flat color = "grey" name="input-7-1" outlined label="Idade" ></v-text-field>
-                                    <v-select 
-                                        color = "grey"
-                                        name="input-7-1"
-                                        flat outlined 
-                                        :items="itemsporte"
-                                        label="Porte"
-                                    ></v-select>
-                                    <v-text-field flat color = "grey" name="input-7-1" outlined label="Distrito" ></v-text-field>
-                            </v-card-text>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn class="ma-6" x-large color = "brown lighten-4" @click="dialog = false">Pesquisar</v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-row>
                 </v-col>
             </v-row>
         </div>
@@ -133,30 +97,10 @@
                             width = "800" 
                             src="@/assets/example.jpg"
                         ></v-img> 
-                        <v-card flat color = "white" height = "100"></v-card>
-                            <v-row>
-                                <v-btn color = "red darken-3" dark x-large class = "headline" @click="alert = !alert"> Remover Cão</v-btn>
-                                    <v-alert
-                                        :value="alert"
-                                        color="red"
-                                        prominent
-                                        dark
-                                        transition="scale-transition"
-                                        type = "error"
-                                        text
-                                    >
-                                    <v-row align="center">
-                                        <v-col class="grow">Tem a certeza de que pretende remover este cão? Todos os dados serão perdidos, pelo que é uma ação irreversível.</v-col>
-                                        <v-col class="shrink">
-                                            <v-btn @click="removeCao()">Remover</v-btn>
-                                        </v-col>
-                                    </v-row>
-                                </v-alert>
-                            </v-row>
-                        </v-card>
-                    </v-col>
+                    </v-card>
+                </v-col>
 
-                     <v-col>
+                <v-col>
                     <v-card flat>
                         <v-row>
                             <p 
@@ -288,7 +232,7 @@ const lhost = require("@/config/global").host;
 
 
 export default {
-    name: "DogKennel",
+    name: "Dog",
     props:['id'],
 
     data: () => ({   
@@ -349,34 +293,9 @@ export default {
             this.fotos = dados.fotos;
             this.dialog = true;
         },
-        removeCao: async function() {
-            try{ 
-                var resposta = 
-                await axios.put(lhost + "/api/Caes/" + this.idCao , {
-                    idCao:this.idCao,
-                    nome:this.nome,
-                    raca:this.raca,
-                    idade:this.idade,
-                    sexo:this.sexo,
-                    cor:this.cor,
-                    porte:this.porte,
-                    esterilizacao:this.esterilizacao,
-                    descricao:this.descricao,
-                    estado:"Apagado",
-                    canil_user_email:this.id,
-                    fotos: this.fotos,
-                });
-                console.log(JSON.stringify(resposta.data));
-                this.atualiza();
-                this.dialog=false;
-            }
-            catch(e){
-                console.log("erro: " + e); 
-            }
-        },
         atualiza: async function(){
             try {
-                let response = await axios.get(lhost + "/api/CaesEmailCanil/" + this.id);
+                let response = await axios.get(lhost + "/api/Favoritos/" + this.id);
                 this.caes = response.data;
                 this.ready = true;
             } 
@@ -384,17 +303,13 @@ export default {
                 return e;
             }
         },
-        registarCao(){
-           this.$router.push("/registar/cao/" + this.id); 
-        },
-
         getPath: function(e) {
            return e.fotos[0].path
         },
     },
     created: async function(){
         try {
-        let response = await axios.get(lhost + "/api/CaesEmailCanil/" + this.id);
+        let response = await axios.get(lhost + "/api/Favoritos/" + this.id);
         this.caes = response.data;
         this.ready = true;
         } 
@@ -405,7 +320,7 @@ export default {
     computed: {
         disponiveis: function () {
         return this.caes.filter(function (disponivel) {
-            return (disponivel.estado !== "Apagado" && disponivel.estado !== "Adotado")
+            return (disponivel.estado !== "Apagado" && disponivel.estado != "Adotado")
         })
         }, 
     }    

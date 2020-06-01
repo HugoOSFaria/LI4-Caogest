@@ -69,7 +69,7 @@ const lhost = require("@/config/global").host;
     name:"NameChange",
     props:['id'],
     data: () => ({
-      utilizador:{},
+      canil:{},
       dialog: false,
       form:{
         nome: "", 
@@ -86,17 +86,18 @@ const lhost = require("@/config/global").host;
         if (this.$refs.form.validate()) {
           try{ 
             var resposta = 
-            await axios.put(lhost + "/api/Utilizadors/" + this.id , {
-              email:this.utilizador.email, 
+            await axios.put(lhost + "/api/Canis/" + this.id , {
+              email:this.canil.email, 
+              nib:this.canil.nib,
               nome:this.form.nome,
-              data_de_nascimento:this.utilizador.data_de_nascimento,
-              distrito:this.utilizador.distrito,
-              rua: this.utilizador.rua,
-              localidade:this.utilizador.localidade,
-              cc:this.utilizador.cc,
-              sexo:this.utilizador.sexo,
-              contacto: this.utilizador.contacto,
-              encriptado: this.utilizador.encriptado,
+              capacidadeOcupada:this.canil.capacidadeOcupada,
+              capacidadeTotal:this.canil.capacidadeTotal,
+              distrito:this.canil.distrito,
+              rua: this.canil.rua,
+              localidade:this.canil.localidade,
+              contacto: this.canil.contacto,
+              estado: this.canil.estado, 
+              encriptado: this.canil.encriptado,
             });
             console.log(JSON.stringify(resposta.data));
             this.dialog = false; 
@@ -118,8 +119,8 @@ const lhost = require("@/config/global").host;
     },
     created: async function(){
       try {
-        let response = await axios.get(lhost + "/api/Utilizadors/" + this.id);
-        this.utilizador = response.data;
+        let response = await axios.get(lhost + "/api/Canis/" + this.id);
+        this.canil = response.data;
         this.ready = true;
       } 
       catch (e) {

@@ -52,7 +52,7 @@
             </v-row>
         </v-container>
         <v-dialog v-model="dialog" persistent width="1000px">
-        <v-card class = "mx-auto" height = "400">
+        <v-card class = "mx-auto" >
             <v-card color = "brown darken-4" flat dark class="pa-6" height="80">
                 <span class="display-1" dark>Alterar Horário</span>
             </v-card>
@@ -61,11 +61,11 @@
             <v-row>
                 <v-col cols = "6">
                     <v-menu
-                        ref="dataInicio7"
+                        ref="dataInicio"
                         v-model="menu13"
                         :close-on-content-click="false"
                         :nudge-right="40"
-                        :return-value.sync="dataInicio7"
+                        :return-value.sync="dataInicio"
                         transition="scale-transition"
                         offset-y
                         max-width="290px"
@@ -79,26 +79,26 @@
                                 readonly
                                 color = "grey"
                                 v-on="on"
-                                v-model="form.dataInicio7"
+                                v-model="form.dataInicio"
                             ></v-text-field>
                         </template>
                         <v-time-picker
                             format="24hr"
-                            v-model="form.dataInicio7"
+                            v-model="form.dataInicio"
                             full-width
                             color = "brown lighten-2"
-                            @click:minute="$refs.dataInicio7.save(dataInicio7)"
+                            @click:minute="$refs.dataInicio.save(dataInicio)"
                         ></v-time-picker>
                     </v-menu>
                 </v-col>
                                      
                 <v-col cols = "6">
                     <v-menu
-                        ref="dataFim7"
+                        ref="dataFim"
                         v-model="menu14"
                         :close-on-content-click="false"
                         :nudge-right="40"
-                        :return-value.sync="dataFim7"
+                        :return-value.sync="dataFim"
                         transition="scale-transition"
                         offset-y
                         max-width="290px"
@@ -112,24 +112,38 @@
                                 readonly
                                 color = "grey"
                                 v-on="on"
-                                v-model="form.dataFim7"
+                                v-model="form.dataFim"
                             ></v-text-field>
                         </template>
                         <v-time-picker
                             format="24hr"
-                            v-model="form.dataFim7"
+                            v-model="form.dataFim"
                             full-width
                             color = "brown lighten-2"
-                            @click:minute="$refs.dataFim7.save(dataFim7)"
+                            @click:minute="$refs.dataFim.save(dataFim)"
                         ></v-time-picker>
                     </v-menu>
                 </v-col>    
             </v-row>
+            <v-card flat class = "ma-8">
+                <v-row>
+                    <v-col cols = "6">
+                        <v-text-field
+                            :rules="regraVoluntarios"
+                            label="Número Máximo de Voluntários"
+                            color="grey"
+                            v-model="form.capacidade"
+                            type="number"
+                        >
+                        </v-text-field>
+                    </v-col>
+                </v-row>
+            </v-card>
             <v-card height = "80" flat></v-card>
             <v-row align = "end" justify = "end">
                 <v-spacer></v-spacer>
-                <v-btn class = "mr-2 headline" color="brown lighten-1" text @click="dialog = false">Cancelar</v-btn>
-                <v-btn class = "mr-2 headline" color="brown lighten-1" text @click="confirma()">Confirmar</v-btn>
+                <v-btn class = "ma-4 headline" color="brown lighten-1" text @click="dialog = false">Cancelar</v-btn>
+                <v-btn class = "ma-4 headline" color="brown lighten-1" text @click="confirma()">Confirmar</v-btn>
             </v-row>
             </v-card>
         </v-card>
@@ -144,19 +158,23 @@ const lhost = require("@/config/global").host;
 
 
 export default {
-    name: 'Horario',
+    name: 'Horarios',
     props:['id'],
     data: () => ({             
         items: [],
         dialog: false,
         regraHorario: [v => !!v || "Horários obrigatórios."],
-        dataInicio7:null, 
-        dataFim7:null, 
+        regraVoluntarios: [v => !!v || "Número de Voluntários obrigatório."],
+        dataInicio:null, 
+        dataFim:null, 
         menu13:false, 
         menu14:false, 
+        diaS:"",
+        canil_user_email:"", 
         form:{
-            dataInicio7:"", 
-            dataFim7:"",
+            dataInicio:"", 
+            dataFim:"",
+            capacidade:"",
         }
     }),
     components: { },
@@ -184,28 +202,25 @@ export default {
             return "Domingo";
         },
         editaHorario: function(dados){
-            this.dataInicio7 = dados.dataInicio7;
-            this.dataFim7 = dados.dataFim7;
+            this.dataInicio = dados.dataInicio;
+            this.dataFim = dados.dataFim;
+            this.capacidade = dados.capacidade;
+            this.diaS = dados.dia;
+            this.canil_user_email = dados.canil_user_email;
             this.dialog = true;
         },
         confirma:  async function() {
             try{ 
                 var resposta = 
-                await axios.post(lhost + "/api/Canil/" + this.idCao , {
-                    idCao:this.idCao,
-                    nome:this.nome,
-                    raca:this.raca,
-                    idade:this.idade,
-                    sexo:this.sexo,
-                    cor:this.cor,
-                    porte:this.porte,
-                    esterilizacao:this.esterilizacao,
-                    descricao:this.descricao,
-                    estado:"Apagado",
-                    canil_user_email:this.id
+                await axios.put(lhost + "/api/Horarios/" + this.id + "/" + this.diaS , {
+                    dataInicio: this.form.dataInicio, 
+                    dataFim: this.form.dataFim, 
+                    capacidade: this.form.capacidade, 
+                    registados: 0,
+                    dia: this.diaS,
+                    canil_user_email: this.id
                 });
                 console.log(JSON.stringify(resposta.data));
-                this.atualiza();
                 this.dialog=false;
             }
             catch(e){

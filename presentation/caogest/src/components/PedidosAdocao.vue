@@ -3,7 +3,7 @@
         <v-card flat height = "100" color = "brown lighten-5">
             <v-row>
                 <v-card-text class = "display-2 black--text text-center">
-                    {{pedido.utilizador_user_email}} 
+                    {{pedido.nome_Utilizador}} 
                     <v-icon>pets</v-icon> 
                     {{pedido.cao_idCao}}
                 </v-card-text>
@@ -21,7 +21,7 @@
                     <v-card flat>
                         <v-row>
                             <p class = " display-1 font-weight-bold" color = "grey"> Nome Completo: 
-                                <span class = "display-1 font-weight-regular ">{{pedido.utilizador_user_email}}</span>
+                                <span class = "display-1 font-weight-regular ">{{pedido.nome_Utilizador}}</span>
                             </p> 
                         </v-row>
                         <v-card flat color = "white" height = "40"></v-card>

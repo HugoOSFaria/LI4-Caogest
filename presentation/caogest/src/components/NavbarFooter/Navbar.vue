@@ -89,7 +89,7 @@ export default {
             await axios.get(lhost + "/api/Login");
             this.$router.push("/");
         }, 
-         preferencias(){
+        preferencias(){
             this.$router.push("/preferencias/" + this.id);
         }
     },

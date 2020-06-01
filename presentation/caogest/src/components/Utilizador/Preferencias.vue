@@ -12,53 +12,51 @@
                     <v-card flat height= "80" color = "white"></v-card>    
                     
                     <v-row>
-                        <v-col>
-                            <p class = " pa-8 headline font-weight-regular" color = "grey"> NOME </p> 
-                        </v-col>
+                        <v-flex xs8 md4>
+                        <div class = " pa-8 headline font-weight-regular" color = "grey"> NOME </div> 
+                        </v-flex>
                         <v-spacer></v-spacer>
-                        <v-col>
-                            <p class = " pa-8 headline font-weight-regular" color = "grey darken-4">
+                        <v-flex xs8 md4>
+                        <div  class = " pa-8 headline font-weight-regular" color = "grey darken-4">
                                 {{dados.nome}}
-                            </p>
-                        </v-col>
+                            </div>
+                        </v-flex>
                         <v-spacer></v-spacer>
-                        <v-col>
-                            <NameChange/>  
-                        </v-col>
+                       <v-flex xs8 md4>
+                            <NameChange :id="$route.params.id"/>  
+                        </v-flex>
                     </v-row>
                     <v-divider></v-divider>
 
                     <v-row>
-                        <v-col>
-                            <p class = " pa-8 headline font-weight-regular" color = "grey"> ANIVERSÁRIO </p> 
-                        </v-col>
+                        <v-flex xs8 md4>
+                        <div  class = " pa-8 headline font-weight-regular" color = "grey"> ANIVERSÁRIO </div> 
+                        </v-flex>
                         <v-spacer></v-spacer>
-                        <v-col>
-                            <p class = " pa-8 headline font-weight-regular" color = "grey darken-4">
+                        <v-flex xs8 md4>
+                        <div  class = " pa-8 headline font-weight-regular" color = "grey darken-4">
                                 {{date(dados.data_de_nascimento)}}
-                            </p>
-                        </v-col>
+                            </div>
+                        </v-flex>
                         <v-spacer></v-spacer>
-                        <v-col>
-                            <BirthChange/>  
-                        </v-col>
+                        <v-flex xs8 md4>
+                            <BirthChange :id="$route.params.id"/>  
+                        </v-flex>
                     </v-row>
                     <v-divider></v-divider>
 
                     <v-row>
-                       <v-col>
-                            <p class = " pa-8 headline font-weight-regular" color = "grey"> PALAVRA-PASSE </p> 
-                        </v-col>
+                       <v-flex xs8 md4>
+                        <div  class = " pa-8 headline font-weight-regular" color = "grey"> PALAVRA-PASSE </div> 
+                        </v-flex>
                         <v-spacer></v-spacer>
-                        <v-col>
-                            <p class = " pa-8 headline font-weight-regular" color = "grey darken-4">
-                                **********
-                            </p>
-                        </v-col>
+                        <v-flex xs8 md4>
+                        <div class = " pa-8 headline font-weight-regular" color = "grey darken-4">**********</div>
+                        </v-flex>
                         <v-spacer></v-spacer>
-                        <v-col>
-                            <PasswordChange/>  
-                        </v-col>
+                        <v-flex xs8 md4>
+                           <!-- <PasswordChange :id="$route.params.id"/>  -->
+                        </v-flex>
                     </v-row>
                 </v-card>    
 
@@ -70,71 +68,71 @@
                     <v-card flat height= "20" color = "white"></v-card>    
                     
                     <v-row>
-                        <v-col>
-                            <p class = " pa-8 headline font-weight-regular" color = "grey"> EMAIL </p> 
-                        </v-col>
+                        <v-flex xs8 md4>
+                        <div  class = " pa-8 headline font-weight-regular" color = "grey"> EMAIL </div> 
+                        </v-flex>
                         <v-spacer></v-spacer>
-                        <v-col>
-                            <p class = " pa-8 headline font-weight-regular" color = "grey darken-4">
+                        <v-flex xs8 md4>
+                        <div  class = " pa-8 headline font-weight-regular" color = "grey darken-4">
                                 {{dados.email}}
-                            </p>
-                        </v-col>
+                            </div>
+                        </v-flex>
                         <v-spacer></v-spacer>
-                        <v-col>
+                        <v-flex xs8 md4>
                             <v-btn class="ma-5" disabled text fab></v-btn>
-                        </v-col>
+                        </v-flex>
                         
                     </v-row>
                     <v-divider></v-divider>
 
                     <v-row>
-                        <v-col>
-                            <p class = " pa-8 headline font-weight-regular" color = "grey"> MORADA </p> 
-                        </v-col>
+                        <v-flex xs8 md4>
+                        <div  class = " pa-8 headline font-weight-regular" color = "grey"> MORADA </div> 
+                        </v-flex>
                         <v-spacer></v-spacer>
-                        <v-col>
-                            <p class = " pa-8 headline font-weight-regular" color = "grey darken-4">
+                        <v-flex xs8 md4>
+                        <div  class = " pa-8 headline font-weight-regular" color = "grey darken-4">
                                 {{dados.rua}}
-                            </p>
-                        </v-col>
+                            </div>
+                        </v-flex>
                         <v-spacer></v-spacer>
-                        <v-col>
-                            <AddressChange/>  
-                        </v-col>
+                        <v-flex xs8 md4>
+                            <AddressChange :id="$route.params.id"/>  
+                        </v-flex>
                     </v-row>
                     <v-divider></v-divider>
 
                     <v-row>
-                        <v-col>
-                            <p class = " pa-8 headline font-weight-regular" color = "grey"> CONCELHO </p> 
-                        </v-col>
+                        <v-flex xs8 md4>
+                        <div  class = " pa-8 headline font-weight-regular" color = "grey"> CONCELHO </div> 
+                        </v-flex>
                         <v-spacer></v-spacer>
-                        <v-col>
-                            <p class = " pa-8 headline font-weight-regular" color = "grey darken-4">
+                        <v-flex xs8 md4>
+                        <div  class = " pa-8 headline font-weight-regular" color = "grey darken-4">
                                 {{dados.localidade}}
-                            </p>
-                        </v-col>
+                            </div>
+                        </v-flex>
                         <v-spacer></v-spacer>
-                        <v-col>
-                            <CityChange/>  
-                        </v-col>
+                        <v-flex xs8 md4>
+                            <CityChange :id="$route.params.id"/>  
+                        </v-flex>
                     </v-row>
                     <v-divider></v-divider>
 
                     <v-row>
-                        <v-col>
-                            <p class = " pa-8 headline font-weight-regular" color = "grey"> NÚMERO DE CARTÃO DE CIDADÃO </p> 
-                        </v-col>
+                        <v-flex xs8 md4>
+                        <div  class = " pa-8 headline font-weight-regular" color = "grey"> NÚMERO DE CARTÃO DE CIDADÃO </div> 
+                        </v-flex>
                         <v-spacer></v-spacer>
-                        <v-col>
-                            <p class = " pa-8 headline font-weight-regular" color = "grey darken-4">
+                        <v-flex xs8 md4>
+                        <div  class = " pa-8 headline font-weight-regular" color = "grey darken-4">
                                 {{dados.cc}}
-                            </p>
-                        </v-col>
+                            </div>
+                        </v-flex>
                         <v-spacer></v-spacer>
-                        <v-col>
-                            <NIFChange/>  
-                        </v-col>
+                        <v-flex xs8 md4>
+                            <NIFChange :id="$route.params.id"/>  
+                        </v-flex>
                     </v-row>
                 </v-card>     
                 <v-card flat height= "100" color = "white"></v-card>          
@@ -164,7 +162,7 @@
 import NameChange from '@/components/EditarDados/NameChange.vue'
 import BirthChange from '@/components/EditarDados/BirthChange.vue'
 import AddressChange from '@/components/EditarDados/AddressChange.vue'
-import PasswordChange from '@/components/EditarDados/PasswordChange.vue'
+//import PasswordChange from '@/components/EditarDados/PasswordChange.vue'
 import CityChange from '@/components/EditarDados/CityChange.vue'
 import NIFChange from '@/components/EditarDados/NIFChange.vue'
 import moment from 'moment/moment'
@@ -183,7 +181,7 @@ export default {
         NameChange,
         BirthChange,
         AddressChange,
-        PasswordChange,
+        //PasswordChange,
         CityChange,
         NIFChange
     },   

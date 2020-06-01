@@ -46,7 +46,7 @@
         </v-list>
         <template v-slot:append>
         <div class="pa-2">
-            <v-btn x-large text block to='/preferencias/canil'>
+            <v-btn x-large text block @click="preferencias()">
                 <v-icon left>settings</v-icon>Preferências
             </v-btn>
         </div>
@@ -73,11 +73,11 @@ export default {
             items: [
             { title: 'Página Inicial', icon: 'dashboard', route: '/pagina/canil/' + this.id}, 
             { title: 'Pedidos de Adoção', icon: 'description', route: '/pedidos/adocao/canil/' + this.id},
-            { title: 'Sobre', icon: 'info', route: '/sobre/canil/' + this.id },
             { title: 'Donativos', icon: 'payment', route: '/donativos/canil/' + this.id},
             { title: 'Horários', icon: 'schedule', route: '/horario/canil/' + this.id },
             { title: 'Voluntários', icon: 'people', route: '/voluntarios/canil/' + this.id },
             { title: 'Parcerias', icon: 'group_work', route: '/parcerias/canil/' + this.id },
+            { title: 'Sobre', icon: 'info', route: '/sobre/canil/' + this.id },
             { title: 'FAQs', icon: 'help', route: '/faqs/canil/' + this.id },
             { title: 'Entre em Contacto', icon:'question_answer', route: '/entre/contacto/canil/' + this.id}
             ],
@@ -86,10 +86,10 @@ export default {
     methods: {
         async logout() {
             await axios.get(lhost + "/api/Login");
-            this.$router.push("/");
+            this.$router.push("/"); 
         }, 
          preferencias(){
-            this.$router.push("/preferencias/" + this.id);
+            this.$router.push("/preferencias/canil/" + this.id);
         }
     },
     created: async function(){

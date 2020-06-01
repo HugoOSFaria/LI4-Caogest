@@ -8,7 +8,7 @@
         <v-layout row class="mb-1"> 
             <v-tooltip top>
                 <template v-slot:activator="{ on }">
-                    <v-btn class = "ma-2" text @click="sortBy('utilizador_user_email')" v-on="on">
+                    <v-btn class = "ma-2" text @click="sortBy('nome_Utilizador')" v-on="on">
                         <v-icon left small>person</v-icon>    
                         <span class = "caption text-lowercase">Por nome de utilizador</span>
                     </v-btn>  
@@ -41,7 +41,7 @@
         <v-layout row wrap :class="`pa-7 pedido ${pedido.estado}`">
           <v-flex xs4 md2>
             <div class="caption grey--text">Nome Utilizador</div>
-            <div class=" headline">{{ pedido.utilizador_user_email }}</div>
+            <div class=" headline">{{ pedido.nome_Utilizador }}</div>
           </v-flex>
           <v-flex xs8 md4>
             <div class="caption grey--text">Nome Canil</div>

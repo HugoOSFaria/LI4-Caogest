@@ -2,7 +2,7 @@
         <v-dialog v-model="dialog" persistent width="800px">
             <template v-slot:activator="{ on }">
                 
-                        <v-btn class="ma-5" text fab v-on="on">
+                        <v-btn class="pa-12 ma-2" text fab v-on="on">
                           <v-icon x-large color = "grey"> keyboard_arrow_right</v-icon>
                         </v-btn>
                     

@@ -13,9 +13,6 @@
                 </v-toolbar>
                     
                 <v-card color = "white" height = "150" flat></v-card>
-
-                
-
             </v-card>    
         </v-dialog>
     </div>

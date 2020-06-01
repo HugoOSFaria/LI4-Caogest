@@ -23,18 +23,19 @@
     <v-form ref="form" lazy-validation>
     <v-card>
       <v-card flat color = "deep-orange lighten-4" class = "pa-6">
-        <span class="display-1" dark>Alterar Nome</span>
+        <span class="display-1" dark>Alterar Contacto</span>
       </v-card>
       <v-card-text>
         <v-container>
           <v-col>
             <v-text-field 
               color = "grey" 
-              placeholder="Novo Nome" 
+              placeholder="Novo Contacto" 
               required
               class = "ma-12"
-              v-model="form.nome"
-              :rules="regraNome"
+              v-model="form.contacto"
+              :rules="regraContacto"
+              type="number"
             ></v-text-field>
           </v-col>
         </v-container>
@@ -66,41 +67,42 @@ import axios from 'axios'
 const lhost = require("@/config/global").host;
 
   export default {
-    name:"NameChange",
+    name:"ContactoChange",
     props:['id'],
     data: () => ({
-      utilizador:{},
+      canil:{},
       dialog: false,
       form:{
-        nome: "", 
+        contacto: "", 
       },
       snackbar: false, 
       color: "", 
       done: false, 
       timeout: 4000,
       text: "", 
-      regraNome: [v => !!v || "Nome obrigatório."],
+      regraContacto: [v => !!v || "Contacto obrigatório."],
     }),
     methods:{
       confirma: async function(){
         if (this.$refs.form.validate()) {
           try{ 
             var resposta = 
-            await axios.put(lhost + "/api/Utilizadors/" + this.id , {
-              email:this.utilizador.email, 
-              nome:this.form.nome,
-              data_de_nascimento:this.utilizador.data_de_nascimento,
-              distrito:this.utilizador.distrito,
-              rua: this.utilizador.rua,
-              localidade:this.utilizador.localidade,
-              cc:this.utilizador.cc,
-              sexo:this.utilizador.sexo,
-              contacto: this.utilizador.contacto,
-              encriptado: this.utilizador.encriptado,
+            await axios.put(lhost + "/api/Canis/" + this.id , {
+              email:this.canil.email, 
+              nib:this.canil.nib,
+              nome:this.canil.nome,
+              capacidadeOcupada:this.canil.capacidadeOcupada,
+              capacidadeTotal:this.canil.capacidadeTotal,
+              distrito:this.canil.distrito,
+              rua: this.canil.rua,
+              localidade:this.canil.localidade,
+              contacto: this.form.contacto,
+              estado: this.canil.estado, 
+              encriptado: this.canil.encriptado,
             });
             console.log(JSON.stringify(resposta.data));
             this.dialog = false; 
-            this.text = "Nome alterado com sucesso!";
+            this.text = "Contacto alterado com sucesso!";
             this.color = "success"; 
             this.snackbar = true; 
           }
@@ -118,8 +120,8 @@ const lhost = require("@/config/global").host;
     },
     created: async function(){
       try {
-        let response = await axios.get(lhost + "/api/Utilizadors/" + this.id);
-        this.utilizador = response.data;
+        let response = await axios.get(lhost + "/api/Canis/" + this.id);
+        this.canil = response.data;
         this.ready = true;
       } 
       catch (e) {
