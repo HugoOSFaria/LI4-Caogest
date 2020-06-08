@@ -32,15 +32,15 @@ namespace trial2.Models
             });
             modelBuilder.Entity<Favoritos>(entity =>
             {
-                entity.HasKey(f => new { f.utilizador_user_email, f.cao_idCao });
+                entity.HasKey(f => new { f.utilizador_user_email, f.cao_idCa });
 
                 entity.HasOne(f => f.utilizador)
                     .WithMany(u => u.favoritos)
                     .HasForeignKey(f => f.utilizador_user_email);
 
-                entity.HasOne(f => f.cao)
+                /*entity.HasOne(f => f.cao)
                     .WithMany(u => u.favoritos)
-                    .HasForeignKey(f => f.cao_idCao);
+                    .HasForeignKey(f => f.cao_idCao);*/
 
             });
             modelBuilder.Entity<Horario>().HasKey(h => new { h.dataInicio, h.dataFim, h.canil_user_email, h.dia});
@@ -68,5 +68,6 @@ namespace trial2.Models
         public DbSet<trial2.Models.Donativos> Donativos { get; set; }
         public DbSet<trial2.Models.Voluntarios> Voluntarios { get; set; }
         public DbSet<trial2.Models.Sugestoes> Sugestoes { get; set; }
+        public DbSet<trial2.Models.Documento> Documento { get; set; }
     }
 }

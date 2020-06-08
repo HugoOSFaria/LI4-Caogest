@@ -23,6 +23,7 @@ namespace trial2.Models
 
         [ForeignKey("Canil")]
         public string canil_user_email { get; set; }
-        public ICollection<Favoritos> favoritos { get; set; }
+        //public ICollection<Favoritos> favoritos { get; set; }
+        public Cao() { }
     }
 }

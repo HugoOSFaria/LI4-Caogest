@@ -12,6 +12,6 @@ namespace trial2.Models
         public Utilizador utilizador { get; set; }
         public string utilizador_user_email { get; set; }
         public Cao cao { get; set; }
-        public int cao_idCao { get; set; }
+        public int cao_idCa { get; set; }
     }
 }

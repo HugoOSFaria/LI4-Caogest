@@ -10,7 +10,7 @@ namespace trial2.Models
     public class Sugestoes
     {
         [Key]
-        public int id { get; set; }
+        public int identificacao { get; set; }
         public string nome { get; set; }
         public string sugestoes { get; set; }
         public string estado { get; set; }
