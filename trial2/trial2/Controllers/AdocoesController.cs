@@ -44,14 +44,14 @@ namespace trial2.Controllers
                     exterior = a.exterior,
                     tipoMoradia = a.tipoMoradia,
                     motivo = a.motivo,
-                    utilizador_user_email = a.utilizador_user_email,
                     comprovativo = a.comprovativo,
                     donoAnimal = a.donoAnimal
                 };
 
-                res.utilizador_user_email = await (from us in _context.Utilizador
-                                                   where us.email == a.utilizador_user_email
-                                                   select us.nome).FirstOrDefaultAsync();
+                res.nome_Utilizador = await (from us in _context.Utilizador
+                                             where us.email == a.utilizador_user_email
+                                             select us.nome).FirstOrDefaultAsync();
+                res.nome_Utilizador = Encriptar.Decrypt(res.nome_Utilizador, "1c2b3a");
 
                 res.cao_idCao = await (from us in _context.Cao
                                        where us.idCao == a.cao_idCao
@@ -61,10 +61,13 @@ namespace trial2.Controllers
                                         join c in _context.Cao on us.email equals c.canil_user_email
                                         where c.idCao == a.cao_idCao
                                         select us.nome).FirstOrDefaultAsync();
+                res.nome_Canil = Encriptar.Decrypt(res.nome_Canil, "bac321");
 
                 res.cc = await (from us in _context.Utilizador
                                 where us.email == a.utilizador_user_email
                                 select us.cc).FirstOrDefaultAsync();
+                res.cc = Encriptar.Decrypt(res.cc, "b32a1c");
+
 
                 adocoes.Add(res);
             }
@@ -98,13 +101,13 @@ namespace trial2.Controllers
                 exterior = adocao.exterior,
                 tipoMoradia = adocao.tipoMoradia,
                 motivo = adocao.motivo,
-                utilizador_user_email = adocao.utilizador_user_email,
                 comprovativo = adocao.comprovativo,
                 donoAnimal = adocao.donoAnimal
             };
-            res.utilizador_user_email = await (from us in _context.Utilizador
-                                               where us.email == adocao.utilizador_user_email
-                                               select us.nome).FirstOrDefaultAsync();
+            res.nome_Utilizador = await (from us in _context.Utilizador
+                                         where us.email == adocao.utilizador_user_email
+                                         select us.nome).FirstOrDefaultAsync();
+            res.nome_Utilizador = Encriptar.Decrypt(res.nome_Utilizador, "1c2b3a");
 
             res.cao_idCao = await (from us in _context.Cao
                                    where us.idCao == adocao.cao_idCao
@@ -114,10 +117,12 @@ namespace trial2.Controllers
                                     join c in _context.Cao on us.email equals c.canil_user_email
                                     where c.idCao == adocao.cao_idCao
                                     select us.nome).FirstOrDefaultAsync();
+            res.nome_Canil = Encriptar.Decrypt(res.nome_Canil, "bac321");
 
             res.cc = await (from us in _context.Utilizador
                             where us.email == adocao.utilizador_user_email
                             select us.cc).FirstOrDefaultAsync();
+            res.cc = Encriptar.Decrypt(res.cc, "b32a1c");
 
             return res;
         }
@@ -126,14 +131,33 @@ namespace trial2.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAdocao(int id, Adocao adocao)
+        public async Task<IActionResult> PutAdocao(int id, RecieveAdo adocao)
         {
             if (id != adocao.nPedido)
             {
                 return BadRequest();
             }
 
-            _context.Entry(adocao).State = EntityState.Modified;
+            var res = new Adocao
+            {
+                nPedido = adocao.nPedido,
+                data = adocao.data,
+                estado = adocao.estado,
+                cao_idCao = Int32.Parse(adocao.cao_idCao),
+                permissao = adocao.permissao,
+                alergia = adocao.alergia,
+                descAnimais = adocao.descAnimais,
+                ausencia = adocao.ausencia,
+                habitacao = adocao.habitacao,
+                exterior = adocao.exterior,
+                tipoMoradia = adocao.tipoMoradia,
+                motivo = adocao.motivo,
+                utilizador_user_email = adocao.utilizador_user_email,
+                comprovativo = adocao.comprovativo,
+                donoAnimal = adocao.donoAnimal
+            };
+
+            _context.Entry(res).State = EntityState.Modified;
 
             try
             {
@@ -158,12 +182,35 @@ namespace trial2.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Adocao>> PostAdocao(Adocao adocao)
+        public async Task<ActionResult<Adocao>> PostAdocao(RecieveAdo adocao)
         {
-            _context.Adocao.Add(adocao);
+            var res = new Adocao
+            {
+                data = adocao.data,
+                estado = adocao.estado,
+                cao_idCao = Int32.Parse(adocao.cao_idCao),
+                permissao = adocao.permissao,
+                alergia = adocao.alergia,
+                descAnimais = adocao.descAnimais,
+                ausencia = adocao.ausencia,
+                habitacao = adocao.habitacao,
+                exterior = adocao.exterior,
+                tipoMoradia = adocao.tipoMoradia,
+                motivo = adocao.motivo,
+                utilizador_user_email = adocao.utilizador_user_email,
+                comprovativo = adocao.comprovativo,
+                donoAnimal = adocao.donoAnimal
+            };
+
+            var adocoes = await (from us in _context.Adocao
+                                 select us).ToListAsync();
+
+            res.nPedido = adocoes.Count() + 1;
+
+            _context.Adocao.Add(res);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAdocao", new { id = adocao.nPedido }, adocao);
+            return CreatedAtAction(nameof(GetAdocao), new { id = adocao.nPedido }, adocao);
         }
 
         // DELETE: api/Adocoes/5

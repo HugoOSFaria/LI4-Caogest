@@ -27,7 +27,23 @@ namespace trial2.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Utilizador>>> GetUtilizador()
         {
-            return await _context.Utilizador.ToListAsync();
+            var utilizadores = await (from u in _context.Utilizador
+                                      select u).ToListAsync();
+            if (utilizadores == null)
+            {
+                return NotFound();
+            }
+
+            foreach (Utilizador utilizador in utilizadores)
+            {
+                utilizador.localidade = Encriptar.Decrypt(utilizador.localidade, "123abc");
+                utilizador.rua = Encriptar.Decrypt(utilizador.rua, "1a2b3c");
+                utilizador.distrito = Encriptar.Decrypt(utilizador.distrito, "cba321");
+                utilizador.cc = Encriptar.Decrypt(utilizador.cc, "b32a1c");
+                utilizador.nome = Encriptar.Decrypt(utilizador.nome, "1c2b3a");
+            }
+            
+            return utilizadores;
         }
 
         // GET: api/Utilizadors/5
@@ -42,6 +58,10 @@ namespace trial2.Controllers
             {
                 return NotFound();
             }
+
+            var encriptado = await (from us in _context.User
+                                    where us.email == id
+                                    select us.encriptado).FirstOrDefaultAsync();
 
             utilizador.localidade = Encriptar.Decrypt(utilizador.localidade, "123abc");
             utilizador.rua = Encriptar.Decrypt(utilizador.rua, "1a2b3c");

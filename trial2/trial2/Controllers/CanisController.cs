@@ -27,9 +27,26 @@ namespace trial2.Controllers
 
         // GET: api/Canis
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Canil>>> GetCanil()
+        public async Task<ActionResult<List<Canil>>> GetCanil()
         {
-            return await _context.Canil.ToListAsync();
+            var canis = await (from c in _context.Canil
+                               select c).ToListAsync();
+            if (canis == null)
+            {
+                return NotFound();
+            }
+
+            foreach(Canil c in canis)
+            {
+                c.localidade = Encriptar.Decrypt(c.localidade, "123abc");
+                c.rua = Encriptar.Decrypt(c.rua, "1a2b3c");
+                c.distrito = Encriptar.Decrypt(c.distrito, "cba321");
+                c.nib = Encriptar.Decrypt(c.nib, "b32a1c");
+                c.nome = Encriptar.Decrypt(c.nome, "bac321");
+                c.contacto = Encriptar.Decrypt(c.contacto, "1c2b3a");
+            }
+
+            return canis;
         }
 
         // GET: api/Canis/5
@@ -82,19 +99,28 @@ namespace trial2.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCanil(string id, Canil canil)
+        public async Task<IActionResult> PutCanil(string id, RecieveCanil1 canilF)
         {
-            if (id != canil.email)
+            if (id != canilF.email)
             {
                 return BadRequest();
             }
 
-            canil.localidade = Encriptar.Encrypt(canil.localidade, "123abc");
-            canil.rua = Encriptar.Encrypt(canil.rua, "1a2b3c");
-            canil.distrito = Encriptar.Encrypt(canil.distrito, "cba321");
-            canil.nib = Encriptar.Encrypt(canil.nib, "b32a1c");
-            canil.nome = Encriptar.Encrypt(canil.nome, "bac321");
-            canil.contacto = Encriptar.Encrypt(canil.contacto, "1c2b3a");
+            var canil = await (from c in _context.Canil
+                               where c.email == id
+                               select c).FirstOrDefaultAsync();
+
+            canil.nib = Encriptar.Encrypt(canilF.nib, "b32a1c");
+            canil.nome = Encriptar.Encrypt(canilF.nome, "bac321");
+            canil.capacidadeOcupada = /*Int32.Parse(*/canilF.capacidadeOcupada;
+            canil.capacidadeTotal = Int32.Parse(canilF.capacidadeTotal);
+            canil.distrito = Encriptar.Encrypt(canilF.distrito, "cba321");
+            canil.rua = Encriptar.Encrypt(canilF.rua, "1a2b3c");
+            canil.localidade = Encriptar.Encrypt(canilF.localidade, "123abc");
+            canil.contacto = Encriptar.Encrypt(canilF.contacto, "1c2b3a");
+            canil.estado = canilF.estado;
+            canil.encriptado = 1;
+
 
             _context.Entry(canil).State = EntityState.Modified;
 
@@ -137,7 +163,7 @@ namespace trial2.Controllers
             canil.email = canilF.email;
             canil.nib = canilF.nib;
             canil.nome = canilF.nome;
-            canil.capacidadeOcupada = Int32.Parse(canilF.capacidadeOcupada);
+            canil.capacidadeOcupada = /*Int32.Parse(*/canilF.capacidadeOcupada;
             canil.capacidadeTotal = Int32.Parse(canilF.capacidadeTotal);
             canil.distrito = canilF.distrito;
             canil.rua = canilF.rua;
@@ -170,7 +196,7 @@ namespace trial2.Controllers
                 }
             }
 
-            Horario horario1 = new Horario();
+           /* Horario horario1 = new Horario();
             Horario horario2 = new Horario();
             Horario horario3 = new Horario();
             Horario horario4 = new Horario();
@@ -233,7 +259,7 @@ namespace trial2.Controllers
             await _horariosController.PostHorario(horario4);
             await _horariosController.PostHorario(horario5);
             await _horariosController.PostHorario(horario6);
-            await _horariosController.PostHorario(horario7);
+            await _horariosController.PostHorario(horario7);*/
 
             return CreatedAtAction("GetCanil", new { id = canil.email }, canil);
         }

@@ -23,9 +23,21 @@ namespace trial2.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<ActionResult<List<User>>> GetUser()
         {
-            return await _context.User.ToListAsync();
+            var users = await (from u in _context.User
+                               select u).ToListAsync();
+            if (users == null)
+            {
+                return NotFound();
+            }
+
+            foreach (User user in users)
+            {
+                user.password = Encriptar.Decrypt(user.password, "abc123");
+            }
+
+            return users;
         }
 
         // GET: api/Users/5
@@ -40,7 +52,7 @@ namespace trial2.Controllers
             {
                 return NotFound();
             }
-
+            
             user.password = Encriptar.Decrypt(user.password, "abc123");
 
             return user;

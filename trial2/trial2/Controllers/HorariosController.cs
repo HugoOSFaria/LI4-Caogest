@@ -130,6 +130,46 @@ namespace trial2.Controllers
             return NoContent();
         }
 
+        // PUT: api/Horarios/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPut("{id}/{dia}")]
+        public async Task<IActionResult> PutHorario1(string id, int dia, Horario horario)
+        {
+            if (id != horario.canil_user_email)
+            {
+                return BadRequest();
+            }
+
+            var horarioN = await (from us in _context.Horario
+                                  where us.dia == dia && us.canil_user_email == id
+                                  select us).FirstOrDefaultAsync();
+
+
+            _context.Horario.Remove(horarioN);
+            await _context.SaveChangesAsync();
+            
+            _context.Horario.Add(horario);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!HorarioExists(horario.dataInicio))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
         // POST: api/Horarios
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

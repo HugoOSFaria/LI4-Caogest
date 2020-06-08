@@ -54,13 +54,14 @@ namespace trial2.Controllers
                     exterior = ad.exterior,
                     tipoMoradia = ad.tipoMoradia,
                     motivo = ad.motivo,
-                    utilizador_user_email = ad.utilizador_user_email,
                     comprovativo = ad.comprovativo,
                     donoAnimal = ad.donoAnimal
                 };
-                res.utilizador_user_email = await (from us in _context.Utilizador
-                                                   where us.email == ad.utilizador_user_email
-                                                   select us.nome).FirstOrDefaultAsync();
+
+                res.nome_Utilizador = await (from us in _context.Utilizador
+                                             where us.email == ad.utilizador_user_email
+                                             select us.nome).FirstOrDefaultAsync();
+                res.nome_Utilizador = Encriptar.Decrypt(res.nome_Utilizador, "1c2b3a");
 
                 res.cao_idCao = await (from us in _context.Cao
                                        where us.idCao == ad.cao_idCao
@@ -70,10 +71,12 @@ namespace trial2.Controllers
                                         join c in _context.Cao on us.email equals c.canil_user_email
                                         where c.idCao == ad.cao_idCao
                                         select us.nome).FirstOrDefaultAsync();
+                res.nome_Canil = Encriptar.Decrypt(res.nome_Canil, "bac321");
 
                 res.cc = await (from us in _context.Utilizador
                                 where us.email == ad.utilizador_user_email
                                 select us.cc).FirstOrDefaultAsync();
+                res.cc = Encriptar.Decrypt(res.cc, "b32a1c");
 
                 AdReturn.Add(res);
             };

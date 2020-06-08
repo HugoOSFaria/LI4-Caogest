@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using trial2.Models;
 using trial2.Results;
 
@@ -12,6 +13,7 @@ namespace trial2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class CaesController : ControllerBase
     {
         private readonly trial2Context _context;
@@ -43,7 +45,11 @@ namespace trial2.Controllers
                 res.idade = cao.idade;
                 res.esterilizacao = cao.esterilizacao;
                 res.porte = cao.porte;
-
+                res.email_canil = cao.canil_user_email;
+                var nome = await (from f in _context.Canil
+                                        where f.email == cao.canil_user_email
+                                        select f.nome).FirstOrDefaultAsync();
+                res.nome_canil = Encriptar.Decrypt(nome, "bac321");
                 var fotos = await (from f in _context.Fotografia
                                    where f.cao_idCao == cao.idCao
                                    select f).ToListAsync();
@@ -88,7 +94,12 @@ namespace trial2.Controllers
             res.idade = cao.idade;
             res.esterilizacao = cao.esterilizacao;
             res.porte = cao.porte;
-            foreach(Fotografia f in fotos)
+            res.email_canil = cao.canil_user_email;
+            var nome = await (from f in _context.Canil
+                              where f.email == cao.canil_user_email
+                              select f.nome).FirstOrDefaultAsync();
+            res.nome_canil = Encriptar.Decrypt(nome, "bac321");
+            foreach (Fotografia f in fotos)
             {
                 res.fotos.Add(f);
             }
@@ -132,12 +143,40 @@ namespace trial2.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Cao>> PostCao(Cao cao)
+        public async Task<ActionResult<Cao>> PostCao(RecieveCao cao)
         {
-            _context.Cao.Add(cao);
+            var caes = await (from c in _context.Cao
+                              select c).ToListAsync();
+
+            Cao res = new Cao();
+
+            if (caes == null)
+            {
+                res.idCao = 1;
+            }
+            else
+            {
+                res.idCao = caes.Count() + 1;
+            }
+
+            res.nome = cao.nome;
+            res.sexo = cao.sexo;
+            res.descricao = cao.descricao;
+            res.estado = cao.estado;
+            res.raca = cao.raca;
+            res.idade = Int32.Parse(cao.idade);
+            res.esterilizacao = cao.esterilizacao;
+            res.porte = cao.porte;
+            res.canil_user_email = cao.canil_user_email;
+            res.cor = cao.cor[0];
+            for(int i=1; i<cao.cor.Count(); i++)
+            {
+                res.cor = res.cor + ", " + cao.cor[i];
+            }
+            _context.Cao.Add(res);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCao", new { id = cao.idCao }, cao);
+            return CreatedAtAction(nameof(GetCao), new { id = cao.idCao }, cao);
         }
 
         // DELETE: api/Caes/5

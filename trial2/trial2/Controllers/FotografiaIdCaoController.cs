@@ -27,7 +27,7 @@ namespace trial2.Controllers
         {
             var fotografia = await (from f in _context.Fotografia
                                     where f.cao_idCao == id
-                                    select f).ToListAsync(); ;
+                                    select f).ToListAsync();
 
             if (fotografia == null)
             {

@@ -14,12 +14,10 @@ namespace trial2.Controllers
     public class SugestoesController : ControllerBase
     {
         private readonly trial2Context _context;
-        private int last;
 
         public SugestoesController(trial2Context context)
         {
             _context = context;
-            last = 0;
         }
 
         // GET: api/Sugestoes
@@ -34,7 +32,7 @@ namespace trial2.Controllers
         public async Task<ActionResult<Sugestoes>> GetSugestoes(int id)
         {
             var sugestoes = await (from s in _context.Sugestoes
-                                   where s.id == id
+                                   where s.identificacao == id
                                    select s).SingleOrDefaultAsync();
 
             if (sugestoes == null)
@@ -67,7 +65,7 @@ namespace trial2.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSugestoes(int id, Sugestoes sugestoes)
         {
-            if (id != sugestoes.id)
+            if (id != sugestoes.identificacao)
             {
                 return BadRequest();
             }
@@ -106,14 +104,14 @@ namespace trial2.Controllers
                 return NotFound();
             }
 
-            sugestoes.id = list.Count+1;
+            sugestoes.identificacao = list.Count()+1;
             sugestoes.estado = "Não Lida";
             sugestoes.estadoU = "Enviada";
 
             _context.Sugestoes.Add(sugestoes);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSugestoes", new { id = sugestoes.id }, sugestoes);
+            return CreatedAtAction("GetSugestoes", new { id = sugestoes.identificacao }, sugestoes);
         }
 
         // DELETE: api/Sugestoes/5
@@ -134,7 +132,7 @@ namespace trial2.Controllers
 
         private bool SugestoesExists(int id)
         {
-            return _context.Sugestoes.Any(e => e.id == id);
+            return _context.Sugestoes.Any(e => e.identificacao == id);
         }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using trial2.Models;
+using trial2.Results;
 
 namespace trial2.Controllers
 {
@@ -20,20 +21,49 @@ namespace trial2.Controllers
             _context = context;
         }
 
-        // GET: api/Caes/5
+        // GET: api/CaesEmailCanil/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<Cao>>> GetCao(string id)
+        public async Task<ActionResult<List<ReturnCao>>> GetCao(string id)
         {
-            var cao = await (from ca in _context.Cao
+            var caes = await (from ca in _context.Cao
                              where ca.canil_user_email == id
                              select ca).ToListAsync();
 
-            if (cao == null)
+            if (caes == null)
             {
                 return NotFound();
             }
 
-            return cao;
+            
+            var fotos = await (from f in _context.Fotografia
+                               select f).ToListAsync();
+            if (fotos == null)
+            {
+                return NotFound();
+            }
+
+            List<ReturnCao> list = new List<ReturnCao>();
+            foreach (Cao cao in caes)
+            {
+                ReturnCao res = new ReturnCao();
+
+                res.idCao = cao.idCao;
+                res.nome = cao.nome;
+                res.sexo = cao.sexo;
+                res.descricao = cao.descricao;
+                res.estado = cao.estado;
+                res.raca = cao.raca;
+                res.cor = cao.cor;
+                res.idade = cao.idade;
+                res.esterilizacao = cao.esterilizacao;
+                res.porte = cao.porte;
+                foreach (Fotografia f in fotos)
+                {
+                    if(f.cao_idCao == cao.idCao) res.fotos.Add(f);
+                }
+                list.Add(res);
+            }
+            return list;
         }
     }
 }

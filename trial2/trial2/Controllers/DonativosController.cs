@@ -32,10 +32,12 @@ namespace trial2.Controllers
                 don.utilizador_user_email = await (from d in _context.Utilizador
                                                    where d.email == don.utilizador_user_email
                                                    select d.nome).FirstOrDefaultAsync();
+                don.utilizador_user_email = Encriptar.Decrypt(don.utilizador_user_email, "1c2b3a");
 
                 don.canil_user_email = await (from us in _context.Canil
                                               where us.email == don.canil_user_email
                                               select us.nome).FirstOrDefaultAsync();
+                don.canil_user_email = Encriptar.Decrypt(don.canil_user_email, "bac321");
             }
 
             if (donativos == null)
@@ -59,10 +61,12 @@ namespace trial2.Controllers
                 don.utilizador_user_email = await (from d in _context.Utilizador
                                                    where d.email == don.utilizador_user_email
                                                    select d.nome).FirstOrDefaultAsync();
+                don.utilizador_user_email = Encriptar.Decrypt(don.utilizador_user_email, "1c2b3a");
 
                 don.canil_user_email = await (from us in _context.Canil
                                               where us.email == don.canil_user_email
                                               select us.nome).FirstOrDefaultAsync();
+                don.canil_user_email = Encriptar.Decrypt(don.canil_user_email, "bac321");
             }
 
             if (donativos == null)

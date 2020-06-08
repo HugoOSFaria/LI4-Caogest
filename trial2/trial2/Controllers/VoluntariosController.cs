@@ -36,10 +36,12 @@ namespace trial2.Controllers
                 res.nomeCanil = await (from d in _context.Canil
                                        where d.email == v.canil_user_email
                                        select d.nome).FirstOrDefaultAsync();
+                res.nomeCanil = Encriptar.Decrypt(res.nomeCanil, "bac321");
 
                 res.nomeUser = await (from d in _context.Utilizador
                                       where d.email == v.utilizador_user_email
                                       select d.nome).FirstOrDefaultAsync();
+                res.nomeUser = Encriptar.Decrypt(res.nomeUser, "1c2b3a");
 
                 res.mailUser = v.utilizador_user_email;
 
@@ -83,10 +85,12 @@ namespace trial2.Controllers
                 res.nomeCanil = await (from d in _context.Canil
                                        where d.email == v.canil_user_email
                                        select d.nome).FirstOrDefaultAsync();
+                res.nomeCanil = Encriptar.Decrypt(res.nomeCanil, "bac321");
 
                 res.nomeUser = await (from d in _context.Utilizador
                                        where d.email == v.utilizador_user_email
                                        select d.nome).FirstOrDefaultAsync();
+                res.nomeUser = Encriptar.Decrypt(res.nomeUser, "1c2b3a");
 
                 res.mailUser = v.utilizador_user_email;
 

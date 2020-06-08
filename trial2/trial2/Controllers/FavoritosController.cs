@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using trial2.Models;
+using trial2.Results;
 
 namespace trial2.Controllers
 {
@@ -22,18 +23,11 @@ namespace trial2.Controllers
 
         // GET: api/Favoritos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Favoritos>>> GetFavoritos()
+        public async Task<ActionResult<List<ReturnFavoritos>>> GetFavoritos()
         {
-            return await _context.Favoritos.ToListAsync();
-        }
-
-        // GET: api/Favoritos/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<List<Cao>>> GetFavoritos(string id)
-        {
+            List<ReturnFavoritos> result = new List<ReturnFavoritos>();
             var favoritos = await (from us in _context.Favoritos
-                                   join c in _context.Cao on us.cao_idCao equals c.idCao
-                                   where us.utilizador_user_email == id
+                                   join c in _context.Cao on us.cao_idCa equals c.idCao
                                    select c).ToListAsync();
 
             if (favoritos == null)
@@ -41,7 +35,77 @@ namespace trial2.Controllers
                 return NotFound();
             }
 
-            return favoritos;
+            foreach (Cao cao in favoritos)
+            {
+                ReturnFavoritos res = new ReturnFavoritos();
+
+                res.idCao = cao.idCao;
+                res.nome = cao.nome;
+                res.sexo = cao.sexo;
+                res.descricao = cao.descricao;
+                res.estado = cao.estado;
+                res.raca = cao.raca;
+                res.cor = cao.cor;
+                res.idade = cao.idade;
+                res.esterilizacao = cao.esterilizacao;
+                res.porte = cao.porte;
+                res.email_canil = cao.canil_user_email;
+                var fotos = await (from f in _context.Fotografia
+                                   where f.cao_idCao == cao.idCao
+                                   select f).ToListAsync();
+
+                foreach (Fotografia f in fotos)
+                {
+                    res.fotos.Add(f);
+                }
+
+                result.Add(res);
+            }
+            return result;
+        }
+
+        // GET: api/Favoritos/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<ReturnFavoritos>>> GetFavoritos(string id)
+        {
+            List<ReturnFavoritos> result = new List<ReturnFavoritos>();
+            var favoritos = await (from us in _context.Favoritos
+                                   join c in _context.Cao on us.cao_idCa equals c.idCao
+                                   where us.utilizador_user_email == id
+                                   select c).ToListAsync();
+
+            if (favoritos == null)
+            {
+                return NotFound();
+            }
+            
+            foreach (Cao cao in favoritos)
+            {
+                ReturnFavoritos res = new ReturnFavoritos();
+
+                res.idCao = cao.idCao;
+                res.nome = cao.nome;
+                res.sexo = cao.sexo;
+                res.descricao = cao.descricao;
+                res.estado = cao.estado;
+                res.raca = cao.raca;
+                res.cor = cao.cor;
+                res.idade = cao.idade;
+                res.esterilizacao = cao.esterilizacao;
+                res.porte = cao.porte;
+                res.email_canil = cao.canil_user_email;
+                var fotos = await (from f in _context.Fotografia
+                                   where f.cao_idCao == cao.idCao
+                                   select f).ToListAsync();
+
+                foreach (Fotografia f in fotos)
+                {
+                    res.fotos.Add(f);
+                }
+
+                result.Add(res);
+            }
+            return result;
         }
 
         // PUT: api/Favoritos/5
