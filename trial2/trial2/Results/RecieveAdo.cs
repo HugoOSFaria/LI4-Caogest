@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace trial2.Results
 {
-    public class ReturnAdo
+    public class RecieveAdo
     {
         public int nPedido { get; set; }
         public DateTime data { get; set; }
@@ -19,10 +19,8 @@ namespace trial2.Results
         public string exterior { get; set; }
         public string tipoMoradia { get; set; }
         public string motivo { get; set; }
-        public string nome_Utilizador { get; set; }
+        public string utilizador_user_email { get; set; }
         public string comprovativo { get; set; }
         public string donoAnimal { get; set; }
-        public string nome_Canil { get; set; }
-        public string cc { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using trial2.Models;
 
 namespace trial2.Results
 {
-    public class ReturnCao
+    public class RecieveCao
     {
         public int idCao { get; set; }
         public string nome { get; set; }
@@ -14,15 +14,10 @@ namespace trial2.Results
         public string descricao { get; set; }
         public string estado { get; set; }
         public string raca { get; set; }
-        public string cor { get; set; }
-        public int idade { get; set; }
+        public List<string> cor { get; set; }
+        public string idade { get; set; }
         public string esterilizacao { get; set; }
         public string porte { get; set; }
-        public string email_canil { get; set; }
-        public string nome_canil { get; set; }
-        public List<Fotografia> fotos { get; set; }
-        public ReturnCao() {
-            fotos = new List<Fotografia>();
-        }
+        public string canil_user_email { get; set; }
     }
 }

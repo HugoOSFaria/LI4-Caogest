@@ -12,7 +12,7 @@ namespace trial2.Results
         public int tipo { get; set; }
         public string nib { get; set; }
         public string nome { get; set; }
-        public string capacidadeOcupada { get; set; }
+        public int capacidadeOcupada { get; set; }
         public string capacidadeTotal { get; set; }
         public string distrito { get; set; }
         public string rua { get; set; }

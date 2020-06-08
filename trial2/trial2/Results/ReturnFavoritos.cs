@@ -6,7 +6,7 @@ using trial2.Models;
 
 namespace trial2.Results
 {
-    public class ReturnCao
+    public class ReturnFavoritos
     {
         public int idCao { get; set; }
         public string nome { get; set; }
@@ -19,9 +19,9 @@ namespace trial2.Results
         public string esterilizacao { get; set; }
         public string porte { get; set; }
         public string email_canil { get; set; }
-        public string nome_canil { get; set; }
         public List<Fotografia> fotos { get; set; }
-        public ReturnCao() {
+        public ReturnFavoritos()
+        {
             fotos = new List<Fotografia>();
         }
     }
