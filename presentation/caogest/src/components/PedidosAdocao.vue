@@ -113,10 +113,10 @@ export default {
         pedido: {},
     }),
     name: 'PedidoAdocao',
-    props: ['id'], 
+    props: ['id', 'id2'], 
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Adocoes/" + this.id);
+            let response = await axios.get(lhost + "/api/Adocoes/" + this.id2);
             this.pedido = response.data;
             this.ready = true;
         } 

@@ -70,7 +70,9 @@ import axios from 'axios'
 const lhost = require("@/config/global").host;
 
 export default {
+  props:['id'],
   data() {
+
     return {
       pedidos: [],
       fab:false,
@@ -88,7 +90,7 @@ export default {
             return "#EF9A9A";
     },
     pedidoregisto: function(pedido){
-      this.$router.push("/pedido/registo/" + pedido.email);
+      this.$router.push("/pedido/registo/" + this.id + '/' + pedido.email);
     },
     onScroll (e) {
       if (typeof window === 'undefined') return

@@ -1,6 +1,6 @@
 <template>
     <div id = "informations" class = "informations">
-        <Navbar/>
+        <Navbar :id="$route.params.id"/>
 
             <v-card flat height= "60" color = "white"></v-card>
 
@@ -143,7 +143,7 @@
                 </v-card>
     
             </div>
-        <Footer/>
+        <Footer :id="$route.params.id"/>
     </div>
 </template>
 
@@ -154,17 +154,17 @@ import axios from 'axios'
 const lhost = require("@/config/global").host;
 
 export default {
+    props:['id','id2'],
     data: () => ({
         canil: {},
     }),
     name: 'Informacoes',
-    props: ['id'], 
     components: { Navbar, 
                   Footer, 
     },
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Canis/" + this.id);
+            let response = await axios.get(lhost + "/api/Canis/" + this.id2);
             this.canil = response.data;
             this.ready = true;
         } 

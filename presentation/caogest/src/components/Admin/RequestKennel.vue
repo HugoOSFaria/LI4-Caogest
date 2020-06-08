@@ -1,6 +1,6 @@
 <template>
     <div id = "requestkennel" class = "Request Kennel" >
-        <NavbarAdmin/>
+        <NavbarAdmin :id="$route.params.id"/>
         <v-card flat height = "100"></v-card>
         <v-card flat height = "100" color = "brown lighten-5">
                 <v-card-text class = "display-2 black--text text-center">{{canil.nome}}</v-card-text>
@@ -82,13 +82,13 @@
         <v-card flat class = "ma-12">
             <v-row align = "end">
             <v-spacer></v-spacer>
-            <v-btn v-if="canil.estado === 'Pendente'" class="ma-4" x-large color = "deep-orange lighten-4" @click="rejeitarRegisto">
+            <v-btn v-if="canil.estado === 'Pendente'" class="ma-4" x-large color = "deep-orange lighten-4" @click="rejeitarRegisto()">
                 Recusar Registo
             </v-btn>
             <v-btn v-else class="ma-4" x-large disabled>
                 Recusar Registo
             </v-btn>
-             <v-btn v-if="canil.estado === 'Pendente'" type="button" class="ma-4" x-large color = "deep-orange lighten-4" @click="aceitarRegisto">
+             <v-btn v-if="canil.estado === 'Pendente'" type="button" class="ma-4" x-large color = "deep-orange lighten-4" @click="aceitarRegisto()">
                 Aceitar Registo
             </v-btn>
             <v-btn v-else class="ma-4" x-large disabled>
@@ -97,7 +97,7 @@
            
             </v-row>
         </v-card>
-        <Footer/>
+        <Footer :id="$route.params.id"/>
     </div>
 </template> 
 
@@ -115,14 +115,14 @@ export default {
         horario:[], 
     }),
     name: 'PedidoRegisto',
-    props: ['id'], 
+    props: ['id', 'id2'], 
     components: { NavbarAdmin, 
                   Footer, 
     },
     
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Canis/" + this.id);
+            let response = await axios.get(lhost + "/api/Canis/" + this.id2);
             this.canil = response.data;
             this.horario = response.data.horarios;
             this.ready = true;
@@ -134,20 +134,21 @@ export default {
     methods: {
         aceitarRegisto: async function(){
            try{ 
-                let vm = this;
                 var resposta = 
-                await axios.put(lhost + "/api/Canis/" + this.id , {
-                    email: vm.canil.email,
-                    nib: vm.canil.nib, 
-                    nome: vm.canil.nome, 
-                    capacidadeOcupada: vm.canil.capacidadeOcupada,
-                    capacidadeTotal: vm.canil.capacidadeTotal, 
-                    distrito: vm.canil.distrito, 
-                    rua: vm.canil.rua, 
-                    localidade: vm.canil.localidade, 
-                    contacto: vm.canil.contacto, 
-                    estado: "Aceite"
+                await axios.put(lhost + "/api/Canis/" + this.id2 , {
+                    email: this.canil.email,
+                    nib: this.canil.nib, 
+                    nome: this.canil.nome, 
+                    capacidadeOcupada: this.canil.capacidadeOcupada,
+                    capacidadeTotal: this.canil.capacidadeTotal, 
+                    distrito: this.canil.distrito, 
+                    rua: this.canil.rua, 
+                    localidade: this.canil.localidade, 
+                    contacto: this.canil.contacto, 
+                    estado: "Aceite", 
+                    encriptado: this.canil.encriptado,
                 });
+                this.$router.push("/pagina/admin/" + this.id); 
                 console.log(JSON.stringify(resposta.data));
            }
            catch(e){
@@ -158,7 +159,7 @@ export default {
            try{ 
                 let vm = this;
                 var resposta = 
-                await axios.put(lhost + "/api/Canis/" + this.id , {
+                await axios.put(lhost + "/api/Canis/" + this.id2 , {
                     email: vm.canil.email,
                     nib: vm.canil.nib, 
                     nome: vm.canil.nome, 
@@ -168,8 +169,10 @@ export default {
                     rua: vm.canil.rua, 
                     localidade: vm.canil.localidade, 
                     contacto: vm.canil.contacto, 
-                    estado: "Rejeitado"
+                    estado: "Rejeitado", 
+                    encriptado:1,
                 });
+                this.$router.push("/pagina/admin/" + this.id); 
                 console.log(JSON.stringify(resposta.data));
            }
            catch(e){

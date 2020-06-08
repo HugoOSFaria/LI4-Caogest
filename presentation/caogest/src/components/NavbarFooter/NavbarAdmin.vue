@@ -61,20 +61,22 @@
 
 <script>
 export default {
+    props: ['id'], 
     data() {
         return {
             drawer: true,
             items: [
-            { title: 'Pedidos de Registo', icon: 'archive', route: '/pagina/admin'},
-            { title: 'Pedidos de Adoção', icon: 'description', route: '/pedido/adocao/admin'},
-            { title: 'Sobre', icon: 'info', route: '/sobre/admin' },
-            { title: 'Donativos Realizados', icon: 'payment', route: '/donativos/admin'},
-            { title: 'Cães', icon: 'pets', route: '/caes/admin' },
-            { title: 'Canis', icon: 'house', route: '/canis/admin' },
-            { title: 'Voluntários', icon:'accessibility_new', route: '/voluntarios/admin'},
-            { title: 'Entre em Contacto', icon:'question_answer', route: '/entre/contacto'},
-            { title: 'FAQs', icon: 'help', route: '/faqs/admin' }, 
-            { title: 'Estatísticas', icon: 'equalizer', route: '/estatisticas'}
+            { title: 'Pedidos de Registo', icon: 'archive', route: '/pagina/admin/' + this.id },
+            { title: 'Pedidos de Adoção', icon: 'description', route: '/pedidos/adocao/admin/' + this.id },
+            { title: 'Sobre', icon: 'info', route: '/sobre/admin/' + this.id  },
+            { title: 'Donativos Realizados', icon: 'payment', route: '/donativos/admin/' + this.id },
+            { title: 'Cães', icon: 'pets', route: '/caes/admin/' + this.id  },
+            { title: 'Canis', icon: 'house', route: '/canis/admin/' + this.id  },
+            { title: 'Voluntários', icon:'accessibility_new', route: '/voluntarios/admin/' + this.id },
+            { title: 'Documentos', icon: 'description', route: "/documentos/admin/" + this.id},
+            { title: 'Entre em Contacto', icon:'question_answer', route: '/entre/contacto/' + this.id },
+            { title: 'FAQs', icon: 'help', route: '/faqs/admin/' + this.id  }, 
+            { title: 'Estatísticas', icon: 'equalizer', route: '/estatisticas/' + this.id }
             ],
         }
     }

@@ -3,7 +3,10 @@
         <v-row>
             <v-col cols="12" sm="8" offset-sm="2" >
                 <v-container fluid>
-                    <v-item-group
+                    <v-card class = " mx-auto" height = "80" width="2000" flat color = "brown lighten-5" v-if="this.items.length === 0"> 
+                        <v-card-title class = "display-1 text-center justify-center"> Não existem parcerias associadas. </v-card-title>
+                    </v-card>
+                        <v-item-group
                         v-model="selected"
                         multiple
                     >

@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <v-container max-witdh="5000">
+  <div id="entreemcontacto" class="entreemcontacto">
+    <v-container max-witdh="5000">
       <v-layout row class="mb-1"> 
             <v-tooltip top>
                 <template v-slot:activator="{ on }">
@@ -71,7 +71,7 @@
                   </v-list-item-action-text>
                 </v-list-item-action>
                 <v-list-item-icon>
-                  <v-icon :color="obj.estado == 'Não Lida' ? 'brown lighten-1' : 'grey'">chat_bubble</v-icon>
+                  <v-icon :color="obj.estadoU == 'Não Lida' ? 'brown lighten-1' : 'grey'">chat_bubble</v-icon>
                 </v-list-item-icon>
                 </v-list-item>
               </v-list-item-group>
@@ -130,9 +130,6 @@
                 <v-list-item-action>
                   <v-list-item-action-text> {{date(obj.data)}}
                   </v-list-item-action-text>
-                  <v-btn icon>
-                    <v-icon large color="grey">delete</v-icon>
-                  </v-btn>
                 </v-list-item-action>
               </v-list-item>
             </v-list>
@@ -170,6 +167,16 @@
             Apagar
           </v-btn>
 
+          <v-btn
+            color="red"
+            outlined
+            x-large
+            class = "ma-4 "
+            @click="marcaNaoLida(this)"
+          >
+            Marcar como Não Lida
+          </v-btn>
+
           <v-spacer></v-spacer>
           
           <v-btn
@@ -180,86 +187,6 @@
             @click="dialog = false"
           >
             Fechar
-          </v-btn>
-
-          <v-btn
-            color="brown darken-4"
-            dark
-            x-large
-            class = "ma-4"
-            @click="openDialog1()"
-          >
-            Responder
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
-     <v-dialog v-model="dialog1" max-width="1500">
-      <v-card>
-        <v-card flat color = "brown darken-4" dark>
-          <v-card-title class="display-2 ma-2 pt-12">
-          Enviar Resposta
-          </v-card-title>
-        </v-card>
-
-        <v-text-field 
-          readonly 
-          class = "headline ma-12"
-          color="brown darken-4"
-          label="De"
-          value="CãoGest"
-        >
-        </v-text-field>
-
-         <v-text-field 
-          label="Para"
-          class = "headline ma-12"
-          color="brown darken-4"
-          readonly
-          :value = "this.user_email"
-        > 
-        </v-text-field>
-       
-        <v-card flat class = "ma-8">
-          <v-card-text
-            class = "display-1"
-            color="brown darken-4"
-          > {{ this.sugestoes }}
-          </v-card-text>
-        </v-card>
-
-        <v-textarea
-          label="Mensagem"
-          color="brown darken-4"
-          class = "headline ma-12"
-          rows="4"
-          auto-grow
-          v-model="form.sugestoes"
-        >
-        </v-textarea>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          
-          <v-btn
-            color="brown darken-4"
-            outlined
-            x-large
-            class = "ma-4"
-            @click="dialog1 = false"
-          >
-            Cancelar
-          </v-btn>
-
-          <v-btn
-            color="brown darken-4"
-            dark
-            x-large
-            class = "ma-4"
-            @click="enviaMensagem(this)"
-          >
-            Enviar
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -331,7 +258,23 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    </div>
+
+    <v-btn
+      v-scroll="onScroll"
+      x-large
+      v-show="fab"
+      fab
+      depressed
+      fixed
+      bottom
+      right
+      class = "ma-6"
+      color="deep-orange lighten-4"
+      @click="toTop"
+    >
+      <v-icon>keyboard_arrow_up</v-icon>
+    </v-btn>    
+  </div>
 </template>
 
 <script>
@@ -340,14 +283,12 @@ import axios from 'axios'
 const lhost = require("@/config/global").host;
 
 export default {
-    name: 'EntreemContacto',    
-    props: ['id'], 
-    
-    data() {
+  props: ['sugestao', 'ident'],
+  data() {
     return {
+      fab:false,
       selected: [],
       dialog: false,
-      dialog1: false,
       dialog2:false, 
       dialog3:false, 
       sugestoesl: [],
@@ -360,11 +301,6 @@ export default {
       data: "",
       user_email: "",
       estadoU:"", 
-      form:{
-        sugestoes: "",
-        estadoU: "Enviada",
-        data: moment().format(),
-      }
     };
   },
   methods: {
@@ -373,41 +309,24 @@ export default {
       this.sugestoes = dados.sugestoes;
       this.nome = dados.nome;
       this.estado = dados.estado;
+      this.estadoU = dados.estadoU;
       this.data = dados.data;
       this.user_email = dados.user_email;
       this.id = dados.id;
-      this.estadoU = dados.estadoU;
       this.dialog = true;
-      if(this.estadoU === 'Lida'){
-        this.marcaNaoLida();
-      }
-      else{
+      if(this.estadoU === 'Não Lida'){
         this.marcaLida();
+        this.getMensagem();
       }
-    },
-    openDialog1: function(){
-      this.dialog = false;
-      this.dialog1 = true;
-    },
-    openApagadas: function(dados){
-      this.motivo = dados.motivo;
-      this.sugestoes = dados.sugestoes;
-      this.nome = dados.nome;
-      this.estado = dados.estado;
-      this.data = dados.data;
-      this.estadoU = dados.estadoU;
-      this.user_email = dados.user_email;
-      this.id = dados.id;
-      this.dialog2 = true;
     },
     openEnviadas: function(dados){
       this.motivo = dados.motivo;
       this.sugestoes = dados.sugestoes;
       this.nome = dados.nome;
       this.estado = dados.estado;
+      this.estadoU = dados.estadoU;
       this.data = dados.data;
       this.user_email = dados.user_email;
-      this.estadoU = dados.estadoU;
       this.id = dados.id;
       this.dialog3 = true;
     },
@@ -417,21 +336,30 @@ export default {
     sortBy(prop){
           this.sugestoesl.sort((a,b) => a[prop] < b[prop] ? 1 : -1)
     },
+    onScroll (e) {
+      if (typeof window === 'undefined') return
+      const top = window.pageYOffset ||   e.target.scrollTop || 0
+      this.fab = top > 20
+    },
+    toTop () {
+      this.$vuetify.goTo(0)
+    },
     marcaLida: async function(){
       try{ 
         var resposta = 
-        await axios.put(lhost + "/api/Sugestoes/Users/" + this.id , {
+        await axios.put(lhost + "/api/Sugestoes/" + this.id , {
           id:this.id, 
           motivo:this.motivo,
           sugestoes:this.sugestoes,
           nome:this.nome,
           estado:this.estado,
-          estadoU:"Lida",
           data:this.data,
+          estadoU:"Lida", 
           user_email: this.user_email,
         });
         console.log(JSON.stringify(resposta.data));
         this.numero--;
+        this.getMensagem();
       }
       catch(e){
         console.log("erro: " + e); 
@@ -440,7 +368,7 @@ export default {
     marcaNaoLida: async function(){
       try{ 
         var resposta = 
-        await axios.put(lhost + "/api/Sugestoes/Users/" + this.id , {
+        await axios.put(lhost + "/api/Sugestoes/" + this.id , {
           id:this.id, 
           motivo:this.motivo,
           sugestoes:this.sugestoes,
@@ -452,6 +380,8 @@ export default {
         });
         console.log(JSON.stringify(resposta.data));
         this.numero++;
+        this.getMensagem();
+        this.dialog=false;
       }
       catch(e){
         console.log("erro: " + e); 
@@ -461,7 +391,7 @@ export default {
        try{ 
         if(this.estado === 'Não Lida') this.numero--;
         var resposta = 
-        await axios.put(lhost + "/api/Sugestoes/Users/" + this.id , {
+        await axios.put(lhost + "/api/Sugestoes/" + this.id , {
           id:this.id, 
           motivo:this.motivo,
           sugestoes:this.sugestoes,
@@ -469,14 +399,16 @@ export default {
           estado:this.estado,
           data:this.data,
           user_email: this.user_email,
-          estadoU: "Apagada",
+          estadoU:"Apagada",
         });
         console.log(JSON.stringify(resposta.data));
+        this.dialog = false;
+        this.getMensagem();
+        this.dialog3 = false;
       }
       catch(e){
         console.log("erro: " + e); 
       }
-      this.dialog = false;
     },
     recuperaMensagem: async function(dados){
         this.motivo = dados.motivo;
@@ -489,41 +421,33 @@ export default {
         this.estadoU = dados.estadoU;
        try{ 
         var resposta = 
-        await axios.put(lhost + "/api/Sugestoes/Users/" + this.id , {
+        await axios.put(lhost + "/api/Sugestoes/" + this.id , {
           id:this.id, 
           motivo:this.motivo,
           sugestoes:this.sugestoes,
           nome:this.nome,
-          estadoU:"Lida",
+          estado:this.estado,
           data:this.data,
           user_email: this.user_email,
-          estado:this.estado,
+          estadoU:"Lida",
         });
         console.log(JSON.stringify(resposta.data));
+        this.getMensagem();
       }
       catch(e){
         console.log("erro: " + e); 
       }
     },
-    enviaMensagem: async function(){
-      try{
-        var resposta = 
-          await axios.post(lhost + "/api/Sugestoes/Users/" + this.id, {
-            user_email: this.user_email,
-            nome: this.nome,
-            motivo: this.motivo,
-            sugestoes: this.form.sugestoes,
-            data: this.form.data,
-            estadoU: "Não Lida",
-            estado: this.form.estado,
-          });
-        console.log(JSON.stringify(resposta.data));
-        this.dialog1 = false;
+    async getMensagem(){
+      try {
+        let response = await axios.get(lhost + "/api/Sugestoes/Users/" + this.ident);
+        this.sugestoesl = response.data;
+        this.ready = true;
+      } 
+      catch (e) {
+        return e;
       }
-      catch(e){
-        console.log("erro: " + e);
-      }
-    },
+    },   
   },
   computed: {
     recebidas: function () {
@@ -555,9 +479,8 @@ export default {
   },
   created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Sugestoes/Users/" + this.id);
+            let response = await axios.get(lhost + "/api/Sugestoes/Users/" + this.ident);
             this.sugestoesl = response.data;
-            alert(JSON.stringify(this.id));
             this.ready = true;
         } 
         catch (e) {

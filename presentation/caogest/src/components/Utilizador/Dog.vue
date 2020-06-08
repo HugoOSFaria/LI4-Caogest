@@ -9,8 +9,9 @@
                             multiple
                         >
                             <v-card flat height = "100"></v-card>
-                            <v-card class = " mx-auto" height = "80" width="1770" flat color = "brown lighten-5" v-if="this.disponiveis.length === 0"> 
-                                <v-card-title class = "display-1 text-center justify-center"> Não existem cães favoritos </v-card-title>
+                            <v-card class = " mx-auto" height = "150" width="1770" flat color = "brown lighten-5" v-if="this.disponiveis.length === 0"> 
+                                <v-card-title class = "display-1 text-center justify-center"> Adotar um cão é um processo longo e cuidado. Adicione aqui os patudos que pretende conhecer e torná-los </v-card-title>
+                                <v-card-title class = "display-1 justify-center">parte da sua família.</v-card-title>
                             </v-card>
                             <v-row>
                                 <v-col
@@ -95,8 +96,22 @@
                         <v-img 
                             height = "800" 
                             width = "800" 
-                            src="@/assets/example.jpg"
+                            :src="require(`@/assets/${getPath2()}`)"
                         ></v-img> 
+                        <v-card 
+                            flat 
+                            color = "white" 
+                            height = "100"
+                        ></v-card>
+                        <v-row>
+                            <v-btn 
+                                x-large 
+                                height = "100" 
+                                class = "display-2" 
+                                color = "deep-orange lighten-5" 
+                                @click="adotar(this.canil_user_email)"
+                            > Quero Adotar! </v-btn>
+                        </v-row>
                     </v-card>
                 </v-col>
 
@@ -276,6 +291,7 @@ export default {
         cor: "", 
         porte: "", 
         descricao: "", 
+        canil_user_email: "",
         estado: "", 
         fotos: []  
     }),
@@ -291,6 +307,7 @@ export default {
             this.esterilizacao = dados.esterilizacao;
             this.descricao = dados.descricao;
             this.fotos = dados.fotos;
+            this.canil_user_email = dados.canil_user_email;
             this.dialog = true;
         },
         atualiza: async function(){
@@ -306,6 +323,15 @@ export default {
         getPath: function(e) {
            return e.fotos[0].path
         },
+        getPath2: function() {
+           alert(JSON.stringify(this));
+           
+        },
+        adotar: function(email){
+            alert(JSON.stringify(email));
+            this.$router.push("/registar/cao/" + email); 
+
+        }
     },
     created: async function(){
         try {

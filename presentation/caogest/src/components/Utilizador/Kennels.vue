@@ -1,5 +1,5 @@
 <template>
-     <div>
+    <div>
             <v-card flat class="mx-auto ml-12">
                 <v-row>
                     <v-col class = "ma-12">
@@ -124,10 +124,10 @@
 </template>
 
 <script>
-import axios from 'axios'
 const lhost = require("@/config/global").host;
+import axios from 'axios'
 export default {
-    props:['id', 'id2'],
+    props:['id'],
     data () {
         return {
             fab:false,
@@ -166,7 +166,7 @@ export default {
             this.itemsPerPage = number
         },
         canil: function(item){
-            this.$router.push("/canil/admin/" + this.id + '/' + item.email );
+            this.$router.push("/canil/" + this.id + '/' + item.email);
         },
         onScroll (e) {
             if (typeof window === 'undefined') return
@@ -189,6 +189,5 @@ export default {
       return e;
     }
   },
-    
 }
 </script>

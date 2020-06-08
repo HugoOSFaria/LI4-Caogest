@@ -1,6 +1,6 @@
 <template>
     <div id = "partnerships" class = "Partnerships">
-        <Navbar/>
+        <Navbar :id="$route.params.id"/>
         <v-card> 
             <v-img src='@/assets/parcerias.png'></v-img> 
         </v-card>
@@ -69,7 +69,7 @@
         >
             <v-icon>keyboard_arrow_up</v-icon>
         </v-btn>
-        <Footer/>
+        <Footer :id="$route.params.id"/>
     </div>
 </template>
 
@@ -90,10 +90,10 @@ export default {
                 Footer
     }, 
     name: 'Parcerias',    
-    props: ['id'], 
+    props: ['id', 'id2'], 
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/CP/" + this.id);
+            let response = await axios.get(lhost + "/api/CP/" + this.id2);
             this.items = response.data;
             this.ready = true;
         } 

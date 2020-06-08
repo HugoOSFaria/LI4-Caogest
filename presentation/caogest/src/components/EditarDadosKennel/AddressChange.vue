@@ -80,7 +80,7 @@ const lhost = require("@/config/global").host;
       timeout: 4000,
       text: "", 
       regraMorada: [v => !!v || "Introdução de morada obrigatória."],
-    }),
+    }), 
     methods:{
       confirma: async function(){
         if (this.$refs.form.validate()) {

@@ -1,6 +1,6 @@
 <template>
     <div id = "schedule" class = "schedule">
-        <Navbar/>
+        <Navbar :id="$route.params.id"/>
         <v-card> 
             <v-img src='@/assets/horários.png'>
             </v-img>
@@ -54,7 +54,7 @@
                 </v-col>
             </v-row>
         </v-container>
-        <Footer/>
+        <Footer :id="$route.params.id"/>
     </div>
 </template>
 
@@ -71,7 +71,7 @@ export default {
          horario:[] ,
     }),
     name: 'HorarioCanil',
-    props: ['id'], 
+    props: ['id', 'id2'], 
     components: { Navbar, 
                   Footer,
                 },
@@ -104,7 +104,7 @@ export default {
     },
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Horarios/" + this.id);
+            let response = await axios.get(lhost + "/api/Horarios/" + this.id2);
             this.horario = response.data;
             this.ready = true;
         } 

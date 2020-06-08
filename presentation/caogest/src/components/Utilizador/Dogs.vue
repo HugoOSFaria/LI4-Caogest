@@ -1,54 +1,28 @@
 <template>
-    <div id = "kennel" class = "Kennel">
-        <Navbar :id="$route.params.id"/>
+    <div>
         <div>
-            <v-card flat height = "200"></v-card>
-            <v-card flat height = "100" color = "brown lighten-5">
-                <v-card-text class = "display-2 black--text text-center">{{canil.nome}}</v-card-text>
-            </v-card>
-            <v-card flat height = "80"></v-card>
-            <v-card flat>
-                <v-row>
-                    <v-spacer></v-spacer>
-                    <v-col>
-                        <v-btn disabled class="ma-6 headline" x-large color = "brown lighten-4">Quero voluntariar-me!</v-btn>
-                    </v-col>
-                    <v-spacer></v-spacer>
-                    <v-col>
-                        <v-btn class="ma-6 headline" x-large color = "brown lighten-4" @click="horario(canil)">Horário Voluntários</v-btn>
-                    </v-col>
-                    <v-spacer></v-spacer>
-                    <v-col>
-                        <v-btn class="ma-6 headline" x-large color = "brown lighten-4" @click="informacoes(canil)">Informações</v-btn>
-                    </v-col>
-                    <v-spacer></v-spacer>
-                    <v-col>
-                        <v-btn class="ma-6 headline" x-large color = "brown lighten-4" @click="parcerias(canil)">Parcerias</v-btn>
-                    </v-col>
-                    <v-spacer></v-spacer>
-                </v-row>
-            </v-card>
-             <v-card flat height = "200"></v-card>
-            <v-row>
-                <v-col cols="12" sm="6" offset-sm="2">
+            <v-row >
+                <v-col 
+                    cols="12" 
+                    sm="6" 
+                    offset-sm="2" 
+                >
                     <v-container fluid>
                         <v-item-group
                             v-model="selected"
                             multiple
                         >
-                            <v-card flat height = "100"></v-card>
-                            <v-card class = " mx-auto" height = "80" width="2000" flat color = "brown lighten-5" v-if="this.disponiveis.length === 0"> 
-                                <v-card-title class = "display-1 text-center justify-center"> Não existem cães registados neste canil </v-card-title>
-                            </v-card>
                             <v-row>
                                 <v-col
-                                    v-for="obj in disponiveis"
-                                    :key="obj.nome"
                                     class="d-flex child-flex"
                                     cols="4"
-                                >
+                                    v-for="obj in disponiveis"
+                                    :key="obj.nome"
+                                    >
                                     <v-card flat tile>
-                                        <v-item v-slot:default="{ active, toggle }">
+                                        <v-item 
+                                            v-slot:default="{ active, toggle }"
+                                        >
                                             <v-img
                                                 :src="require(`@/assets/${getPath(obj)}`)"
                                                 aspect-ratio="1"
@@ -56,28 +30,42 @@
                                                 @click="toggle"
                                             >
                                                 <template v-slot:placeholder>
-                                                    <v-row class="fill-height ma-0" align="center" justify="center">
-                                                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                                                    <v-row 
+                                                        class="fill-height ma-0" 
+                                                        align="center" 
+                                                        justify="center"
+                                                    >
+                                                        <v-progress-circular 
+                                                            indeterminate 
+                                                            color="grey lighten-5"
+                                                        ></v-progress-circular>
                                                     </v-row>
-                                                </template>  
+                                                </template>
+
+                                                <v-btn icon dark>
+                                                    <v-icon large>
+                                                        {{ active ? 'mdi-heart' : 'mdi-heart-outline' }}
+                                                    </v-icon>
+                                                </v-btn>
+
                                             </v-img>
+                                 
                                         </v-item>
-                                    <v-card-actions class="justify-center">
-                                       <v-btn 
-                                            text
-                                            x-large
-                                            class = "headline"
-                                            @click="openDialog(obj)"
-                                        > {{obj.nome}} 
-                                        </v-btn>  
-                                    </v-card-actions>
-                                </v-card>
-                            </v-col>
-                        </v-row>
-                    </v-item-group>
-                </v-container>
-               
-                       
+                                        
+                                        <v-row justify="center">
+                                            <v-btn 
+                                                text
+                                                x-large
+                                                class = "headline"
+                                                @click="openDialog(obj)"
+                                            > {{obj.nome}} 
+                                            </v-btn>  
+                                        </v-row>
+                                    </v-card>
+                                </v-col>
+                            </v-row>
+                        </v-item-group>
+                    </v-container>      
                 </v-col>
                 <v-spacer></v-spacer>
                 <v-col cols = "3">
@@ -109,7 +97,7 @@
                                         :items="itemsporte"
                                         label="Porte"
                                     ></v-select>
-                                    <v-text-field flat color = "grey" name="input-7-1" outlined label="Localidade" ></v-text-field>
+                                    <v-text-field flat color = "grey" name="input-7-1" outlined label="Distrito" ></v-text-field>
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
@@ -118,9 +106,10 @@
                         </v-card>
                     </v-row>
                 </v-col>  
-            </v-row>            
+            </v-row>        
         </div>
-        <v-dialog
+       
+        <v-dialog 
             v-model="dialog" 
             fullscreen 
             hide-overlay 
@@ -145,21 +134,34 @@
                 height = "150" 
                 flat
             ></v-card>
-       
+                                        
             <v-row>
                 <v-col>
                     <v-card 
-                    flat 
-                    color = "white" 
-                    class = "mx-auto" 
-                    height = "800" 
-                    width = "900"
+                        flat color = "white" 
+                        class = "mx-auto" 
+                        height = "800" 
+                        width = "900"
                     > 
                         <v-img 
                             height = "800" 
                             width = "800" 
-                            src="@/assets/example.jpg"
+                            src='@/assets/example.jpg'
                         ></v-img> 
+                        <v-card 
+                            flat 
+                            color = "white" 
+                            height = "100"
+                        ></v-card>
+                        <v-row>
+                            <v-btn 
+                                x-large 
+                                height = "100" 
+                                class = "display-2" 
+                                color = "deep-orange lighten-5" 
+                                @click="adotar(this)"
+                            > Quero Adotar! </v-btn>
+                        </v-row>
                     </v-card>
                 </v-col>
 
@@ -281,52 +283,49 @@
                                     >{{this.descricao}}</span>
                                 </p> 
                             </v-row>
+                            <v-card 
+                                flat 
+                                color = "white" 
+                                height = "40"
+                            ></v-card>   
+                            <v-row>
+                                <p class = " display-2 font-weight-bold" 
+                                    color = "grey"
+                                > Canil: 
+                                    <span 
+                                        class = "display-2 font-weight-regular "
+                                    >{{this.nome_canil}}</span>
+                                </p> 
+                            </v-row>
                         </v-card>
                     </v-col>
                 </v-row>
             </v-card>
         </v-dialog>
-        <v-btn
-            v-scroll="onScroll"
-            x-large
-            v-show="fab"
-            fab
-            depressed
-            fixed
-            bottom
-            right
-            class = "ma-6"
-            color="deep-orange lighten-4"
-            @click="toTop"
-        >
-            <v-icon>keyboard_arrow_up</v-icon>
-        </v-btn>
-        <Footer :id="$route.params.id"/>
     </div>
 </template>
 
 <script>
-import Navbar from '@/components/NavbarFooter/NavbarAdmin.vue'
-import Footer from '@/components/NavbarFooter/FooterAdmin.vue'
-
 import axios from 'axios'
 const lhost = require("@/config/global").host;
 
 export default {
+    props: ['item', 'id'],
     data: () => ({   
-        fab:false,           
+        dialog:false,         
         itemssexo: [ 
+            '- Selecionar -',
             'Macho',
             'Fêmea',
-            'Ambos',
         ],
         itemsporte: [ 
+            '- Selecionar -',
             'Pequeno',
             'Médio',
             'Grande',
-            'Todos',
         ], 
         itemscor: [
+            '- Selecionar -',
             'Amarelo',
             'Azul',
             'Branco',
@@ -338,14 +337,9 @@ export default {
             'Malhado',
             'Preto',
             'Vermelho',
-            'Todas',
         ],
         items: [],
-        canil: {},
         selected: [],  
-        caes:[],
-        disponivel:[], 
-        idCao: "",
         nome: "",
         idade: "",
         esterilizacao: "", 
@@ -354,53 +348,23 @@ export default {
         cor: "", 
         porte: "", 
         descricao: "", 
-        estado: "", 
-        fotos: [],
-        dialog: false,
-        alert: false, 
-    }),
-    name: 'KennelsAdmin',
-    props: ['id', 'id2'], 
-    components: {   Navbar, 
-                    Footer
-                }, 
-
+        nome_canil: "", 
+        id_Cao: "", 
+        disponivel: [],  
+        fotos: []
+    }), 
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Canis/" + this.id2);
-            this.canil = response.data;
-
-            let resposta = await axios.get(lhost + "/api/CaesEmailCanil/" + this.id2);
-            this.caes = resposta.data;
-            this.ready = true;
+        let response = await axios.get(lhost + "/api/Caes");
+        this.items = response.data;
+        this.ready = true;
         } 
         catch (e) {
-            return e;
+        return e;
         }
-    }, 
-    methods: {
-        informacoes: function(canil){
-            this.$router.push("/informacoes/admin/" + this.id + '/' + canil.email);
-        }, 
-        parcerias: function(canil){
-            this.$router.push("/parcerias/admin/" + this.id + '/' + canil.email);
-        },
-        horario: function(canil){
-            this.$router.push("/horario/admin/canil/" + this.id + '/' + canil.email);
-        },
-        onScroll (e) {
-            if (typeof window === 'undefined') return
-            const top = window.pageYOffset ||   e.target.scrollTop || 0
-            this.fab = top > 20
-        },
-        toTop () {
-            this.$vuetify.goTo(0)
-        }, 
-        getPath: function(e) {
-           return e.fotos[0].path
-        },
+    },   
+    methods:{
          openDialog: function(dados){
-            this.idCao = dados.idCao;
             this.nome = dados.nome;
             this.raca = dados.raca;
             this.idade = dados.idade;
@@ -409,17 +373,24 @@ export default {
             this.porte = dados.porte;
             this.esterilizacao = dados.esterilizacao;
             this.descricao = dados.descricao;
-            this.fotos = dados.fotos;
+            this.nome_canil = dados.nome_canil; 
+            this.id_Cao = dados.id_Cao;
             this.dialog = true;
         },
+        getPath: function(e) {
+           return e.fotos[0].path
+        },
+        adotar: function(){
+            this.$router.push("/formulario/adocao/" + this.id + '/' + this.email_canil + '/' + this.idCao);
+        }
+       
     },
     computed: {
         disponiveis: function () {
-        return this.caes.filter(function (disponivel) {
-            return (disponivel.estado !== "Apagado" && disponivel.estado !== "Adotado")
-        })
+            return this.items.filter(function (disponivel) {
+                return (disponivel.estado !== "Apagado" && disponivel.estado !== "Adotado")
+            })
         }, 
-    }                    
-            
+    }      
 }
 </script>

@@ -89,6 +89,7 @@ import axios from 'axios'
 const lhost = require("@/config/global").host;
 
 export default {
+  props:['id'],
   data() {
     return {
       pedidos: [],
@@ -113,7 +114,7 @@ export default {
         return "#EF9A9A";
     },  
     pedidoadocao: function(pedido){
-      this.$router.push("/pedido/adocao/admin/" + pedido.nPedido);
+      this.$router.push("/pedido/adocao/admin/" + this.id + '/' + pedido.nPedido );
     }, 
     date: function (date) {
       return moment(date).locale("pt").format('LL');

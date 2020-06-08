@@ -1,6 +1,6 @@
 <template>
     <div id = "schedule" class = "schedule">
-        <Navbar/>
+        <Navbar :id="$route.params.id"/>
         <v-card> 
             <v-img src='@/assets/horários.png'>
             </v-img>
@@ -12,6 +12,7 @@
             <v-card flat height= "100" color = "white"></v-card>
 
             <v-row>
+                <v-card class = "display-1 mx-auto text-center justify-center" width="2000" height = "50" flat color = "brown lighten-5" v-if="sortedArray.length == 0">Este canil não tem horários registados.</v-card>
                 <v-col v-for="hor in sortedArray" :key = "hor.dia" cols="12" md="4" >
                     <v-card
                         color="white"
@@ -48,7 +49,7 @@
                 </v-col>
             </v-row>
         </v-container>
-        <Footer/>
+        <Footer :id="$route.params.id"/>
     </div>
 </template>
 
@@ -65,7 +66,7 @@ export default {
          horario:[] ,
     }),
     name: 'HorarioCanil',
-    props: ['id'], 
+    props: ['id', 'id2'], 
     components: { Navbar, 
                   Footer,
                 },
@@ -98,7 +99,7 @@ export default {
     },             
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Horarios/" + this.id);
+            let response = await axios.get(lhost + "/api/Horarios/" + this.id2);
             this.horario = response.data;
             this.ready = true;
         } 
