@@ -926,7 +926,6 @@
         </v-card>
         </v-col>
     </v-row>
-    <p>{{JSON.stringify(this.form)}}</p>
   </div>
 </template>
 

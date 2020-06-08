@@ -1,5 +1,5 @@
 <template>
-    <Informations :id="$route.params.id"/>
+    <Informations :id="$route.params.id" :id2="$route.params.id2"/>
 </template>
 
 <script>

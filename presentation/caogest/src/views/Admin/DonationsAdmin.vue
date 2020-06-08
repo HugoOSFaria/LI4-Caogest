@@ -1,6 +1,6 @@
 <template>
     <div id = "donationskennel" class = "donationsKennel">
-        <NavbarAdmin/>
+        <NavbarAdmin :id="$route.params.id"/>
             <v-card> 
                 <v-img src='@/assets/donativosrealizados.png'></v-img>
             </v-card>
@@ -76,7 +76,7 @@
                     <v-icon>keyboard_arrow_up</v-icon>
                 </v-btn>
             </v-container>
-        <Footer/>
+        <Footer :id="$route.params.id"/>
     </div>
 </template>
 
@@ -89,7 +89,7 @@ import axios from 'axios'
 const lhost = require("@/config/global").host;
 
 export default {
-
+    props:["id"],
     data() {
         return {
         donativos: [],

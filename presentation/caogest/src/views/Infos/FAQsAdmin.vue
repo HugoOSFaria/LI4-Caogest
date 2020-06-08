@@ -1,8 +1,8 @@
 <template>
     <div id = "faqsadmin" class = "FAQsAdmin">
-        <NavbarKennel/>
-        <FAQs/>
-        <Footer/>
+        <NavbarKennel :id="$route.params.id"/>
+        <FAQs :id="$route.params.id"/>
+        <Footer :id="$route.params.id"/>
     </div>
 </template>
 

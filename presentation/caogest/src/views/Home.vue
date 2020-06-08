@@ -125,7 +125,7 @@ export default {
               this.$store.commit("guardaNomeUtilizador", res.data.nome); 
               this.$store.commit("guardaTipoUtilizador", res.data.tipo); 
               if(res.data.tipo == 0)
-                this.$router.push("/pagina/admin" );
+                this.$router.push("/pagina/admin/" + this.$data.form.email );
               if(res.data.tipo == 1)
                 this.$router.push("/pagina/utilizador/" + this.$data.form.email);
               if(res.data.tipo == 2)

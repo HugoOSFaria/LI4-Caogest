@@ -1,6 +1,6 @@
 <template>
     <div id = "preferences" class = "preferences">
-        <Navbar/>
+        <Navbar :id="$route.params.id"/>
             <v-card flat height= "60" color = "white"></v-card>
 
             <div>
@@ -55,7 +55,7 @@
                     </v-row>
                 </v-card>    
             </div>      
-        <Footer/>
+        <Footer :id="$route.params.id"/>
     </div>
 </template>
 

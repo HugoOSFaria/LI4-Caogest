@@ -1,5 +1,5 @@
 <template>
-    <Kennel :id="$route.params.id"/>
+    <Kennel :id="$route.params.id" :id2="$route.params.id2"/>
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
     <div id = "dogs" class = "Dogs">
-        <Navbar/>
+        <Navbar :id="$route.params.id"/>
         <v-card> 
             <v-img src='@/assets/caes2.png'></v-img> 
         </v-card>
@@ -23,7 +23,7 @@
                                 <v-col
                                     class="d-flex child-flex"
                                     cols="4"
-                                    v-for="obj in items"
+                                    v-for="obj in disponiveis"
                                     :key="obj.nome"
                                     >
                                     <v-card flat tile>
@@ -31,7 +31,7 @@
                                             v-slot:default="{ active, toggle }"
                                         >
                                             <v-img
-                                                src='@/assets/example.jpg'
+                                                :src="require(`@/assets/${getPath(obj)}`)"
                                                 aspect-ratio="1"
                                                 class="grey lighten-2"
                                                 @click="toggle"
@@ -48,13 +48,6 @@
                                                         ></v-progress-circular>
                                                     </v-row>
                                                 </template>
-
-                                                <v-btn icon dark>
-                                                    <v-icon large>
-                                                        {{ active ? 'mdi-heart' : 'mdi-heart-outline' }}
-                                                    </v-icon>
-                                                </v-btn>
-
                                             </v-img>
                                         </v-item>
                                         
@@ -152,7 +145,7 @@
                         <v-img 
                             height = "800" 
                             width = "800" 
-                            :src="require(`@/assets/${getPath(obj)}`)"
+                             src='@/assets/example.jpg'
                         ></v-img> 
                         <v-card 
                             flat 
@@ -300,7 +293,7 @@
         >
             <v-icon>keyboard_arrow_up</v-icon>
         </v-btn>    
-        <Footer/>
+        <Footer :id="$route.params.id"/>
     </div>
 </template>
 
@@ -312,9 +305,10 @@ import Navbar from '@/components/NavbarFooter/NavbarAdmin.vue'
 import Footer from '@/components/NavbarFooter/FooterAdmin.vue'
 
 export default {
-    props: ["item"],
+    props: ['item', 'id'],
     data: () => ({    
         dialog:false,    
+        disponivel: [],
         fab:false,     
         itemssexo: [ 
             '- Selecionar -',
@@ -350,7 +344,8 @@ export default {
       sexo: "", 
       cor: "", 
       porte: "", 
-      descricao: ""
+      descricao: "",
+      fotos:[]
     }),
     components: {   Navbar, 
                     Footer,
@@ -385,7 +380,17 @@ export default {
         toTop () {
         this.$vuetify.goTo(0)
         },
+        getPath: function(e) {
+           return e.fotos[0].path
+        },
         
-    }  
+    },
+    computed: {
+        disponiveis: function () {
+        return this.items.filter(function (disponivel) {
+            return (disponivel.estado !== "Apagado" && disponivel.estado != "Adotado")
+        })
+        }, 
+    }      
 }
 </script>

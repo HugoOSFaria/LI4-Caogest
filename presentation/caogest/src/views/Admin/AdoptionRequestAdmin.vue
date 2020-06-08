@@ -1,14 +1,14 @@
 <template>
     <div id = "adoptionRequestAdmin" class = "Adoption Request Admin">
-        <NavbarAdmin/>
+        <NavbarAdmin :id="$route.params.id"/>
         <v-card> 
             <v-img src='@/assets/pedidosadocao.png'></v-img> 
         </v-card>
        
         <v-container>
-            <AdoptionRequestAdmin/>
+            <AdoptionRequestAdmin :id="$route.params.id"/>
         </v-container>
-        <Footer/>
+        <Footer :id="$route.params.id"/>
     </div>
 </template>
 

@@ -51,7 +51,7 @@
             <AdoptionRequest :id="$route.params.id"/>
     
             <v-card flat height="100" color="white"></v-card>
-            <p class="my-5 display-2 font-weight-bold text-center">Os meus cães favoritos</p>
+            <p class="my-5 display-2 font-weight-bold text-center">As minhas almas gémeas</p>
             <v-card flat height="40" color="white"></v-card>
 
             <Dog :id="$route.params.id"/>

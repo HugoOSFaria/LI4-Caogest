@@ -1,5 +1,5 @@
 <template>
-    <Horario :id="$route.params.id"/>
+    <Horario :id="$route.params.id" :id2="$route.params.id2"/>
 </template>
 
 <script>

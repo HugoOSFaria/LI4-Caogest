@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Navbar/>
-    <PedidosAdocao :id="$route.params.id"/>
-    <Footer/>
+    <Navbar :id="$route.params.id"/>
+    <PedidosAdocao :id="$route.params.id" :id2="$route.params.id2"/>
+    <Footer :id="$route.params.id"/>
   </div>
 </template>
 
@@ -18,5 +18,5 @@ export default {
     Navbar, 
     Footer
   }
-}
+} 
 </script>

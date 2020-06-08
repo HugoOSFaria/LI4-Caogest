@@ -1,13 +1,7 @@
 <template>
-    <div id = "dogs" class = "Dogs">
-        <Navbar :id="$route.params.id"/>
-        <v-card> 
-            <v-img src='@/assets/caes2.png'></v-img> 
-        </v-card>
-        <v-card flat height= "100" color = "white"></v-card>
-
-        <Dogs :id="$route.params.id"/>
-        
+    <div id = "treinar" class = "treinar">
+        <Navbar :id="$route.params.id" />
+        <Treinar :id="$route.params.id" />
         <v-btn
             v-scroll="onScroll"
             x-large
@@ -22,27 +16,27 @@
             @click="toTop"
         >
             <v-icon>keyboard_arrow_up</v-icon>
-        </v-btn>
-        <Footer :id="$route.params.id"/>
+         </v-btn>   
+        <Footer :id="$route.params.id" />
     </div>
 </template>
 
 <script>
-
-
-import Navbar from '@/components/NavbarFooter/Navbar.vue'
-import Footer from '@/components/NavbarFooter/Footer.vue'
-import Dogs from '@/components/Utilizador/Dogs.vue'
-
+import Navbar from '@/components/NavbarFooter/NavbarAdmin.vue'
+import Footer from '@/components/NavbarFooter/FooterAdmin.vue'
+import Treinar from '@/components/Docs/Treinar.vue'
 export default {
-    data: () => ({   
-        fab: false,  
-    }),
+    name:"treinar", 
+    props:['id'],
+    data() {
+        return {
+            fab:false,
+        }
+    },
     components: {   Navbar, 
                     Footer,
-                    Dogs
-                    }, 
-    methods:{
+                    Treinar },
+    methods: {
         onScroll (e) {
             if (typeof window === 'undefined') return
             const top = window.pageYOffset ||   e.target.scrollTop || 0
@@ -51,7 +45,6 @@ export default {
         toTop () {
             this.$vuetify.goTo(0)
         },
-       
-    },    
+    }
 }
 </script>

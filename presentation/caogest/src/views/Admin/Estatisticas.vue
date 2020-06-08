@@ -1,6 +1,6 @@
 <template>
     <div id="entreemcontacto" class="entreemcontacto">
-        <NavbarAdmin />
+        <NavbarAdmin  :id="$route.params.id"/>
         <v-card>
             <v-img src="@/assets/estatisticas.png"></v-img>
         </v-card>
@@ -17,77 +17,89 @@
                 v-bind:key="index"
             >
                 <v-card :class="stat.bgColor" dark>
-                <v-container fluid grid-list-sm dark>
-                    <v-layout class="mt-6 mb-6 mx-6" row wrap>
-                    <v-flex sm3 hidden-xs-only>
-                        <v-icon class="mx-0" x-large dark>{{ stat.icon }}</v-icon>
-                    </v-flex>
-                    <v-flex sm9 xs12>
-                        <v-layout class="mt-0 mb-0 pa-0" row wrap>
-                        <v-flex d-flex xs12>
-                            <div class="silver--text headline">{{ stat.title }}</div>
+                    <v-container fluid grid-list-sm dark>
+                        <v-layout class="mt-6 mb-6 mx-6" row wrap>
+                        <v-flex sm3 hidden-xs-only>
+                            <v-icon class="mx-0" x-large dark>{{ stat.icon }}</v-icon>
                         </v-flex>
-                        <v-flex d-flex xs12 class="mx-4">
-                            <div class="silver--text display-1">{{ stat.data }}</div>
-                            &nbsp;&nbsp;
-                            
+                        <v-flex sm9 xs12>
+                            <v-layout class="mt-0 mb-0 pa-0" row wrap>
+                            <v-flex d-flex xs12>
+                                <div class="silver--text headline">{{ stat.title }}</div>
+                            </v-flex>
+                            <v-flex d-flex xs12 class="mx-4">
+                                <div class="silver--text display-1">{{ stat.data }}</div>
+                                &nbsp;&nbsp;
+                                
+                            </v-flex>
+                            </v-layout>
                         </v-flex>
                         </v-layout>
-                    </v-flex>
-                    </v-layout>
-                </v-container>
+                    </v-container>
                 </v-card>
             </v-flex>
             </v-layout>
             <v-card height = "100" flat></v-card>
-            <v-layout row wrap>
-                <v-flex full>
-                    <v-card light flat height = "1000">
-                        <v-card-title class = "display-2">Tipos de Utilizadores</v-card-title>
-                        <v-card flat height= "100"></v-card>
-                        <canisVSusers :width="600" :height="600"></canisVSusers>
-                    </v-card>
-                </v-flex>
-            </v-layout>
+            <v-row>
+                <v-col>
+                    <v-layout row wrap>
+                        <v-flex full>
+                            <v-card light flat height = "1000">
+                                <v-card-title class = "display-1 justify-center">Tipos de Utilizadores</v-card-title>
+                                <v-card flat height= "100"></v-card>
+                                <canisVSusers :width="600" :height="600"></canisVSusers>
+                            </v-card>
+                        </v-flex>
+                    </v-layout>
+                </v-col>
+                <v-col>
+                    <v-layout row wrap>
+                        <v-flex full>
+                            <v-card light flat height = "1000">
+                                <v-card-title class = "display-1 justify-center">Pedidos de Registo de Canis</v-card-title>
+                                <v-card flat height= "100"></v-card>
+                                <pedidosRegisto :width="600" :height="600"></pedidosRegisto>
+                            </v-card>
+                        </v-flex>
+                    </v-layout>
+                </v-col>
+                <v-col>
+                    <v-layout row wrap>
+                        <v-flex full>
+                            <v-card light flat height = "1000">
+                                <v-card-title class = "display-1 justify-center">Pedidos de Adoção</v-card-title>
+                                <v-card flat height= "100"></v-card>
+                                <nPedidos :width="600" :height="600"></nPedidos>
+                            </v-card>
+                        </v-flex>
+                    </v-layout>
+                </v-col>
+            </v-row>
 
-            <v-layout row wrap>
-                <v-flex full>
-                    <v-card light flat height = "1000">
-                        <v-card-title class = "display-2">Pedidos de Registo de Canis</v-card-title>
-                        <v-card flat height= "100"></v-card>
-                        <pedidosRegisto :width="600" :height="600"></pedidosRegisto>
-                    </v-card>
-                </v-flex>
-            </v-layout>
-
-            <v-layout row wrap>
-                <v-flex full>
-                    <v-card light flat height = "1000">
-                        <v-card-title class = "display-2">Pedidos de Adoção</v-card-title>
-                        <nPedidos :width="600" :height="600"></nPedidos>
-                    </v-card>
-                </v-flex>
-            </v-layout>
-
-            <v-layout row wrap>
-                <v-flex full>
-                    <v-card light flat height = "1000">
-                        <v-card-title class = "display-2">Número de Cães Adotados por Porte</v-card-title>
-                        <v-card flat height= "100"></v-card>
-                        <pedidosPorte :width="600" :height="600"></pedidosPorte>
-                    </v-card>
-                </v-flex>
-            </v-layout>
-
-            <v-layout row wrap>
-                <v-flex full>
-                    <v-card light flat height = "1000">
-                        <v-card-title class = "display-2">Número de Cães Adotados por Mês</v-card-title>
-                        <v-card flat height= "100"></v-card>
-                        <nPedidosMes :width="600" :height="600"></nPedidosMes>
-                    </v-card>
-                </v-flex>
-            </v-layout>
+            <v-row>
+                <v-col cols = "4">
+                    <v-layout row wrap>
+                        <v-flex ful4>
+                            <v-card light flat height = "1000">
+                                <v-card-title class = "display-1 justify-center">Número de Cães Adotados por Porte</v-card-title>
+                                <v-card flat height= "100"></v-card>
+                                <pedidosPorte :width="600" :height="600"></pedidosPorte>
+                            </v-card>
+                        </v-flex>
+                    </v-layout>
+                </v-col>
+                <v-col cols = "8">
+                    <v-layout row wrap>
+                        <v-flex full>
+                            <v-card light flat height = "1000">
+                                <v-card-title class = "display-1 justify-center">Número de Cães Adotados por Mês</v-card-title>
+                                <v-card flat height= "100"></v-card>
+                                <nPedidosMes :width="600" :height="600"></nPedidosMes>
+                            </v-card>
+                        </v-flex>
+                    </v-layout>
+                </v-col>
+            </v-row>
 
             <v-layout row wrap>
                 <v-flex full>
@@ -114,7 +126,7 @@
         >
             <v-icon>keyboard_arrow_up</v-icon>
          </v-btn>   
-        <Footer/>
+        <Footer  :id="$route.params.id"/>
     </div>    
 </template>
 

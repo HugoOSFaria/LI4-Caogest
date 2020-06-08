@@ -1,6 +1,6 @@
 <template>
     <div id = "volunteers" class = "Volunteers">
-        <NavbarAdmin/>
+        <NavbarAdmin :id="$route.params.id"/>
         <v-card> 
             <v-img src='@/assets/voluntarios.png'></v-img>
         </v-card>
@@ -90,7 +90,7 @@
                     <v-icon>keyboard_arrow_up</v-icon>
                 </v-btn>    
             </v-container>
-        <Footer/>
+        <Footer :id="$route.params.id"/>
     </div>
 </template>
 
