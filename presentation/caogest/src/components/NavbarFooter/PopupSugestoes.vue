@@ -130,7 +130,8 @@ import moment from 'moment/moment';
             motivo: "", 
             sugestoes: "", 
             data: moment().format(), 
-            estado: "Não Lida"
+            estado: "Não Lida", 
+            estadoU: "Enviada",
         }, 
         snackbar: false, 
         color: "", 
@@ -159,7 +160,8 @@ import moment from 'moment/moment';
                         motivo: this.form.motivo,
                         sugestoes: this.form.sugestoes,
                         data: this.form.data,
-                        estado: this.form.estado
+                        estado: this.form.estado, 
+                        estadoU: this.form.estadoU
                     });
                     
                     console.log(JSON.stringify(resposta.data));

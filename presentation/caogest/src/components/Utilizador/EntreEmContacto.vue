@@ -53,7 +53,7 @@
                 <v-list-item
                   color="dark lighten-4"
                   v-for="obj in recebidas"
-                  :key="obj.id"
+                  :key="obj.identificacao"
                   @click="openDialog(obj)"
                 >
                   <v-list-item-content>
@@ -83,7 +83,7 @@
               <v-list-item
                 color="dark lighten-4"
                 v-for="obj in apagadas"
-                :key="obj.id"
+                :key="obj.identificacao"
               >
                 <v-list-item-content>
                   <v-list-item-title
@@ -112,7 +112,7 @@
               <v-list-item
                 color="brown darken-4"
                 v-for="obj in enviadas"
-                :key="obj.id"
+                :key="obj.identificacao"
                 @click="openEnviadas(obj)"
               >
                 <v-list-item-content>
@@ -283,7 +283,7 @@ import axios from 'axios'
 const lhost = require("@/config/global").host;
 
 export default {
-  props: ['sugestao', 'ident'],
+  props: ['sugestao', 'id'],
   data() {
     return {
       fab:false,
@@ -312,7 +312,7 @@ export default {
       this.estadoU = dados.estadoU;
       this.data = dados.data;
       this.user_email = dados.user_email;
-      this.id = dados.id;
+      this.identificacao = dados.identificacao;
       this.dialog = true;
       if(this.estadoU === 'Não Lida'){
         this.marcaLida();
@@ -327,7 +327,7 @@ export default {
       this.estadoU = dados.estadoU;
       this.data = dados.data;
       this.user_email = dados.user_email;
-      this.id = dados.id;
+      this.identificacao = dados.identificacao;
       this.dialog3 = true;
     },
     date: function (date) {
@@ -347,8 +347,8 @@ export default {
     marcaLida: async function(){
       try{ 
         var resposta = 
-        await axios.put(lhost + "/api/Sugestoes/" + this.id , {
-          id:this.id, 
+        await axios.put(lhost + "/api/Sugestoes/" + this.identificacao , {
+          identificacao:this.identificacao, 
           motivo:this.motivo,
           sugestoes:this.sugestoes,
           nome:this.nome,
@@ -368,8 +368,8 @@ export default {
     marcaNaoLida: async function(){
       try{ 
         var resposta = 
-        await axios.put(lhost + "/api/Sugestoes/" + this.id , {
-          id:this.id, 
+        await axios.put(lhost + "/api/Sugestoes/" + this.identificacao , {
+          identificacao:this.identificacao, 
           motivo:this.motivo,
           sugestoes:this.sugestoes,
           nome:this.nome,
@@ -391,8 +391,8 @@ export default {
        try{ 
         if(this.estado === 'Não Lida') this.numero--;
         var resposta = 
-        await axios.put(lhost + "/api/Sugestoes/" + this.id , {
-          id:this.id, 
+        await axios.put(lhost + "/api/Sugestoes/" + this.identificacao , {
+          identificacao:this.identificacao, 
           motivo:this.motivo,
           sugestoes:this.sugestoes,
           nome:this.nome,
@@ -417,12 +417,12 @@ export default {
         this.estado = dados.estado;
         this.data = dados.data;
         this.user_email = dados.user_email;
-        this.id = dados.id;
+        this.identificacao = dados.identificacao;
         this.estadoU = dados.estadoU;
        try{ 
         var resposta = 
-        await axios.put(lhost + "/api/Sugestoes/" + this.id , {
-          id:this.id, 
+        await axios.put(lhost + "/api/Sugestoes/" + this.identificacao , {
+          identificacao:this.identificacao, 
           motivo:this.motivo,
           sugestoes:this.sugestoes,
           nome:this.nome,
@@ -438,9 +438,9 @@ export default {
         console.log("erro: " + e); 
       }
     },
-    async getMensagem(){
+    getMensagem: async function(){
       try {
-        let response = await axios.get(lhost + "/api/Sugestoes/Users/" + this.ident);
+        let response = await axios.get(lhost + "/api/Sugestoes/Users/" + this.id);
         this.sugestoesl = response.data;
         this.ready = true;
       } 
@@ -479,7 +479,7 @@ export default {
   },
   created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Sugestoes/Users/" + this.ident);
+            let response = await axios.get(lhost + "/api/Sugestoes/Users/" + this.id);
             this.sugestoesl = response.data;
             this.ready = true;
         } 

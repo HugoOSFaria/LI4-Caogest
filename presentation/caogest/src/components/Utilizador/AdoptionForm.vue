@@ -17,7 +17,7 @@
         <v-card flat height= "100" color = "white"></v-card>
 
         <div> 
-
+            <v-form ref="form" lazy-validation>
             <v-card color = "grey lighten-2" class = "mx-auto" max-width = "1500" fluid outlined rounded>
                 <v-row>
                     <v-col>
@@ -29,7 +29,9 @@
                     <v-col cols = "6">
                         <v-text-field
                             ref="name"
-                            v-model="name"
+                            :rules="regraNome"
+                            name="nome"
+                            type="nome"
                             required
                             color = "deep-orange darken-4"
                             class = "pa-8"
@@ -52,7 +54,9 @@
                     <v-col cols = "6">
                         <v-text-field
                             ref="name"
-                            v-model="name"
+                            :rules="regraNomeCao"
+                            name="nomeCao"
+                            type="nomeCao"
                             required
                             color = "deep-orange darken-4"
                             class = "pa-8"
@@ -73,13 +77,13 @@
                 </v-row>
                 <v-row>
                     <v-container fluid>
-                         <v-radio-group column v-model="radios" :mandatory="false" class = "ma-12" >
-                            <v-radio color = "deep-orange darken-4" label="Apartamento" value="apartamento"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Vivenda" value="vivenda"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Moradia" value="moradia"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Terreno" value="terreno"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Empresa/Fábrica" value="empresa/fábrica"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Outra" value="outra"></v-radio>
+                         <v-radio-group column v-model="form.tipoMoradia" :rules="regraTipoMoradia" :mandatory="false" class = "ma-12" >
+                            <v-radio color = "deep-orange darken-4" label="Apartamento" value="Apartamento"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Vivenda" value="Vivenda"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Moradia" value="Moradia"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Terreno" value="Terreno"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Empresa/Fábrica" value="Empresa/Fábrica"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Outra" value="Outra"></v-radio>
                         </v-radio-group>
                     </v-container>
                 </v-row>
@@ -96,13 +100,13 @@
                 </v-row>
                 <v-row>
                     <v-container fluid>
-                         <v-radio-group column v-model="radios" :mandatory="false" class = "ma-12" >
-                            <v-radio color = "deep-orange darken-4" label="Varanda" value="varanda"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Terraço" value="terraço"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Marquise" value="marquise"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Jardim" value="jardim"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Nenhum" value="nenhum"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Outra" value="outra"></v-radio>
+                         <v-radio-group column v-model="form.exterior" :rules="regraExterior" :mandatory="false" class = "ma-12" >
+                            <v-radio color = "deep-orange darken-4" label="Varanda" value="Varanda"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Terraço" value="Terraço"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Marquise" value="Marquise"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Jardim" value="Jardim"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Nenhum" value="Nenhum"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Outra" value="Outra"></v-radio>
                         </v-radio-group>
                     </v-container>
                 </v-row>
@@ -119,10 +123,10 @@
                 </v-row>
                 <v-row>
                     <v-container fluid>
-                         <v-radio-group column v-model="radios" :mandatory="false" class = "ma-12" >
-                            <v-radio color = "deep-orange darken-4" label="Própria" value="própria"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Alugada" value="alugada"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Condomínio" value="condomínio"></v-radio>
+                         <v-radio-group column v-model="form.habitacao" :rules="regraHabitacao" :mandatory="false" class = "ma-12" >
+                            <v-radio color = "deep-orange darken-4" label="Própria" value="Própria"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Alugada" value="Alugada"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Condomínio" value="Condomínio"></v-radio>
                         </v-radio-group>
                     </v-container>
                 </v-row>
@@ -139,10 +143,10 @@
                 </v-row>
                 <v-row>
                     <v-container fluid>
-                         <v-radio-group column v-model="radios" :mandatory="false" class = "ma-12" >
-                            <v-radio color = "deep-orange darken-4" label="Sim" value="sim"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Não" value="não"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="É própria" value="própria"></v-radio>
+                         <v-radio-group column v-model="form.permissao" :rules="regraPermissao" :mandatory="false" class = "ma-12" >
+                            <v-radio color = "deep-orange darken-4" label="Sim" value="Sim"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Não" value="Não"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="É própria" value="Própria"></v-radio>
                         </v-radio-group>
                     </v-container>
                 </v-row>
@@ -159,12 +163,12 @@
                 </v-row>
                 <v-row>
                     <v-container fluid>
-                         <v-radio-group column v-model="radios" :mandatory="false" class = "ma-12" >
-                            <v-radio color = "deep-orange darken-4" label="Companhia" value="companhia"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Caça" value="caça"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Guarda" value="guarda"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Dar de presente" value="presente"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Outra" value="outra"></v-radio>
+                         <v-radio-group column v-model="form.motivo" :rules="regraMotivo" :mandatory="false" class = "ma-12" >
+                            <v-radio color = "deep-orange darken-4" label="Companhia" value="Companhia"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Caça" value="Caça"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Guarda" value="Guarda"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Dar de presente" value="Presente"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Outra" value="Outra"></v-radio>
                         </v-radio-group>
                     </v-container>
                 </v-row>
@@ -181,12 +185,12 @@
                 </v-row>
                 <v-row>
                     <v-container fluid>
-                         <v-radio-group column v-model="radios" :mandatory="false" class = "ma-12" >
-                            <v-radio color = "deep-orange darken-4" label="Acompanhará a família" ></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Ficará com familiares/amigos"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Ficará num hotel"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Ficará sozinho em casa" ></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Outro" ></v-radio>
+                         <v-radio-group column v-model="form.ausencia" :rules="regraAusencia" :mandatory="false" class = "ma-12" >
+                            <v-radio color = "deep-orange darken-4" label="Acompanhará a família" value="Acompanhará a família"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Ficará com familiares/amigos" value="Ficará com familiares/amigos"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Ficará num hotel" value="Ficará num hotel"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Ficará sozinho em casa" value="Ficará sozinho em casa"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Outro" value="Outro"></v-radio>
                         </v-radio-group>
                     </v-container>
                 </v-row>
@@ -203,9 +207,9 @@
                 </v-row>
                 <v-row>
                     <v-container fluid>
-                         <v-radio-group column v-model="radios" :mandatory="false" class = "ma-12" >
-                            <v-radio color = "deep-orange darken-4" label="Sim" value="sim"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Não" value="não"></v-radio>
+                         <v-radio-group column v-model="form.alergia" :rules="regraAlergia" :mandatory="false" class = "ma-12" >
+                            <v-radio color = "deep-orange darken-4" label="Sim" value="Sim"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Não" value="Não"></v-radio>
                         </v-radio-group>
                     </v-container>
                 </v-row>
@@ -222,9 +226,9 @@
                 </v-row>
                 <v-row>
                     <v-container fluid>
-                         <v-radio-group column v-model="radios" :mandatory="false" class = "ma-12" >
-                            <v-radio color = "deep-orange darken-4" label="Sim" value="sim"></v-radio>
-                            <v-radio color = "deep-orange darken-4" label="Não" value="não"></v-radio>
+                         <v-radio-group column v-model="form.donoAnimal" :rules="regraDonoAnimal" :mandatory="false" class = "ma-12" >
+                            <v-radio color = "deep-orange darken-4" label="Sim" value="Sim"></v-radio>
+                            <v-radio color = "deep-orange darken-4" label="Não" value="Não"></v-radio>
                         </v-radio-group>
                     </v-container>
                 </v-row>
@@ -244,6 +248,7 @@
                         <v-textarea
                             flat
                             auto-grow
+                            v-model="form.descAnimais"
                             placeholder = "Indique de que outros animais é dono"
                             color = "grey lighten-1" 
                             class = "pa-8"
@@ -270,6 +275,7 @@
                             prepend-icon=""
                             flat
                             placeholder="Adicione um comprovativo de morada"
+                            :rules="regraComprovativo"
                             prepend-inner-icon = "search">
                         </v-file-input>
                     </v-col>
@@ -280,7 +286,7 @@
             <v-card class = "mx-auto" max-width = "1500" flat>
                 <v-row>
                     <v-col cols="12">
-                        <v-checkbox color="deep-orange darken-4">
+                        <v-checkbox color="deep-orange darken-4" v-model="terms" id="terms" :rules="regraTermos" >
                             <template v-slot:label>
                                 <div>
                                     <Termos/>
@@ -291,26 +297,130 @@
                 </v-row>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="ma-6 headline" x-large color = "deep-orange lighten-4" to="/caes">Cancelar</v-btn>
+                    <v-btn class="ma-6 headline" x-large color = "deep-orange lighten-4" @click="cancelar()">Cancelar</v-btn>
                     <v-btn
                         class="ma-6 headline"
                         x-large
                         color="deep-orange lighten-4"
-                        type="submit"
+                        :disabled="isDisabled"
+                        @click="submeterPedido()" 
                     >Submeter Pedido</v-btn>
                 </v-card-actions>  
-            </v-card>      
+            </v-card>    
+            </v-form>  
         </div>
-    
+
+        <div class="text-center ma-2">
+        <v-snackbar
+          v-model="snackbar"
+          :color="color"
+          :timeout="timeout"
+          bottom
+          multi-line
+          class = "headline"
+        >
+          {{ text }}
+          <v-btn class = "headline" text @click="fecharSnackbar">Fechar</v-btn>
+        </v-snackbar>
+        </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
+const lhost = require("@/config/global").host;
 import Termos from '@/components/Infos/TermosECondicoes.vue'
 export default {
     props:['id','id2','id3'],
+    data () {
+      return {
+        terms:false, 
+        snackbar: false, 
+        color: "", 
+        done: false, 
+        timeout: 0,
+        text: "",
+        form:{
+            tipoMoradia:"",
+            exterior:"", 
+            ausencia:"", 
+            alergia:"", 
+            donoAnimal:"", 
+            descAnimais:"", 
+            motivo:"", 
+            permissao:"", 
+            habitacao:"",  
+        }, 
+        regraNome: [v => !!v || "Nome obrigatório."],
+        regraNomeCao: [v => !!v || "Nome de cão obrigatório."],
+        regraTipoMoradia: [v => !!v || "Indicaçaõ obrigatória."],
+        regraExterior: [v => !!v || "Indicação obrigatória."],
+        regraAlergia: [v => !!v || "Indicação obrigatória."],
+        regraDonoAnimal: [v => !!v || "Indicação obrigatória."],
+        regraAusencia: [v => !!v || "Indicação obrigatória."],
+        regraMotivo: [v => !!v || "Indicação obrigatória."],
+        regraPermissao: [v => !!v || "Indicação obrigatória."],
+        regraHabitacao: [v => !!v || "Indicação obrigatória."],
+        regraComprovativo: [v => !!v || "Comprovativo de Morada obrigatório."],
+        regraTermos: [v => !!v || "Por favor aceite os termos de condição"],
+      }
+    },
     components: {
-                Termos}
+                Termos
+    },
+    computed:{
+        isDisabled: function(){
+            return !this.terms;
+        }
+    }, 
+    methods:{
+      submeterPedido: async function(){
+        if (this.$refs.form.validate()) {
+            try{ 
+            var resposta = 
+                await axios.post(lhost + "/api/Adocoes", {
+                    estado: "Pendente", 
+                    cao_idCao: this.id3, 
+                    permissao: this.form.permissao, 
+                    alergia: this.form.alergia, 
+                    descAnimais: this.form.descAnimais, 
+                    ausencia: this.form.ausencia, 
+                    habitacao: this.form.habitacao, 
+                    exterior: this.form.exterior, 
+                    tipoMoradia: this.form.tipoMoradia, 
+                    motivo: this.form.motivo, 
+                    utilizador_user_email: this.id, 
+                    comprovativo: "Sim", 
+                    donoAnimal: this.form.donoAnimal
+                }); 
+                console.log(JSON.stringify(resposta.data));
+                this.text = "Pedido de Adoção submetido criado com sucesso!";
+                this.color = "success"; 
+                this.snackbar = true; 
+            }
+            catch(e){
+                console.log("erro: " + e);
+                this.text = "Ocorreu um erro na submissão do pedido, por favor tente mais tarde!";
+                this.color = "warning"; 
+                this.snackbar = true; 
+            }
+            } else {
+                this.text = "Por favor preencha todos os campos!";
+                this.color = "error";
+                this.snackbar = true;
+                this.done = false;
+            }   
+        },
+        fecharSnackbar() {
+        this.snackbar = false;
+        if(this.color == 'success')
+            this.$router.push("/pagina/utilizador/" + this.id);
+        },
+        cancelar() {
+            this.$router.push("/pagina/utilizador/" + this.id);
+        },
+    } 
+
 }
 </script>
 

@@ -11,12 +11,13 @@
                 <v-row>
                     <v-spacer></v-spacer>
                     <v-col>
-                        <v-btn class="ma-6 headline" x-large color = "brown lighten-4" @click="openVoluntario(canil)">Quero voluntariar-me!</v-btn>
+                        <v-btn v-if="lista" class="ma-6 headline" x-large color = "brown lighten-5" @click="naoVoluntario(canil)">Já não estou interessado em ser voluntário</v-btn>
+                        <v-btn v-else class="ma-6 headline" x-large color = "brown lighten-4" @click="openVoluntario(canil)">Quero voluntariar-me!</v-btn>
                     </v-col>
                     <v-spacer></v-spacer>
                     <v-col>
-                        <v-btn class="ma-6 headline" x-large color = "brown lighten-4" @click="horarios(canil)">Horário Voluntários</v-btn>
-                    
+                        <v-btn class="ma-6 headline" v-if="this.registados.length !== 0" x-large color = "brown lighten-4" @click="horarios(canil)">Horário Voluntários</v-btn>
+                        <v-btn class="ma-6 headline" v-else disabled x-large color = "brown lighten-4" @click="horarios(canil)">Horário Voluntários</v-btn>
                     </v-col>
                     <v-spacer></v-spacer>
                     <v-col>
@@ -69,7 +70,7 @@
                                             text
                                             x-large
                                             class = "headline"
-                                            @click="openDialog(obj)"
+                                            @click="cao(obj)"
                                         > {{obj.nome}} 
                                         </v-btn>  
                                     </v-card-actions>
@@ -121,172 +122,6 @@
                 </v-col>
             </v-row>
         </div>
-        <v-dialog
-            v-model="dialog" 
-            fullscreen 
-            hide-overlay 
-            transition="dialog-bottom-transition"
-        >                                                                              
-            <v-card 
-                class = "ma-2" 
-                flat
-            >
-            <v-toolbar 
-                height = "100" 
-                color="deep-orange lighten-4"
-            >
-                <v-btn icon @click="dialog = false">
-                    <v-icon>mdi-close</v-icon>
-                </v-btn>
-                <v-toolbar-title >Fechar</v-toolbar-title>
-            </v-toolbar>
-                                                        
-            <v-card 
-                color = "white" 
-                height = "150" 
-                flat
-            ></v-card>
-       
-            <v-row>
-                <v-col>
-                    <v-card 
-                    flat 
-                    color = "white" 
-                    class = "mx-auto" 
-                    height = "800" 
-                    width = "900"
-                    > 
-                        <v-img 
-                            height = "800" 
-                            width = "800" 
-                            src="@/assets/example.jpg"
-                        ></v-img> 
-                    </v-card>    
-                </v-col>
-
-                <v-col>
-                    <v-card flat>
-                        <v-row>
-                            <p 
-                                class = " display-2 font-weight-bold" 
-                                color = "grey"
-                            > Nome: 
-                                <span 
-                                    class = "display-2 font-weight-regular "
-                                >{{this.nome}}</span>
-                            </p> 
-                            </v-row>
-                            <v-card 
-                                flat 
-                                color = "white" 
-                                height = "100"
-                            ></v-card>
-                            <v-row>
-                                <p 
-                                    class = " display-2 font-weight-bold" 
-                                    color = "grey"
-                                > Raça: 
-                                    <span 
-                                        class = "display-2 font-weight-regular "
-                                    >{{this.raca}}</span>
-                                </p> 
-                            </v-row>
-                            <v-card 
-                                flat 
-                                color = "white" 
-                                height = "50"
-                            ></v-card>                                       
-                            <v-row>
-                                <p 
-                                    class = " display-2 font-weight-bold" 
-                                    color = "grey"
-                                > Idade: 
-                                    <span 
-                                        class = "display-2 font-weight-regular "
-                                    >{{this.idade}}</span>
-                                </p> 
-                            </v-row>
-                            <v-card 
-                                flat 
-                                color = "white" 
-                                height = "40"
-                            ></v-card>
-                            <v-row>
-                                <p 
-                                    class = " display-2 font-weight-bold" 
-                                    color = "grey"
-                                > Cor: 
-                                    <span 
-                                        class = "display-2 font-weight-regular "
-                                    >{{this.cor}}</span>
-                                </p> 
-                            </v-row>
-                            <v-card 
-                                flat 
-                                color = "white" 
-                                height = "40"
-                            ></v-card>                                    
-                            <v-row>
-                                <p 
-                                    class = " display-2 font-weight-bold" 
-                                    color = "grey"
-                                > Porte: 
-                                    <span 
-                                        class = "display-2 font-weight-regular "
-                                    >{{this.porte}}</span>
-                                </p> 
-                            </v-row>
-                            <v-card 
-                                flat 
-                                color = "white" 
-                                height = "40"
-                            ></v-card>
-                            <v-row>
-                                <p 
-                                    class = " display-2 font-weight-bold" 
-                                    color = "grey"
-                                > Sexo: 
-                                    <span 
-                                        class = "display-2 font-weight-regular "
-                                    >{{this.sexo}}</span>
-                                </p> 
-                            </v-row>
-                            <v-card 
-                                flat 
-                                color = "white" 
-                                height = "40"
-                            ></v-card>                                        
-                            <v-row>
-                            <p 
-                                class = " display-2 font-weight-bold" 
-                                color = "grey"
-                            > Esterilizado: 
-                                <span 
-                                    class = "display-2 font-weight-regular "
-                                >{{this.esterilizacao}}
-                                </span>
-                            </p> 
-                            </v-row>
-                            <v-card 
-                                flat   
-                                color = "white" 
-                                height = "40"
-                            ></v-card>
-                            <v-row>
-                                <p 
-                                    class = " display-2 font-weight-bold" 
-                                    color = "grey"
-                                > Descrição: 
-                                    <span 
-                                        class = "display-2 font-weight-regular "
-                                    >{{this.descricao}}</span>
-                                </p> 
-                            </v-row>
-                        </v-card>
-                    </v-col>
-                </v-row>
-            </v-card>
-        </v-dialog>
         <Footer :id="$route.params.id"/>
         <v-dialog v-model="dialog2" max-width="1500" persistent>
             <v-card>
@@ -401,7 +236,14 @@ const lhost = require("@/config/global").host;
 
 export default {
     name: 'Kennel',
-    props: ['id', 'id2'], 
+    props: {
+        id:{
+            type: String,
+        }, 
+        id2: {
+            type: String, 
+        }
+    },  
     data: () => ({  
         fab:false,           
         itemssexo: [ 
@@ -435,6 +277,8 @@ export default {
         selected: [],   
         disponivel: [],     
         caes: [],
+        voluntarios: [],
+        voluntario: [],
         dialog: false, 
         dialog2: false,
         alert: false, 
@@ -452,7 +296,7 @@ export default {
         snackbar: false, 
         color: "", 
         done: false, 
-        timeout: 0,
+        timeout: 4000,
         text: "",    
     }),
 
@@ -463,6 +307,13 @@ export default {
         try {
             let response = await axios.get(lhost + "/api/Canis/" + this.id2);
             this.canil = response.data;
+
+            let resposta = await axios.get(lhost + "/api/CaesEmailCanil/" + this.id2);
+            this.caes = resposta.data;
+
+            let resp = await axios.get(lhost + "/api/Voluntarios/" + this.id2); 
+            this.voluntarios = resp.data; 
+
             this.ready = true;
         } 
         catch (e) {
@@ -470,6 +321,9 @@ export default {
         }
     }, 
     methods: {
+        cao: function(obj){
+            this.$router.push("/cao/utilizador/" + this.id + '/' + obj.idCao );
+        },
         informacoes: function(canil){
             this.$router.push("/informacoes/utilizador/" + this.id + '/' + canil.email);
         }, 
@@ -513,6 +367,7 @@ export default {
               
                 }); 
             console.log(JSON.stringify(response.data));
+            this.reloadPage();
             this.text = "Registou-se como voluntário!";
             this.color = "success"; 
             this.dialog2 = false;
@@ -526,22 +381,32 @@ export default {
             this.snackbar = true; 
           }
         },
+        naoVoluntario: async function(){
+            try{
+                await axios.delete(lhost + "/api/Voluntarios/" + this.id2 + '/' + this.id);
+                this.reloadPage();
+                this.text = "Removeu o seu voluntariado com sucesso!";
+                this.color = "success"; 
+                this.dialog2 = false;
+                this.snackbar = true; 
+            }
+            catch(e){
+                console.log("erro: " + e);
+                this.text = "Ocorreu um erro no registo, por favor tente mais tarde!";
+                this.color = "warning"; 
+                this.dialog2 = false;
+                this.snackbar = true; 
+            }
+        },
         getPath: function(e) {
            return e.fotos[0].path
         },
         fecharSnackbar() {
             this.snackbar = false;
         },
-        created: async function(){
-            try {
-                let response = await axios.get(lhost + "/api/CaesEmailCanil/" + this.id2);
-                this.caes = response.data;
-                this.ready = true;
-            } 
-                catch (e) {
-                return e;
-            }   
-        },
+        reloadPage(){
+            window.location.reload()
+        }
     },
     computed: {
         disponiveis: function () {
@@ -549,6 +414,15 @@ export default {
                 return (disponivel.estado !== "Apagado" && disponivel.estado !== "Adotado")
             })
         }, 
+        registados: function(){
+            let self=this;
+            return this.voluntarios.filter(function (voluntario){
+                return (voluntario.mailUser == self.id)
+            })
+        }, 
+        lista: function(){
+            return (this.registados.length) ? true : false;
+        }
     },                  
           
 }

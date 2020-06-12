@@ -40,7 +40,7 @@
                         </v-flex>
                         <v-spacer></v-spacer>
                         <v-flex xs8 md4>
-                            <BirthChange :id="$route.params.id"/>  
+                            <!--<BirthChange :id="$route.params.id"/>  -->
                         </v-flex>
                     </v-row>
                     <v-divider></v-divider>
@@ -55,7 +55,7 @@
                         </v-flex>
                         <v-spacer></v-spacer>
                         <v-flex xs8 md4>
-                           <!-- <PasswordChange :id="$route.params.id"/>  -->
+                            <PassChange :id="$route.params.id"/>  
                         </v-flex>
                     </v-row>
                 </v-card>    
@@ -91,7 +91,7 @@
                         </v-flex>
                         <v-spacer></v-spacer>
                         <v-flex xs8 md4>
-                        <div  class = " pa-8 headline font-weight-regular" color = "grey darken-4">
+                        <div class = " pa-8 headline font-weight-regular" color = "grey darken-4">
                                 {{dados.rua}}
                             </div>
                         </v-flex>
@@ -108,7 +108,7 @@
                         </v-flex>
                         <v-spacer></v-spacer>
                         <v-flex xs8 md4>
-                        <div  class = " pa-8 headline font-weight-regular" color = "grey darken-4">
+                        <div class = " pa-8 headline font-weight-regular" color = "grey darken-4">
                                 {{dados.localidade}}
                             </div>
                         </v-flex>
@@ -160,9 +160,9 @@
 
 <script>
 import NameChange from '@/components/EditarDados/NameChange.vue'
-import BirthChange from '@/components/EditarDados/BirthChange.vue'
+//import BirthChange from '@/components/EditarDados/BirthChange.vue'
 import AddressChange from '@/components/EditarDados/AddressChange.vue'
-//import PasswordChange from '@/components/EditarDados/PasswordChange.vue'
+import PassChange from '@/components/EditarDados/PassChange.vue'
 import CityChange from '@/components/EditarDados/CityChange.vue'
 import NIFChange from '@/components/EditarDados/NIFChange.vue'
 import moment from 'moment/moment'
@@ -179,9 +179,9 @@ export default {
     }),
     components: {  
         NameChange,
-        BirthChange,
+        //BirthChange,
         AddressChange,
-        //PasswordChange,
+        PassChange,
         CityChange,
         NIFChange
     },   

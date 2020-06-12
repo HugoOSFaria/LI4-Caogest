@@ -255,6 +255,7 @@ export default {
             user_email: "", 
             motivo: "", 
             estado: "Não Lida",
+            estadoU: "Enviada",
             sugestoes: "", 
             data: moment().format()
         }, 
@@ -286,6 +287,7 @@ export default {
                         sugestoes: this.form.sugestoes,
                         data: this.form.data,
                         estado: this.form.estado,
+                        estadoU: this.form.estadoU
                     });
                     
                     console.log(JSON.stringify(resposta.data));

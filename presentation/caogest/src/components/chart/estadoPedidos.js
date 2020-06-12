@@ -13,6 +13,7 @@ export default {
           "Aceites",
           "Expirados",
           "Pendentes",
+          "Concluídos"
         ],
         datasets: [
           {
@@ -21,8 +22,9 @@ export default {
               "#C5E1A5",
               "#B39DDB",
               "#FFE082",
+              "#B2EBF2",
             ],
-            data: [0, 0, 0, 0],
+            data: [0, 0, 0, 0, 0],
           }
         ]
       },
@@ -53,6 +55,9 @@ export default {
 
           if(res.data[i].estado === 'Pendente')
           this.info.datasets[0].data[3] += 1;
+
+          if(res.data[i].estado === 'Concluído')
+          this.info.datasets[0].data[4] += 1;
         }
         this.renderChart(this.info, this.options);
       })

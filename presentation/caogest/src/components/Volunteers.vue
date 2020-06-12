@@ -29,7 +29,7 @@
                             <v-card-title class = "display-1 text-center justify-center"> Não existem voluntários associados </v-card-title>
                         </v-card>
                         <v-card v-else flat v-for="voluntario in voluntarios" :key="voluntario.nome">
-                            <v-layout row wrap :class="`pa-7 voluntario`">
+                            <v-layout row wrap :class="`pa-7 voluntario ${voluntario.sexo}`">
                             <v-flex xs12 md4>
                                 <div class="caption grey--text">Nome Voluntário</div>
                                 <div>{{ voluntario.nomeUser }}</div>
@@ -112,5 +112,12 @@ export default {
 </script>
 
 <style>
+.voluntario.Feminino {
+  border-left: 4px solid rgb(240, 200, 219);
+}
+
+.voluntario.Masculino {
+  border-left: 4px solid rgb(158, 210, 232);
+}
 
 </style>

@@ -45,8 +45,8 @@
                             <v-card flat height= "60" color = "white"></v-card>
 
                             <v-row align = "center" justify = "center">
-                                <v-btn v-if="hor.registados == hor.capacidade" disabled class = "headline" light block>Registar em Horário</v-btn>
-                                <v-btn v-else class = "headline" color = "brown lighten-4" light block>Registar em Horário</v-btn>
+                                <v-btn v-if="hor.registados == hor.capacidade" bottom absolute disabled class = "headline" light block>Registar em Horário</v-btn>
+                                <v-btn v-else bottom absolute class = "headline" color = "brown lighten-4" light block @click="regista(hor)">Registar em Horário</v-btn>
                             </v-row>
                             
                         </v-col>
@@ -54,6 +54,19 @@
                 </v-col>
             </v-row>
         </v-container>
+        <div class="text-center ma-2">
+        <v-snackbar
+          v-model="snackbar"
+          :color="color"
+          :timeout="timeout"
+          bottom
+          multi-line
+          class = "headline"
+        >
+          {{ text }}
+          <v-btn class = "headline" text @click="fecharSnackbar">Fechar</v-btn>
+        </v-snackbar>
+        </div>
         <Footer :id="$route.params.id"/>
     </div>
 </template>
@@ -68,7 +81,12 @@ const lhost = require("@/config/global").host;
 
 export default {
     data: () => ({             
-         horario:[] ,
+        horario:[] ,
+        snackbar: false, 
+        color: "", 
+        done: false, 
+        timeout: 4000,
+        text: "", 
     }),
     name: 'HorarioCanil',
     props: ['id', 'id2'], 
@@ -88,6 +106,31 @@ export default {
             else if (num === 6) return "Sábado";
             return "Domingo";
         },
+        regista: async function(hor){
+            try{
+                var resposta = 
+                    await axios.post(lhost + "/api/HU", {
+                        horario_DataInicio: hor.dataInicio, 
+                        horario_DataFim: hor.dataFim, 
+                        horario_Dia: hor.dia,
+                        horario_Canil_User_Email: this.id2,
+                        utilizador_email: this.id,        
+            }); 
+            console.log(JSON.stringify(resposta.data));
+            this.text = "Registo no horário efetuado com sucesso!";
+            this.color = "success"; 
+            this.snackbar = true; 
+          }
+          catch(e){
+            console.log("erro: " + e);
+            this.text = "Já se encontra registado neste horário";
+            this.color = "warning"; 
+            this.snackbar = true; 
+          }
+      }, 
+      fecharSnackbar() {
+        this.snackbar = false;
+      },
     },
     computed: {
         sortedArray: function() {
@@ -100,13 +143,12 @@ export default {
             }
 
             return this.horario.slice(0).sort(compare);
-        }
+        },
     },
     created: async function(){
         try {
             let response = await axios.get(lhost + "/api/Horarios/" + this.id2);
             this.horario = response.data;
-            this.ready = true;
         } 
         catch (e) {
             return e;

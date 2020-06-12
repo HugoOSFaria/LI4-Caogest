@@ -58,141 +58,13 @@
             <div class="method headline">{{date(pedido.data)}}</div>
           </v-flex>
           <v-flex xs1 md1>
-               <v-chip :color="project_status(pedido.estado)" class="black--text caption my-2" @click="getPedidos(pedido)">{{pedido.estado}}</v-chip> 
+               <v-chip :color="project_status(pedido.estado)" class="black--text caption my-2" @click="pedidoadocao(pedido)">{{pedido.estado}}</v-chip> 
             <div>
             </div>
           </v-flex>
         </v-layout>
         <v-divider></v-divider>
       </v-card>
-      <v-dialog 
-            v-model="dialog" 
-            fullscreen 
-            hide-overlay 
-            transition="dialog-bottom-transition"
-        >                                                                              
-            <v-card 
-                class = "ma-2" 
-                flat
-            >
-            <v-toolbar 
-                height = "100" 
-                color="deep-orange lighten-4"
-            >
-                <v-btn icon @click="dialog = false">
-                    <v-icon>mdi-close</v-icon>
-                </v-btn>
-                <v-toolbar-title >Fechar</v-toolbar-title>
-            </v-toolbar>
-                                                        
-            <v-card 
-                color = "white" 
-                height = "150" 
-                flat
-            ></v-card>
-                                        
-            <v-card flat height = "100" color = "brown lighten-5">
-            <v-row>
-                <v-card-text class = "display-2 black--text text-center">
-                    {{individual.nome_Utilizador}} 
-                    <v-icon>pets</v-icon> 
-                    {{individual.cao_idCao}}
-                </v-card-text>
-            </v-row>
-        </v-card>
-        <v-card flat height = "50"></v-card>
-        <v-card flat class="ma-12" max-width="3000" fluid>
-            <v-row>
-                <v-col>
-                    <v-card flat color = "white" class = "mx-auto" height = "800" width = "900"> 
-                         <v-img height = "800" width = "800" src='@/assets/example.jpg'></v-img> 
-                    </v-card>
-                </v-col>
-                <v-col>
-                    <v-card flat>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Nome Completo: 
-                                <span class = "display-1 font-weight-regular ">{{individual.nome_Utilizador}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Nome Cão: 
-                                <span class = "display-1 font-weight-regular ">{{individual.cao_idCao}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Número do Cartão de Cidadão: 
-                                <span class = "display-1 font-weight-regular ">{{individual.cc}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Tipo de Moradia: 
-                                <span class = "display-1 font-weight-regular ">{{individual.tipoMoradia}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Espaço exterior ou equivalente: 
-                                <span class = "display-1 font-weight-regular ">{{individual.exterior}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> A sua habitação é: 
-                                <span class = "display-1 font-weight-regular ">{{individual.habitacao}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Em caso de alugada ou condomínio, tem permissão para ter animais: 
-                                <span class = "display-1 font-weight-regular ">{{individual.permissao}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Pretende um cão para: 
-                                <span class = "display-1 font-weight-regular ">{{individual.motivo}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Em caso de ausência para férias, trabalho ou outra, o seu cão:
-                                <span class = "display-1 font-weight-regular ">{{individual.ausencia}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Tem alguém alérgico a cães na família: 
-                                <span class = "display-1 font-weight-regular ">{{individual.alergia}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> É dono de mais algum animal: 
-                                <span class = "display-1 font-weight-regular ">{{individual.donoAnimal}}</span>
-                            </p>
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Se sim, quais: 
-                                <span class = "display-1 font-weight-regular ">{{individual.descAnimais}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Comprovativo de Morada: 
-                                <span class = "display-1 font-weight-regular ">{{individual.comprovativo}}</span>
-                            </p> 
-                        </v-row>
-                    </v-card>
-                </v-col>
-            </v-row>
-        </v-card>
-            </v-card>
-        </v-dialog>
       <v-btn
             v-scroll="onScroll"
             x-large
@@ -224,6 +96,7 @@ export default {
       individual: {},
       dialog:false, 
       fab:false,
+      fotos:[],
       utilizador_user_email:"",
       cao_idCao:"", 
       cc:"", 
@@ -256,35 +129,12 @@ export default {
           return "#FFE082";
         else if (estado == "Expirado")
           return "#B39DDB";
+        else if (estado == "Concluído")
+          return "#B2EBF2";
         return "#EF9A9A";
     }, 
-    
-    getPedidos: async function(pedido){
-      try{ 
-        var resposta = 
-        await axios.get(lhost + "/api/Adocoes/" + pedido.nPedido);
-        this.individual = resposta.data;
-        this.dialog = true;
-      }
-      catch (e) {
-        return e;
-      }
-    },
     pedidoadocao: function(pedido){
-      this.dialog = true;
-      this.utilizador_user_email = pedido.utilizador_user_email;
-      this.cao_idCao = pedido.cao_idCao;
-      this.cc = pedido.cc;
-      this.tipoMoradia = pedido.tipoMoradia;
-      this.exterior = pedido.exterior;
-      this.habitacao = pedido.habitacao;
-      this.permissao = pedido.permissao;
-      this.motivo = pedido.motivo;
-      this.ausencia = pedido.ausencia; 
-      this.alergia = pedido.alergia; 
-      this.donoAnimal = pedido.donoAnimal; 
-      this.descAnimais = pedido.descAnimais; 
-      this.comprovativo = pedido.comprovativo;
+      this.$router.push("/pedido/adocao/" + this.id + '/' + pedido.nPedido );
     }, 
     date: function (date) {
       return moment(date).locale("pt").format('LL');
@@ -297,6 +147,9 @@ export default {
     toTop () {
       this.$vuetify.goTo(0)
     },
+    getPath: function(e) {
+           return e.fotos[0].path;
+        },
   },
   created: async function(){
     try {
@@ -326,6 +179,10 @@ export default {
 
 .pedido.Recusado {
     border-left: 4px solid #EF9A9A;
+}
+
+.pedido.Concluído{
+    border-left: 4px solid #B2EBF2;
 }
 
 </style>

@@ -78,8 +78,8 @@
             </v-row>    
             <v-row align = "end" justify = "end">
                 <v-spacer></v-spacer>
-                <v-btn class = "mr-2 headline" color="brown lighten-1" text @click="dialog = false">Cancelar</v-btn>
-                <v-btn class = "mr-2 headline" color="brown lighten-1" text @click="dialog = false">Confirmar</v-btn>
+                <v-btn class = "mr-2 mb-12 headline" color="brown lighten-1" text @click="dialog = false">Cancelar</v-btn>
+                <v-btn class = "mr-2 mb-12 headline" color="brown lighten-1" text @click="dialog = false">Confirmar</v-btn>
             </v-row>
             </v-card>
         </v-card>

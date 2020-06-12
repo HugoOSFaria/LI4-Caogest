@@ -88,17 +88,51 @@
             </v-row>
             <v-divider inset></v-divider>
         </v-card>
+
+        <v-card 
+            flat 
+            width="2000" 
+            class="mx-auto" 
+            color = "white" 
+            v-for="obj in documentos"
+            :key="obj.identificacao"
+        >
+        <v-card flat height = "40"></v-card>
+            <v-row class = "ml-12">
+                <v-col cols = "2">
+                    <v-img height = "200" width = "200" :src="obj.pathImagem"></v-img>
+                </v-col>
+                <v-col >
+                    <p class = "display-1 font-weight-medium">{{obj.titulo}}</p>
+                     <p class="headline">{{obj.nota1}} </p> 
+                    <span class = "headline"> {{obj.nota2}}... </span>
+                </v-col>
+                <v-col>     
+                    <v-btn absolute right bottom x-large color ="brown darken-2" dark class = "ma-2 headline" @click="readDoc(obj)">Ler</v-btn>
+                </v-col>
+            </v-row>
+            <v-divider inset></v-divider>
+
+        </v-card>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
+const lhost = require("@/config/global").host;
+
 export default {
     name: "textos", 
     props:['id'],
 
+    data: () => ({   
+        documentos:[],
+        titulo: "", 
+        texto: "", 
+    }),
+
     methods:{
         direitosAnimais(){
-            alert(JSON.stringify(this.id));
             this.$router.push("/documentos/direitosanimais/" + this.id);
         },
         esterilizar(){
@@ -113,6 +147,22 @@ export default {
         doencas(){
             this.$router.push("/documentos/doencas/" + this.id);
         },
-    }
+        readDoc: function(dados){
+            this.identificacao = dados.identificacao;
+            this.titulo = dados.titulo; 
+            this.texto = dados.texto; 
+            this.$router.push("/documentos/utilizador/" + this.id + '/' + this.identificacao);
+        }, 
+    },
+    created: async function(){
+            try {
+                let response = await axios.get(lhost + "/api/Documentos");
+                this.documentos = response.data;
+                this.ready = true;
+            } 
+            catch (e) {
+                return e;
+            }   
+        },
 }
 </script>

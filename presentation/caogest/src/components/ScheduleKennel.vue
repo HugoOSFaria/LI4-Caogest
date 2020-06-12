@@ -43,8 +43,8 @@
                             </v-row>
                             <v-card flat color = "white" height = "40"></v-card>
                             <v-row align = "center" justify = "center">
-                                <v-btn v-if="hor.registados !== 0" disabled class = "headline" light block>Editar Horário</v-btn>
-                                <v-btn v-else class = "headline" color = "brown lighten-4" light block @click="editaHorario(hor)">Editar Horário</v-btn>
+                                <v-btn v-if="hor.registados !== 0" bottom absolute disabled class = "headline" light block>Editar Horário</v-btn>
+                                <v-btn v-else class = "headline" bottom absolute color = "brown lighten-4" light block @click="editaHorario(hor)">Editar Horário</v-btn>
                             </v-row>
                         </v-col>
                     </v-card>
@@ -59,7 +59,7 @@
             <v-card color = "white" fluid class = "mx-auto text-center px-12" flat>
             <v-card height = "30" flat ></v-card>
             <v-row>
-                <v-col cols = "6">
+                <v-col cols = "4">
                     <v-menu
                         ref="dataInicio"
                         v-model="menu13"
@@ -76,7 +76,6 @@
                                 :rules="regraHorario"
                                 label="Hora Início"
                                 prepend-icon="access_time"
-                                readonly
                                 color = "grey"
                                 v-on="on"
                                 v-model="form.dataInicio"
@@ -92,7 +91,7 @@
                     </v-menu>
                 </v-col>
                                      
-                <v-col cols = "6">
+                <v-col cols = "4">
                     <v-menu
                         ref="dataFim"
                         v-model="menu14"
@@ -109,7 +108,6 @@
                                 :rules="regraHorario"
                                 label="Hora Fim"
                                 prepend-icon="access_time"
-                                readonly
                                 color = "grey"
                                 v-on="on"
                                 v-model="form.dataFim"
@@ -125,11 +123,13 @@
                     </v-menu>
                 </v-col>    
             </v-row>
-            <v-card flat class = "ma-8">
+            <v-card flat height = "10"></v-card>
+            <v-card flat>
                 <v-row>
-                    <v-col cols = "6">
+                    <v-col cols = "5">
                         <v-text-field
                             :rules="regraVoluntarios"
+                            prepend-icon="accessibility_new"
                             label="Número Máximo de Voluntários"
                             color="grey"
                             v-model="form.capacidade"
@@ -140,10 +140,10 @@
                 </v-row>
             </v-card>
             <v-card height = "80" flat></v-card>
-            <v-row align = "end" justify = "end">
+            <v-row>
                 <v-spacer></v-spacer>
-                <v-btn class = "ma-4 headline" color="brown lighten-1" text @click="dialog = false">Cancelar</v-btn>
-                <v-btn class = "ma-4 headline" color="brown lighten-1" text @click="confirma()">Confirmar</v-btn>
+                <v-btn class = "ma-4 mb-12 headline" color="brown lighten-1" text @click="dialog = false">Cancelar</v-btn>
+                <v-btn class = "ma-4 mb-12 headline" color="brown lighten-1" text @click="confirma()">Confirmar</v-btn>
             </v-row>
             </v-card>
         </v-card>
@@ -186,7 +186,7 @@ export default {
         } 
         catch (e) {
             return e;
-        }
+        } 
     },  
     methods: {
         date: function (date) {
@@ -209,6 +209,16 @@ export default {
             this.canil_user_email = dados.canil_user_email;
             this.dialog = true;
         },
+        atualiza: async function(){
+            try {
+                let response = await axios.get(lhost + "/api/Horarios/" + this.id);
+                this.items = response.data;
+                this.ready = true;
+            } 
+            catch (e) {
+                return e;
+            } 
+        },
         confirma:  async function() {
             try{ 
                 var resposta = 
@@ -222,6 +232,7 @@ export default {
                 });
                 console.log(JSON.stringify(resposta.data));
                 this.dialog=false;
+                this.atualiza();
             }
             catch(e){
                 console.log("erro: " + e); 
@@ -243,3 +254,4 @@ export default {
     },     
 }
 </script>
+

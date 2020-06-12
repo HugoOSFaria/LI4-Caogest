@@ -3,82 +3,98 @@
         <NavbarAdmin :id="$route.params.id"/>
         <v-card flat height = "100"></v-card>
         <v-card flat height = "100" color = "brown lighten-5">
-                <v-card-text class = "display-2 black--text text-center">{{canil.nome}}</v-card-text>
-            </v-card>
-        <v-card flat class="ma-12" max-width="1500" fluid>
-            <v-row>
-                <v-col>
-                    <v-card flat>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> E-mail: 
-                                <span class = "display-1 font-weight-regular ">{{canil.email}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Nome: 
-                                <span class = "display-1 font-weight-regular ">{{canil.nome}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Morada: 
-                                <span class = "display-1 font-weight-regular ">{{canil.rua}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Localidade: 
-                                <span class = "display-1 font-weight-regular ">{{canil.localidade}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Distrito: 
-                                <span class = "display-1 font-weight-regular ">{{canil.distrito}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Capacidade Total: 
-                                <span class = "display-1 font-weight-regular ">{{canil.capacidadeTotal}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Vagas Ocupadas: 
-                                <span class = "display-1 font-weight-regular ">{{canil.capacidadeOcupada}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> NIB: 
-                                <span class = "display-1 font-weight-regular ">{{canil.nib}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Contacto: 
-                                <span class = "display-1 font-weight-regular ">{{canil.contacto}}</span>
-                            </p> 
-                        </v-row>
-                        <v-card flat color = "white" height = "40"></v-card>
-                        <v-row>
-                            <p class = " display-1 font-weight-bold" color = "grey"> Horário de Funcionamento: </p>
-                        </v-row>
-
-                                <v-col v-for="hor in sortedArray" :key = "hor.dia">
-                                    <v-row>
-                                        <p class = "display-1 font-weight-bold ">{{dia(hor.dia)}}
-                                            <span class = "display-1 font-weight-regular ">{{date(hor.dataInicio)}} - {{date(hor.dataFim)}}</span>    
-                                        </p>  
-                                    </v-row>    
-                                </v-col>
-           
-                    </v-card>
-                </v-col>
-            </v-row>
+            <v-card-text class = "display-2 black--text text-center">{{canil.nome}}</v-card-text>
         </v-card>
+        
+        <v-container>
+            <v-card flat height = "40"></v-card>
+                <v-card flat color = "white" height = "40"></v-card>
+                        
+                <v-card width="2000" color = "brown lighten-5">
+                    <v-row class = "align-center">
+                        <v-col cols = "8">
+                            <v-row class="ml-8">
+                                <p class = " display-1 font-weight-bold" color = "grey"> E-mail: 
+                                    <span class = "display-1 font-weight-regular ">{{canil.email}}</span>
+                                </p> 
+                            </v-row>
+
+                            <v-card flat color = "brown lighten-5" height = "40"></v-card>
+
+                            <v-row class="ml-8">
+                                <p class = " display-1 font-weight-bold" color = "grey"> Morada: 
+                                    <span class = "display-1 font-weight-regular ">{{canil.rua}}</span>
+                                </p> 
+                            </v-row>
+
+                            <v-card flat color = "brown lighten-5" height = "40"></v-card>
+
+                            <v-row class="ml-8">
+                                <p class = " display-1 font-weight-bold" color = "grey"> Localidade: 
+                                    <span class = "display-1 font-weight-regular ">{{canil.localidade}}</span>
+                                </p> 
+                            </v-row>
+
+                            <v-card flat color = "brown lighten-5" height = "40"></v-card>
+
+                            <v-row class="ml-8">
+                                <p class = " display-1 font-weight-bold" color = "grey"> Distrito: 
+                                    <span class = "display-1 font-weight-regular ">{{canil.distrito}}</span>
+                                </p> 
+                            </v-row>
+
+                            <v-card flat color = "brown lighten-5" height = "40"></v-card>
+
+                            <v-row class="ml-8">
+                                <p class = " display-1 font-weight-bold" color = "grey"> NIB: 
+                                    <span class = "display-1 font-weight-regular ">{{canil.nib}}</span>
+                                </p> 
+                            </v-row>
+
+                            <v-card flat color = "brown lighten-5" height = "40"></v-card>
+
+                            <v-row class="ml-8">
+                                <p class = " display-1 font-weight-bold" color = "grey"> Contacto: 
+                                    <span class = "display-1 font-weight-regular ">{{canil.contacto}}</span>
+                                </p> 
+                            </v-row>
+
+                            <v-card flat color = "brown lighten-5" height = "100"></v-card>
+
+                            <v-row class="ml-8">
+                                <p class = " display-1 font-weight-bold" color = "grey"> Capacidade Total: 
+                                    <span class = "display-1 font-weight-regular ">{{canil.capacidadeTotal}}</span>
+                                </p> 
+                            </v-row>
+
+                            <v-card flat color = "brown lighten-5" height = "20"></v-card>
+
+                            <v-row class="ml-8">
+                                <p class = " display-1 font-weight-bold" color = "grey"> Vagas Ocupadas: 
+                                    <span class = "display-1 font-weight-regular ">{{canil.capacidadeOcupada}}</span>
+                                </p> 
+                            </v-row>
+
+                        </v-col>
+
+                        <v-col cols="4">
+                            <v-row class="ml-8">
+                                <p class = " display-1 font-weight-bold" color = "grey"> HORÁRIO DE FUNCIONAMENTO: </p>
+                            </v-row>
+
+                            <v-col v-for="hor in sortedArray" :key = "hor.dia">
+                                <v-row class="ml-8">
+                                    <p class = "display-1 font-weight-bold ">{{dia(hor.dia)}}
+                                        <span class = "display-1 font-weight-regular ">{{date(hor.dataInicio)}} - {{date(hor.dataFim)}}</span>    
+                                    </p>  
+                                </v-row>    
+                            </v-col>
+                        </v-col>
+
+                            </v-row>
+                        </v-card>
+  
+        </v-container>
         <v-card flat class = "ma-12">
             <v-row align = "end">
             <v-spacer></v-spacer>

@@ -90,7 +90,7 @@ const lhost = require("@/config/global").host;
               nib:this.canil.nib,
               nome:this.canil.nome,
               capacidadeOcupada:this.canil.capacidadeOcupada,
-              capacidadeTotal:this.form.capacidadeTotal,
+              capacidadeTotal:parseInt(this.form.capacidadeTotal,10),
               distrito:this.canil.distrito,
               rua: this.canil.rua,
               localidade:this.canil.localidade,

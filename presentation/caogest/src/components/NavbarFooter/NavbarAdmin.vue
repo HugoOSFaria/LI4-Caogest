@@ -46,7 +46,7 @@
         </v-list>
         <template v-slot:append>
         <div class="pa-2">
-            <v-btn x-large text block to='/preferencias/admin'>
+            <v-btn x-large text block @click="preferencias()">
                 <v-icon left>settings</v-icon>Preferências
             </v-btn>
         </div>
@@ -71,13 +71,18 @@ export default {
             { title: 'Sobre', icon: 'info', route: '/sobre/admin/' + this.id  },
             { title: 'Donativos Realizados', icon: 'payment', route: '/donativos/admin/' + this.id },
             { title: 'Cães', icon: 'pets', route: '/caes/admin/' + this.id  },
-            { title: 'Canis', icon: 'house', route: '/canis/admin/' + this.id  },
+            { title: 'Canis', icon: 'house', route: '/canis/admin/' + this.id },
             { title: 'Voluntários', icon:'accessibility_new', route: '/voluntarios/admin/' + this.id },
             { title: 'Documentos', icon: 'description', route: "/documentos/admin/" + this.id},
             { title: 'Entre em Contacto', icon:'question_answer', route: '/entre/contacto/' + this.id },
             { title: 'FAQs', icon: 'help', route: '/faqs/admin/' + this.id  }, 
             { title: 'Estatísticas', icon: 'equalizer', route: '/estatisticas/' + this.id }
             ],
+        }
+    }, 
+    methods:{
+        preferencias(){
+            this.$router.push("/preferencias/admin/" + this.id);
         }
     }
 }

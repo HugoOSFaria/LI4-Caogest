@@ -335,7 +335,7 @@ const routes = [
     component: () => import('../views/Admin/PedidosAdocao.vue')
   },
   {
-    path: '/pedido/adocao/:id',
+    path: '/pedido/adocao/:id/:id2',
     name: 'PedidoAdocao',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -343,7 +343,7 @@ const routes = [
     component: () => import('../views/Utilizador/PedidosAdocaoUser.vue')
   },
   {
-    path: '/pedido/adocao/canil/:id',
+    path: '/pedido/adocao/canil/:id/:id2',
     name: 'PedidoAdocaoCanil',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -487,7 +487,46 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import('../views/Admin/AdicionarDocumentos.vue')
   },
-
+  {
+    path: '/documentos/admin/:id/:id2',
+    name: 'documentosRand',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Docs/DocumentosRand.vue')
+  },
+  {
+    path: '/documentos/utilizador/:id/:id2',
+    name: 'documentosRandUser',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Docs/DocumentosRandUser.vue')
+  },
+  {
+    path: '/cao/utilizador/:id/:id2',
+    name: 'caoUtilizador',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Utilizador/Cao.vue')
+  },
+  {
+    path: '/cao/canil/:id/:id2',
+    name: 'caoCanil',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Canil/Cao.vue')
+  },
+  {
+    path: '/cao/admin/:id/:id2',
+    name: 'caoAdmin',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Admin/Cao.vue')
+  },
 
 ]
 

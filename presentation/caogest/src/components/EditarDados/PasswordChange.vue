@@ -35,11 +35,12 @@
               class = "ma-12"
               v-model="form.password"
               :rules="regrapassword"
+              :type="show1 ? 'text' : 'password'"
             ></v-text-field>
           </v-col>
         </v-container>
       </v-card-text>
-      <v-card-actions>
+      <v-card-actions> 
         <v-spacer></v-spacer>
         <v-btn class="ma-6" large color = "deep-orange lighten-4" @click="dialog = false">Cancelar</v-btn>
         <v-btn class="ma-6" large color = "deep-orange lighten-4" @click="confirma()">Confirmar</v-btn>
@@ -71,6 +72,7 @@ const lhost = require("@/config/global").host;
     data: () => ({
       utilizador:{},
       dialog: false,
+      show1: false, 
       form:{
         password: "", 
       },
@@ -87,14 +89,13 @@ const lhost = require("@/config/global").host;
           try{ 
             var resposta = 
             await axios.put(lhost + "/api/Users/" + this.id , {
-              email:this.utilizador.email, 
-              password:this.form.password,
-              tipo:this.utilizador.tipo,
-              encriptado: this.utilizador.encriptado,
+              email:this.utilizador.email,
+              password: this.form.password,
+              tipo:1,
             });
             console.log(JSON.stringify(resposta.data));
             this.dialog = false; 
-            this.text = "Número de Identificação Bancário alterado com sucesso!";
+            this.text = "Nome alterado com sucesso!";
             this.color = "success"; 
             this.snackbar = true; 
           }

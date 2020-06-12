@@ -92,7 +92,7 @@
                     </div>
                 </v-flex>
                 <v-flex xs8 md4>
-                   <PasswordChange/>  
+                   <PasswordChange :id="$route.params.id"/>  
                 </v-flex>
             </v-row>    
   
@@ -253,7 +253,7 @@
 <script>
 import NameChange from '@/components/EditarDadosKennel/NameChange.vue'
 import AddressChange from '@/components/EditarDadosKennel/AddressChange.vue'
-import PasswordChange from '@/components/EditarDadosKennel/PasswordChange.vue'
+import PasswordChange from '@/components/EditarDadosKennel/PassChange.vue'
 import CityChange from '@/components/EditarDadosKennel/CityChange.vue'
 import DistrictChange from '@/components/EditarDadosKennel/DistrictChange.vue'
 import NIBChange from '@/components/EditarDadosKennel/NIBChange.vue'

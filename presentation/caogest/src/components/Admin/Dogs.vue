@@ -1,6 +1,5 @@
 <template>
     <div>
-        <div>
             <v-row >
                 <v-col 
                     cols="12" 
@@ -42,7 +41,6 @@
                                                     </v-row>
                                                 </template>
                                             </v-img>
-                                 
                                         </v-item>
                                         
                                         <v-row justify="center">
@@ -99,19 +97,19 @@
                         </v-card>
                     </v-row>
                 </v-col>  
-            </v-row>        
+            </v-row>    
         </div>
-    </div>
 </template>
 
 <script>
+
 import axios from 'axios'
 const lhost = require("@/config/global").host;
 
 export default {
     props: ['item', 'id'],
-    data: () => ({   
-        dialog:false,         
+    data: () => ({     
+        disponivel: [], 
         itemssexo: [ 
             '- Selecionar -',
             'Macho',
@@ -138,38 +136,42 @@ export default {
             'Vermelho',
         ],
         items: [],
-        favoritos: [],
-        selected: [],  
-        disponivel: [],  
-        fotos: []
-    }), 
+      selected: [],  
+      nome: "",
+      idade: "",
+      esterilizacao: "", 
+      raca: "", 
+      sexo: "", 
+      cor: "", 
+      porte: "", 
+      descricao: "",
+      fotos:[]
+    }),
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Caes");
-            this.items = response.data;
-            this.ready = true;
+        let response = await axios.get(lhost + "/api/Caes");
+        this.items = response.data;
+        this.ready = true;
         } 
         catch (e) {
         return e;
         }
     },   
     methods:{
-        cao: function(obj){
-            this.$router.push("/cao/utilizador/" + this.id + '/' + obj.idCao );
-        },
         getPath: function(e) {
            return e.fotos[0].path
         },
-        adotar: function(){
-            this.$router.push("/formulario/adocao/" + this.id + '/' + this.email_canil + '/' + this.idCao);
+        cao: function(obj){
+            this.$router.push("/cao/admin/" + this.id + '/' + obj.idCao );
         },
+        
     },
     computed: {
         disponiveis: function () {
-            return this.items.filter(function (disponivel) {
-                return (disponivel.estado !== "Apagado" && disponivel.estado !== "Adotado")
-            })
+        return this.items.filter(function (disponivel) {
+            return (disponivel.estado !== "Apagado" && disponivel.estado != "Adotado")
+        })
         }, 
     }      
 }
-</script> 
+</script>

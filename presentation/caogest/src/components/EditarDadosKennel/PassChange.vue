@@ -23,19 +23,19 @@
     <v-form ref="form" lazy-validation>
     <v-card>
       <v-card flat color = "deep-orange lighten-4" class = "pa-6">
-        <span class="display-1" dark>Alterar Capacidade Atual</span>
+        <span class="display-1" dark>Alterar Palavra-passe</span>
       </v-card>
       <v-card-text>
         <v-container>
           <v-col>
             <v-text-field 
               color = "grey" 
-              placeholder="Nova Capacidade Atual" 
+              placeholder="Nova Palavra-Passe" 
               required
               class = "ma-12"
-              type="number"
-              v-model="form.capacidadeOcupada"
-              :rules="regracapacidadeAtual"
+              v-model="form.password"
+              :rules="regraPassword"
+              :type="show1 ? 'text' : 'password'"
             ></v-text-field>
           </v-col>
         </v-container>
@@ -65,42 +65,38 @@
 <script>
 import axios from 'axios'
 const lhost = require("@/config/global").host;
+
   export default {
-    name:"CapacityChange",
+    name:"PasswordChange",
     props:['id'],
     data: () => ({
-      canil:{},
+      utilizador:{},
       dialog: false,
+      show1: false, 
       form:{
-        capacidadeOcupada: "", 
+        password: "", 
       },
       snackbar: false, 
       color: "", 
       done: false, 
       timeout: 4000,
       text: "", 
-      regracapacidadeAtual: [v => !!v || "Introdução de um valor obrigatório."],
-    }),methods:{
+      regraPassword: [v => !!v || "Palavra-passe obrigatória."],
+    }),
+    methods:{
       confirma: async function(){
         if (this.$refs.form.validate()) {
           try{ 
             var resposta = 
-            await axios.put(lhost + "/api/Canis/" + this.id , {
-              email:this.canil.email, 
-              nib:this.canil.nib,
-              nome:this.canil.nome,
-              capacidadeOcupada:parseInt(this.form.capacidadeOcupada,10),
-              capacidadeTotal:this.canil.capacidadeTotal,
-              distrito:this.canil.distrito,
-              rua: this.canil.rua,
-              localidade:this.canil.localidade,
-              contacto: this.canil.contacto,
-              estado: this.canil.estado, 
-              encriptado: this.canil.encriptado,
+            await axios.put(lhost + "/api/Users/" + this.id , {
+              email:this.utilizador.email, 
+              password:this.form.password,
+              tipo:this.utilizador.tipo,
+              encriptado: this.utilizador.encriptado,
             });
             console.log(JSON.stringify(resposta.data));
             this.dialog = false; 
-            this.text = "Nome alterado com sucesso!";
+            this.text = "Palavra-passe alterada com sucesso!";
             this.color = "success"; 
             this.snackbar = true; 
           }
@@ -118,8 +114,8 @@ const lhost = require("@/config/global").host;
     },
     created: async function(){
       try {
-        let response = await axios.get(lhost + "/api/Canis/" + this.id);
-        this.canil = response.data;
+        let response = await axios.get(lhost + "/api/Users/" + this.id);
+        this.utilizador = response.data;
         this.ready = true;
       } 
       catch (e) {

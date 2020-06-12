@@ -35,6 +35,16 @@
               </template>
               <span>Ordenar pedidos por data de submissão</span>
             </v-tooltip>  
+
+            <v-tooltip top>    
+              <template v-slot:activator="{ on }">
+                <v-btn class = "ma-2" text @click="sortBy('estado')" v-on="on">
+                  <v-icon left small>info</v-icon>    
+                  <span class = "caption text-lowercase">Por estado</span>
+                </v-btn> 
+              </template>
+              <span>Ordenar pedidos por estado do pedido</span>
+            </v-tooltip>  
         </v-layout>
 
       <v-card flat v-for="pedido in pedidos" :key="pedido.nPedido">
@@ -55,11 +65,12 @@
             <div class="caption grey--text">Data de Submissão</div>
             <div class="method headline">{{date(pedido.data)}}</div>
           </v-flex>
-          <v-flex xs2 md2>
+          <v-flex xs2 md1>
                <v-chip :color="project_status(pedido.estado)" class="black--text caption my-2" @click="pedidoadocao(pedido)">{{pedido.estado}}</v-chip> 
             <div>
             </div>
           </v-flex>
+          
         </v-layout>
         <v-divider></v-divider>
       </v-card>
@@ -94,6 +105,7 @@ export default {
     return {
       pedidos: [],
       fab:false,
+      show:false,
     };
   },
   methods: {
@@ -111,6 +123,8 @@ export default {
           return "#FFE082";
         else if (estado == "Expirado")
           return "#B39DDB";
+        else if (estado == "Concluído")
+          return "#B2EBF2";
         return "#EF9A9A";
     },  
     pedidoadocao: function(pedido){
@@ -128,8 +142,6 @@ export default {
       this.$vuetify.goTo(0)
     },
   },
-
-
   created: async function(){
     try {
       let response = await axios.get(lhost + "/api/Adocoes");
@@ -158,6 +170,10 @@ export default {
 
 .pedido.Recusado {
     border-left: 4px solid #EF9A9A;
+}
+
+.pedido.Concluído{
+    border-left: 4px solid #B2EBF2;
 }
 
 </style>

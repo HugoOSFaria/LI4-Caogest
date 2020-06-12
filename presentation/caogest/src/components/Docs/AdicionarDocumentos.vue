@@ -34,6 +34,49 @@
                                         ></v-text-field>
                                         </v-col>
                                     </v-row>
+                                    
+                                    <v-row>
+                                        <v-col cols="2">
+                                            <div class="info-label headline">
+                                                Subtítulo <p class="caption">(opcional)</p>
+                                            </div>
+                                            
+                                            </v-col>
+                                            <v-col cols = "8">
+                                                <v-text-field  
+                                                    outlined 
+                                                    flat 
+                                                    color = "grey lighten-1" 
+                                                    required 
+                                                    placeholder="Introduza um subtítulo"
+                                                    v-model="form.nota1"
+                                                    name="nota1"
+                                                    type="nota1"
+                                                ></v-text-field>
+                                            </v-col>
+                                    </v-row>
+
+                                    <v-row>
+                                        <v-col cols="2">
+                                            <div class="info-label headline">
+                                                Informações Adicionais <p class = "caption">(opcional)</p>
+                                            </div>
+                                            
+                                            </v-col>
+                                            <v-col cols = "8">
+                                                <v-text-field  
+                                                    outlined 
+                                                    flat 
+                                                    color = "grey lighten-1" 
+                                                    required 
+                                                    placeholder="Introduza informações adicionais sobre o texto"
+                                                    v-model="form.nota2"
+                                                    name="nota2"
+                                                    type="nota2"
+                                                ></v-text-field>
+                                            </v-col>
+                                    </v-row>
+
 
                                     <v-row>
                                         <v-col cols="2">
@@ -68,10 +111,10 @@
                                 </v-row>
                                     <v-card flat height= "20" color = "white"></v-card>
                                 <v-row justify = "end">
-                                    <v-col cols = "8" md = "6">
+                                    <v-col cols = "12" md = "5">
                                         <v-row >
-                                            <v-btn class="ma-6" type="button" right bottom x-large color = "deep-orange lighten-4" @click="cancelar">Cancelar</v-btn>
-                                            <v-btn class = "ma-6" type="button" right bottom x-large color = "deep-orange lighten-4" @click="adicionarDoc">Adicionar</v-btn>
+                                            <v-btn class="ma-4" type="button" right bottom x-large color = "deep-orange lighten-4" @click="cancelar">Cancelar</v-btn>
+                                            <v-btn class = "ma-4" type="button" right bottom x-large color = "deep-orange lighten-4" @click="adicionarDoc">Adicionar</v-btn>
                                         </v-row>
                                     </v-col>
                                 </v-row>
@@ -96,7 +139,6 @@
             </div>
             </v-col>
         </v-row>
-        <p>{{JSON.stringify(this.form)}}</p>
     </div>
 </template>
 
@@ -114,6 +156,8 @@ export default {
             texto: "", 
             url:"",
             user_email:"admincaogest@caogest.pt",
+            nota1:"", 
+            nota2:"", 
         },  
         snackbar: false, 
         color: "", 
@@ -162,6 +206,8 @@ export default {
                         texto: this.form.texto, 
                         user_email:this.id,
                         pathImagem:this.form.url, 
+                        nota1: this.form.nota1, 
+                        nota2: this.form.nota2, 
                     }); 
                     console.log(JSON.stringify(resposta.data));
                     this.text = "Documento adicionado com sucesso!";

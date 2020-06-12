@@ -14,7 +14,7 @@
                 </v-col>
                 <v-col>  
                         <v-btn absolute right bottom x-large color ="brown darken-2" dark class = "ma-2 headline" @click="direitosAnimais()">Ler</v-btn>
-                        <v-btn x-large color = "grey" text fab right absolute top class = "ma-2 headline"> 
+                        <v-btn x-large color = "grey" text fab right absolute class = "ma-2 headline"> 
                             <v-icon>delete</v-icon>
                         </v-btn>
                 </v-col>
@@ -35,7 +35,7 @@
                 </v-col>
                 <v-col>     
                     <v-btn absolute right bottom x-large color ="brown darken-2" dark class = "ma-2 headline" @click="esterilizar()">Ler</v-btn>
-                    <v-btn x-large color = "grey" text fab right absolute top class = "ma-2 headline"> 
+                    <v-btn x-large color = "grey" text fab right absolute class = "ma-2 headline"> 
                         <v-icon>delete</v-icon>
                     </v-btn>
                 </v-col>
@@ -56,7 +56,7 @@
                 </v-col>
                 <v-col>     
                     <v-btn absolute right bottom x-large color ="brown darken-2" dark class = "ma-2 headline" @click="motivosparaadotar()">Ler</v-btn>
-                    <v-btn x-large color = "grey" text fab right absolute top class = "ma-2 headline"> 
+                    <v-btn x-large color = "grey" text fab right absolute class = "ma-2 headline"> 
                         <v-icon>delete</v-icon>
                     </v-btn>
                 </v-col>
@@ -77,7 +77,7 @@
                 </v-col>
                 <v-col>     
                     <v-btn absolute right bottom x-large color ="brown darken-2" dark class = "ma-2 headline" @click="treino()">Ler</v-btn>
-                    <v-btn x-large color = "grey" text fab right absolute top class = "ma-2 headline"> 
+                    <v-btn x-large color = "grey" text fab right absolute class = "ma-2 headline"> 
                         <v-icon>delete</v-icon>
                     </v-btn>
                 </v-col>
@@ -98,13 +98,60 @@
                 </v-col>
                 <v-col>     
                     <v-btn absolute right bottom x-large color ="brown darken-2" dark class = "ma-2 headline" @click="doencas()">Ler</v-btn>
-                    <v-btn x-large color = "grey" text fab right absolute top class = "ma-2 headline"> 
+                    <v-btn x-large color = "grey" text fab right absolute class = "ma-2 headline"> 
                         <v-icon>delete</v-icon>
                     </v-btn>
                 </v-col>
             </v-row>
             <v-divider inset></v-divider>
         </v-card>
+
+        
+        <v-card 
+            flat 
+            width="2000" 
+            class="mx-auto" 
+            color = "white" 
+            v-for="obj in documentos"
+            :key="obj.identificacao"
+        >
+        <v-card flat height = "40"></v-card>
+            <v-row class = "ml-12">
+                <v-col cols = "2">
+                    <v-img height = "200" width = "200" :src="obj.pathImagem"></v-img>
+                </v-col>
+                <v-col >
+                    <p class = "display-1 font-weight-medium">{{obj.titulo}}</p>
+                     <p class="headline">{{obj.nota1}} </p> 
+                    <span class = "headline"> {{obj.nota2}}... </span>
+                </v-col>
+                <v-col>     
+                    <v-btn absolute right bottom x-large color ="brown darken-2" dark class = "ma-2 headline" @click="readDoc(obj)">Ler</v-btn>
+                    <v-btn x-large color = "grey" text fab right absolute class = "ma-2 headline" @click="deleteDoc(obj)"> 
+                        <v-icon>delete</v-icon>
+                    </v-btn>
+                </v-col>
+            </v-row>
+            <v-divider inset></v-divider>
+
+        </v-card>
+
+
+        <v-btn
+            v-scroll="onScroll"
+            x-large
+            v-show="fab"
+            fab
+            depressed
+            fixed
+            bottom
+            right
+            class = "ma-6"
+            color="deep-orange lighten-4"
+            @click="toTop"
+            >
+            <v-icon>keyboard_arrow_up</v-icon>
+        </v-btn>    
     </div>
 </template>
 
@@ -118,6 +165,8 @@ export default {
     data: () => ({   
         fab:false,   
         documentos:[],
+        titulo: "", 
+        texto: "", 
     }),
 
     methods:{
@@ -139,7 +188,42 @@ export default {
         adicionaDoc(){
             this.$router.push("/documentos/admin/adiciona/" + this.id);
         },
-        created: async function(){
+        onScroll (e) {
+            if (typeof window === 'undefined') return
+                const top = window.pageYOffset ||   e.target.scrollTop || 0
+                this.fab = top > 20
+        },
+        toTop () {
+            this.$vuetify.goTo(0)
+        },
+        readDoc: function(dados){
+            this.identificacao = dados.identificacao;
+            this.titulo = dados.titulo; 
+            this.texto = dados.texto; 
+            this.$router.push("/documentos/admin/" + this.id + '/' + this.identificacao);
+        }, 
+        deleteDoc: async function(dados){
+            this.identificacao = dados.identificacao; 
+            try{
+                await axios.delete(lhost + "/api/Documentos/" + this.identificacao);
+                this.atualiza();
+            }
+            catch(e){
+                return e;
+            }
+        },  
+        atualiza: async function(){
+            try {
+                let response = await axios.get(lhost + "/api/Documentos/");
+                this.documentos = response.data;
+                this.ready = true;
+            } 
+            catch (e) {
+                return e;
+            }
+        },
+    },
+    created: async function(){
             try {
                 let response = await axios.get(lhost + "/api/Documentos");
                 this.documentos = response.data;
@@ -149,14 +233,5 @@ export default {
                 return e;
             }   
         },
-        onScroll (e) {
-            if (typeof window === 'undefined') return
-                const top = window.pageYOffset ||   e.target.scrollTop || 0
-                this.fab = top > 20
-        },
-        toTop () {
-            this.$vuetify.goTo(0)
-        },
-    }
 }
 </script>

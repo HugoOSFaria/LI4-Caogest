@@ -30,7 +30,7 @@
           <v-col>
             <v-text-field 
               color = "grey" 
-              placeholder="Novo NIB" 
+              placeholder="Novo número de cartão de cidadão" 
               required
               class = "ma-12"
               v-model="form.nif"
@@ -89,7 +89,7 @@ const lhost = require("@/config/global").host;
             var resposta = 
             await axios.put(lhost + "/api/Utilizadors/" + this.id , {
               email:this.utilizador.email, 
-              nif:this.form.nif,
+              cc:this.form.nif,
               nome:this.utilizador.nome,
               capacidadeOcupada:this.utilizador.capacidadeOcupada,
               capacidadeTotal:this.utilizador.capacidadeTotal,
@@ -98,6 +98,7 @@ const lhost = require("@/config/global").host;
               localidade:this.utilizador.localidade,
               contacto: this.utilizador.contacto,
               estado: this.utilizador.estado, 
+              sexo: this.utilizador.sexo,
               encriptado: this.utilizador.encriptado,
             });
             console.log(JSON.stringify(resposta.data));
