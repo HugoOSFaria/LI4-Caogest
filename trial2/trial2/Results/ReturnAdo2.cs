@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using trial2.Models;
 
 namespace trial2.Results
 {
@@ -23,5 +24,10 @@ namespace trial2.Results
         public string comprovativo { get; set; }
         public string donoAnimal { get; set; }
         public string nome_Cao { get; set; }
+        public List<Fotografia> fotos { get; set; }
+        public ReturnAdo2()
+        {
+            fotos = new List<Fotografia>();
+        }
     }
 }

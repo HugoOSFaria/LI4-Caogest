@@ -75,7 +75,7 @@ namespace trial2.Controllers
             if (check != null)
             {
                 var temp = Encriptar.Decrypt(check.password, "abc123");
-                if (temp!= user.password)
+                if (temp != user.password)
                 {
                     return NotFound();
                 }

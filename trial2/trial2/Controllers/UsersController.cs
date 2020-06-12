@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Operations;
@@ -12,6 +13,7 @@ namespace trial2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class UsersController : ControllerBase
     {
         private readonly trial2Context _context;
@@ -48,17 +50,17 @@ namespace trial2.Controllers
                               where u.email == id
                               select u).FirstOrDefaultAsync();
 
-            if(user == null)
+            if (user == null)
             {
                 return NotFound();
             }
-            
+
             user.password = Encriptar.Decrypt(user.password, "abc123");
 
             return user;
         }
-        
-        
+
+
 
         // PUT: api/Users/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for

@@ -87,23 +87,22 @@ namespace trial2.Controllers
                 return NotFound();
             }
 
-            var res = new ReturnAdo
-            {
-                nPedido = adocao.nPedido,
-                data = adocao.data,
-                estado = adocao.estado,
-                cao_idCao = adocao.cao_idCao.ToString(),
-                permissao = adocao.permissao,
-                alergia = adocao.alergia,
-                descAnimais = adocao.descAnimais,
-                ausencia = adocao.ausencia,
-                habitacao = adocao.habitacao,
-                exterior = adocao.exterior,
-                tipoMoradia = adocao.tipoMoradia,
-                motivo = adocao.motivo,
-                comprovativo = adocao.comprovativo,
-                donoAnimal = adocao.donoAnimal
-            };
+            var res = new ReturnAdo();
+            res.nPedido = adocao.nPedido;
+            res.data = adocao.data;
+            res.estado = adocao.estado;
+            res.cao_idCao = adocao.cao_idCao.ToString();
+            res.permissao = adocao.permissao;
+            res.alergia = adocao.alergia;
+            res.descAnimais = adocao.descAnimais;
+            res.ausencia = adocao.ausencia;
+            res.habitacao = adocao.habitacao;
+            res.exterior = adocao.exterior;
+            res.tipoMoradia = adocao.tipoMoradia;
+            res.motivo = adocao.motivo;
+            res.comprovativo = adocao.comprovativo;
+            res.donoAnimal = adocao.donoAnimal;
+
             res.nome_Utilizador = await (from us in _context.Utilizador
                                          where us.email == adocao.utilizador_user_email
                                          select us.nome).FirstOrDefaultAsync();
@@ -112,7 +111,7 @@ namespace trial2.Controllers
             res.cao_idCao = await (from us in _context.Cao
                                    where us.idCao == adocao.cao_idCao
                                    select us.nome).FirstOrDefaultAsync();
-
+            res.identificacao = adocao.cao_idCao;
             res.nome_Canil = await (from us in _context.Canil
                                     join c in _context.Cao on us.email equals c.canil_user_email
                                     where c.idCao == adocao.cao_idCao
@@ -123,6 +122,14 @@ namespace trial2.Controllers
                             where us.email == adocao.utilizador_user_email
                             select us.cc).FirstOrDefaultAsync();
             res.cc = Encriptar.Decrypt(res.cc, "b32a1c");
+
+            var fotos = await (from f in _context.Fotografia
+                               where f.cao_idCao == adocao.cao_idCao
+                               select f).ToListAsync();
+            foreach (Fotografia f in fotos)
+            {
+                res.fotos.Add(f);
+            }
 
             return res;
         }
@@ -138,24 +145,27 @@ namespace trial2.Controllers
                 return BadRequest();
             }
 
-            var res = new Adocao
+            var res = await (from f in _context.Adocao
+                             where f.nPedido == id
+                             select f).FirstOrDefaultAsync();
+            if (res == null)
             {
-                nPedido = adocao.nPedido,
-                data = adocao.data,
-                estado = adocao.estado,
-                cao_idCao = Int32.Parse(adocao.cao_idCao),
-                permissao = adocao.permissao,
-                alergia = adocao.alergia,
-                descAnimais = adocao.descAnimais,
-                ausencia = adocao.ausencia,
-                habitacao = adocao.habitacao,
-                exterior = adocao.exterior,
-                tipoMoradia = adocao.tipoMoradia,
-                motivo = adocao.motivo,
-                utilizador_user_email = adocao.utilizador_user_email,
-                comprovativo = adocao.comprovativo,
-                donoAnimal = adocao.donoAnimal
-            };
+                return BadRequest();
+            }
+
+            res.nPedido = adocao.nPedido;
+            res.data = adocao.data;
+            res.estado = adocao.estado;
+            res.permissao = adocao.permissao;
+            res.alergia = adocao.alergia;
+            res.descAnimais = adocao.descAnimais;
+            res.ausencia = adocao.ausencia;
+            res.habitacao = adocao.habitacao;
+            res.exterior = adocao.exterior;
+            res.tipoMoradia = adocao.tipoMoradia;
+            res.motivo = adocao.motivo;
+            res.comprovativo = adocao.comprovativo;
+            res.donoAnimal = adocao.donoAnimal;
 
             _context.Entry(res).State = EntityState.Modified;
 
@@ -186,7 +196,7 @@ namespace trial2.Controllers
         {
             var res = new Adocao
             {
-                data = adocao.data,
+                data = DateTime.Today,
                 estado = adocao.estado,
                 cao_idCao = Int32.Parse(adocao.cao_idCao),
                 permissao = adocao.permissao,
@@ -210,7 +220,7 @@ namespace trial2.Controllers
             _context.Adocao.Add(res);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetAdocao), new { id = adocao.nPedido }, adocao);
+            return CreatedAtAction(nameof(GetAdocao), new { id = res.nPedido }, adocao);
         }
 
         // DELETE: api/Adocoes/5

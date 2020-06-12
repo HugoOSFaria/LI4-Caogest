@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace trial2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class AdocoesCanilController : ControllerBase
     {
         private readonly trial2Context _context;
@@ -21,7 +23,7 @@ namespace trial2.Controllers
             _context = context;
         }
 
-      
+
         // GET: api/AdocoesCanil/5
         [HttpGet("{id}")]
         public async Task<ActionResult<List<ReturnAdo>>> GetAdocao(string id)

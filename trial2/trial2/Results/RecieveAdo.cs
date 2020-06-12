@@ -11,6 +11,7 @@ namespace trial2.Results
         public DateTime data { get; set; }
         public string estado { get; set; }
         public string cao_idCao { get; set; }
+        public int identificacao { get; set; }
         public string permissao { get; set; }
         public string alergia { get; set; }
         public string descAnimais { get; set; }

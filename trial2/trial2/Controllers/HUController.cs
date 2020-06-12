@@ -29,14 +29,27 @@ namespace trial2.Controllers
 
         // GET: api/HU/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<Horario>>> GetHorarios_has_Utilizador(string id)
+        public async Task<ActionResult<List<Horario_has_Utilizador>>> GetHorarios_has_Utilizador(string id)
         {
             var horarios_has_Utilizador = await (from us in _context.Horarios_has_Utilizador
-                                                 join c in _context.Horario on us.horario_DataInicio equals c.dataInicio
-                                                 join l in _context.Horario on us.horario_DataFim equals l.dataFim
-                                                 join s in _context.Horario on us.horario_Dia equals s.dia
                                                  where us.utilizador_email == id
-                                                 select c).ToListAsync();
+                                                 select us).ToListAsync();
+
+            if (horarios_has_Utilizador == null)
+            {
+                return NotFound();
+            }
+
+            return horarios_has_Utilizador;
+        }
+
+        // GET: api/HU/5/2/1
+        [HttpGet("{id1}/{id2}/{id3}")]
+        public async Task<ActionResult<List<Horario_has_Utilizador>>> GetHorarios_has_Utilizador(string id1, string id2, string id3)
+        {
+            var horarios_has_Utilizador = await (from us in _context.Horarios_has_Utilizador
+                                                 where us.utilizador_email == id1 && us.horario_Dia == Int32.Parse(id2) && us.horario_Canil_User_Email == id3
+                                                 select us).ToListAsync();
 
             if (horarios_has_Utilizador == null)
             {
@@ -85,6 +98,11 @@ namespace trial2.Controllers
         public async Task<ActionResult<Horario_has_Utilizador>> PostHorarios_has_Utilizador(Horario_has_Utilizador horarios_has_Utilizador)
         {
             _context.Horarios_has_Utilizador.Add(horarios_has_Utilizador);
+
+            var horario = await (from h in _context.Horario
+                                 where h.dia == horarios_has_Utilizador.horario_Dia && h.canil_user_email == horarios_has_Utilizador.horario_Canil_User_Email
+                                 select h).FirstOrDefaultAsync();
+            horario.registados++;
             try
             {
                 await _context.SaveChangesAsync();

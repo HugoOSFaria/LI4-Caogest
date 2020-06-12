@@ -9,7 +9,6 @@ namespace trial2.Results
     {
         public string nome { get; set; }
         public string token { get; set; }
-        //public string reToken { get; set; }
         public int tipo { get; set; }
 
         public ReturnLogin() { }

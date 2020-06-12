@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace trial2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class FotografiaIdCaoController : ControllerBase
     {
         private readonly trial2Context _context;
@@ -27,7 +29,7 @@ namespace trial2.Controllers
         {
             var fotografia = await (from f in _context.Fotografia
                                     where f.cao_idCao == id
-                                    select f).ToListAsync();
+                                    select f).ToListAsync(); ;
 
             if (fotografia == null)
             {

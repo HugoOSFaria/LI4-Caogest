@@ -36,7 +36,7 @@ namespace trial2.Controllers
                 return NotFound();
             }
 
-            foreach(Canil c in canis)
+            foreach (Canil c in canis)
             {
                 c.localidade = Encriptar.Decrypt(c.localidade, "123abc");
                 c.rua = Encriptar.Decrypt(c.rua, "1a2b3c");
@@ -86,7 +86,7 @@ namespace trial2.Controllers
             res.contacto = canil.contacto;
             res.estado = canil.estado;
 
-            foreach(Horario h in horario)
+            foreach (Horario h in horario)
             {
                 res.horarios.Add(h);
             }
@@ -110,17 +110,16 @@ namespace trial2.Controllers
                                where c.email == id
                                select c).FirstOrDefaultAsync();
 
-            canil.nib = Encriptar.Encrypt(canilF.nib, "b32a1c");
-            canil.nome = Encriptar.Encrypt(canilF.nome, "bac321");
-            canil.capacidadeOcupada = /*Int32.Parse(*/canilF.capacidadeOcupada;
-            canil.capacidadeTotal = Int32.Parse(canilF.capacidadeTotal);
-            canil.distrito = Encriptar.Encrypt(canilF.distrito, "cba321");
-            canil.rua = Encriptar.Encrypt(canilF.rua, "1a2b3c");
-            canil.localidade = Encriptar.Encrypt(canilF.localidade, "123abc");
-            canil.contacto = Encriptar.Encrypt(canilF.contacto, "1c2b3a");
-            canil.estado = canilF.estado;
+            canil.capacidadeOcupada = canilF.capacidadeOcupada;
+            canil.capacidadeTotal = canilF.capacidadeTotal;
             canil.encriptado = 1;
 
+            canil.localidade = Encriptar.Encrypt(canilF.localidade, "123abc");
+            canil.rua = Encriptar.Encrypt(canilF.rua, "1a2b3c");
+            canil.distrito = Encriptar.Encrypt(canilF.distrito, "cba321");
+            canil.nib = Encriptar.Encrypt(canilF.nib, "b32a1c");
+            canil.nome = Encriptar.Encrypt(canilF.nome, "bac321");
+            canil.contacto = Encriptar.Encrypt(canilF.contacto, "1c2b3a");
 
             _context.Entry(canil).State = EntityState.Modified;
 
@@ -164,7 +163,7 @@ namespace trial2.Controllers
             canil.nib = canilF.nib;
             canil.nome = canilF.nome;
             canil.capacidadeOcupada = /*Int32.Parse(*/canilF.capacidadeOcupada;
-            canil.capacidadeTotal = Int32.Parse(canilF.capacidadeTotal);
+            canil.capacidadeTotal = canilF.capacidadeTotal;
             canil.distrito = canilF.distrito;
             canil.rua = canilF.rua;
             canil.localidade = canilF.localidade;
@@ -196,7 +195,7 @@ namespace trial2.Controllers
                 }
             }
 
-           /* Horario horario1 = new Horario();
+            Horario horario1 = new Horario();
             Horario horario2 = new Horario();
             Horario horario3 = new Horario();
             Horario horario4 = new Horario();
@@ -234,7 +233,7 @@ namespace trial2.Controllers
 
             horario5.dataInicio = DateTime.Parse(canilF.dataInicio5);
             horario5.dataFim = DateTime.Parse(canilF.dataFim5);
-            horario5.capacidade =Int32.Parse(canilF.capacidade5);
+            horario5.capacidade = Int32.Parse(canilF.capacidade5);
             horario5.registados = 0;
             horario5.dia = 5;
             horario5.canil_user_email = canilF.email;
@@ -259,7 +258,7 @@ namespace trial2.Controllers
             await _horariosController.PostHorario(horario4);
             await _horariosController.PostHorario(horario5);
             await _horariosController.PostHorario(horario6);
-            await _horariosController.PostHorario(horario7);*/
+            await _horariosController.PostHorario(horario7);
 
             return CreatedAtAction("GetCanil", new { id = canil.email }, canil);
         }

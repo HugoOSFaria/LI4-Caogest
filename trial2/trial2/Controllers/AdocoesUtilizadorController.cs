@@ -35,26 +35,25 @@ namespace trial2.Controllers
             }
 
             List<ReturnAdo2> list = new List<ReturnAdo2>();
-            
-            foreach(Adocao ad in adocao)
+
+            foreach (Adocao ad in adocao)
             {
-                var res = new ReturnAdo2
-                {
-                    nPedido = ad.nPedido,
-                    data = ad.data,
-                    estado = ad.estado,
-                    cao_idCao = ad.cao_idCao,
-                    permissao = ad.permissao,
-                    alergia = ad.alergia,
-                    descAnimais = ad.descAnimais,
-                    ausencia = ad.ausencia,
-                    habitacao = ad.habitacao,
-                    exterior = ad.exterior,
-                    tipoMoradia = ad.tipoMoradia,
-                    motivo = ad.motivo,
-                    comprovativo = ad.comprovativo,
-                    donoAnimal = ad.donoAnimal
-                };
+                var res = new ReturnAdo2();
+
+                res.nPedido = ad.nPedido;
+                res.data = ad.data;
+                res.estado = ad.estado;
+                res.cao_idCao = ad.cao_idCao;
+                res.permissao = ad.permissao;
+                res.alergia = ad.alergia;
+                res.descAnimais = ad.descAnimais;
+                res.ausencia = ad.ausencia;
+                res.habitacao = ad.habitacao;
+                res.exterior = ad.exterior;
+                res.tipoMoradia = ad.tipoMoradia;
+                res.motivo = ad.motivo;
+                res.comprovativo = ad.comprovativo;
+                res.donoAnimal = ad.donoAnimal;
 
                 res.nome_Canil = await (from c in _context.Canil
                                         join ca in _context.Cao on res.cao_idCao equals ca.idCao
@@ -65,6 +64,14 @@ namespace trial2.Controllers
                 res.nome_Cao = await (from c in _context.Cao
                                       where c.idCao == res.cao_idCao
                                       select c.nome).FirstOrDefaultAsync();
+
+                var fotos = await (from f in _context.Fotografia
+                                   where f.cao_idCao == ad.cao_idCao
+                                   select f).ToListAsync();
+                foreach (Fotografia f in fotos)
+                {
+                    res.fotos.Add(f);
+                }
                 list.Add(res);
             }
             return list;

@@ -15,6 +15,8 @@ namespace trial2.Models
         public string texto { get; set;}
         public DateTime date { get; set;}
         public string pathImagem { get; set; }
+        public string nota1 { get; set; }
+        public string nota2 { get; set; }
         [ForeignKey("User")]
         public string user_email { get; set;}
     }

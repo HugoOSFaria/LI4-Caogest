@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace trial2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class UtilizadorsController : ControllerBase
     {
         private readonly trial2Context _context;
@@ -42,7 +44,7 @@ namespace trial2.Controllers
                 utilizador.cc = Encriptar.Decrypt(utilizador.cc, "b32a1c");
                 utilizador.nome = Encriptar.Decrypt(utilizador.nome, "1c2b3a");
             }
-            
+
             return utilizadores;
         }
 
@@ -118,7 +120,7 @@ namespace trial2.Controllers
         {
 
             User user = new User();
-            
+
             user.email = utilizadorF.email;
             user.password = utilizadorF.password;
             user.tipo = utilizadorF.tipo;

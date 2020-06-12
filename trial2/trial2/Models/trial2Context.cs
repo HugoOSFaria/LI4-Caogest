@@ -38,16 +38,16 @@ namespace trial2.Models
                     .WithMany(u => u.favoritos)
                     .HasForeignKey(f => f.utilizador_user_email);
 
-                /*entity.HasOne(f => f.cao)
+                entity.HasOne(f => f.cao)
                     .WithMany(u => u.favoritos)
-                    .HasForeignKey(f => f.cao_idCao);*/
+                    .HasForeignKey(f => f.cao_idCa);
 
             });
-            modelBuilder.Entity<Horario>().HasKey(h => new { h.dataInicio, h.dataFim, h.canil_user_email, h.dia});
-            modelBuilder.Entity<Horario_has_Utilizador>().HasKey(hu => new { hu.horario_DataInicio, hu.horario_DataFim, hu.horario_Canil_User_Email, hu.utilizador_email, hu.horario_Dia});
+            modelBuilder.Entity<Horario>().HasKey(h => new { h.dataInicio, h.dataFim, h.canil_user_email, h.dia });
+            modelBuilder.Entity<Horario_has_Utilizador>().HasKey(hu => new { hu.horario_DataInicio, hu.horario_DataFim, hu.horario_Canil_User_Email, hu.utilizador_email, hu.horario_Dia });
             modelBuilder.Entity<Voluntarios>().HasKey(v => new { v.canil_user_email, v.utilizador_user_email });
         }
-        
+
         public DbSet<trial2.Models.Cao> Cao { get; set; }
 
         public DbSet<trial2.Models.Favoritos> Favoritos { get; set; }

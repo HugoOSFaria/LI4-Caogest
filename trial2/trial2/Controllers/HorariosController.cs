@@ -134,9 +134,9 @@ namespace trial2.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}/{dia}")]
-        public async Task<IActionResult> PutHorario1(string id, int dia, Horario horario)
+        public async Task<IActionResult> PutHorario1(string id, int dia, ReceiveHorario horario1)
         {
-            if (id != horario.canil_user_email)
+            if (id != horario1.canil_user_email)
             {
                 return BadRequest();
             }
@@ -148,7 +148,15 @@ namespace trial2.Controllers
 
             _context.Horario.Remove(horarioN);
             await _context.SaveChangesAsync();
-            
+
+            Horario horario = new Horario();
+            horario.dataInicio = DateTime.Parse(horario1.dataInicio);
+            horario.dataFim = DateTime.Parse(horario1.dataFim);
+            horario.capacidade = Int32.Parse(horario1.capacidade);
+            horario.registados = horario1.registados;
+            horario.dia = horario1.dia;
+            horario.canil_user_email = horario1.canil_user_email;
+
             _context.Horario.Add(horario);
 
             try

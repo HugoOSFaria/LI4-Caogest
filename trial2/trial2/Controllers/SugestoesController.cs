@@ -42,7 +42,7 @@ namespace trial2.Controllers
 
             return sugestoes;
         }
-        
+
         // GET: api/Sugestoes/Users/trial@example.com
         [HttpGet("Users/{id}")]
         public async Task<ActionResult<List<Sugestoes>>> GetSugestoes(string id)
@@ -104,9 +104,7 @@ namespace trial2.Controllers
                 return NotFound();
             }
 
-            sugestoes.identificacao = list.Count()+1;
-            sugestoes.estado = "Não Lida";
-            sugestoes.estadoU = "Enviada";
+            sugestoes.identificacao = list.Count() + 1;
 
             _context.Sugestoes.Add(sugestoes);
             await _context.SaveChangesAsync();

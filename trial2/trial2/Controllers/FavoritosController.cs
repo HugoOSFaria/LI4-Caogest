@@ -50,6 +50,10 @@ namespace trial2.Controllers
                 res.esterilizacao = cao.esterilizacao;
                 res.porte = cao.porte;
                 res.email_canil = cao.canil_user_email;
+                var nomeC = await (from f in _context.Canil
+                                   where f.email == cao.canil_user_email
+                                   select f.nome).FirstOrDefaultAsync();
+                res.nome_canil = Encriptar.Decrypt(nomeC, "bac321");
                 var fotos = await (from f in _context.Fotografia
                                    where f.cao_idCao == cao.idCao
                                    select f).ToListAsync();
@@ -78,7 +82,7 @@ namespace trial2.Controllers
             {
                 return NotFound();
             }
-            
+
             foreach (Cao cao in favoritos)
             {
                 ReturnFavoritos res = new ReturnFavoritos();
@@ -94,6 +98,10 @@ namespace trial2.Controllers
                 res.esterilizacao = cao.esterilizacao;
                 res.porte = cao.porte;
                 res.email_canil = cao.canil_user_email;
+                var nomeC = await (from f in _context.Canil
+                                   where f.email == cao.canil_user_email
+                                   select f.nome).FirstOrDefaultAsync();
+                res.nome_canil = Encriptar.Decrypt(nomeC, "bac321");
                 var fotos = await (from f in _context.Fotografia
                                    where f.cao_idCao == cao.idCao
                                    select f).ToListAsync();
@@ -127,7 +135,7 @@ namespace trial2.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FavoritosExists(id))
+                if (!FavoritosExists(id, favoritos.cao_idCa))
                 {
                     return NotFound();
                 }
@@ -153,7 +161,7 @@ namespace trial2.Controllers
             }
             catch (DbUpdateException)
             {
-                if (FavoritosExists(favoritos.utilizador_user_email))
+                if (FavoritosExists(favoritos.utilizador_user_email, favoritos.cao_idCa))
                 {
                     return Conflict();
                 }
@@ -167,10 +175,12 @@ namespace trial2.Controllers
         }
 
         // DELETE: api/Favoritos/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Favoritos>> DeleteFavoritos(string id)
+        [HttpDelete("{id1}/{id2}")]
+        public async Task<ActionResult<Favoritos>> DeleteFavoritos(string id1, int id2)
         {
-            var favoritos = await _context.Favoritos.FindAsync(id);
+            var favoritos = await (from f in _context.Favoritos
+                                   where f.utilizador_user_email == id1 && f.cao_idCa == id2
+                                   select f).FirstOrDefaultAsync();
             if (favoritos == null)
             {
                 return NotFound();
@@ -182,9 +192,9 @@ namespace trial2.Controllers
             return favoritos;
         }
 
-        private bool FavoritosExists(string id)
+        private bool FavoritosExists(string id1, int id2)
         {
-            return _context.Favoritos.Any(e => e.utilizador_user_email == id);
+            return _context.Favoritos.Any(e => e.utilizador_user_email == id1 && e.cao_idCa == id2);
         }
     }
 }

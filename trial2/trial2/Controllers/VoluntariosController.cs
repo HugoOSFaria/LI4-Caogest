@@ -79,7 +79,8 @@ namespace trial2.Controllers
 
             List<ReceiveVoluntario> vol = new List<ReceiveVoluntario>();
 
-            foreach (var v in voluntarios) {
+            foreach (var v in voluntarios)
+            {
                 var res = new ReceiveVoluntario();
 
                 res.nomeCanil = await (from d in _context.Canil
@@ -88,8 +89,8 @@ namespace trial2.Controllers
                 res.nomeCanil = Encriptar.Decrypt(res.nomeCanil, "bac321");
 
                 res.nomeUser = await (from d in _context.Utilizador
-                                       where d.email == v.utilizador_user_email
-                                       select d.nome).FirstOrDefaultAsync();
+                                      where d.email == v.utilizador_user_email
+                                      select d.nome).FirstOrDefaultAsync();
                 res.nomeUser = Encriptar.Decrypt(res.nomeUser, "1c2b3a");
 
                 res.mailUser = v.utilizador_user_email;
@@ -99,8 +100,8 @@ namespace trial2.Controllers
                                       select d.contacto).FirstOrDefaultAsync();
 
                 res.sexo = await (from d in _context.Utilizador
-                                      where d.email == v.utilizador_user_email
-                                      select d.sexo).FirstOrDefaultAsync();
+                                  where d.email == v.utilizador_user_email
+                                  select d.sexo).FirstOrDefaultAsync();
 
                 res.data_de_nascimento = await (from d in _context.Utilizador
                                                 where d.email == v.utilizador_user_email
@@ -115,7 +116,7 @@ namespace trial2.Controllers
             }
 
             return vol;
-           
+
         }
 
         // PUT: api/Voluntarios/5
@@ -176,11 +177,13 @@ namespace trial2.Controllers
             return CreatedAtAction("GetVoluntarios", new { id = voluntarios.canil_user_email }, voluntarios);
         }
 
-        // DELETE: api/Voluntarios/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Voluntarios>> DeleteVoluntarios(string id)
+        // DELETE: api/Voluntarios/5/3
+        [HttpDelete("{id1}/{id2}")]
+        public async Task<ActionResult<Voluntarios>> DeleteVoluntarios(string id1, string id2)
         {
-            var voluntarios = await _context.Voluntarios.FindAsync(id);
+            var voluntarios = await (from v in _context.Voluntarios
+                                     where v.canil_user_email == id1 && v.utilizador_user_email == id2
+                                     select v).FirstOrDefaultAsync();
             if (voluntarios == null)
             {
                 return NotFound();

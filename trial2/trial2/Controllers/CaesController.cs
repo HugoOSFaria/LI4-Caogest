@@ -28,10 +28,10 @@ namespace trial2.Controllers
         public async Task<ActionResult<IEnumerable<ReturnCao>>> GetCao()
         {
             List<ReturnCao> result = new List<ReturnCao>();
-            
+
             var caes = await _context.Cao.ToListAsync();
-            
-            foreach(Cao cao in caes)
+
+            foreach (Cao cao in caes)
             {
                 ReturnCao res = new ReturnCao();
 
@@ -47,8 +47,8 @@ namespace trial2.Controllers
                 res.porte = cao.porte;
                 res.email_canil = cao.canil_user_email;
                 var nome = await (from f in _context.Canil
-                                        where f.email == cao.canil_user_email
-                                        select f.nome).FirstOrDefaultAsync();
+                                  where f.email == cao.canil_user_email
+                                  select f.nome).FirstOrDefaultAsync();
                 res.nome_canil = Encriptar.Decrypt(nome, "bac321");
                 var fotos = await (from f in _context.Fotografia
                                    where f.cao_idCao == cao.idCao
@@ -61,7 +61,7 @@ namespace trial2.Controllers
 
                 result.Add(res);
             }
-            
+
             return result;
         }
 
@@ -72,7 +72,7 @@ namespace trial2.Controllers
             var cao = await (from ca in _context.Cao
                              where ca.idCao == id
                              select ca).FirstOrDefaultAsync();
-            
+
             if (cao == null)
             {
                 return NotFound();
@@ -169,10 +169,14 @@ namespace trial2.Controllers
             res.porte = cao.porte;
             res.canil_user_email = cao.canil_user_email;
             res.cor = cao.cor[0];
-            for(int i=1; i<cao.cor.Count(); i++)
+            for (int i = 1; i < cao.cor.Count(); i++)
             {
                 res.cor = res.cor + ", " + cao.cor[i];
             }
+            var canil = await (from c in _context.Canil
+                               where c.email == cao.canil_user_email
+                               select c).FirstOrDefaultAsync();
+            canil.capacidadeOcupada++;
             _context.Cao.Add(res);
             await _context.SaveChangesAsync();
 
