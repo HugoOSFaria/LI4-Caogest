@@ -1,13 +1,7 @@
 <template>
-    <div id = "dogs" class = "Dogs">
-        <Navbar :id="$route.params.id"/>
-        <v-card> 
-            <v-img src='@/assets/caes2.png'></v-img> 
-        </v-card>
-        <v-card flat height= "100" color = "white"></v-card>
-    
-        <Dogs :id="$route.params.id" />
-
+    <div id = "direitos" class = "direitos">
+        <Navbar :id="$route.params.id" />
+        <DocumentosRand :id="$route.params.id" :id2="$route.params.id2"  />
         <v-btn
             v-scroll="onScroll"
             x-large
@@ -22,34 +16,34 @@
             @click="toTop"
         >
             <v-icon>keyboard_arrow_up</v-icon>
-        </v-btn>    
-        <Footer :id="$route.params.id"/>
+         </v-btn>   
+        <Footer :id="$route.params.id" />
     </div>
 </template>
 
 <script>
 import Navbar from '@/components/NavbarFooter/NavbarAdmin.vue'
 import Footer from '@/components/NavbarFooter/FooterAdmin.vue'
-import Dogs from '@/components/Admin/Dogs.vue'
-
+import DocumentosRand from '@/components/Docs/DocumentosRand.vue'
 export default {
-    props: ['item', 'id'],
-    data: () => ({   
-        fab:false,     
-    }),
+    name:"docsrand", 
+    data() {
+        return {
+            fab:false,
+        }
+    },
     components: {   Navbar, 
                     Footer,
-                    Dogs
-    },  
-    methods:{
+                    DocumentosRand },
+    methods: {
         onScroll (e) {
             if (typeof window === 'undefined') return
             const top = window.pageYOffset ||   e.target.scrollTop || 0
             this.fab = top > 20
         },
         toTop () {
-        this.$vuetify.goTo(0)
-        }, 
-    },    
+            this.$vuetify.goTo(0)
+        },
+    }
 }
 </script>

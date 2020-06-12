@@ -132,14 +132,14 @@ export default {
                 this.$router.push("/pagina/canil/" + this.$data.form.email);
             }
             else{
-              this.text = "Email ou Palavra-Passe incorretos"; 
+              this.text = "Email ou Palavra-Passe incorretos!"; 
               this.color = "error"; 
               this.snackbar = true; 
               this.done = false; 
             }
           }
           catch(e) {
-            this.text = e;
+            this.text = "Email ou Palavra-Passe incorretos!";
             this.color = "error";
             this.snackbar = true;
             this.done = false;

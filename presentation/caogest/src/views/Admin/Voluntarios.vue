@@ -152,6 +152,6 @@ export default {
 .voluntario.Masculino {
   border-left: 4px solid rgb(158, 210, 232);
 }
-
+ 
 
 </style>

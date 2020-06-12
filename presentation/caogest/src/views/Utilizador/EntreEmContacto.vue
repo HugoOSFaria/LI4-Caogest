@@ -6,7 +6,7 @@
     </v-card>
     <v-card flat height="150" color="white"></v-card>
 
-    <EntreEmContacto :ident="$route.params.ident" />
+    <EntreEmContacto :id="$route.params.id" />
 
     <v-btn
       v-scroll="onScroll"

@@ -1,12 +1,12 @@
 <template>
   <div id="entreemcontacto" class="entreemcontacto">
-    <Navbar :ident="$route.params.ident" />
+    <Navbar :id="$route.params.id" />
     <v-card>
       <v-img src="@/assets/entreemcontacto.png"></v-img>
     </v-card>
     <v-card flat height="150" color="white"></v-card>
 
-    <EntreEmContacto :ident="$route.params.ident" />
+    <EntreEmContacto :id="$route.params.id" />
 
     <v-btn
       v-scroll="onScroll"
@@ -23,7 +23,7 @@
     >
       <v-icon>keyboard_arrow_up</v-icon>
     </v-btn>    
-    <Footer :ident="$route.params.ident"/>
+    <Footer :id="$route.params.id"/>
 
   </div>
 </template>
