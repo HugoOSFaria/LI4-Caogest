@@ -9,7 +9,6 @@ namespace trial2.Results
 {
     public class RecieveCao
     {
-        public int idCao { get; set; }
         public string nome { get; set; }
         public string sexo { get; set; }
         public string descricao { get; set; }
@@ -21,6 +20,5 @@ namespace trial2.Results
         public string porte { get; set; }
         public string canil_user_email { get; set; }
         public string path { get; set; }
-        public IFormCollection file { get; set; }
     }
 }
