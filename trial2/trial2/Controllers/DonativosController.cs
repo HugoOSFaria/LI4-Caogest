@@ -12,7 +12,7 @@ namespace trial2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize(AuthenticationSchemes = "Cookies,Bearer")]
     public class DonativosController : ControllerBase
     {
         private readonly trial2Context _context;

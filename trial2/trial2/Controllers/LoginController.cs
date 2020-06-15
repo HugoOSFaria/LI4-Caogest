@@ -39,9 +39,9 @@ namespace trial2.Controllers
                 throw new SecurityTokenException("Invalid token");
 
             return principal;
-        }*/
+        }
 
-        /*public async Task<ActionResult<ReturnLogin>> RefreshToken(ReturnLogin login)
+        public async Task<ActionResult<ReturnLogin>> RefreshToken(ReturnLogin login)
         {
             var principal = GetPrincipalFromExpiredToken(login.token);
             var username = principal.Identity.Name; //this is mapped to the Name claim by default
@@ -92,19 +92,19 @@ namespace trial2.Controllers
                     var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
                     var JWToken = new JwtSecurityToken(
-                        issuer: "*",
-                        audience: "*",
+                        issuer: "https://localhost:44321",
+                        audience: "https://localhost:44321",
                         claims: claims,
                         expires: DateTime.Now.AddMinutes(2),
                         signingCredentials: creds);
                     var token = new JwtSecurityTokenHandler().WriteToken(JWToken);
 
-                    /*var randomNumber = new byte[32];
+                    var randomNumber = new byte[32];
                     using (var rng = RandomNumberGenerator.Create())
                     {
                         rng.GetBytes(randomNumber);
                         var reToken = Convert.ToBase64String(randomNumber);
-                    }*/
+                    }
 
                     ReturnLogin res = new ReturnLogin();
                     var nome = "Admin";

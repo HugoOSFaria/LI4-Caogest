@@ -11,6 +11,7 @@ namespace trial2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Cookies,Bearer")]
     public class SugestoesController : ControllerBase
     {
         private readonly trial2Context _context;

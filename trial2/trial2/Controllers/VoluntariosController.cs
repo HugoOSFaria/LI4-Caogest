@@ -23,15 +23,15 @@ namespace trial2.Controllers
 
         // GET: api/Voluntarios
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReceiveVoluntario>>> GetVoluntarios()
+        public async Task<ActionResult<IEnumerable<ReturnVoluntario>>> GetVoluntarios()
         {
             var voluntarios = await _context.Voluntarios.ToListAsync();
 
-            List<ReceiveVoluntario> vol = new List<ReceiveVoluntario>();
+            List<ReturnVoluntario> vol = new List<ReturnVoluntario>();
 
             foreach (var v in voluntarios)
             {
-                var res = new ReceiveVoluntario();
+                var res = new ReturnVoluntario();
 
                 res.nomeCanil = await (from d in _context.Canil
                                        where d.email == v.canil_user_email
@@ -70,18 +70,17 @@ namespace trial2.Controllers
 
         // GET: api/Voluntarios/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<ReceiveVoluntario>>> GetVoluntarios(string id)
+        public async Task<ActionResult<List<ReturnVoluntario>>> GetVoluntarios(string id)
         {
             var voluntarios = await (from us in _context.Voluntarios
-                                     join c in _context.Utilizador on us.utilizador_user_email equals c.email
                                      where us.canil_user_email == id
                                      select us).ToListAsync();
 
-            List<ReceiveVoluntario> vol = new List<ReceiveVoluntario>();
+            List<ReturnVoluntario> vol = new List<ReturnVoluntario>();
 
             foreach (var v in voluntarios)
             {
-                var res = new ReceiveVoluntario();
+                var res = new ReturnVoluntario();
 
                 res.nomeCanil = await (from d in _context.Canil
                                        where d.email == v.canil_user_email
@@ -106,6 +105,44 @@ namespace trial2.Controllers
                 res.data_de_nascimento = await (from d in _context.Utilizador
                                                 where d.email == v.utilizador_user_email
                                                 select d.data_de_nascimento).FirstOrDefaultAsync();
+
+                vol.Add(res);
+            }
+
+            if (voluntarios == null)
+            {
+                return NotFound();
+            }
+
+            return vol;
+
+        }
+
+        // GET: api/Voluntarios/Utilizador/5
+        [HttpGet("Utilizador/{id}")]
+        public async Task<ActionResult<List<ReturnVoluntario>>> GetVoluntariosU(string id)
+        {
+            var voluntarios = await (from us in _context.Voluntarios
+                                     where us.utilizador_user_email == id
+                                     select us).ToListAsync();
+
+            List<ReturnVoluntario> vol = new List<ReturnVoluntario>();
+
+            foreach (var v in voluntarios)
+            {
+                var res = new ReturnVoluntario();
+
+                Canil canil = await (from d in _context.Canil
+                                     where d.email == v.canil_user_email
+                                     select d).FirstOrDefaultAsync();
+
+                res.nomeCanil = Encriptar.Decrypt(canil.nome, "bac321");
+
+                res.mailUser = v.canil_user_email;
+
+                res.contacto = Encriptar.Decrypt(canil.contacto, "1c2b3a");
+
+                res.localidade = Encriptar.Decrypt(canil.localidade, "123abc");
 
                 vol.Add(res);
             }

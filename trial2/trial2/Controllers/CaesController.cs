@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
@@ -13,14 +14,16 @@ namespace trial2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize(AuthenticationSchemes = "Cookies,Bearer")]
     public class CaesController : ControllerBase
     {
         private readonly trial2Context _context;
+        private readonly FotografiasController _contextFoto;
 
         public CaesController(trial2Context context)
         {
             _context = context;
+            _contextFoto = new FotografiasController(context);
         }
 
         // GET: api/Caes
@@ -46,10 +49,12 @@ namespace trial2.Controllers
                 res.esterilizacao = cao.esterilizacao;
                 res.porte = cao.porte;
                 res.email_canil = cao.canil_user_email;
-                var nome = await (from f in _context.Canil
+                var canil = await (from f in _context.Canil
                                   where f.email == cao.canil_user_email
-                                  select f.nome).FirstOrDefaultAsync();
-                res.nome_canil = Encriptar.Decrypt(nome, "bac321");
+                                  select f).FirstOrDefaultAsync();
+                
+                res.nome_canil = Encriptar.Decrypt(canil.nome, "bac321");
+                res.distrito = Encriptar.Decrypt(canil.distrito, "cba321");
                 var fotos = await (from f in _context.Fotografia
                                    where f.cao_idCao == cao.idCao
                                    select f).ToListAsync();
@@ -179,7 +184,11 @@ namespace trial2.Controllers
             canil.capacidadeOcupada++;
             _context.Cao.Add(res);
             await _context.SaveChangesAsync();
-
+            RecieveFoto foto = new RecieveFoto();
+            foto.path = cao.path;
+            foto.cao_idCao = res.idCao;
+            foto.file = cao.file;
+            await _contextFoto.PostFotografia(foto);
             return CreatedAtAction(nameof(GetCao), new { id = cao.idCao }, cao);
         }
 

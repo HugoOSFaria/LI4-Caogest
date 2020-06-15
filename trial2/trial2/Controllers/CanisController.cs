@@ -12,6 +12,7 @@ namespace trial2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Cookies,Bearer")]
     public class CanisController : ControllerBase
     {
         private readonly trial2Context _context;

@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using trial2.Models;
+using trial2.Results;
 
 namespace trial2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Cookies,Bearer")]
     public class HUController : ControllerBase
     {
         private readonly trial2Context _context;
@@ -29,15 +32,34 @@ namespace trial2.Controllers
 
         // GET: api/HU/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<Horario_has_Utilizador>>> GetHorarios_has_Utilizador(string id)
+        public async Task<ActionResult<List<ReturnHU>>> GetHorarios_has_Utilizador(string id)
         {
-            var horarios_has_Utilizador = await (from us in _context.Horarios_has_Utilizador
+            var list = await (from us in _context.Horarios_has_Utilizador
                                                  where us.utilizador_email == id
                                                  select us).ToListAsync();
 
-            if (horarios_has_Utilizador == null)
+            if (list == null)
             {
                 return NotFound();
+            }
+
+            var horarios_has_Utilizador = new List<ReturnHU>();
+
+            foreach(Horario_has_Utilizador hu in list)
+            {
+                var res = new ReturnHU();
+                res.horario_DataInicio = hu.horario_DataInicio;
+                res.horario_DataFim = hu.horario_DataFim;
+                res.horario_Dia = hu.horario_Dia;
+                res.horario_Canil_User_Email = hu.horario_Canil_User_Email;
+                res.utilizador_email = hu.utilizador_email;
+
+                var nome = await (from c in _context.Canil
+                                  where c.email == hu.horario_Canil_User_Email
+                                  select c.nome).FirstOrDefaultAsync();
+                res.nome_canil = Encriptar.Decrypt(nome, "bac321");
+
+                horarios_has_Utilizador.Add(res);
             }
 
             return horarios_has_Utilizador;
