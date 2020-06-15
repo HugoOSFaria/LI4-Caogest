@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using trial2.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace trial2.Results
 {
@@ -19,5 +20,7 @@ namespace trial2.Results
         public string esterilizacao { get; set; }
         public string porte { get; set; }
         public string canil_user_email { get; set; }
+        public string path { get; set; }
+        public IFormCollection file { get; set; }
     }
 }

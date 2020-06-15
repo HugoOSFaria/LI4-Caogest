@@ -20,6 +20,7 @@ namespace trial2.Results
         public string porte { get; set; }
         public string email_canil { get; set; }
         public string nome_canil { get; set; }
+        public string distrito { get; set; }
         public List<Fotografia> fotos { get; set; }
         public ReturnCao()
         {
