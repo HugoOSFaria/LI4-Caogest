@@ -184,12 +184,13 @@ namespace trial2.Controllers
             canil.capacidadeOcupada++;
             _context.Cao.Add(res);
             await _context.SaveChangesAsync();
-            RecieveFoto foto = new RecieveFoto();
+
+            Fotografia foto = new Fotografia();
             foto.path = cao.path;
             foto.cao_idCao = res.idCao;
-            foto.file = cao.file;
             await _contextFoto.PostFotografia(foto);
-            return CreatedAtAction(nameof(GetCao), new { id = cao.idCao }, cao);
+            
+            return CreatedAtAction(nameof(GetCao), new { id = res.idCao }, res);
         }
 
         // DELETE: api/Caes/5

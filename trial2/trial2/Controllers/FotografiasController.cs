@@ -83,31 +83,22 @@ namespace trial2.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<string>> PostFotografia(RecieveFoto fotografia)
+        public async Task<ActionResult<string>> PostFotografia(Fotografia fotografia)
         {
-            var foto = new Fotografia();
             var fotos = await (from f in _context.Fotografia
                                select f).ToListAsync();
             if (fotos == null)
             {
-                foto.idFotografia = 1;
+                fotografia.idFotografia = 1;
             }
             else
             {
-                foto.idFotografia = fotos.Count() + 1;
+                fotografia.idFotografia = fotos.Count() + 1;
             }
-            foto.path = fotografia.path;
-            foto.cao_idCao = fotografia.cao_idCao;
-            string file = "C:\\Users\\Pedro Duarte\\Desktop\\"+ foto.path;
-            using (var stream = System.IO.File.Create(file))
-            {
-
-                await fotografia.file.Files[0].CopyToAsync(stream);
-            }
-            _context.Fotografia.Add(foto);
+            _context.Fotografia.Add(fotografia);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFotografia", new { id = foto.idFotografia }, fotografia);
+            return CreatedAtAction("GetFotografia", new { id = fotografia.idFotografia }, fotografia);
         }
 
 
@@ -115,9 +106,9 @@ namespace trial2.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost("File")]
-        public async Task<ActionResult<string>> PostFotografiaFile(IFormCollection fotografia)
+        public async Task<ActionResult<string>> PostFotografiaFile(/*RecieveFoto*/IFormCollection fotografia)
         {
-            string file = "C:\\Users\\Pedro Duarte\\Desktop\\aaaa.jpg";
+            string file = "C:\\Users\\Pedro Duarte\\Desktop\\" + fotografia["path"];
             using (var stream = System.IO.File.Create(file))
             {
 
