@@ -14,6 +14,10 @@ using Microsoft.EntityFrameworkCore;
 using trial2.Models;
 using MySql.Data.MySqlClient;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 
 namespace trial2
 {
@@ -43,12 +47,30 @@ namespace trial2
             services.AddDbContext<trial2Context>(opt =>
                opt.UseMySql(connectionString));
             services.AddControllers();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateAudience = true,
+                            ValidAudience = "https://localhost:44321",
+                            ValidateIssuer = true,
+                            ValidIssuer = "https://localhost:44321",
+                            ValidateIssuerSigningKey = true,
+                            RequireExpirationTime = true,
+                            RequireSignedTokens = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("damfdertyuiopsaz")),
+                            ValidateLifetime = true,
+                            ClockSkew = TimeSpan.Zero //the default for this setting is 5 minutes*/
+                        };
+                    });
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie(options =>
                     {
                         options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None;
 
                     });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
