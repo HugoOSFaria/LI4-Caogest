@@ -9,16 +9,6 @@
          <v-layout row class="mb-1"> 
             <v-tooltip top>
                 <template v-slot:activator="{ on }">
-                    <v-btn class = "ma-2" text @click="sortBy('utilizador_user_email')" v-on="on">
-                        <v-icon left small>person</v-icon>    
-                        <span class = "caption text-lowercase">Por nome de utilizador</span>
-                    </v-btn>  
-                </template>
-                <span>Ordenar pedidos por nome de utilizador</span> 
-            </v-tooltip>
-
-            <v-tooltip top>
-                <template v-slot:activator="{ on }">
                     <v-btn class = "ma-2" text @click="sortBy('nome_Canil')" v-on="on">
                         <v-icon left small>pets</v-icon>    
                         <span class = "caption text-lowercase">Por canil</span>
@@ -36,6 +26,16 @@
               </template>
               <span>Ordenar pedidos por data de submissão</span>
             </v-tooltip>  
+
+            <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                    <v-btn class = "ma-2" text @click="sortBy('estado')" v-on="on">
+                        <v-icon left small>info</v-icon>    
+                        <span class = "caption text-lowercase">Por estado</span>
+                    </v-btn>  
+                </template>
+                <span>Ordenar pedidos por estado do pedido</span> 
+            </v-tooltip>
         </v-layout>
 
       <v-card flat height = "100"></v-card>
@@ -57,7 +57,7 @@
             <div class="caption grey--text">Data de Submissão</div>
             <div class="method headline">{{date(pedido.data)}}</div>
           </v-flex>
-          <v-flex xs1 md1>
+          <v-flex xs8 md2>
                <v-chip :color="project_status(pedido.estado)" class="black--text caption my-2" @click="pedidoadocao(pedido)">{{pedido.estado}}</v-chip> 
             <div>
             </div>

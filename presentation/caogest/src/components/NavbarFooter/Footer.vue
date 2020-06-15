@@ -9,27 +9,27 @@
                 <v-col>
                     <strong class="subheading">Cães</strong>
                     <v-card-actions>
-                    <v-btn class="ma-1" text small to="/caes">Encontrar um Cão</v-btn>
+                    <v-btn class="ma-1" text small @click="caes()">Encontrar um Cão</v-btn>
                     </v-card-actions>
                 </v-col>
 
                 <v-col>
                     <strong class="subheading">Envolva-se</strong>
                     <v-card-actions>
-                        <v-btn text-lowercase class="ma-1" text small to="/antesdeadotar">Adotar</v-btn>
+                        <v-btn text-lowercase class="ma-1" text small @click="antesAdotar()">Adotar</v-btn>
                     </v-card-actions>
                     <v-card-actions>
-                        <v-btn class="ma-1" text small to= "/donativos">Donativos</v-btn>
+                        <v-btn class="ma-1" text small @click="donativos()">Donativos</v-btn>
                     </v-card-actions>
                 </v-col>
 
                 <v-col>
                     <strong class="subheading">A Nossa Organização</strong>
                     <v-card-actions>
-                    <v-btn class="ma-1" text small to= "/sobre">Sobre</v-btn>
+                    <v-btn class="ma-1" text small @click="sobre()">Sobre</v-btn>
                     </v-card-actions>
                     <v-card-actions>
-                    <v-btn class="ma-1" text small to="/faqs">Contactos</v-btn>
+                    <v-btn class="ma-1" text small @click="faqs()">Contactos</v-btn>
                     </v-card-actions>
                 </v-col>
 
@@ -60,8 +60,26 @@
 <script>
 import PopupSugestoes from '@/components/NavbarFooter/PopupSugestoes.vue'
 export default {
+    props:['id'],
     components: {
         PopupSugestoes 
+    }, 
+    methods:{
+        caes: function(){
+            this.$router.push("/caes/" + this.id);
+        },
+        antesAdotar: function(){
+            this.$router.push("/antesdeadotar/" + this.id);
+        },
+        donativos: function(){
+            this.$router.push("/donativos/" + this.id);
+        },
+        sobre: function(){
+            this.$router.push("/sobre/" + this.id);
+        },
+        faqs: function(){
+            this.$router.push("/faqs/" + this.id);
+        }
     }
     
 }

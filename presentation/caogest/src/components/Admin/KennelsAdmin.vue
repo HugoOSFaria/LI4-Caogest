@@ -1,5 +1,5 @@
 <template>
-     <div>
+     <div >
             <v-card flat class="mx-auto ml-12">
                 <v-row>
                     <v-col class = "ma-12">
@@ -18,7 +18,7 @@
                                 <v-row 
                                     v-for="item in filteredList"
                                     :key="item.nome">
-                                    <v-col v-if="item.estado==='Aceite'">
+                                    <v-col >
                                     <v-card flat>
                                         <v-row >
                                             <v-btn icon @click="canil(item)">
@@ -144,15 +144,15 @@ export default {
     },
     computed: {
         numberOfPages () {
-        return Math.ceil(this.items.length / this.itemsPerPage)
+            return Math.ceil(this.items.length / this.itemsPerPage)
         },
         filteredKeys () {
-        return this.keys.filter(key => key !== `Nome`)
+            return this.keys.filter(key => key !== `Nome`)
         },
         filteredList() {
-        return this.items.filter(item => {
-            return item.nome.toLowerCase().includes(this.search.toLowerCase()) || item.distrito.toLowerCase().includes(this.search.toLowerCase()) || item.localidade.toLowerCase().includes(this.search.toLowerCase()) 
-        })
+            return this.items.filter(item => {
+                return item.nome.toLowerCase().includes(this.search.toLowerCase()) || item.distrito.toLowerCase().includes(this.search.toLowerCase()) || item.localidade.toLowerCase().includes(this.search.toLowerCase()) 
+            })
         },
     },
     methods: {

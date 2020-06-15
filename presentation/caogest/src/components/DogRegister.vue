@@ -162,10 +162,32 @@
                                             outlined
                                             rounded
                                             auto-grow
+                                            :rules="rules"
                                             placeholder = "Introduza informações que considere relevantes"
                                             color = "grey lighten-1" 
                                             rows = "5"
                                         ></v-textarea>
+                                    </v-col>
+                                </v-row>
+                                <v-card flat height= "20" color = "white"></v-card>
+                                <v-row>
+                                    <v-col cols="2">
+                                        <div class="info-label headline"> Fotografia </div>
+                                    </v-col>
+                                    <v-col>
+                                        <v-file-input
+                                            v-model="form.ficheiro"
+                                            placeholder="Selecione o ficheiro a submeter"
+                                            show-size
+                                            clearable
+                                            flat
+                                            rounded
+                                            single-line
+                                            accept=".jpg, .jpeg, .png"
+                                            outlined
+                                            solo
+                                            :rules="regraFicheiro"
+                                        ></v-file-input>
                                     </v-col>
                                 </v-row>
 
@@ -199,7 +221,6 @@
             </div>
         </v-col>
     </v-row>
-    <p>{{JSON.stringify(this.form)}} </p>
   </div>
 </template>
 
@@ -236,6 +257,8 @@ export default {
         regraEsterilizacao: [v => !!v || "Esterilização obrigatória."],
         regraCor: [v => !!v || "Cor obrigatória."],
         regraPorte: [v => !!v || "Porte obrigatório."],
+        regraFicheiro: [v => !!v || "Selecione um ficheiro."],
+        rules: [v => v.length <= 100 || 'Máx 100 caracteres'],
         form: {
             nome: "",
             raca: "", 
@@ -247,49 +270,58 @@ export default {
             descricao:"",
             estado: "Por Adotar",
             canil_user_email:"", 
+            ficheiro: null,
         },  
         snackbar: false, 
         color: "", 
         done: false, 
         timeout: 0,
         text: "", 
+
     }), 
     methods: {
       registarCao: async function(){
      
-      if (this.$refs.form.validate()) {
-         try{ 
-          var resposta = 
-            await axios.post(lhost + "/api/Caes/", {
-                nome: this.form.nome,
-                sexo: this.form.sexo, 
-                descricao: this.form.descricao,
-                estado: this.form.descricao,
-                raca: this.form.raca, 
-                cor: this.form.cor, 
-                idade: this.form.idade, 
-                esterilizacao: this.form.esterilizacao, 
-                porte: this.form.porte, 
-                canil_user_email: this.id
-            }); 
-            console.log(JSON.stringify(resposta.data));
-            this.text = "Cão registado com sucesso!";
-            this.color = "success"; 
-            this.snackbar = true; 
-          }
-          catch(e){
-            console.log("erro: " + e);
-            this.text = "Ocorreu um erro no registo, por favor tente mais tarde!";
-            this.color = "warning"; 
-            this.snackbar = true; 
-          }
-      } else {
-        this.text = "Por favor preencha todos os campos!";
-        this.color = "error";
-        this.snackbar = true;
-        this.done = false;
-      }
+        if (this.$refs.form.validate()) {
+            try{ 
+                var formData = new FormData();
+                if (this.form.ficheiro != null) {
+                    formData.append("file", this.form.ficheiro);
+                }
+                var resposta = 
+                    await axios.post(lhost + "/api/Caes/", {
+                        nome: this.form.nome,
+                        sexo: this.form.sexo, 
+                        descricao: this.form.descricao,
+                        estado: "Por Adotar",
+                        raca: this.form.raca, 
+                        cor: this.form.cor, 
+                        idade: this.form.idade, 
+                        esterilizacao: this.form.esterilizacao, 
+                        porte: this.form.porte, 
+                        canil_user_email: this.id,
+                        file: formData,
+                        path: this.form.ficheiro.name,
+                    }); 
+                    console.log(JSON.stringify(resposta.data));
+                    this.text = "Cão registado com sucesso!";
+                    this.color = "success"; 
+                    this.snackbar = true; 
+            }
+            catch(e){
+                console.log("erro: " + e);
+                this.text = "Ocorreu um erro no registo, por favor tente mais tarde!";
+                this.color = "warning"; 
+                this.snackbar = true; 
+            }
+        } else {
+            this.text = "Por favor preencha todos os campos!";
+            this.color = "error";
+            this.snackbar = true;
+            this.done = false;
+        }
     },
+
     fecharSnackbar() {
       this.snackbar = false;
       if(this.color == 'success')

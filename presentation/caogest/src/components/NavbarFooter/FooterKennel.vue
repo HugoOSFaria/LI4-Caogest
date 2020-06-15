@@ -9,27 +9,27 @@
                 <v-col>
                     <strong class="subheading">Cães</strong>
                     <v-card-actions>
-                    <v-btn class="ma-1" text small to="/pagina/canil">Os nossos cães</v-btn>
+                    <v-btn class="ma-1" text small @click="caes()">Os nossos cães</v-btn>
                     </v-card-actions>
                 </v-col>
 
                 <v-col>
                     <strong class="subheading">Envolva-se</strong>
                     <v-card-actions>
-                        <v-btn text-lowercase class="ma-1" text small to="/voluntarios/canil">Voluntários</v-btn>
+                        <v-btn text-lowercase class="ma-1" text small @click="voluntarios()">Voluntários</v-btn>
                     </v-card-actions>
                     <v-card-actions>
-                        <v-btn class="ma-1" text small to= "/donativos/canil">Donativos</v-btn>
+                        <v-btn class="ma-1" text small @click="donativos()">Donativos</v-btn>
                     </v-card-actions>
                 </v-col>
 
                 <v-col>
                     <strong class="subheading">A Nossa Organização</strong>
                     <v-card-actions>
-                    <v-btn class="ma-1" text small to= "/sobre/canil">Sobre</v-btn>
+                    <v-btn class="ma-1" text small @click="sobre()">Sobre</v-btn>
                     </v-card-actions>
                     <v-card-actions>
-                    <v-btn class="ma-1" text small to="/faqs/canil">Contactos</v-btn>
+                    <v-btn class="ma-1" text small @click="faqs()">Contactos</v-btn>
                     </v-card-actions>
                 </v-col>
 
@@ -60,8 +60,26 @@
 <script>
 import PopupSugestoes from '@/components/NavbarFooter/PopupSugestoes.vue'
 export default {
+    props:['id'],
     components: {
         PopupSugestoes 
+    }, 
+    methods: {
+        caes: function(){
+            this.$router.push("/pagina/canil/" + this.id);
+        },
+        voluntarios: function(){
+            this.$router.push("/voluntarios/canil/" + this.id);
+        },
+        donativos: function(){
+            this.$router.push("/donativos/canil/" + this.id);
+        },
+        sobre: function(){
+            this.$router.push("/sobre/canil/" + this.id);
+        },
+        faqs: function(){
+            this.$router.push("/faqs/canil/" + this.id);
+        }
     }
     
 }

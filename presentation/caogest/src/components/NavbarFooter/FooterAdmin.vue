@@ -9,27 +9,27 @@
                 <v-col>
                     <strong class="subheading">Cães</strong>
                     <v-card-actions>
-                    <v-btn class="ma-1" text small to="/caes/admin">Encontrar um cão</v-btn>
+                    <v-btn class="ma-1" text small @click="caes()">Encontrar um cão</v-btn>
                     </v-card-actions>
                 </v-col>
 
                 <v-col>
                     <strong class="subheading">Envolva-se</strong>
                     <v-card-actions>
-                        <v-btn text-lowercase class="ma-1" text small to="/voluntarios/admin">Voluntários</v-btn>
+                        <v-btn text-lowercase class="ma-1" text small @click="voluntarios()">Voluntários</v-btn>
                     </v-card-actions>
                     <v-card-actions>
-                        <v-btn class="ma-1" text small to= "/donativos/admin">Donativos</v-btn>
+                        <v-btn class="ma-1" text small @click="donativos()">Donativos</v-btn>
                     </v-card-actions>
                 </v-col>
 
                 <v-col>
                     <strong class="subheading">A Nossa Organização</strong>
                     <v-card-actions>
-                    <v-btn class="ma-1" text small to= "/sobre/admin">Sobre</v-btn>
+                    <v-btn class="ma-1" text small @click="sobre()">Sobre</v-btn>
                     </v-card-actions>
                     <v-card-actions>
-                    <v-btn class="ma-1" text small to="/faqs/admin">Contactos</v-btn>
+                    <v-btn class="ma-1" text small @click="faqs()">Contactos</v-btn>
                     </v-card-actions>
                 </v-col>
 
@@ -60,7 +60,26 @@
 <script>
 import PopupSugestoes from '@/components/NavbarFooter/PopupSugestoes.vue'
 export default {
-    components: {PopupSugestoes 
+    props:['id'],
+    components: {
+        PopupSugestoes 
+    },
+    methods:{
+        caes: function(){
+            this.$router.push("/caes/admin/" + this.id);
+        },
+        voluntarios: function(){
+            this.$router.push("/voluntarios/admin/" + this.id);
+        },
+        donativos: function(){
+            this.$router.push("/donativos/admin/" + this.id);
+        },
+        sobre: function(){
+            this.$router.push("/sobre/admin/" + this.id);
+        },
+        faqs: function(){
+            this.$router.push("/faqs/admin/" + this.id);
+        }
     }
     
 }

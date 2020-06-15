@@ -6,14 +6,13 @@
                         <v-container fluid>
                             <v-data-iterator
                                 :items="items"
-                                :items-per-page.sync="itemsPerPage"
+                                :items-per-page="itemsPerPage"
                                 :page="page"
                                 :search="search"
                                 :sort-by="sortBy.toLowerCase()"
                                 :sort-desc="sortDesc"
                                 hide-default-footer
                             >
-                        
                                 <template >
                                 <v-row 
                                     v-for="item in filteredList"
@@ -144,15 +143,12 @@ export default {
     },
     computed: {
         numberOfPages () {
-        return Math.ceil(this.items.length / this.itemsPerPage)
-        },
-        filteredKeys () {
-        return this.keys.filter(key => key !== `Nome`)
+            return Math.ceil(this.items.length / this.itemsPerPage)
         },
         filteredList() {
-        return this.items.filter(item => {
-            return item.nome.toLowerCase().includes(this.search.toLowerCase()) || item.distrito.toLowerCase().includes(this.search.toLowerCase()) || item.localidade.toLowerCase().includes(this.search.toLowerCase()) 
-        })
+            return this.items.filter(item => {
+                return item.nome.toLowerCase().includes(this.search.toLowerCase()) || item.distrito.toLowerCase().includes(this.search.toLowerCase()) || item.localidade.toLowerCase().includes(this.search.toLowerCase()) 
+            })
         },
     },
     methods: {

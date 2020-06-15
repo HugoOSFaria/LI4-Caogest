@@ -16,7 +16,7 @@
                                 <v-col
                                     class="d-flex child-flex"
                                     cols="4"
-                                    v-for="obj in disponiveis"
+                                    v-for="obj in filterList"
                                     :key="obj.nome"
                                     >
                                     <v-card flat tile>
@@ -67,12 +67,13 @@
                             <v-card-text align = "start" justify= "end" >
                                 <v-card-text class="display-2 font-weight-bold black--text">Pesquisar Cães</v-card-text>
                                 <v-card flat height= "50" color = "white"></v-card>
-                                    <v-text-field flat color = "grey" name="input-7-1" outlined label="Raça" ></v-text-field>
+                                    <v-text-field flat color = "grey" name="input-7-1" v-model="raca" outlined label="Raça" ></v-text-field>
                                     <v-select 
                                         color = "grey"
                                         name="input-7-1"
                                         flat outlined 
                                         :items="itemscor"
+                                        v-model="cor"
                                         label="Cor"
                                     ></v-select>
                                     <v-select 
@@ -80,22 +81,19 @@
                                         name="input-7-1"
                                         flat outlined 
                                         :items="itemssexo"
+                                        v-model="sexo"
                                         label="Género"
                                     ></v-select>
-                                    <v-text-field flat color = "grey" name="input-7-1" outlined label="Idade" ></v-text-field>
                                     <v-select 
                                         color = "grey"
                                         name="input-7-1"
                                         flat outlined 
                                         :items="itemsporte"
+                                        v-model="porte"
                                         label="Porte"
                                     ></v-select>
-                                    <v-text-field flat color = "grey" name="input-7-1" outlined label="Distrito" ></v-text-field>
+                                    <v-text-field flat color = "grey" name="input-7-1" v-model="distrito" outlined label="Distrito" ></v-text-field>
                             </v-card-text>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn class="ma-6" x-large color = "brown lighten-4" @click="dialog = false">Pesquisar</v-btn>
-                            </v-card-actions>
                         </v-card>
                     </v-row>
                 </v-col>  
@@ -141,7 +139,12 @@ export default {
         favoritos: [],
         selected: [],  
         disponivel: [],  
-        fotos: []
+        fotos: [], 
+        cor: "",
+        sexo:"",
+        porte:"",
+        raca:"",
+        distrito:"", 
     }), 
     created: async function(){
         try {
@@ -170,6 +173,13 @@ export default {
                 return (disponivel.estado !== "Apagado" && disponivel.estado !== "Adotado")
             })
         }, 
+        filterList(){
+
+            return this.items.filter(item => {
+                if(this.cor == "" && this.sexo == "" && this.porte=="" && this.raca == "" && this.distrito == "") return this.items
+                return (this.cor == item.cor) || (this.sexo == item.sexo) || (this.porte == item.porte) || (this.raca == item.raca) || (this.distrito == item.distrito) 
+            })
+        }
     }      
 }
 </script> 

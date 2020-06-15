@@ -77,6 +77,7 @@ export default {
             { title: 'Documentos', icon: 'description', route: "/documentos/" + this.id},
             { title: 'Cães', icon: 'pets', route: "/caes/" + this.id },
             { title: 'Canis', icon: 'house', route: "/canis/" + this.id },
+            { title: 'Voluntariado', icon: 'accessibility_new', route: "/voluntariado/" + this.id},
             { title: 'FAQs', icon: 'help', route: "/faqs/" + this.id },
             { title: 'Entre em Contacto', icon:'question_answer', route: "/entre/contacto/utilizador/" + this.id},
             ],
