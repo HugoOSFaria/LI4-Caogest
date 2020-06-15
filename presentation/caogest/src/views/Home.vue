@@ -1,8 +1,13 @@
 <template>
   <div id = "login" >
-    <v-col cols = "12">
-      <v-card height = "300"  color = "transparent" flat></v-card>
-      
+    
+        <v-card class = "ma-8" flat color = "transparent">
+          <v-btn dark text class = "headline ma-2 text-lowercase">Sobre</v-btn>
+          <v-btn dark text class = "headline text-lowercase" @click="openContactos">Contactos</v-btn>
+        </v-card>
+
+      <v-col cols = "12">
+      <v-card height = "250"  color = "transparent" flat></v-card>
       <v-row align = "center" justify = "center">
           <v-card color = "transparent" flat width = "600">
             <v-card-text class="justify-center">
@@ -85,7 +90,7 @@
           </v-card>
       </v-row>
     </v-col>
-  </div>
+    </div>
 </template>
 
 
@@ -113,19 +118,22 @@ export default {
     }
   }, 
   methods: {
+    openContactos: function(){
+      this.$router.push("/caogest/sobre");
+    },
     async loginUtilizador() {
       if (this.$refs.form.validate()) {
         try{
           var res = await axios.post(lhost + "/api/Login", {
             email: this.$data.form.email,
-            password: this.$data.form.password
+            password: this.$data.form.password 
           })
             if (res.data.token != undefined && res.data.nome != undefined){
               this.$store.commit("guardaTokenUtilizador", res.data.token); 
               this.$store.commit("guardaNomeUtilizador", res.data.nome); 
               this.$store.commit("guardaTipoUtilizador", res.data.tipo); 
               if(res.data.tipo == 0)
-                this.$router.push("/pagina/admin/" + this.$data.form.email );
+                this.$router.push("/pagina/admin/" + this.$data.form.email);
               if(res.data.tipo == 1)
                 this.$router.push("/pagina/utilizador/" + this.$data.form.email);
               if(res.data.tipo == 2)
@@ -157,7 +165,7 @@ export default {
 </script>
 
 <style scoped>
-  #login{
+#login{
     width: 100%;
     height: 100%;
     position: absolute;

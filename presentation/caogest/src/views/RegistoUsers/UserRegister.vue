@@ -78,6 +78,7 @@
                                         color = "grey lighten-1" 
                                         v-model="form.password"
                                         :rules="regraPassword"
+                                        maxlength="32"
                                         :type="show1 ? 'text' : 'password'"
                                         name="password" 
                                         ></v-text-field>
@@ -204,8 +205,6 @@
                                         :rules="regraCC"
                                         name="cc"
                                         type="number"
-                                        min = "9"
-                                        max = "9"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -301,7 +300,7 @@ export default {
         ], 
         regraNome: [v => !!v || "Nome obrigatório."],
         regraEmail:[v => !!v || "Email obrigatório."], 
-        regraPassword: [v => !!v || "Palavra-passe obrigatória."],
+        regraPassword: [v => !!v || "Palavra-passe obrigatória. Máx 32 caracteres."],
         regraRua: [v => !!v || "Morada obrigatória."],
         regraDistrito: [v => !!v || "Distrito obrigatório."],
         regraCC: [v => !!v || "Número de Cartão de Cidadão obrigatório."],
