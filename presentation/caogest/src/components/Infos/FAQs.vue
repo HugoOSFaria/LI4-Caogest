@@ -231,8 +231,9 @@
 
 <script>
 import axios from 'axios'
-const lhost = require("@/config/global").host;
-import moment from 'moment/moment';
+const lhost = require("@/config/global").host
+import moment from 'moment/moment'
+import store from '@/store.js'
 
 export default {
     data: () => ({
@@ -280,7 +281,8 @@ export default {
             if (this.$refs.form.validate()) {
                 try{ 
                 var resposta = 
-                    await axios.post(lhost + "/api/Sugestoes", {
+                    await axios.post(lhost + "/api/Sugestoes", 
+                    {
                         user_email: this.form.user_email,
                         nome: this.form.nome,
                         motivo: this.form.motivo,
@@ -288,6 +290,9 @@ export default {
                         data: this.form.data,
                         estado: this.form.estado,
                         estadoU: this.form.estadoU
+                    },
+                    { headers: 
+                        { "Authorization": 'Bearer ' + store.getters.token }
                     });
                     
                     console.log(JSON.stringify(resposta.data));
@@ -296,7 +301,10 @@ export default {
                     this.snackbar = true; 
                 }
                 catch(e){
-                    console.log("erro: " + e);
+                    if(e.message == "Request failed with status code 401"){
+                        this.$store.commit("limpaStore");
+                        this.$router.push("/");
+                    }
                     this.text = "Ocorreu um erro, por favor tente mais tarde";
                     this.color = "warning"; 
                     this.snackbar = true; 

@@ -97,6 +97,7 @@
 <script>
 const lhost = require("@/config/global").host;
 import axios from "axios";
+import store from '@/store.js'
 import moment from 'moment/moment';
 
 export default {
@@ -126,12 +127,18 @@ export default {
     }, 
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Donativos/" + this.id);
+            let response = await axios.get(lhost + "/api/Donativos/" + this.id,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
             this.donativos = response.data;
             this.ready = true;
         } 
         catch (e) {
-        return e;
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
         }
     },        
 };

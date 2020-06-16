@@ -9,7 +9,7 @@
                             v-model="selected"
                             multiple
                         >
-                            <v-card flat height = "100"></v-card>
+                            <v-card flat height = "20"></v-card>
                             <v-card class = " mx-auto" height = "80" width="2000" flat color = "brown lighten-5" v-if="this.disponiveis.length === 0"> 
                                 <v-card-title class = "display-1 text-center justify-center"> Não existem cães registados neste canil </v-card-title>
                             </v-card>
@@ -98,6 +98,7 @@
 
 <script>
 import axios from 'axios'
+import store from '@/store.js'
 const lhost = require("@/config/global").host;
 
 
@@ -140,12 +141,19 @@ export default {
     methods:{
         atualiza: async function(){
             try {
-                let response = await axios.get(lhost + "/api/CaesEmailCanil/" + this.id);
+                let response = await axios.get(lhost + "/api/CaesEmailCanil/" + this.id,
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
+                });
+                response.data.sort((a, b) => (a.nome > b.nome) ? 1 : -1);
                 this.caes = response.data;
                 this.ready = true;
             } 
             catch (e) {
-                return e;
+               if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
             }
         },
         registarCao(){
@@ -161,12 +169,19 @@ export default {
     },
     created: async function(){
         try {
-        let response = await axios.get(lhost + "/api/CaesEmailCanil/" + this.id);
+        let response = await axios.get(lhost + "/api/CaesEmailCanil/" + this.id,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
+        response.data.sort((a, b) => (a.nome > b.nome) ? 1 : -1);
         this.caes = response.data;
         this.ready = true;
         } 
         catch (e) {
-        return e;
+        if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
         }   
     },
     computed: {

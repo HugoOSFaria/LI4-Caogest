@@ -157,6 +157,7 @@
 
 <script>
 import axios from 'axios'
+import store from '@/store.js'
 const lhost = require("@/config/global").host;
 
 export default {
@@ -205,7 +206,10 @@ export default {
         deleteDoc: async function(dados){
             this.identificacao = dados.identificacao; 
             try{
-                await axios.delete(lhost + "/api/Documentos/" + this.identificacao);
+                await axios.delete(lhost + "/api/Documentos/" + this.identificacao,
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
+                });
                 this.atualiza();
             }
             catch(e){
@@ -214,7 +218,10 @@ export default {
         },  
         atualiza: async function(){
             try {
-                let response = await axios.get(lhost + "/api/Documentos/");
+                let response = await axios.get(lhost + "/api/Documentos/",
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
+                });
                 this.documentos = response.data;
                 this.ready = true;
             } 
@@ -225,7 +232,10 @@ export default {
     },
     created: async function(){
             try {
-                let response = await axios.get(lhost + "/api/Documentos");
+                let response = await axios.get(lhost + "/api/Documentos",
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
+                });
                 this.documentos = response.data;
                 this.ready = true;
             } 

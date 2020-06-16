@@ -230,7 +230,7 @@
 <script>
 import Navbar from '@/components/NavbarFooter/Navbar.vue'
 import Footer from '@/components/NavbarFooter/Footer.vue'
-
+import store from '@/store.js'
 import axios from 'axios'
 const lhost = require("@/config/global").host;
 
@@ -305,19 +305,31 @@ export default {
                 }, 
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Canis/" + this.id2);
+            let response = await axios.get(lhost + "/api/Canis/" + this.id2,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
             this.canil = response.data;
 
-            let resposta = await axios.get(lhost + "/api/CaesEmailCanil/" + this.id2);
+            let resposta = await axios.get(lhost + "/api/CaesEmailCanil/" + this.id2,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
             this.caes = resposta.data;
 
-            let resp = await axios.get(lhost + "/api/Voluntarios/" + this.id2); 
+            let resp = await axios.get(lhost + "/api/Voluntarios/" + this.id2,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
             this.voluntarios = resp.data; 
 
             this.ready = true;
         } 
         catch (e) {
-            return e;
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
         }
     }, 
     methods: {
@@ -361,10 +373,14 @@ export default {
         voluntariar: async function(){
             try{
                 var response = 
-                await axios.post(lhost + "/api/Voluntarios", {
+                await axios.post(lhost + "/api/Voluntarios", 
+                {
                     utilizador_user_email: this.id,
                     canil_user_email: this.id2,
               
+                },
+                { headers: 
+                { "Authorization": 'Bearer ' + store.getters.token }
                 }); 
             console.log(JSON.stringify(response.data));
             this.reloadPage();
@@ -374,7 +390,10 @@ export default {
             this.snackbar = true; 
           }
           catch(e){
-            console.log("erro: " + e);
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
             this.text = "Ocorreu um erro no registo, por favor tente mais tarde!";
             this.color = "warning"; 
             this.dialog2 = false;
@@ -383,7 +402,10 @@ export default {
         },
         naoVoluntario: async function(){
             try{
-                await axios.delete(lhost + "/api/Voluntarios/" + this.id2 + '/' + this.id);
+                await axios.delete(lhost + "/api/Voluntarios/" + this.id2 + '/' + this.id,
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
+                });
                 this.reloadPage();
                 this.text = "Removeu o seu voluntariado com sucesso!";
                 this.color = "success"; 
@@ -391,7 +413,10 @@ export default {
                 this.snackbar = true; 
             }
             catch(e){
-                console.log("erro: " + e);
+                if(e.message == "Request failed with status code 401"){
+                    this.$store.commit("limpaStore");
+                    this.$router.push("/");
+                }
                 this.text = "Ocorreu um erro no registo, por favor tente mais tarde!";
                 this.color = "warning"; 
                 this.dialog2 = false;

@@ -225,6 +225,7 @@
 </template>
 
 <script>
+import store from '@/store.js'
 import axios from 'axios'
 const lhost = require("@/config/global").host;
 
@@ -287,9 +288,11 @@ export default {
                 var formData = new FormData();
                 if (this.form.ficheiro != null) {
                     formData.append("file", this.form.ficheiro);
+                    formData.append("path", this.form.ficheiro.name);
                 }
                 var resposta = 
-                    await axios.post(lhost + "/api/Caes/", {
+                    await axios.post(lhost + "/api/Caes/", 
+                    {
                         nome: this.form.nome,
                         sexo: this.form.sexo, 
                         descricao: this.form.descricao,
@@ -300,16 +303,35 @@ export default {
                         esterilizacao: this.form.esterilizacao, 
                         porte: this.form.porte, 
                         canil_user_email: this.id,
-                        file: formData,
                         path: this.form.ficheiro.name,
+                    },
+                    { headers: 
+                        { "Authorization": 'Bearer ' + store.getters.token }
                     }); 
+
+                var res =  
+                    await axios.post(lhost + "/api/Fotografias/File",
+                    {
+                        file: formData,
+
+                    },
+                    { headers: 
+                        { "Authorization": 'Bearer ' + store.getters.token, 
+                          "Content-Type": 'multipart/form-data' 
+                        }, 
+                    });
+
                     console.log(JSON.stringify(resposta.data));
+                    console.log(JSON.stringify(res.data));
                     this.text = "Cão registado com sucesso!";
                     this.color = "success"; 
                     this.snackbar = true; 
             }
             catch(e){
-                console.log("erro: " + e);
+               if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
                 this.text = "Ocorreu um erro no registo, por favor tente mais tarde!";
                 this.color = "warning"; 
                 this.snackbar = true; 

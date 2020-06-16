@@ -166,6 +166,7 @@ import PassChange from '@/components/EditarDados/PassChange.vue'
 import CityChange from '@/components/EditarDados/CityChange.vue'
 import NIFChange from '@/components/EditarDados/NIFChange.vue'
 import moment from 'moment/moment'
+import store from '@/store.js'
 import axios from 'axios'
 const lhost = require("@/config/global").host;
 
@@ -192,12 +193,18 @@ export default {
     },
    created: async function(){
     try {
-      let response = await axios.get(lhost + "/api/Utilizadors/" + this.id);
+      let response = await axios.get(lhost + "/api/Utilizadors/" + this.id,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
       this.dados = response.data;
       this.ready = true;
     } 
     catch (e) {
-      return e;
+      if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
     }
    }       
 }

@@ -74,7 +74,7 @@
 <script> 
 import Navbar from '@/components/NavbarFooter/Navbar.vue'
 import Footer from '@/components/NavbarFooter/Footer.vue'
-
+import store from '@/store.js'
 import moment from 'moment/moment';
 import axios from 'axios'
 const lhost = require("@/config/global").host;
@@ -109,20 +109,28 @@ export default {
         regista: async function(hor){
             try{
                 var resposta = 
-                    await axios.post(lhost + "/api/HU", {
+                    await axios.post(lhost + "/api/HU", 
+                    {
                         horario_DataInicio: hor.dataInicio, 
                         horario_DataFim: hor.dataFim, 
                         horario_Dia: hor.dia,
                         horario_Canil_User_Email: this.id2,
                         utilizador_email: this.id,        
-            }); 
+                    },
+                    { headers: 
+                        { "Authorization": 'Bearer ' + store.getters.token }
+                    },
+                    ); 
             console.log(JSON.stringify(resposta.data));
             this.text = "Registo no horário efetuado com sucesso!";
             this.color = "success"; 
             this.snackbar = true; 
           }
           catch(e){
-            console.log("erro: " + e);
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
             this.text = "Já se encontra registado neste horário";
             this.color = "warning"; 
             this.snackbar = true; 
@@ -147,11 +155,17 @@ export default {
     },
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Horarios/" + this.id2);
+            let response = await axios.get(lhost + "/api/Horarios/" + this.id2,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
             this.horario = response.data;
         } 
         catch (e) {
-            return e;
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
         }
     }, 
 }

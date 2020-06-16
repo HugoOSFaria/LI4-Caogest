@@ -9,8 +9,8 @@
                     </v-card>
                 </v-col>
 
-                <v-col cols = "5">
-                    <v-card color = "brown lighten-5" height = "800" width = "1000" tile>
+                <v-col cols = "6">
+                    <v-card color = "brown lighten-5" height = "800" width = "1200" tile>
                         <v-card flat color = "brown lighten-5" height = "40"></v-card>
                         <v-row class="ml-8">
                             <p 
@@ -150,6 +150,7 @@
 </template>
 
 <script>
+import store from '@/store.js'
 import axios from 'axios'
 const lhost = require("@/config/global").host;
 
@@ -184,12 +185,18 @@ export default {
     },
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Caes/" + this.id2);
+            let response = await axios.get(lhost + "/api/Caes/" + this.id2,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
             this.cao = response.data;
             this.ready = true;
         } 
         catch (e) {
-        return e;
+            if(e.message == "Request failed with status code 401"){
+            this.$store.commit("limpaStore");
+            this.$router.push("/");
+      }
         }
     }, 
 }

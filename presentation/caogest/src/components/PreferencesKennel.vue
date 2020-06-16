@@ -261,6 +261,7 @@ import ContactChange from '@/components/EditarDadosKennel/ContactChange.vue'
 import CapacityChange from '@/components/EditarDadosKennel/CapacityChange.vue'
 import CapacityTotalChange from '@/components/EditarDadosKennel/CapacityTotalChange.vue'
 import axios from 'axios'
+import store from '@/store.js'
 const lhost = require("@/config/global").host;
 
 export default {
@@ -284,12 +285,18 @@ export default {
     },
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Canis/" + this.id);
+            let response = await axios.get(lhost + "/api/Canis/" + this.id,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
             this.canil = response.data;
             this.ready = true;
         } 
         catch (e) {
-            return e;
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
         }
     }, 
     methods:{

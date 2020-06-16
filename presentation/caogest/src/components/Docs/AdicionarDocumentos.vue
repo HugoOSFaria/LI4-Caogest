@@ -144,6 +144,7 @@
 
 <script>
 import axios from 'axios'
+import store from '@/store.js'
 const lhost = require("@/config/global").host;
 import { VueEditor } from "vue2-editor";
 
@@ -201,13 +202,17 @@ export default {
             if (this.$refs.form.validate()) {
                 try{ 
                 var resposta = 
-                    await axios.post(lhost + "/api/Documentos/", {
+                    await axios.post(lhost + "/api/Documentos/", 
+                    {
                         titulo: this.form.titulo,
                         texto: this.form.texto, 
                         user_email:this.id,
                         pathImagem:this.form.url, 
                         nota1: this.form.nota1, 
                         nota2: this.form.nota2, 
+                    },
+                    {
+                        headers: { "Authorization": 'Bearer ' + store.getters.token }
                     }); 
                     console.log(JSON.stringify(resposta.data));
                     this.text = "Documento adicionado com sucesso!";
@@ -215,7 +220,10 @@ export default {
                     this.snackbar = true; 
                 }
             catch(e){
-                console.log("erro: " + e);
+                if(e.message == "Request failed with status code 401"){
+                    this.$store.commit("limpaStore");
+                    this.$router.push("/");
+                }
                 this.text = "Ocorreu um erro na criação do documento, por favor tente mais tarde!";
                 this.color = "warning"; 
                 this.snackbar = true; 

@@ -123,6 +123,7 @@
 <script>
 import moment from 'moment/moment';
 import axios from 'axios'
+import store from '@/store.js'
 const lhost = require("@/config/global").host;
 
 export default {
@@ -212,7 +213,8 @@ export default {
       try{ 
         let vm = this;
         var resposta = 
-        await axios.put(lhost + "/api/Adocoes/" + vm.nPedido , {
+        await axios.put(lhost + "/api/Adocoes/" + vm.nPedido , 
+        {
           nPedido: vm.nPedido, 
           data: vm.data, 
           estado: "Expirado", 
@@ -226,12 +228,29 @@ export default {
           motivo: vm.motivo, 
           comprovativo: vm.comprovativo, 
           donoAnimal: vm.donoAnimal,
+        },
+        { headers: 
+          { "Authorization": 'Bearer ' + store.getters.token }
         });
 
+        var res = 
+          await axios.put(lhost + "/api/Caes/Adocao/" + vm.cao_idCao,
+          {
+              cao_idCao: vm.cao_idCao, 
+              estado: "Por Adotar"
+          }, 
+          { headers: 
+            { "Authorization": 'Bearer ' + store.getters.token }
+          });
+
+        console.log(JSON.stringify(res.data));
         console.log(JSON.stringify(resposta.data));
        }
        catch(e){
-         console.log("erro: " + e); 
+         if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
        }
        this.dialog = false;
        this.atualiza();
@@ -240,7 +259,8 @@ export default {
       try{ 
         let vm = this;
         var resposta = 
-        await axios.put(lhost + "/api/Adocoes/" + vm.nPedido , {
+        await axios.put(lhost + "/api/Adocoes/" + vm.nPedido , 
+        {
           nPedido: vm.nPedido, 
           data: vm.data, 
           estado: "Concluído", 
@@ -254,36 +274,65 @@ export default {
           motivo: vm.motivo, 
           comprovativo: vm.comprovativo, 
           donoAnimal: vm.donoAnimal,
+        },
+        { headers: 
+          { "Authorization": 'Bearer ' + store.getters.token }
         });
 
+        var res = 
+          await axios.put(lhost + "/api/Caes/Adocao/" + vm.cao_idCao,
+          {
+              cao_idCao: vm.cao_idCao, 
+              estado: "Adotado"
+          }, 
+          { headers: 
+            { "Authorization": 'Bearer ' + store.getters.token }
+          });
+
         console.log(JSON.stringify(resposta.data));
+        console.log(JSON.stringify(res.data));
        }
        catch(e){
-         console.log("erro: " + e); 
+         if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
        }
        this.dialog = false;
        this.atualiza();
     },
     atualiza: async function(){
       try {
-      let response = await axios.get(lhost + "/api/AdocoesCanil/" + this.id);
+      let response = await axios.get(lhost + "/api/AdocoesCanil/" + this.id,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
       this.pedidos = response.data;
       this.ready = true;
       } 
       catch (e) {
-        return e;
+        if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
       }
     }
   },
 
   created: async function(){
     try {
-      let response = await axios.get(lhost + "/api/AdocoesCanil/" + this.id);
+      let response = await axios.get(lhost + "/api/AdocoesCanil/" + this.id,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
       this.pedidos = response.data;
       this.ready = true;
     } 
     catch (e) {
-      return e;
+      if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
     }
   }    
 };

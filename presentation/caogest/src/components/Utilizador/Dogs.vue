@@ -104,6 +104,7 @@
 
 <script>
 import axios from 'axios'
+import store from '@/store'
 const lhost = require("@/config/global").host;
 
 export default {
@@ -148,12 +149,19 @@ export default {
     }), 
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Caes");
+            let response = await axios.get(lhost + "/api/Caes", 
+            { headers: 
+                { "Authorization": 'Bearer ' + store.getters.token }
+            });
+            response.data.sort((a, b) => (a.nome > b.nome) ? 1 : -1);
             this.items = response.data;
             this.ready = true;
         } 
         catch (e) {
-        return e;
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
         }
     },   
     methods:{
@@ -174,10 +182,18 @@ export default {
             })
         }, 
         filterList(){
+            return this.disponiveis.filter(item => {
+                if (this.cor == "- Selecionar -") this.cor = ""; 
+                if (this.sexo == "- Selecionar -") this.sexo = ""; 
+                if (this.porte == "- Selecionar -") this.porte = "";
+                if(this.cor == "" && this.sexo == "" && this.porte =="" && this.raca == "" && this.distrito == "") return this.disponiveis;
+                var cor = this.cor ? (item.cor.includes(this.cor)) : true, 
+                    sexo = this.sexo ? (this.sexo == item.sexo) : true, 
+                    porte = this.porte ? (this.porte == item.porte) : true, 
+                    raca = this.raca ? (this.raca == item.raca) : true, 
+                    distrito = this.distrito ? (this.distrito == item.distrito) : true;
 
-            return this.items.filter(item => {
-                if(this.cor == "" && this.sexo == "" && this.porte=="" && this.raca == "" && this.distrito == "") return this.items
-                return (this.cor == item.cor) || (this.sexo == item.sexo) || (this.porte == item.porte) || (this.raca == item.raca) || (this.distrito == item.distrito) 
+            if (cor && sexo && porte && raca && distrito) return item;
             })
         }
     }      

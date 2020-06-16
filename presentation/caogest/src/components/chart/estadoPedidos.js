@@ -1,5 +1,6 @@
 const lhost = require("@/config/global").host;
 import axios from "axios";
+import store from '@/store.js'
 
 import {Pie} from "vue-chartjs";
 
@@ -41,9 +42,12 @@ export default {
     };
   },
   async mounted() {
-    await axios.get(lhost + "/api/Adocoes")
-      .then(res => {
-        for (var i = 0; i < res.data.length; i++) {
+    try{
+      let res = await axios.get(lhost + "/api/Adocoes",
+      { headers: 
+        { "Authorization": 'Bearer ' + store.getters.token }
+      });
+      for (var i = 0; i < res.data.length; i++) {
           if(res.data[i].estado === 'Recusado')
           this.info.datasets[0].data[0] += 1;
 
@@ -60,7 +64,12 @@ export default {
           this.info.datasets[0].data[4] += 1;
         }
         this.renderChart(this.info, this.options);
-      })
-      .catch(error => console.log(JSON.stringify(error)));
+    }
+    catch(error){
+      if(error.message == "Request failed with status code 401"){
+        this.$store.commit("limpaStore");
+        this.$router.push("/");
+    }
+    }
   }
 };

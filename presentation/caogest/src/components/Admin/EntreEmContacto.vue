@@ -361,6 +361,7 @@
 import axios from 'axios'
 const lhost = require("@/config/global").host;
 import moment from 'moment/moment';
+import store from '@/store.js'
 
 export default {
     props: ['sugestao', 'id'],
@@ -437,7 +438,8 @@ export default {
     marcaLida: async function(){
       try{ 
         var resposta = 
-        await axios.put(lhost + "/api/Sugestoes/" + this.identificacao , {
+        await axios.put(lhost + "/api/Sugestoes/" + this.identificacao , 
+        {
           identificacao:this.identificacao, 
           motivo:this.motivo,
           sugestoes:this.sugestoes,
@@ -446,19 +448,26 @@ export default {
           data:this.data,
           estadoU:this.estadoU, 
           user_email: this.user_email,
+        },
+        {
+          headers: { "Authorization": 'Bearer ' + store.getters.token }
         });
         console.log(JSON.stringify(resposta.data));
         this.numero--;
         this.getMensagem();
       }
       catch(e){
-        console.log("erro: " + e); 
+          if(e.message == "Request failed with status code 401"){
+         this.$store.commit("limpaStore");
+         this.$router.push("/");
+      }
       }
     },
     marcaNaoLida: async function(){
       try{ 
         var resposta = 
-        await axios.put(lhost + "/api/Sugestoes/" + this.identificacao , {
+        await axios.put(lhost + "/api/Sugestoes/" + this.identificacao , 
+        {
           identificacao:this.identificacao, 
           motivo:this.motivo,
           sugestoes:this.sugestoes,
@@ -467,6 +476,9 @@ export default {
           data:this.data,
           user_email: this.user_email,
           estadoU:this.estadoU,
+        },
+        {
+          headers: { "Authorization": 'Bearer ' + store.getters.token }
         });
         console.log(JSON.stringify(resposta.data));
         this.numero++;
@@ -474,14 +486,18 @@ export default {
         this.dialog=false;
       }
       catch(e){
-        console.log("erro: " + e); 
+          if(e.message == "Request failed with status code 401"){
+         this.$store.commit("limpaStore");
+         this.$router.push("/");
+      }
       }
     },
     apagaMensagem: async function(){
        try{ 
         if(this.estado === 'Não Lida') this.numero--;
         var resposta = 
-        await axios.put(lhost + "/api/Sugestoes/" + this.identificacao , {
+        await axios.put(lhost + "/api/Sugestoes/" + this.identificacao , 
+        {
           identificacao:this.identificacao, 
           motivo:this.motivo,
           sugestoes:this.sugestoes,
@@ -490,6 +506,9 @@ export default {
           data:this.data,
           user_email: this.user_email,
           estadoU:this.estadoU,
+        },
+        {
+          headers: { "Authorization": 'Bearer ' + store.getters.token }
         });
         console.log(JSON.stringify(resposta.data));
         this.dialog = false;
@@ -497,7 +516,10 @@ export default {
         this.dialog3 = false;
       }
       catch(e){
-        console.log("erro: " + e); 
+          if(e.message == "Request failed with status code 401"){
+            this.$store.commit("limpaStore");
+            this.$router.push("/");
+          }
       }
     },
     recuperaMensagem: async function(dados){
@@ -511,7 +533,8 @@ export default {
         this.estadoU = dados.estadoU;
        try{ 
         var resposta = 
-        await axios.put(lhost + "/api/Sugestoes/" + this.identificacao , {
+        await axios.put(lhost + "/api/Sugestoes/" + this.identificacao , 
+        {
           identificacao:this.identificacao, 
           motivo:this.motivo,
           sugestoes:this.sugestoes,
@@ -520,18 +543,25 @@ export default {
           data:this.data,
           user_email: this.user_email,
           estadoU:this.estadoU,
+        },
+        {
+          headers: { "Authorization": 'Bearer ' + store.getters.token }
         });
         console.log(JSON.stringify(resposta.data));
         this.getMensagem();
       }
       catch(e){
-        console.log("erro: " + e); 
+          if(e.message == "Request failed with status code 401"){
+            this.$store.commit("limpaStore");
+            this.$router.push("/");
+          }
       }
     },
     enviaMensagem: async function(){
       try{
         var resposta = 
-          await axios.post(lhost + "/api/Sugestoes", {
+          await axios.post(lhost + "/api/Sugestoes", 
+          {
             user_email: this.user_email,
             nome: this.nome,
             motivo: this.motivo,
@@ -539,23 +569,35 @@ export default {
             data: this.form.data,
             estado: "Enviada",
             estadoU:"Não Lida",
+          },
+          {
+            headers: { "Authorization": 'Bearer ' + store.getters.token }
           });
         console.log(JSON.stringify(resposta.data));
         this.dialog1 = false;
         this.getMensagem();
       }
       catch(e){
-        console.log("erro: " + e);
+          if(e.message == "Request failed with status code 401"){
+            this.$store.commit("limpaStore");
+            this.$router.push("/");
+          }
       }
     },
     async getMensagem(){
       try {
-        let response = await axios.get(lhost + "/api/Sugestoes");
+        let response = await axios.get(lhost + "/api/Sugestoes",
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
         this.sugestoesl = response.data;
         this.ready = true;
       } 
       catch (e) {
-        return e;
+          if(e.message == "Request failed with status code 401"){
+            this.$store.commit("limpaStore");
+            this.$router.push("/");
+          }
       }
     },   
   },
@@ -589,12 +631,18 @@ export default {
   },
   created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Sugestoes");
+            let response = await axios.get(lhost + "/api/Sugestoes",
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
             this.sugestoesl = response.data;
             this.ready = true;
         } 
         catch (e) {
-        return e;
+            if(e.message == "Request failed with status code 401"){
+              this.$store.commit("limpaStore");
+              this.$router.push("/");
+            }
         }
     },   
 

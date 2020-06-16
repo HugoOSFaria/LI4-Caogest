@@ -62,6 +62,7 @@
 </template>
   
 <script>
+import store from '@/store.js'
 import axios from 'axios'
 const lhost = require("@/config/global").host;
 
@@ -86,7 +87,8 @@ const lhost = require("@/config/global").host;
         if (this.$refs.form.validate()) {
           try{ 
             var resposta = 
-            await axios.put(lhost + "/api/Utilizadors/" + this.id , {
+            await axios.put(lhost + "/api/Utilizadors/" + this.id , 
+            {
               email:this.utilizador.email, 
               nome:this.form.nome,
               data_de_nascimento:this.utilizador.data_de_nascimento,
@@ -97,6 +99,9 @@ const lhost = require("@/config/global").host;
               sexo:this.utilizador.sexo,
               contacto: this.utilizador.contacto,
               encriptado: this.utilizador.encriptado,
+            },
+            {
+              headers: { "Authorization": 'Bearer ' + store.getters.token }
             });
             console.log(JSON.stringify(resposta.data));
             this.dialog = false; 
@@ -105,7 +110,10 @@ const lhost = require("@/config/global").host;
             this.snackbar = true; 
           }
           catch(e){
-            console.log(e);
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
             this.text = "Ocorreu um erro, por favor tente mais tarde!";
             this.color = "warning"; 
             this.snackbar = true; 
@@ -118,12 +126,18 @@ const lhost = require("@/config/global").host;
     },
     created: async function(){
       try {
-        let response = await axios.get(lhost + "/api/Utilizadors/" + this.id);
+        let response = await axios.get(lhost + "/api/Utilizadors/" + this.id,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
         this.utilizador = response.data;
         this.ready = true;
       } 
       catch (e) {
-        return e;
+        if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
       }
     }
   }

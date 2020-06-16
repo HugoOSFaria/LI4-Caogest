@@ -56,6 +56,7 @@
 
 <script>
 import axios from 'axios'
+import store from '@/store'
 const lhost = require("@/config/global").host;
 
 
@@ -121,12 +122,18 @@ export default {
     },
     created: async function(){
         try {
-        let response = await axios.get(lhost + "/api/Favoritos/" + this.id);
+        let response = await axios.get(lhost + "/api/Favoritos/" + this.id, 
+            { headers: 
+                { "Authorization": 'Bearer ' + store.getters.token }
+            });
         this.caes = response.data;
         this.ready = true;
         } 
         catch (e) {
-        return e;
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
         }   
     },
     computed: {

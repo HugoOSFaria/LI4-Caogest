@@ -123,6 +123,7 @@
 <script>
 
 import axios from 'axios'
+import store from '@/store.js'
 const lhost = require("@/config/global").host;
 
 export default {
@@ -133,12 +134,18 @@ export default {
     props: ['id', 'id2'], 
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Adocoes/" + this.id2);
+            let response = await axios.get(lhost + "/api/Adocoes/" + this.id2,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
             this.pedido = response.data;
             this.ready = true;
         } 
         catch (e) {
-            return e;
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
         }
     },  
     methods: {
@@ -149,7 +156,8 @@ export default {
            try{ 
                 let vm = this;
                 var resposta = 
-                await axios.put(lhost + "/api/Adocoes/" + this.id2 , {
+                await axios.put(lhost + "/api/Adocoes/" + this.id2 , 
+                {
                     nPedido: vm.pedido.nPedido, 
                     data: vm.pedido.data, 
                     estado: "Aceite", 
@@ -165,19 +173,26 @@ export default {
                     motivo: vm.pedido.motivo, 
                     comprovativo: vm.pedido.comprovativo, 
                     donoAnimal: vm.pedido.donoAnimal,
+                },
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
                 });
                 this.$router.push("/pedidos/adocao/canil/" + this.id); 
                 console.log(JSON.stringify(resposta.data));
            }
            catch(e){
-            console.log("erro: " + e); 
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
           }
         },
         rejeitarRegisto: async function(){
            try{ 
                 let vm = this;
                 var resposta = 
-                await axios.put(lhost + "/api/Adocoes/" + this.id2 , {
+                await axios.put(lhost + "/api/Adocoes/" + this.id2 , 
+                {
                     nPedido: vm.pedido.nPedido, 
                     data: vm.pedido.data, 
                     estado: "Recusado", 
@@ -193,12 +208,18 @@ export default {
                     motivo: vm.pedido.motivo, 
                     comprovativo: vm.pedido.comprovativo, 
                     donoAnimal: vm.pedido.donoAnimal,
+                },
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
                 });
                 this.$router.push("/pedidos/adocao/canil/" + this.id); 
                 console.log(JSON.stringify(resposta.data));
            }
            catch(e){
-            console.log("erro: " + e); 
+           if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
           }
         },
     }

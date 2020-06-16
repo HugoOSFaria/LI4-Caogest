@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import store from '@/store.js'
 import axios from 'axios'
 const lhost = require("@/config/global").host;
  
@@ -29,7 +30,10 @@ export default {
 
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Documentos/" + this.id2);
+            let response = await axios.get(lhost + "/api/Documentos/" + this.id2,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
             this.doc = response.data;
             this.ready = true;
         } 

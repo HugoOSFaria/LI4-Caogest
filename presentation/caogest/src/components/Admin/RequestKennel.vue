@@ -120,7 +120,7 @@
 <script>
 import NavbarAdmin from '@/components/NavbarFooter/NavbarAdmin.vue'
 import Footer from '@/components/NavbarFooter/Footer.vue'
-
+import store from '@/store.js'
 import axios from 'axios'
 import moment from 'moment/moment';
 const lhost = require("@/config/global").host;
@@ -138,20 +138,27 @@ export default {
     
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Canis/" + this.id2);
+            let response = await axios.get(lhost + "/api/Canis/" + this.id2,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
             this.canil = response.data;
             this.horario = response.data.horarios;
             this.ready = true;
         } 
         catch (e) {
-            return e;
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
         }
     },
     methods: {
         aceitarRegisto: async function(){
            try{ 
                 var resposta = 
-                await axios.put(lhost + "/api/Canis/" + this.id2 , {
+                await axios.put(lhost + "/api/Canis/" + this.id2 , 
+                {
                     email: this.canil.email,
                     nib: this.canil.nib, 
                     nome: this.canil.nome, 
@@ -163,19 +170,26 @@ export default {
                     contacto: this.canil.contacto, 
                     estado: "Aceite", 
                     encriptado: this.canil.encriptado,
+                },
+                {
+                    headers: { "Authorization": 'Bearer ' + store.getters.token }
                 });
                 this.$router.push("/pagina/admin/" + this.id); 
                 console.log(JSON.stringify(resposta.data));
            }
            catch(e){
-            console.log("erro: " + e); 
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
           }
         },
         rejeitarRegisto: async function(){
            try{ 
                 let vm = this;
                 var resposta = 
-                await axios.put(lhost + "/api/Canis/" + this.id2 , {
+                await axios.put(lhost + "/api/Canis/" + this.id2 , 
+                {
                     email: vm.canil.email,
                     nib: vm.canil.nib, 
                     nome: vm.canil.nome, 
@@ -187,12 +201,18 @@ export default {
                     contacto: vm.canil.contacto, 
                     estado: "Rejeitado", 
                     encriptado:1,
+                },
+                {
+                    headers: { "Authorization": 'Bearer ' + store.getters.token }
                 });
                 this.$router.push("/pagina/admin/" + this.id); 
                 console.log(JSON.stringify(resposta.data));
            }
            catch(e){
-            console.log("erro: " + e); 
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
           }
         },
         date: function (date) {

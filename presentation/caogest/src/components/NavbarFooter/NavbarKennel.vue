@@ -8,7 +8,7 @@
                     <span>Gest</span>
                 </v-app-bar>
                 <v-spacer></v-spacer>
-                <v-btn text to = "/">
+                <v-btn text @click="logout">
                     <span>Terminar Sessão</span>
                     <v-icon right>exit_to_app</v-icon>
                 </v-btn>
@@ -62,6 +62,7 @@
 <script>
 const lhost = require("@/config/global").host;
 import axios from "axios";
+import store from '@/store.js'
 
 export default {
     name: 'Navbar',    
@@ -86,20 +87,27 @@ export default {
     methods: {
         async logout() {
             await axios.get(lhost + "/api/Login");
-            this.$router.push("/"); 
+            this.$store.commit("limpaStore");
+            this.$router.push("/");
         }, 
-         preferencias(){
+        preferencias(){
             this.$router.push("/preferencias/canil/" + this.id);
         }
     },
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Canis/" + this.id);
+            let response = await axios.get(lhost + "/api/Canis/" + this.id,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
             this.utilizador = response.data;
             this.ready = true;
         } 
         catch (e) {
-            return e;
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
         }
     }, 
 }

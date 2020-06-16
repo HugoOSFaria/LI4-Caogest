@@ -328,6 +328,7 @@
 
 <script>
 import axios from 'axios'
+import store from '@/store.js'
 const lhost = require("@/config/global").host;
 import Termos from '@/components/Infos/TermosECondicoes.vue'
 export default {
@@ -378,7 +379,8 @@ export default {
         if (this.$refs.form.validate()) {
             try{ 
             var resposta = 
-                await axios.post(lhost + "/api/Adocoes", {
+                await axios.post(lhost + "/api/Adocoes", 
+                {
                     estado: "Pendente", 
                     cao_idCao: this.id3, 
                     permissao: this.form.permissao, 
@@ -392,6 +394,9 @@ export default {
                     utilizador_user_email: this.id, 
                     comprovativo: "Sim", 
                     donoAnimal: this.form.donoAnimal
+                },
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
                 }); 
                 console.log(JSON.stringify(resposta.data));
                 this.text = "Pedido de Adoção submetido criado com sucesso!";
@@ -399,7 +404,10 @@ export default {
                 this.snackbar = true; 
             }
             catch(e){
-                console.log("erro: " + e);
+                if(e.message == "Request failed with status code 401"){
+                    this.$store.commit("limpaStore");
+                    this.$router.push("/");
+                }
                 this.text = "Ocorreu um erro na submissão do pedido, por favor tente mais tarde!";
                 this.color = "warning"; 
                 this.snackbar = true; 

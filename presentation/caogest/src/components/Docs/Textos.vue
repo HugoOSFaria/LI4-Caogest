@@ -119,6 +119,7 @@
 
 <script>
 import axios from 'axios'
+import store from '@/store.js'
 const lhost = require("@/config/global").host;
 
 export default {
@@ -156,7 +157,10 @@ export default {
     },
     created: async function(){
             try {
-                let response = await axios.get(lhost + "/api/Documentos");
+                let response = await axios.get(lhost + "/api/Documentos",
+                { headers: 
+                { "Authorization": 'Bearer ' + store.getters.token }
+                });
                 this.documentos = response.data;
                 this.ready = true;
             } 

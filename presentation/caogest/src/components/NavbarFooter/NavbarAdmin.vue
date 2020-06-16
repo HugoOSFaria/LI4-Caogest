@@ -8,7 +8,7 @@
                     <span>Gest</span>
                 </v-app-bar>
                 <v-spacer></v-spacer>
-                <v-btn text to = "/">
+                <v-btn text @click="logout">
                     <span>Terminar Sessão</span>
                     <v-icon right>exit_to_app</v-icon>
                 </v-btn>
@@ -60,6 +60,8 @@
 </template>
 
 <script>
+const lhost = require("@/config/global").host;
+import axios from "axios";
 export default {
     props: ['id'], 
     data() {
@@ -83,7 +85,12 @@ export default {
     methods:{
         preferencias(){
             this.$router.push("/preferencias/admin/" + this.id);
-        }
+        },
+        async logout() {
+            await axios.get(lhost + "/api/Login");
+            this.$store.commit("limpaStore");
+            this.$router.push("/");
+        }, 
     }
 }
 </script>

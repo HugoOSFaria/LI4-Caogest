@@ -153,6 +153,7 @@
 
 <script>
 import axios from 'axios'
+import store from '@/store.js'
 import moment from 'moment/moment';
 const lhost = require("@/config/global").host;
 
@@ -180,7 +181,10 @@ export default {
     components: { },
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Horarios/" + this.id);
+            let response = await axios.get(lhost + "/api/Horarios/" + this.id,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
             this.items = response.data;
             this.ready = true;
         } 
@@ -211,31 +215,44 @@ export default {
         },
         atualiza: async function(){
             try {
-                let response = await axios.get(lhost + "/api/Horarios/" + this.id);
+                let response = await axios.get(lhost + "/api/Horarios/" + this.id,
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
+                });
                 this.items = response.data;
                 this.ready = true;
             } 
             catch (e) {
-                return e;
+                if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
             } 
         },
         confirma:  async function() {
             try{ 
                 var resposta = 
-                await axios.put(lhost + "/api/Horarios/" + this.id + "/" + this.diaS , {
+                await axios.put(lhost + "/api/Horarios/" + this.id + "/" + this.diaS , 
+                {
                     dataInicio: this.form.dataInicio, 
                     dataFim: this.form.dataFim, 
                     capacidade: this.form.capacidade, 
                     registados: 0,
                     dia: this.diaS,
                     canil_user_email: this.id
+                },
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
                 });
                 console.log(JSON.stringify(resposta.data));
                 this.dialog=false;
                 this.atualiza();
             }
             catch(e){
-                console.log("erro: " + e); 
+               if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
             }
         },
     },

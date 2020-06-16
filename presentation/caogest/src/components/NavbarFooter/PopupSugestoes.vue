@@ -105,6 +105,7 @@
   
 <script>
 import axios from 'axios'
+import store from '@/store.js'
 const lhost = require("@/config/global").host;
 import moment from 'moment/moment';
 
@@ -154,7 +155,8 @@ import moment from 'moment/moment';
             if (this.$refs.form.validate()) {
                 try{ 
                 var resposta = 
-                    await axios.post(lhost + "/api/Sugestoes", {
+                    await axios.post(lhost + "/api/Sugestoes", 
+                    {
                         user_email: this.form.user_email,
                         nome: this.form.nome,
                         motivo: this.form.motivo,
@@ -162,6 +164,9 @@ import moment from 'moment/moment';
                         data: this.form.data,
                         estado: this.form.estado, 
                         estadoU: this.form.estadoU
+                    },
+                    { headers: 
+                        { "Authorization": 'Bearer ' + store.getters.token }
                     });
                     
                     console.log(JSON.stringify(resposta.data));
@@ -171,7 +176,10 @@ import moment from 'moment/moment';
                     this.snackbar = true; 
                 }
                 catch(e){
-                    console.log("erro: " + e);
+                    if(e.message == "Request failed with status code 401"){
+                        this.$store.commit("limpaStore");
+                        this.$router.push("/");
+                    }
                     this.text = "Ocorreu um erro, por favor tente mais tarde";
                     this.color = "warning"; 
                     this.dialog = false;

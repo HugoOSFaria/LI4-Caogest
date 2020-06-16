@@ -9,8 +9,8 @@
                     </v-card>
                 </v-col>
 
-                <v-col cols = "5">
-                    <v-card color = "brown lighten-5" height = "800" width = "1000" tile>
+                <v-col cols = "6">
+                    <v-card color = "brown lighten-5" height = "800" width = "1200" tile>
                         <v-card flat color = "brown lighten-5" height = "40"></v-card>
                         <v-row class="ml-8">
                             <p 
@@ -174,6 +174,7 @@
 
 <script>
 import axios from 'axios'
+import store from '@/store.js'
 const lhost = require("@/config/global").host;
 
 
@@ -185,7 +186,6 @@ export default {
         alert: false, 
         fab:false,  
         fotos: [],
-        favoritos:[],
         cao:[],
 
     }),
@@ -196,7 +196,8 @@ export default {
         removeCao: async function(cao) {
             try{ 
                 var resposta = 
-                await axios.put(lhost + "/api/Caes/" + this.id2 , {
+                await axios.put(lhost + "/api/Caes/" + this.id2 , 
+                {
                     idCao:parseInt(this.id2),
                     nome:cao.nome,
                     raca:cao.raca,
@@ -209,41 +210,39 @@ export default {
                     estado:"Apagado",
                     canil_user_email:this.id,
                     fotos: cao.fotos,
+                },
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
                 });
                 console.log(JSON.stringify(resposta.data));
                 this.$router.push("/pagina/canil/" + this.id);
                 this.dialog=false;
             }
             catch(e){
-                console.log("erro: " + e); 
+                if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
             }
         },
     },
     created: async function(){
         try {
-            let response = await axios.get(lhost + "/api/Caes/" + this.id2);
+            let response = await axios.get(lhost + "/api/Caes/" + this.id2,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
             this.cao = response.data;
-
-            let resposta = await axios.get(lhost + "/api/Favoritos/" + this.id); 
-            this.favoritos = resposta.data; 
 
             this.ready = true;
         } 
         catch (e) {
-        return e;
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
         }
-    }, 
-    computed: {
-        favoritado: function(){
-            let self=this;
-            return this.favoritos.filter(function (fav){
-                return (fav.idCao == self.id2)
-            })
-        }, 
-        lista: function(){
-            return (this.favoritado.length) ? true : false;
-        }
-    }  
+    },
 
 }
 </script>
