@@ -139,7 +139,7 @@ import nPedidosMes from '@/components/chart/nPedidosMes'
 import pedidosPorte from '@/components/chart/pedidosPorte'
 import pedidosRegisto from '@/components/chart/pedidosRegisto'
 import donativosStats from '@/components/chart/donativosStat'
-
+import store from '@/store.js'
 import axios from 'axios'
 const lhost = require("@/config/global").host;
 
@@ -174,54 +174,86 @@ export default {
         toTop () {
             this.$vuetify.goTo(0)
         },
-        async getNumeroUtilizadores() {
-        await axios.get(lhost + "/api/Stats/Users")
-        .then (
-        response => {
-          this.stats.push({
-            bgColor: "brown darken-2",
-            icon: "person",
-            title: "Número de Utilizadores Registados",
-            data: response.data - 1,
-        });
-        })
-        .catch(error => console.log(JSON.stringify(error)));
+        getNumeroUtilizadores: async function() {
+            try{
+                let response = await axios.get(lhost + "/api/Stats/Users", 
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
+                });
+
+                this.stats.push({
+                    bgColor: "brown darken-2",
+                    icon: "person",
+                    title: "Número de Utilizadores Registados",
+                    data: response.data - 1,
+                });
+            }
+            catch(error){
+                 if(error.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
+            }
         },
         async getNumeroCaes() {
-        await axios.get(lhost + "/api/Stats/Caes")
-            .then(res => {
+            try{
+                let response = await axios.get(lhost + "/api/Stats/Caes", 
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
+                });
                 this.stats.push({
                     bgColor: "brown darken-2",
                     icon: "pets",
                     title: "Número de Cães Registados",
-                    data: res.data,
+                    data: response.data,
                 });
-                })
-            .catch(error => console.log(JSON.stringify(error)));
+            }
+            catch(error){
+                 if(error.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
+            }
         },
         async getNumeroVoluntarios() {
-        await axios.get(lhost + "/api/Stats/Voluntarios")
-            .then(res => {
-            this.stats.push({
-                bgColor: "brown darken-2",
-                icon: "accessibility_new",
-                title: "Número de Voluntários",
-                data: res.data,
-            });
-            })
-            .catch(error => console.log(JSON.stringify(error)));
+            try{
+                let response = await axios.get(lhost + "/api/Stats/Voluntarios", 
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
+                });
+                this.stats.push({
+                    bgColor: "brown darken-2",
+                    icon: "accessibility_new",
+                    title: "Número de Voluntários",
+                    data: response.data,
+                });
+            }
+            catch(error){
+                 if(error.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
+            }
         },
         async getNumeroAdocoes() {
-        await axios.get(lhost + "/api/Stats/Adocoes")
-            .then(res => {
-            this.stats.push({
-                bgColor: "brown darken-2",
-                icon: "home",
-                title: "Número de Adoções Realizadas",
-                data: res.data,
-            });
-            })
-            .catch(error => console.log(JSON.stringify(error)));
+            try{
+                let response = await axios.get(lhost + "/api/Stats/Adocoes", 
+                    { headers: 
+                        { "Authorization": 'Bearer ' + store.getters.token }
+                    });
+                this.stats.push({
+                    bgColor: "brown darken-2",
+                    icon: "home",
+                    title: "Número de Adoções Realizadas",
+                    data: response.data,
+                });
+            }
+            catch(error) {
+                if(error.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
+            }
         },
     },
 }

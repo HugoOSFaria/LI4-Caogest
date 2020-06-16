@@ -24,6 +24,12 @@ export default new Vuex.Store({
       },
       guardaTipoUtilizador(state, tipo) {
         state.tipo = tipo;
+      },
+      limpaStore(state){
+        state.token = "";
+        state.nome = ""; 
+        state.tipo = ""; 
+        state.liToken = ""; 
       }
     },
     getters: {

@@ -265,6 +265,7 @@
 <script>
 import axios from 'axios'
 const lhost = require("@/config/global").host;
+import store from '@/store.js'
 
 export default {
     name: "UserRegister",
@@ -332,7 +333,8 @@ export default {
       if (this.$refs.form.validate()) {
          try{ 
           var resposta = 
-            await axios.post(lhost + "/api/Utilizadors", {
+            await axios.post(lhost + "/api/Utilizadors", 
+            {
               email: this.form.email,
               password: this.form.password,
               tipo: this.form.tipo,
@@ -344,6 +346,9 @@ export default {
               cc: this.form.cc,
               sexo: this.form.sexo,
               contacto: this.form.contacto
+            },
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
             }); 
             console.log(JSON.stringify(resposta.data));
             this.text = "Utilizador criado com sucesso!";

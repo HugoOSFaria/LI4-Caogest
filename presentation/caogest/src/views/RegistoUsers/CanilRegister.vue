@@ -932,6 +932,7 @@
 <script>
 import axios from 'axios'
 const lhost = require("@/config/global").host;
+import store from '@/store.js'
 
 export default {
     name: "CanilRegister",
@@ -1051,7 +1052,8 @@ export default {
       if (this.$refs.form.validate()) {
          try{ 
           var resposta = 
-            await axios.post(lhost + "/api/Canis", {
+            await axios.post(lhost + "/api/Canis", 
+            {
               email: this.form.email,
               password: this.form.password,
               tipo: this.form.tipo,
@@ -1085,6 +1087,9 @@ export default {
               capacidade6:this.form.capacidade6,
               capacidade7:this.form.capacidade7, 
               estado:this.form.estado,
+            },
+            { headers: 
+                { "Authorization": 'Bearer ' + store.getters.token }
             }); 
             console.log(JSON.stringify(resposta.data));
             this.text = "Canil criado com sucesso!";

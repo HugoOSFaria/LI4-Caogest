@@ -1,11 +1,7 @@
 <template>
   <div id = "login" >
     
-        <v-card class = "ma-8" flat color = "transparent">
-          <v-btn dark text class = "headline ma-2 text-lowercase">Sobre</v-btn>
-          <v-btn dark text class = "headline text-lowercase" @click="openContactos">Contactos</v-btn>
-        </v-card>
-
+      <div class = "section" >
       <v-col cols = "12">
       <v-card height = "250"  color = "transparent" flat></v-card>
       <v-row align = "center" justify = "center">
@@ -89,7 +85,132 @@
             ></v-img>
           </v-card>
       </v-row>
-    </v-col>
+    </v-col> 
+
+    <v-card flat color = "transparent" height="250"></v-card>
+    <v-row align = "center">
+      <v-card flat color = "transparent" class = "mx-auto"> 
+        <v-btn fab x-large dark outlined @click="toNext">
+          <v-icon dark x-large>keyboard_arrow_down</v-icon>
+        </v-btn>
+      </v-card>
+    </v-row>
+      </div>
+
+       <div class = "section" id="sobre"> 
+        <v-parallax
+          dark
+          src="../assets/sobrepage.jpg"
+          height="600"
+        >
+          <v-row
+            align="center"
+            justify="end"
+          >
+            <v-col cols="10">
+              <h1 class="display-2 font-weight-light mb-4 black--text">Sobre</h1>
+            </v-col>
+          </v-row>
+        </v-parallax>
+
+        <v-card flat class="mx-auto" height = "20" color = "white"></v-card>
+
+        <v-row align="center" justify="center">
+          <v-col>
+            <p class="display-2 font-weight-bold text-center">Missão</p>
+            <v-card flat height= "30" color = "white"></v-card>
+            <v-card flat class="mx-auto" max-width="1000" fluid>
+                <v-card-text class="display-1"> A CãoGest tem como missão dar a cada animal um lar, e a cada dono um animal que corresponda às suas expectativas.
+                </v-card-text>
+            </v-card>
+          </v-col>
+
+          <v-col>
+            <v-card flat height= "120" color = "white"></v-card>
+            <p class="display-2 font-weight-bold text-center">Visão</p>
+            <v-card flat height= "30" color = "white"></v-card>
+            <v-card flat class="mx-auto" max-width="1000" fluid>
+                <v-card-text class="display-1">Ambicionamos melhorar a gestão de movimento dos cães pelos canis, promovendo a entrada e saída mais célere dos animais, permitindo assim uma melhor qualidade de vida para os animais, bem como uma diminuição da sobrecarga laboral e insuficiência económica que enfrentam os canis. 
+                </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+
+        <v-card flat height="120"></v-card>
+        <v-row align = "center">
+          <v-card flat color = "transparent" class = "mx-auto"> 
+            <v-btn fab x-large outlined @click="toNext2">
+              <v-icon x-large>keyboard_arrow_down</v-icon>
+            </v-btn>
+          </v-card>
+        </v-row>
+       </div>
+
+
+      <div class = "section" id="contactos"> 
+        <v-parallax
+          dark
+          src="../assets/contactopage.jpg"
+          height="600"
+        >
+          <v-row
+            align="center"
+            justify="end"
+          >
+            <v-col cols="2">
+              <h1 class="display-2 font-weight-light mb-4 black--text">Contactos</h1>
+            </v-col>
+          </v-row>
+        </v-parallax>
+
+        <v-card flat class="mx-auto" height = "100" color = "white"></v-card>
+        
+        <v-card flat outlined class="mx-auto" max-width="1500">
+
+              <v-row>
+                <v-card-text class="ml-8 mt-8 display-2 font-weight-bold"> Quer escrever-nos?</v-card-text>
+              </v-row>
+
+              <v-card flat height = "20"></v-card>
+
+              <v-row align = "center" justify="center">
+                <v-col cols = "2">
+                  <v-icon x-large>mail</v-icon> 
+                </v-col>
+
+                <v-col cols = "8">
+                  <v-card-text class="display-1 font-weight-normal black--text"> caogest@gmail.com </v-card-text>
+                </v-col>
+              </v-row>
+
+              <v-card flat height = "50"></v-card>
+
+              <v-row>
+                  <v-card-text class=" ml-8 display-1 font-weight-normal black--text">Se tiver uma questão, mas preferir falar conosco do que nos enviar um e-mail, ligue para</v-card-text>
+              </v-row>
+
+              <v-card flat height = "50"></v-card>
+
+              <v-row align = "center" justify="center">
+                <v-col cols="2">
+                  <v-icon x-large>call</v-icon>
+                </v-col>
+                <v-col cols = "8">
+                  <v-card-text class="display-1 font-weight-normal black--text"> 9111111111 </v-card-text>
+                </v-col>
+              </v-row>
+        </v-card>
+
+        <v-card flat height = "10"></v-card>
+
+        <v-footer absolute padless>
+        <v-card class="flex" color = "grey lighten-1" flat tile height="50"> 
+            <v-card-text class="py-2 black--text text-center title font-weight-thin">
+            {{ new Date().getFullYear() }} — <strong>CaoGest</strong>
+            </v-card-text>
+        </v-card>
+        </v-footer>
+      </div>
     </div>
 </template>
 
@@ -118,8 +239,11 @@ export default {
     }
   }, 
   methods: {
-    openContactos: function(){
-      this.$router.push("/caogest/sobre");
+    toNext () {
+      this.$vuetify.goTo(1447)
+    },
+    toNext2 () {
+      this.$vuetify.goTo(3000)
     },
     async loginUtilizador() {
       if (this.$refs.form.validate()) {
@@ -172,6 +296,24 @@ export default {
     top: 0;
     left: 0;
     background-image: url('../assets/image-2.jpg');
+    background-size: cover;
+  }
+
+  #sobre{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-size: cover;
+  }
+
+  #contactos{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 200%;
+    left: 0;
     background-size: cover;
   }
 
