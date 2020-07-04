@@ -51,6 +51,9 @@
                                         class = "healine font-weight-regular "
                                     >{{cao.idade}}</span>
                                 </p> 
+                                <v-btn fab text>
+                                    <v-icon color = "grey" @click="changeIdade(cao)">edit</v-icon>
+                                </v-btn>
                             </v-row>
                             <v-card 
                                 flat 
@@ -112,6 +115,9 @@
                                 >{{cao.esterilizacao}}
                                 </span>
                             </p> 
+                            <v-btn fab text @click="changeEst(cao)">
+                                    <v-icon color = "grey">edit</v-icon>
+                                </v-btn>
                             </v-row>
                             <v-card 
                                 flat   
@@ -146,9 +152,9 @@
                     </v-col>
                 </v-row>
                 <v-row justify = "end">
-                    <v-col cols = "12" md = "10">
+                    <v-col cols = "12" md = "11">
                         <v-row justify= "start">
-                             <v-btn color = "red darken-3" dark x-large class = "headline" @click="alert = !alert"> Remover Cão</v-btn>
+                             <v-btn color = "red darken-3" dark x-large class = "headline ma-3" @click="alert = !alert"> Remover Cão</v-btn>
                                     <v-alert
                                         :value="alert"
                                         color="red"
@@ -169,6 +175,71 @@
                     </v-col>
                 </v-row>
             </v-container>
+            <v-dialog 
+                v-model="dialog" 
+                persistent 
+                width="800px"
+            >
+                <v-form ref="form" lazy-validation>
+                <v-card>
+                <v-card flat color = "deep-orange lighten-4" class = "pa-6">
+                    <span class="display-1" dark>Alterar Dados de Esterilização</span>
+                </v-card>
+                <v-card-text>
+                    <v-container>
+                    <v-col>
+                        <v-text-field 
+                        color = "grey" 
+                        placeholder="Novos dados de esterilização" 
+                        required
+                        class = "ma-12"
+                        v-model="form.esterilizacao"
+                        :rules="regraEsterilizacao"
+                        ></v-text-field>
+                    </v-col>
+                    </v-container>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn class="ma-6" large color = "deep-orange lighten-4" @click="dialog = false">Cancelar</v-btn>
+                    <v-btn class="ma-6" large color = "deep-orange lighten-4" @click="confirma()">Confirmar</v-btn>
+                </v-card-actions>
+                </v-card>
+                </v-form>
+        </v-dialog>
+        <v-dialog 
+                v-model="dialog2" 
+                persistent 
+                width="800px"
+            >
+                <v-form ref="form" lazy-validation>
+                <v-card>
+                <v-card flat color = "deep-orange lighten-4" class = "pa-6">
+                    <span class="display-1" dark>Alterar Dados da Idade</span>
+                </v-card>
+                <v-card-text>
+                    <v-container>
+                    <v-col>
+                        <v-text-field 
+                        color = "grey" 
+                        placeholder="Novos dados de Idade" 
+                        required
+                        class = "ma-12"
+                        v-model="form.idade"
+                        :rules="regraIdade"
+                        type="number"
+                        ></v-text-field>
+                    </v-col>
+                    </v-container>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn class="ma-6" large color = "deep-orange lighten-4" @click="dialog2 = false">Cancelar</v-btn>
+                    <v-btn class="ma-6" large color = "deep-orange lighten-4" @click="confirmaIdade">Confirmar</v-btn>
+                </v-card-actions>
+                </v-card>
+                </v-form>
+        </v-dialog>
     </div>
 </template>
 
@@ -187,11 +258,93 @@ export default {
         fab:false,  
         fotos: [],
         cao:[],
-
+        dialog: false, 
+        dialog2: false,
+        esterilizacao:"", 
+        idade:"", 
+        form:{
+            esterilizacao:"",
+            idade:"",
+        },
+        regraEsterilizacao: [v => !!v || "Campo obrigatório."],
+        regraIdade: [v => !!v || "Campo obrigatório."],
     }),
     methods:{
         getPath: function(e) {
            return e.fotos[0].path;
+        },
+        atualiza: async function(){
+            try {
+                let response = await axios.get(lhost + "/api/Caes/" + this.id2,
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
+                });
+                this.cao = response.data;
+                this.ready = true;
+            } 
+            catch (e) {
+                if(e.message == "Request failed with status code 401"){
+                    this.$store.commit("limpaStore");
+                    this.$router.push("/");
+                }
+            }
+        },
+        confirma: async function(){
+                try{
+                    let response = 
+                         axios.put(lhost + "/api/Caes/Update/" + this.id2, 
+                        {
+                            idade: this.idade.toString(),
+                            esterilizacao: this.form.esterilizacao, 
+                        },
+                        { headers: 
+                            { "Authorization": 'Bearer ' + store.getters.token }
+                        });
+  
+                    console.log(JSON.stringify(response.data));
+                    this.atualiza();
+                    this.dialog = false;
+                    }
+                catch(e){
+                    console.log(e); 
+                    if(e.message == "Request failed with status code 401"){
+                        this.$store.commit("limpaStore");
+                        this.$router.push("/");
+                    }
+                }  
+        },
+        confirmaIdade: async function(){
+                try{
+                    let response = 
+                         axios.put(lhost + "/api/Caes/Update/" + this.id2, 
+                        {
+                            idade: this.form.idade,
+                            esterilizacao: this.esterilizacao, 
+                        },
+                        { headers: 
+                            { "Authorization": 'Bearer ' + store.getters.token }
+                        });
+                    console.log(JSON.stringify(response.data));
+                   
+                    this.dialog2 = false;
+                    this.atualiza();
+                }
+                catch(e){
+                    if(e.message == "Request failed with status code 401"){
+                        this.$store.commit("limpaStore");
+                        this.$router.push("/");
+                    }
+                }  
+        },
+        changeEst: function(cao){
+            this.esterilizacao = cao.esterilizacao; 
+            this.idade = cao.idade; 
+            this.dialog = true; 
+        },
+        changeIdade: function(cao){
+            this.esterilizacao = cao.esterilizacao; 
+            this.idade = cao.idade; 
+            this.dialog2 = true; 
         },
         removeCao: async function(cao) {
             try{ 

@@ -269,7 +269,8 @@
                 </v-row>
                 <v-row>
                     <v-col cols = "6">
-                        <v-file-input 
+                        <input class = "ma-12" type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+                        <!--<v-file-input 
                             class = "ma-12"
                             color = "deep-orange darken-4"
                             prepend-icon=""
@@ -277,7 +278,7 @@
                             placeholder="Adicione um comprovativo de morada"
                             :rules="regraComprovativo"
                             prepend-inner-icon = "search">
-                        </v-file-input>
+                        </v-file-input>-->
                     </v-col>
                 </v-row>
             </v-card>      
@@ -364,6 +365,7 @@ export default {
         regraHabitacao: [v => !!v || "Indicação obrigatória."],
         regraComprovativo: [v => !!v || "Comprovativo de Morada obrigatório."],
         regraTermos: [v => !!v || "Por favor aceite os termos de condição"],
+        file: '',
       }
     },
     components: {
@@ -392,13 +394,31 @@ export default {
                     tipoMoradia: this.form.tipoMoradia, 
                     motivo: this.form.motivo, 
                     utilizador_user_email: this.id, 
-                    comprovativo: "Sim", 
+                    comprovativo: "Por Validar", 
                     donoAnimal: this.form.donoAnimal
                 },
                 { headers: 
                     { "Authorization": 'Bearer ' + store.getters.token }
                 }); 
                 console.log(JSON.stringify(resposta.data));
+
+                let formData = new FormData();
+
+                /*
+                    Add the form data we need to submit
+                */
+                formData.append('file', this.file);
+                formData.append('name', this.file.name);
+
+                var res =  
+                    await axios.post(lhost + '/api/Comprovativos/' + this.id ,
+                        formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
+                console.log(JSON.stringify(res.data));
                 this.text = "Pedido de Adoção submetido criado com sucesso!";
                 this.color = "success"; 
                 this.snackbar = true; 
@@ -420,13 +440,16 @@ export default {
             }   
         },
         fecharSnackbar() {
-        this.snackbar = false;
-        if(this.color == 'success')
-            this.$router.push("/pagina/utilizador/" + this.id);
-        },
+            this.snackbar = false;
+                if(this.color == 'success')
+                    this.$router.push("/pagina/utilizador/" + this.id);
+            },
         cancelar() {
             this.$router.push("/pagina/utilizador/" + this.id);
         },
+        handleFileUpload(){
+            this.file = this.$refs.file.files[0];
+        }
     } 
 
 }

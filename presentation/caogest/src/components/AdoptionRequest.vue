@@ -234,11 +234,11 @@ export default {
         });
 
         var res = 
-          await axios.put(lhost + "/api/Caes/Adocao/" + vm.cao_idCao,
-          {
-              cao_idCao: vm.cao_idCao, 
-              estado: "Por Adotar"
-          }, 
+          await axios.put(lhost + "/api/Caes/Adocao/" + this.identificacao,
+            {
+                idCao: vm.identificacao, 
+                estado: "Por Adotar"
+            }, 
           { headers: 
             { "Authorization": 'Bearer ' + store.getters.token }
           });
@@ -280,11 +280,11 @@ export default {
         });
 
         var res = 
-          await axios.put(lhost + "/api/Caes/Adocao/" + vm.cao_idCao,
-          {
-              cao_idCao: vm.cao_idCao, 
-              estado: "Adotado"
-          }, 
+          await axios.put(lhost + "/api/Caes/Adocao/" + vm.identificacao,
+            {
+                idCao: vm.identificacao, 
+                estado: "Adotado"
+            }, 
           { headers: 
             { "Authorization": 'Bearer ' + store.getters.token }
           });

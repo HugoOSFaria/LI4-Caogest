@@ -118,10 +118,17 @@ import moment from 'moment/moment';
         'Quero voluntariar-me para um canil',
         'Quero atualizar os meus dados pessoais',
         'Cuidados com o cão que adotei',
+        'Quero registar um cão', 
+        'Quero editar os dados de um cão', 
+        'Quero editar um horário',
         'Outro',
       ],
       regraNome: [v => !!v || "Nome obrigatório."],
-      regraEmail:[v => !!v || "Email obrigatório."], 
+      regraEmail:[value => {
+            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            return pattern.test(value) || 'Email inválido'
+          },
+      ], 
       regraMotivo: [v => !!v || "Motivo obrigatório."],
       regraMensagem: [v => !!v || "Mensagem obrigatória."],
 

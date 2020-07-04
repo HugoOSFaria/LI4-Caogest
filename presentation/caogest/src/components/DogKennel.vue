@@ -3,7 +3,7 @@
         <div>
         <v-row>
             <v-col cols="12" sm="6" offset-sm="2">
-                    <v-btn class="ma-6" x-large color = "brown lighten-4" @click="registarCao()">Registar Cão</v-btn>
+                    <v-btn class="ma-3" x-large color = "brown lighten-4" @click="registarCao()">Registar Cão</v-btn>
                     <v-container fluid>
                         <v-item-group
                             v-model="selected"

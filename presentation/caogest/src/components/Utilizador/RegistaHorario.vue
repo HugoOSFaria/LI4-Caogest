@@ -125,6 +125,7 @@ export default {
             this.text = "Registo no horário efetuado com sucesso!";
             this.color = "success"; 
             this.snackbar = true; 
+            this.atualiza();
           }
           catch(e){
             if(e.message == "Request failed with status code 401"){
@@ -139,6 +140,21 @@ export default {
       fecharSnackbar() {
         this.snackbar = false;
       },
+      atualiza: async function(){
+        try {
+            let response = await axios.get(lhost + "/api/Horarios/" + this.id2,
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
+            this.horario = response.data;
+        } 
+        catch (e) {
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
+        }
+      }
     },
     computed: {
         sortedArray: function() {

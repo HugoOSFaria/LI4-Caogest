@@ -5,7 +5,16 @@
             <v-row class = "align-center justify-center">
                 <v-col cols = "4">
                     <v-card flat class = "mx-auto" height = "800" width = "900"> 
-                         <v-img height = "800" width = "900" :src="require(`@/assets/${getPath(cao)}`)"></v-img> 
+                         <v-img height = "800" width = "900" :src="require(`@/assets/${getPath(cao)}`)">
+                            <v-tooltip top v-if="reservado">
+                                <template v-slot:activator="{ on }">
+                                    <v-btn class = "ma-6" text fab x-large v-on="on">
+                                        <v-icon style="font-size: 80px;"  color = "yellow" x-large>new_releases</v-icon>    
+                                    </v-btn>  
+                                </template>
+                                <span class = "headline">Em processo de adoção</span> 
+                            </v-tooltip>
+                         </v-img> 
                     </v-card>
                 </v-col>
 
@@ -145,9 +154,8 @@
                         </v-card>
                     </v-col>
                 </v-row>
-                <v-row justify = "end">
-                    <v-col md = "10">
-                        <v-row justify= "start">
+                <v-row justify = "center">
+                    <v-col cols = "12" md = "9">
                             <v-btn 
                                 x-large 
                                 height = "100" 
@@ -185,10 +193,9 @@
                                 </v-icon> 
                                 Favoritos
                             </v-btn>
-                        </v-row>
                     </v-col>
                 </v-row>
-            </v-container>
+        </v-container>
     </div>
 </template>
 
@@ -300,7 +307,10 @@ export default {
         }, 
         lista: function(){
             return (this.favoritado.length) ? true : false;
-        }
+        }, 
+        reservado: function () {
+            return (this.cao.estado === "Reservado") ? true : false; 
+        },   
     }  
 
 }

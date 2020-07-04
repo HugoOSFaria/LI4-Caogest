@@ -59,12 +59,8 @@
                   <v-list-item-content>
                     <v-list-item-title
                       class="display-1"
-                      v-text="obj.nome"
-                    ></v-list-item-title>
-                    <v-list-item-subtitle
-                      class=" headline text--primary"
                       v-text="obj.motivo"
-                    ></v-list-item-subtitle>
+                    ></v-list-item-title>
                   </v-list-item-content>
                   <v-list-item-action>
                   <v-list-item-action-text> {{date(obj.data)}}
@@ -146,10 +142,10 @@
 
         <v-card-subtitle 
           class = "display-1 ma-2 pb-12"> 
-          {{ this.nome }} 
+          CãoGest
           <p 
             class = "headline"> 
-            {{this.user_email}} 
+            caogest@outlook.pt
           </p>
         </v-card-subtitle>
 

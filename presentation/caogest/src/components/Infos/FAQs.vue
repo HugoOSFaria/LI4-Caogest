@@ -198,7 +198,7 @@
         
         <v-card flat outlined class="mx-auto" max-width="1500" fluid color = "white">
             <v-card-text class="display-2 font-weight-bold"> Quer escrever-nos?</v-card-text>
-            <v-card-text class="display-1 font-weight-medium black--text">Pode enviar-nos um e-mail para caogest@gmail.com.</v-card-text>
+            <v-card-text class="display-1 font-weight-medium black--text">Pode enviar-nos um e-mail para caogest@outlook.com.</v-card-text>
         </v-card>
         <v-btn
             v-scroll="onScroll"
@@ -244,10 +244,17 @@ export default {
         'Quero voluntariar-me para um canil',
         'Quero atualizar os meus dados pessoais',
         'Cuidados com o cão que adotei',
+        'Quero registar um cão', 
+        'Quero editar os dados de um cão', 
+        'Quero editar um horário',
         'Outro',
       ],
       regraNome: [v => !!v || "Nome obrigatório."],
-      regraEmail:[v => !!v || "Email obrigatório."], 
+      regraEmail:[value => {
+            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            return pattern.test(value) || 'Email inválido'
+          },
+      ], 
       regraMotivo: [v => !!v || "Motivo obrigatório."],
       regraMensagem: [v => !!v || "Mensagem obrigatória."],
 

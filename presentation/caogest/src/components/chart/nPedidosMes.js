@@ -9,7 +9,6 @@ export default {
   data() {
     return {
       info: {
-        labels: [],
         datasets: [
           {
             label: "Janeiro",

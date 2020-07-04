@@ -14,7 +14,7 @@
             <v-row class = "align-center justify-center">
                 <v-col cols = "4">
                     <v-card flat color = "white" class = "mx-auto" height = "800" width = "900"> 
-                         <v-img height = "800" width = "800" :src="require(`@/assets/${getPath(pedido)}`)"></v-img> 
+                         <v-img height = "800" width = "800" :src="require(`@/assets/${getPath()}`)"></v-img> 
                     </v-card>
                 </v-col>
                 <v-col cols = "5">
@@ -92,11 +92,17 @@
                             </p> 
                         </v-row>
                         <v-card flat color = "brown lighten-5" height = "5"></v-card>
-                        <v-row class="ml-8">
+                        <v-row class="ml-8" v-if="validacao">
+                            <p class = " headline font-weight-bold" color = "grey"> Comprovativo de Morada: 
+                                <v-btn color = "red darken-4" dark class = "headline" @click="valida()">Validar</v-btn>
+                            </p> 
+                        </v-row>
+                         <v-row class="ml-8" v-else>
                             <p class = " headline font-weight-bold" color = "grey"> Comprovativo de Morada: 
                                 <span class = "headline font-weight-regular ">{{pedido.comprovativo}}</span>
                             </p> 
                         </v-row>
+
                     </v-card>
                 </v-col>
             </v-row>
@@ -117,6 +123,27 @@
                 </v-btn>
             </v-row>
         </v-card>
+        <v-row justify="center">
+                <v-dialog v-model="dialog" persistent max-height = "1000px" max-width="2000px">
+                    <v-card>
+                    <v-card height = "80" flat color = "brown darken-1" dark>
+                        <v-card-title>
+                            <span class="display-1">Comprovativo de Morada</span>
+                        </v-card-title>
+                    </v-card>
+
+                    <v-card flat>
+                        <v-card color = "white" flat class = "mx-auto" > 
+                            <v-img class = "ma-12" :src="`${publicPath}images/${getComprovativo()}`"></v-img>
+                            <v-row justify = "end">
+                                <v-btn type="button" class="ma-4" large color = "red lighten-2" @click="invalidado()">Não válido</v-btn>
+                                <v-btn type="button" class="ma-4 mr-12" large color = "light-green lighten-2" @click="validado()">Válido</v-btn>
+                            </v-row>
+                        </v-card>
+                    </v-card>
+                    </v-card>
+                </v-dialog>
+            </v-row>
     </div>
 </template>
 
@@ -128,7 +155,10 @@ const lhost = require("@/config/global").host;
 
 export default {
     data: () => ({
+        comprovativo: {},
         pedido: {},
+        dialog: false, 
+        publicPath: process.env.BASE_URL
     }),
     name: 'EstadoPedidos',
     props: ['id', 'id2'], 
@@ -149,8 +179,11 @@ export default {
         }
     },  
     methods: {
-        getPath: function(e) {
-           return e.fotos[0].path
+        getComprovativo: function(){
+            return this.comprovativo.path
+        },
+        getPath: function() {
+           return this.pedido.fotos[0].path
         },
         aceitarRegisto: async function(){
            try{ 
@@ -177,8 +210,19 @@ export default {
                 { headers: 
                     { "Authorization": 'Bearer ' + store.getters.token }
                 });
+
+                var res = 
+                await axios.put(lhost + "/api/Caes/Adocao/" + vm.pedido.identificacao,
+                {
+                    estado: "Reservado"
+                }, 
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
+                });
+
                 this.$router.push("/pedidos/adocao/canil/" + this.id); 
                 console.log(JSON.stringify(resposta.data));
+                console.log(JSON.stringify(res.data));
            }
            catch(e){
             if(e.message == "Request failed with status code 401"){
@@ -222,6 +266,112 @@ export default {
             }
           }
         },
+        validado: async function(){
+            try{ 
+                let vm = this;
+                await axios.put(lhost + "/api/Adocoes/" + this.id2 , 
+                {
+                    nPedido: vm.pedido.nPedido, 
+                    data: vm.pedido.data, 
+                    estado: vm.pedido.estado,  
+                    cao_idCao: vm.pedido.cao_idCao, 
+                    identificacao: vm.pedido.identificacao,
+                    permissao: vm.pedido.permissao, 
+                    alergia: vm.pedido.alergia, 
+                    descAnimais: vm.pedido.descAnimais, 
+                    ausencia: vm.pedido.ausencia,
+                    habitacao: vm.pedido.habitacao, 
+                    exterior: vm.pedido.exterior, 
+                    tipoMoradia: vm.pedido.tipoMoradia, 
+                    motivo: vm.pedido.motivo, 
+                    comprovativo: "Sim", 
+                    donoAnimal: vm.pedido.donoAnimal,
+                },
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
+                });
+           }
+           catch(e){
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
+          }
+          this.atualiza();
+          this.dialog = false; 
+        },
+        invalidado: async function(){
+            try{ 
+                let vm = this;
+                await axios.put(lhost + "/api/Adocoes/" + this.id2 , 
+                {
+                    nPedido: vm.pedido.nPedido, 
+                    data: vm.pedido.data, 
+                    estado: vm.pedido.estado,  
+                    cao_idCao: vm.pedido.cao_idCao, 
+                    identificacao: vm.pedido.identificacao,
+                    permissao: vm.pedido.permissao, 
+                    alergia: vm.pedido.alergia, 
+                    descAnimais: vm.pedido.descAnimais, 
+                    ausencia: vm.pedido.ausencia,
+                    habitacao: vm.pedido.habitacao, 
+                    exterior: vm.pedido.exterior, 
+                    tipoMoradia: vm.pedido.tipoMoradia, 
+                    motivo: vm.pedido.motivo, 
+                    comprovativo: "Não", 
+                    donoAnimal: vm.pedido.donoAnimal,
+                },
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
+                });
+           }
+           catch(e){
+            if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
+          }
+          this.atualiza();
+          this.dialog = false; 
+        },
+        atualiza: async function(){
+            try {
+                let response = await axios.get(lhost + "/api/Adocoes/" + this.id2,
+                { headers: 
+                { "Authorization": 'Bearer ' + store.getters.token }
+                });
+                this.pedido = response.data;
+                this.ready = true;
+            } 
+            catch (e) {
+                if(e.message == "Request failed with status code 401"){
+                    this.$store.commit("limpaStore");
+                    this.$router.push("/");
+                }
+            }
+        },
+        valida: async function(){
+            try {
+                let response = await axios.get(lhost + "/api/Comprovativos/" + this.id2,
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
+                });
+                this.comprovativo = response.data;
+                this.ready = true;
+            } 
+            catch (e) {
+                if(e.message == "Request failed with status code 401"){
+                    this.$store.commit("limpaStore");
+                    this.$router.push("/");
+                }
+            }
+            this.dialog = true; 
+        }
+    }, 
+    computed:{
+        validacao: function () {
+            return (this.pedido.comprovativo === "Por Validar") ? true : false; 
+        }, 
     }
 }
 </script>     
