@@ -142,7 +142,7 @@
             <v-card height = "80" flat></v-card>
             <v-row>
                 <v-spacer></v-spacer>
-                <v-btn class = "ma-4 mb-12 headline" color="brown lighten-1" text @click="dialog = false">Cancelar</v-btn>
+                <v-btn class = "ma-4 mb-12 headline red--text" color="red" outlined text @click="dialog = false">Cancelar</v-btn>
                 <v-btn class = "ma-4 mb-12 headline" color="brown lighten-1" text @click="confirma()">Confirmar</v-btn>
             </v-row>
             </v-card>

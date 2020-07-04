@@ -42,7 +42,7 @@
       </v-card-text>
       <v-card-actions> 
         <v-spacer></v-spacer>
-        <v-btn class="ma-6" large color = "deep-orange lighten-4" @click="dialog = false">Cancelar</v-btn>
+        <v-btn class="ma-6 red--text" large color = "red" outlined  @click="dialog = false">Cancelar</v-btn>
         <v-btn class="ma-6" large color = "deep-orange lighten-4" @click="confirma()">Confirmar</v-btn>
       </v-card-actions>
     </v-card>

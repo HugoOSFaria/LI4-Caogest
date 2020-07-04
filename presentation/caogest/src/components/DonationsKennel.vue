@@ -192,7 +192,7 @@
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="brown lighten-4" class = "headline ma-2" x-large @click="dialog = false">Cancelar</v-btn>
+                            <v-btn color="red" class = "headline ma-2 red--text" outlined x-large @click="dialog = false">Cancelar</v-btn>
                             <v-btn color="brown lighten-4" class = "headline ma-2" x-large @click="emite">Emitir Recibo</v-btn>
                         </v-card-actions>
                     </v-card>

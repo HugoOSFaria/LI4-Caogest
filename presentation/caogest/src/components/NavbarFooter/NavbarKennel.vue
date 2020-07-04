@@ -39,14 +39,14 @@
                 </v-list-item-icon>
 
                 <v-list-item-content>
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    <v-list-item-title class= "headline">{{ item.title }}</v-list-item-title>
                 </v-list-item-content>
                 <v-card height = "20" flat></v-card>
             </v-list-item>
         </v-list>
         <template v-slot:append>
         <div class="pa-2">
-            <v-btn x-large text block @click="preferencias()">
+            <v-btn x-large text block class= "headline" @click="preferencias()">
                 <v-icon left>settings</v-icon>Preferências
             </v-btn>
         </div>

@@ -8,7 +8,7 @@
                     <span>Gest</span>
                 </v-app-bar>
                 <v-spacer></v-spacer>
-                <v-btn text @click="logout">
+                <v-btn text  @click="logout">
                     <span>Terminar Sessão</span>
                     <v-icon right>exit_to_app</v-icon>
                 </v-btn>
@@ -22,7 +22,7 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                <v-list-item-title>{{this.utilizador.nome}}</v-list-item-title>
+                <v-list-item-title class= "headline">{{this.utilizador.nome}}</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
 
@@ -40,14 +40,14 @@
                 </v-list-item-icon>
 
                 <v-list-item-content>
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    <v-list-item-title class= "headline">{{ item.title }}</v-list-item-title>
                 </v-list-item-content>
                 <v-card height = "20" flat></v-card>
             </v-list-item>
         </v-list>
         <template v-slot:append>
         <div class="pa-2">
-            <v-btn x-large text block @click="preferencias()">
+            <v-btn x-large text class= "headline" block @click="preferencias()">
                 <v-icon left>settings</v-icon>Preferências
             </v-btn>
         </div>

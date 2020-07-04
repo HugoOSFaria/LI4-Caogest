@@ -183,7 +183,7 @@
                                                 <v-row justify = "end">
                                                     <v-col cols = "12" md = "8">
                                                         <v-row justify= "end">
-                                                            <v-btn class="ma-6" x-large color = "deep-orange lighten-4"  @click ="cancelar()" >Cancelar</v-btn>
+                                                            <v-btn class="ma-6 red--text" x-large color = "red" outlined  @click ="cancelar()" >Cancelar</v-btn>
                                                             <v-btn class = "ma-6" :disabled="isDisable" x-large color = "deep-orange lighten-4" @click ="nextStep(1)"> Continuar </v-btn>
                                                         </v-row>
                                                     </v-col>
@@ -214,7 +214,7 @@
                                     <v-row justify = "end">
                                         <v-col cols = "12" md = "8">
                                             <v-row justify= "end">
-                                                <v-btn class="ma-6" x-large color = "brown lighten-5" @click ="cancelar()" >Cancelar</v-btn>
+                                                <v-btn class="ma-6 red--text" x-large color = "red" outlined @click ="cancelar()" >Cancelar</v-btn>
                                                 <v-btn class="ma-6" x-large color = "brown lighten-5" @click="submitFile()"> Registar </v-btn>
                                             </v-row>
                                         </v-col>

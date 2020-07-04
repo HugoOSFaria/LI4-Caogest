@@ -109,10 +109,10 @@
         </v-container>
          <v-card flat class = "mx-auto" width="1900">
             <v-row justify = "end" >
-                <v-btn v-if="pedido.estado === 'Pendente'" class="ma-4" x-large color = "deep-orange lighten-4" @click="rejeitarRegisto()">
+                <v-btn v-if="pedido.estado === 'Pendente'" class="ma-4 red--text" x-large color = "red" outlined @click="rejeitarRegisto()">
                     Recusar Pedido
                 </v-btn>
-                <v-btn v-else class="ma-4" x-large disabled>
+                <v-btn v-else class="ma-4 red--text" color = "red" outlined  x-large disabled>
                     Recusar Pedido
                 </v-btn>
                 <v-btn v-if="pedido.estado === 'Pendente'" type="button" class="ma-4 mr-12" x-large color = "deep-orange lighten-4" @click="aceitarRegisto()">

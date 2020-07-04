@@ -98,7 +98,7 @@
         <v-card flat class = "ma-12">
             <v-row align = "end">
             <v-spacer></v-spacer>
-            <v-btn v-if="canil.estado === 'Pendente'" class="ma-4" x-large color = "deep-orange lighten-4" @click="rejeitarRegisto()">
+            <v-btn v-if="canil.estado === 'Pendente'" class="ma-4 red--text" x-large color = "red" outlined @click="rejeitarRegisto()">
                 Recusar Registo
             </v-btn>
             <v-btn v-else class="ma-4" x-large disabled>

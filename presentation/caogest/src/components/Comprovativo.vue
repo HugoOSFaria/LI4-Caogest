@@ -82,7 +82,7 @@
     <v-card flat height = "100"></v-card>
     <v-card flat class="mx-auto">
       <v-row justify="center" align="center">
-        <v-btn color="brown lighten-4" bottom class = "headline ma-2" x-large @click="dialog = false">Cancelar</v-btn>
+        <v-btn color="red" bottom class = "headline ma-2 red--text" outlined x-large @click="dialog = false">Cancelar</v-btn>
         <v-btn color="brown lighten-4" bottom class = "headline mr-12" x-large @click="send(donativo.utilizador_user_email)">Emitir Recibo</v-btn>
       </v-row>
     </v-card>

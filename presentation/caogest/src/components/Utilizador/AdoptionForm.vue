@@ -270,15 +270,6 @@
                 <v-row>
                     <v-col cols = "6">
                         <input class = "ma-12" type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-                        <!--<v-file-input 
-                            class = "ma-12"
-                            color = "deep-orange darken-4"
-                            prepend-icon=""
-                            flat
-                            placeholder="Adicione um comprovativo de morada"
-                            :rules="regraComprovativo"
-                            prepend-inner-icon = "search">
-                        </v-file-input>-->
                     </v-col>
                 </v-row>
             </v-card>      
@@ -298,7 +289,7 @@
                 </v-row>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="ma-6 headline" x-large color = "deep-orange lighten-4" @click="cancelar()">Cancelar</v-btn>
+                    <v-btn class="ma-6 headline red--text" x-large color = "red" outlined @click="cancelar()">Cancelar</v-btn>
                     <v-btn
                         class="ma-6 headline"
                         x-large
