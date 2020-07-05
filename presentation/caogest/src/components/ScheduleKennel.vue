@@ -2,6 +2,9 @@
     <div>
         <v-card> 
             <v-img src='@/assets/horários.png'>
+                <v-row align = "end" justify = "end">
+                    <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://www.fanpop.com/clubs/border-collie/images/41564797/title/border-collies-autumn-photo">hiperligação para a imagem original</v-btn>
+                </v-row> 
             </v-img>
         </v-card>
         <v-card flat height= "100" color = "white"></v-card>

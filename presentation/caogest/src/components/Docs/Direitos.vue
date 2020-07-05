@@ -1,6 +1,10 @@
 <template>
     <div id = "direitos" class = "direitos">
-        <v-img src="@/assets/direitoscaes.png"></v-img>
+        <v-img src="@/assets/direitoscaes.png">
+            <v-row align = "end" justify = "end">
+                <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://www.pinterest.at/pin/785455991236108261/">hiperligação para a imagem original</v-btn>
+            </v-row>
+        </v-img>
         <v-card flat height = "100"></v-card>
         <v-card flat height = "100" color = "brown lighten-5">
             <v-card-text class = "display-2 black--text text-center">Direitos dos Animais</v-card-text>

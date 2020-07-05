@@ -1,6 +1,14 @@
 <template>
     <div id = "direitos" class = "direitos">
-        <v-img src="@/assets/spaydog.png"></v-img>
+        <v-img src="@/assets/spaydog.png">
+        
+        <v-row align = "end" justify = "end">
+            <v-card flat height= "400" max-width="800" color = "transparent">
+                <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://www.goodfon.com/wallpaper/avstraliiskaia-ovcharka-aussi-sobaka-morda-boke.html">hiperligação para a imagem original</v-btn>
+             </v-card>
+        </v-row>
+       
+        </v-img>
         <v-card flat height = "100"></v-card>
         <v-card flat height = "100" color = "brown lighten-5">
             <v-card-text class = "display-2 black--text text-center">Porquê Esterilizar?</v-card-text>

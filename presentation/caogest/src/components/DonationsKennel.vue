@@ -2,6 +2,9 @@
     <div id = "donationskennel" class = "donationsKennel">
             <v-card> 
                 <v-img src='@/assets/donationskennel.png'>
+                    <v-row align = "end" justify = "end">
+                        <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://besthqwallpapers.com/de/download/original/67832">hiperligação para a imagem original</v-btn>
+                    </v-row> 
                     <v-card flat height= "400" max-width="800" color = "transparent"></v-card>
                     <v-row class="fill-height"
                         align="center"

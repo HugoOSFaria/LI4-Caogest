@@ -1,6 +1,12 @@
 <template>
     <div id = "direitos" class = "direitos">
-        <v-img src="@/assets/adopt.png"></v-img>
+        <v-img src="@/assets/adopt.png">
+            <v-row align = "end" justify = "end">
+                <v-card flat height= "400" max-width="800" color = "transparent">
+                    <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://wall.alphacoders.com/big.php?i=848235&lang=Portuguese">hiperligação para a imagem original</v-btn>
+                </v-card>
+            </v-row>
+        </v-img>
         <v-card flat height = "100"></v-card>
         <v-card flat height = "100" color = "brown lighten-5">
             <v-card-text class = "display-2 black--text text-center">Motivos para Adotar Animais Errantes</v-card-text>

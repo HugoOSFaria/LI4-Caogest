@@ -2,7 +2,11 @@
     <div id = "partnerships" class = "Partnerships">
         <Navbar :id="$route.params.id"/>
         <v-card> 
-            <v-img src='@/assets/parcerias.png'></v-img> 
+            <v-img src='@/assets/parcerias.png'>
+                <v-row align = "end" justify = "end">
+                    <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://www.wallpaperflare.com/dogs-australian-shepherd-border-collie-pet-wallpaper-elke">hiperligação para a imagem original</v-btn>
+                </v-row>
+            </v-img> 
         </v-card>
         <v-card flat height= "100" color = "white"></v-card>
         

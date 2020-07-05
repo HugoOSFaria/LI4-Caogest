@@ -3,6 +3,9 @@
         <Navbar :id="$route.params.id"/>
         <v-card> 
             <v-img src='@/assets/horários.png'>
+                <v-row align = "end" justify = "end">
+                        <v-btn text class = "white--text overline font-weight-thin text--secondary" href="http://rebloggy.com/post/photoset-dog-animals-orange-up-autumn-dogs-leaves-border-collie-under-1k-uncropp/122979725672">hiperligação para a imagem original</v-btn>
+                </v-row>
             </v-img>
         </v-card>
         <v-card flat height= "100" color = "white"></v-card>

@@ -121,6 +121,42 @@
         </v-col>
       </v-row>  
     </v-card>
+    <div>
+      <GmapMap
+        :center="myCoordinates"
+        ref="mapRef"
+        @dragend="handleDrag"
+        :zoom="10"
+        map-type-id="roadmap"
+        style="width: 2470px; height: 1000px"
+      >
+
+      <GmapMarker
+            icon="http://maps.google.com/mapfiles/ms/icons/orange-dot.png"
+            :position="myCoordinates"
+            :clickable="true"
+            :draggable="true"
+            @click="center=myCoordinates"
+        />
+
+        <GmapMarker
+            :key="index"
+            v-for="(m, index) in sets1"
+            :position="m.position"
+            :clickable="true"
+            :draggable="false"
+            @click="toggleInfoWindow(m,index)"
+        />
+        <GmapInfoWindow
+            :options="infoOptions"
+            :position="infoWindowPos"
+            :opened="infoWinOpen"
+            @closeclick="infoWinOpen=false">
+            <div v-html="infoContent"></div>
+        </GmapInfoWindow>
+
+      </GmapMap>
+    </div>
   </div>
 </template>
 
@@ -132,6 +168,9 @@ import store from '@/store.js'
     props:['id'],
     data () {
       return {
+        sets: [], 
+        sets1: [],
+        markers: [],
         fab:false,
         itemsPerPageArray: [10, 15, 20],
         search: '',
@@ -141,7 +180,27 @@ import store from '@/store.js'
         itemsPerPage: 10,
         sortBy: 'nome',
         items: [],
-        ready: false
+        ready: false,
+        map: null,
+        gettingLocation: false,
+        location:null,
+        myCoordinates:{
+          lat: 0, 
+          lng: 0,
+        },
+        infoContent: '',
+        infoWindowPos: {
+          lat: 0,
+          lng: 0
+        },
+        infoWinOpen: false,
+        currentMidx: null,
+        infoOptions: {
+          pixelOffset: {
+            width: 0,
+            height: -35
+          }
+        },
       }
     },
     computed: {
@@ -153,6 +212,18 @@ import store from '@/store.js'
           return item.nome.toLowerCase().includes(this.search.toLowerCase()) || item.distrito.toLowerCase().includes(this.search.toLowerCase()) || item.localidade.toLowerCase().includes(this.search.toLowerCase()) 
         })
       },
+      mapCoordinates() {
+        if(!this.map) {
+          return {
+            lat: 0,
+            lng: 0
+          };
+        }
+        return {
+          lat: this.map.getCenter().lat().toFixed(4),
+          lng: this.map.getCenter().lng().toFixed(4)
+        }
+      }
     },
     methods: {
       nextPage () {
@@ -165,16 +236,43 @@ import store from '@/store.js'
         this.itemsPerPage = number
       },
       canil: function(item){
-            this.$router.push("/canil/" + this.id + '/' + item.email);
+            this.$router.push("/canil/admin/" + this.id + '/' + item.email);
         },
-        onScroll (e) {
+      onScroll (e) {
             if (typeof window === 'undefined') return
             const top = window.pageYOffset ||   e.target.scrollTop || 0
             this.fab = top > 20
         },
-        toTop () {
+      toTop () {
             this.$vuetify.goTo(0)
         },
+      handleDrag() {
+                // get center and zoom level, store in localstorage
+                let center = {
+                    lat: this.map.getCenter().lat(),
+                    lng: this.map.getCenter().lng()
+                };
+                let zoom = this.map.getZoom();
+                localStorage.center = JSON.stringify(center);
+                localStorage.zoom = zoom;
+            },
+      toggleInfoWindow: function (marker, idx) {
+        this.infoWindowPos = marker.position;
+        this.infoContent = this.getInfoWindowContent(marker);
+
+        //check if its the same marker that was selected if yes toggle
+        if (this.currentMidx == idx) {
+          this.infoWinOpen = !this.infoWinOpen;
+        }
+        //if different marker set infowindow to open and reset current marker index
+        else {
+          this.infoWinOpen = true;
+          this.currentMidx = idx;
+        }
+      },
+      getInfoWindowContent: function (marker) {
+          return (`<p class="title is-4">${marker.name}</p>`);
+      },
     },
      created: async function(){
     try {
@@ -186,6 +284,46 @@ import store from '@/store.js'
           return (item.estado === "Aceite")
         }) 
         this.ready = true;
+
+        for (var i = 0; i < this.items.length; i++){
+            let response1 = await axios.post(lhost + "/api/Canis/String",{
+              rua: this.items[i].rua
+            },
+            { headers: 
+              { "Authorization": 'Bearer ' + store.getters.token }
+            });
+            this.sets.push({ b:response1.data })
+          }
+          for (i = 0; i < this.sets.length; i++){
+                let response2 = await axios.post("https://maps.googleapis.com/maps/api/geocode/json?address="+ this.sets[i].b +"&key=AIzaSyDo30UCma5RRXnpbvwvovMpOJiCQO8yTRY")
+                const marker = {
+                    lat: response2.data.results[0].geometry.location.lat,
+                    lng: response2.data.results[0].geometry.location.lng
+                };
+                this.sets1.push({ position:marker, name: this.items[i].nome })
+          }
+
+        if(localStorage.center) {
+                this.myCoordinates = JSON.parse(localStorage.center);
+            } else {
+                // get user's coordinates from browser request
+                this.gettingLocation = true;
+    // get position
+                    navigator.geolocation.getCurrentPosition(pos => {
+                      this.gettingLocation = false;
+                      this.location = pos;
+                      this.myCoordinates.lat = this.location.coords.latitude; 
+                      this.myCoordinates.lng = this.location.coords.longitude;
+                    }, err => {
+                      this.gettingLocation = false;
+                      this.errorStr = err.message;
+                    })
+                
+            }
+            // does the user have a saved zoom? use it instead of the default
+            if(localStorage.zoom) {
+                this.zoom = parseInt(localStorage.zoom);
+            }
     } 
     catch (e) {
        if(e.message == "Request failed with status code 401"){

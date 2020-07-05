@@ -100,6 +100,11 @@
 
         <v-card> 
             <v-img src='@/assets/Contacts.jpg'>
+                <v-row align = "end" justify = "end">
+                    <v-card flat height= "400" max-width="800" color = "transparent">
+                        <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://best-wallpaper.net/Two-dogs-Australian-shepherd-shake-a-paw_wallpapers.html">hiperligação para a imagem original</v-btn>
+                    </v-card>
+                </v-row>
             </v-img> 
         </v-card>
 

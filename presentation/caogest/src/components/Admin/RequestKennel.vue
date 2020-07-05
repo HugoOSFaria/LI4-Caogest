@@ -183,6 +183,23 @@ export default {
                 this.$router.push("/");
             }
           }
+
+          try{
+                await axios.post(lhost + "/api/Mails",{
+                    email: this.canil.email,
+                    assunto: "CãoGest - Resposta ao pedido de registo",
+                    texto: "O seu pedido de registo na plataforma CãoGest foi aprovado, pelo que poderá aceder à mesma." + '\n' + '\n' + "A equipa, " + '\n' + "CãoGest." ,
+                },
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
+                });
+          }
+          catch(e){
+              if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
+          }
         },
         rejeitarRegisto: async function(){
            try{ 
@@ -210,6 +227,23 @@ export default {
            }
            catch(e){
             if(e.message == "Request failed with status code 401"){
+                this.$store.commit("limpaStore");
+                this.$router.push("/");
+            }
+          }
+
+          try{
+                await axios.post(lhost + "/api/Mails",{
+                    email: this.canil.email,
+                    assunto: "CãoGest - Resposta ao pedido de registo",
+                    texto: "O seu pedido de registo na plataforma CãoGest foi recusado." + '\n' + "Para mais informações, entre em contacto conosco através de caogest@outlook.pt" + '\n' + '\n' + "A equipa, " + '\n' + "CãoGest." ,
+                },
+                { headers: 
+                    { "Authorization": 'Bearer ' + store.getters.token }
+                });
+          }
+          catch(e){
+              if(e.message == "Request failed with status code 401"){
                 this.$store.commit("limpaStore");
                 this.$router.push("/");
             }

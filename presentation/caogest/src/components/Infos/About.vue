@@ -1,7 +1,11 @@
 <template>
     <div id = "about" class = "About">
         <v-card> 
-            <v-img src='@/assets/sobre.png'></v-img> 
+            <v-img src='@/assets/sobre.png'>
+                <v-row align = "end" justify = "end">
+                    <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://www.goodfon.com/wallpaper/sobaka-aussi-osen-listia-fon-avstraliiskaia-ovcharka-shcheno.html">hiperligação para a imagem original</v-btn>
+                </v-row>
+            </v-img> 
         </v-card>
         <v-card flat height= "100" color = "white"></v-card>
         <p class="display-2 font-weight-bold text-center">Missão</p>
