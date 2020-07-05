@@ -2,7 +2,11 @@
     <div id = "donationskennel" class = "donationsKennel">
         <NavbarAdmin :id="$route.params.id"/>
             <v-card> 
-                <v-img src='@/assets/donativosrealizados.png'></v-img>
+                <v-img src='@/assets/donativosrealizados.png'>
+                    <v-row align = "end" justify = "end">
+                        <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://www.1zoom.me/fr/wallpaper/420585/z1845.3/">hiperligação para a imagem original</v-btn>
+                    </v-row>   
+                </v-img>
             </v-card>
             <v-card flat height= "150" color = "white"></v-card>
 

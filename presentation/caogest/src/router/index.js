@@ -21,6 +21,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+     
       else next();
     }
   },
@@ -35,6 +36,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+      
       else next();
     }
   },
@@ -49,6 +51,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+      
       else next();
     }
   },
@@ -63,6 +66,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+      
       else next();
     }
   },
@@ -77,6 +81,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+      
       else next();
     }
   },
@@ -91,6 +96,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+     
       else next();
     }
   },
@@ -105,6 +111,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+      
       else next();
     }
   },
@@ -119,6 +126,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+      
       else next();
     }
   },
@@ -133,6 +141,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+      
       else next();
     }
   },
@@ -147,6 +156,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+      
       else next();
     }
   },
@@ -161,6 +171,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+      
       else next();
     }
   },
@@ -175,6 +186,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+     
       else next();
     }
   },
@@ -189,6 +201,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+      
       else next();
     }
   },
@@ -203,6 +216,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+      
       else next();
     }
   },
@@ -217,6 +231,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+    
       else next();
     }
   },
@@ -252,12 +267,6 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import('../views/RegistoUsers/UserRegister.vue'),
-    beforeEnter(to,from,next){
-      if(!store.getters.isAuthenticated) {
-        next('/');
-      }
-      else next();
-    }
   },
   {
     path: '/registar/canil',
@@ -266,12 +275,6 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import('../views/RegistoUsers/CanilRegister.vue'),
-    beforeEnter(to,from,next){
-      if(!store.getters.isAuthenticated) {
-        next('/');
-      }
-      else next();
-    }
   },
   {
     path: '/registar/cao/:id',
@@ -382,6 +385,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -396,6 +400,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -410,6 +415,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -424,6 +430,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -438,6 +445,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -452,6 +460,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -466,6 +475,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -480,6 +490,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -494,6 +505,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -508,6 +520,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -522,6 +535,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -536,6 +550,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -550,6 +565,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -564,6 +580,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -578,6 +595,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -592,6 +610,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -606,6 +625,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -620,6 +640,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -634,6 +655,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -648,6 +670,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -663,6 +686,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -677,6 +701,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -691,6 +716,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -705,6 +731,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -789,6 +816,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -803,6 +831,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -817,6 +846,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -831,6 +861,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -845,6 +876,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -859,6 +891,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -873,6 +906,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -901,6 +935,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -915,6 +950,7 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
@@ -929,9 +965,31 @@ const routes = [
       if(!store.getters.isAuthenticated) {
         next('/');
       }
+       
       else next();
     }
   },
+  {
+    path: '/emissao/recibo/:id/:id2',
+    name: 'Recibo',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/Canil/Recibo.vue'),
+    beforeEnter(to,from,next){
+      if(!store.getters.isAuthenticated) {
+        next('/');
+      }
+       
+      else next();
+    }
+  },
+  {
+    path: '/teste',
+    name: 'Teste',
+    component: () => import('../views/teste.vue'),
+  }
+  
 ]
 
 const router = new VueRouter({

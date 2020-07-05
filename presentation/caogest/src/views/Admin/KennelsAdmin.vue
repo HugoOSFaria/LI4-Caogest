@@ -2,7 +2,11 @@
     <div id = "kennels" class = "kennels">
         <Navbar :id="$route.params.id"/>
         <v-card> 
-            <v-img src='@/assets/canis2.png'></v-img> 
+            <v-img src='@/assets/canis2.png'>
+                <v-row align = "end" justify = "end">
+                    <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://www.tiendanimal.pt/blog/casotas-para-caes-de-verao/">hiperligação para a imagem original</v-btn>
+                </v-row>
+            </v-img> 
         </v-card>
         <v-card flat height= "100" color = "white"></v-card>
 

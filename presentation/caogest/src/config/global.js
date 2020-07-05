@@ -1,1 +1,1 @@
-module.exports.host = "https://localhost:5001"
+module.exports.host = "https://caogest.azurewebsites.net"

@@ -74,6 +74,7 @@
                                         outlined 
                                         flat  
                                         required
+                                        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                                         placeholder="Introduza uma palavra-passe"
                                         color = "grey lighten-1" 
                                         v-model="form.password"
@@ -81,6 +82,7 @@
                                         maxlength="32"
                                         :type="show1 ? 'text' : 'password'"
                                         name="password" 
+                                        @click:append="show1 = !show1"
                                         ></v-text-field>
                                     </v-col>
                                 </v-row>
@@ -228,11 +230,31 @@
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
+
+                            <v-row>
+                                <v-col cols="2">
+                                <div class="info-label headline">Número de Identificação Fiscal</div>
+                                </v-col>
+                                <v-col>
+                                <v-text-field 
+                                        rounded 
+                                        outlined 
+                                        flat 
+                                        color = "grey lighten-1"  
+                                        required 
+                                        placeholder="Introduza o seu número de identificação fiscal"
+                                        v-model="form.nif"
+                                        :rules="regranif"
+                                        name="nif"
+                                        type="number"
+                                    ></v-text-field>
+                                </v-col>
+                            </v-row>
                                 <v-card flat height= "20" color = "white"></v-card>
                             <v-row justify = "end">
                                 <v-col cols = "12" md = "8">
                                     <v-row justify= "end">
-                                        <v-btn class="ma-6" type="button" x-large color = "deep-orange lighten-4" @click="cancelar">Cancelar</v-btn>
+                                        <v-btn class="ma-6 red--text" type="button"  outlined x-large color = "red" @click="cancelar">Cancelar</v-btn>
                                         <v-btn class = "ma-6" type="button" x-large color = "deep-orange lighten-4" @click="registarUtilizador">Registar</v-btn>
                                     </v-row>
                                 </v-col>
@@ -300,14 +322,19 @@ export default {
             'Viseu',
         ], 
         regraNome: [v => !!v || "Nome obrigatório."],
-        regraEmail:[v => !!v || "Email obrigatório."], 
-        regraPassword: [v => !!v || "Palavra-passe obrigatória. Máx 32 caracteres."],
+        regraEmail:[value => {
+            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            return pattern.test(value) || 'Email inválido'
+          },
+        ], 
+        regraPassword: [v => !!v || "Palavra-passe obrigatória."],
         regraRua: [v => !!v || "Morada obrigatória."],
         regraDistrito: [v => !!v || "Distrito obrigatório."],
         regraCC: [v => !!v || "Número de Cartão de Cidadão obrigatório."],
         regraLocalidade: [v => !!v || "Concelho obrigatório."],
         regraData: [v => !!v || "Data de Nascimento obrigatória."],
-        regraContacto: [v => !!v || "Contacto obrigatória."],
+        regraContacto: [v => !!v || 'Contacto obrigatório.'],
+        regranif: [v => !!v || 'Número de Identificação Fiscal obrigatório.'],
         form: {
             nome: "",
             email: "", 
@@ -319,6 +346,7 @@ export default {
             data_de_nascimento:"", 
             sexo:"",
             contacto:"",
+            nif:"", 
             tipo: 1,
         }, 
         snackbar: false, 
@@ -345,7 +373,8 @@ export default {
               localidade: this.form.localidade,
               cc: this.form.cc,
               sexo: this.form.sexo,
-              contacto: this.form.contacto
+              contacto: this.form.contacto, 
+              nif: this.form.nif,
             },
             { headers: 
               { "Authorization": 'Bearer ' + store.getters.token }

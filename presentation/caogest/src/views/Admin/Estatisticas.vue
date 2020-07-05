@@ -2,7 +2,11 @@
     <div id="entreemcontacto" class="entreemcontacto">
         <NavbarAdmin  :id="$route.params.id"/>
         <v-card>
-            <v-img src="@/assets/estatisticas.png"></v-img>
+            <v-img src="@/assets/estatisticas.png">
+                <v-row align = "end" justify = "end">
+                    <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://www.facebook.com/zmyslowska.photo/photos/the-cutestcanon-1dx-and-canon-135mm-f20l/1481841221867109/">hiperligação para a imagem original</v-btn>
+                </v-row>    
+            </v-img>
         </v-card>
         <v-card flat height="150" color="white"></v-card>
 

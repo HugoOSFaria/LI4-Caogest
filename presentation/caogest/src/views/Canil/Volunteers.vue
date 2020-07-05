@@ -2,7 +2,11 @@
     <div id = "volunteers" class = "Volunteers">
         <NavbarKennel :id="$route.params.id"/>
          <v-card> 
-            <v-img src='@/assets/voluntarios.png'></v-img>
+            <v-img src='@/assets/voluntarios.png'>
+                <v-row align = "end" justify = "end">
+                    <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://stopcambioclimatico.es/2018/04/26/cuidar-los-animales-cuidar-del-medioambiente/">hiperligação para a imagem original</v-btn>
+                </v-row>
+            </v-img>
          </v-card>
         <Volunteers :id="$route.params.id"/>
         <Footer :id="$route.params.id"/>    

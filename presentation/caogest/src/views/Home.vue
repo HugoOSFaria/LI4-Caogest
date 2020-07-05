@@ -1,6 +1,8 @@
 <template>
   <div id = "login" >
-    
+    <v-row align = "end" justify = "end">
+      <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://apkpure.com/br/border-collie-wallpapers/com.sgm.bordercolliewallpapers">hiperligação para a imagem original</v-btn>
+    </v-row>
       <div class = "section" >
       <v-col cols = "12">
       <v-card height = "250"  color = "transparent" flat></v-card>
@@ -54,7 +56,7 @@
                       <div>
                         <v-btn x-large depressed class="ma-4 headline" dark color = "transparent" to = "/registar/canil">Registar Canil</v-btn>
                       </div>
-
+                      
                       <div>
                         <v-btn x-large depressed class="ma-4 headline" dark color = "transparent" @click="dialog = false">Cancelar</v-btn>
                       </div>
@@ -69,6 +71,7 @@
             :timeout="timeout"
             :color="color"
             :top="true"
+            class = "headline"
           >
             {{ text }}
           </v-snackbar>
@@ -82,7 +85,8 @@
             <v-img 
               src="../assets/logoA3.png"
               max-width="600"
-            ></v-img>
+            >
+            </v-img>
           </v-card>
       </v-row>
     </v-col> 
@@ -103,6 +107,9 @@
           src="../assets/sobrepage.jpg"
           height="600"
         >
+          <v-row align = "start" justify = "end">
+              <v-btn text class = "white--text overline font-weight-thin text--disabled" href="https://www.1zoom.ru/Животные/обои/521277/z1069.1/1366x768">hiperligação para a imagem original</v-btn>
+          </v-row>
           <v-row
             align="center"
             justify="end"
@@ -153,6 +160,9 @@
           src="../assets/contactopage.jpg"
           height="600"
         >
+          <v-row align = "start" justify = "end">
+              <v-btn text class = "white--text overline font-weight-thin text--disabled" href="https://www.wallpaperbetter.com/en/search?q=Handsome+Dog">hiperligação para a imagem original</v-btn>
+          </v-row>
           <v-row
             align="center"
             justify="end"
@@ -224,6 +234,7 @@ export default {
   name: "login",
   data (){
     return {
+      canil:{},
       form:{
         email: "",
         password: "",
@@ -235,7 +246,7 @@ export default {
       color: "",
       timeout: 4000,
       text: "",
-      done: false
+      done: false, 
     }
   }, 
   methods: {
@@ -252,7 +263,7 @@ export default {
             email: this.$data.form.email,
             password: this.$data.form.password 
           })
-            if (res.data.token != undefined && res.data.nome != undefined){
+            if (res.data.token != undefined && res.data.nome != undefined ){
               this.$store.commit("guardaTokenUtilizador", res.data.token); 
               this.$store.commit("guardaNomeUtilizador", res.data.nome); 
               this.$store.commit("guardaTipoUtilizador", res.data.tipo); 
@@ -260,8 +271,25 @@ export default {
                 this.$router.push("/pagina/admin/" + this.$data.form.email);
               if(res.data.tipo == 1)
                 this.$router.push("/pagina/utilizador/" + this.$data.form.email);
-              if(res.data.tipo == 2)
-                this.$router.push("/pagina/canil/" + this.$data.form.email);
+              if(res.data.tipo == 2){
+                try {
+                  let response = await axios.get(lhost + "/api/Canis/" + this.form.email);
+                  this.canil = response.data;
+                  this.ready = true;
+
+                  if (this.canil.estado !== "Aceite") {
+                    this.text = "Esta conta não se encontra válida."; 
+                    this.color = "error"; 
+                    this.snackbar = true; 
+                    this.done = false; 
+                    this.$store.commit("limpaStore");
+                  }
+                  else this.$router.push("/pagina/canil/" + this.$data.form.email);
+                }
+                catch(e){
+                  console.log(e);
+                }   
+              }
             }
             else{
               this.text = "Email ou Palavra-Passe incorretos!"; 
@@ -284,8 +312,8 @@ export default {
           this.done = false;
         }
       }
-    }
-  }
+  }, 
+}
 </script>
 
 <style scoped>

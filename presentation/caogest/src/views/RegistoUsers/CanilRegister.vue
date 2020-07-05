@@ -50,7 +50,7 @@
                                 </v-col>
                                 <v-col>
                                     <v-text-field 
-                                         rounded 
+                                        rounded 
                                         outlined 
                                         flat  
                                         required
@@ -58,8 +58,11 @@
                                         color = "grey lighten-1" 
                                         v-model="form.password"
                                         :rules="regraPassword"
+                                        maxlength="32"
                                         :type="show1 ? 'text' : 'password'"
                                         name="password" 
+                                        @click:append="show1 = !show1"
+                                        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -899,7 +902,7 @@
                             <v-row justify = "end">
                                 <v-col cols = "12" md = "8">
                                     <v-row justify= "end">
-                                        <v-btn class="ma-6" type="button" x-large color = "deep-orange lighten-4" @click="cancelar">Cancelar</v-btn>
+                                        <v-btn class="ma-6 red--text" type="button" x-large color = "red" outlined @click="cancelar">Cancelar</v-btn>
                                         <v-btn class = "ma-6" type="button" x-large color = "deep-orange lighten-4" @click="registarCanil">Registar</v-btn>
                                         <div class="text-center ma-2">
                                             <v-snackbar
@@ -993,7 +996,11 @@ export default {
         ],
         dialog: false,
         regraNome: [v => !!v || "Nome obrigatório."],
-        regraEmail:[v => !!v || "Email obrigatório."], 
+        regraEmail:[value => {
+            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            return pattern.test(value) || 'Email inválido'
+          },
+        ], 
         regraPassword: [v => !!v || "Palavra-passe obrigatória."],
         regraRua: [v => !!v || "Morada obrigatória."],
         regraDistrito: [v => !!v || "Distrito obrigatório."],
@@ -1063,8 +1070,8 @@ export default {
               localidade: this.form.localidade,
               nib: this.form.nib,
               contacto: this.form.contacto, 
-              capacidadeTotal: this.form.capacidadeTotal, 
-              capacidadeOcupada: this.form.capacidadeOcupada, 
+              capacidadeTotal: parseInt(this.form.capacidadeTotal,10), 
+              capacidadeOcupada: parseInt(this.form.capacidadeOcupada,10),
               dataInicio1: this.form.dataInicio1,
               dataFim1: this.form.dataFim1, 
               dataInicio2: this.form.dataInicio2,

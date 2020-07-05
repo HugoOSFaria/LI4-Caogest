@@ -3,6 +3,9 @@
         <Navbar :id="$route.params.id"/>
         <v-card> 
             <v-img src='@/assets/beforeadopting.png'>
+                <v-row align = "end" justify = "end">
+                    <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://yandex.uz/collections/user/helen-kutuz/sobaki-oseniu/">hiperligação para a imagem original</v-btn>
+                </v-row>
                 <v-card flat height= "500" max-width="800" color = "transparent"></v-card>
                 <v-row class="fill-height"
                        align="center"

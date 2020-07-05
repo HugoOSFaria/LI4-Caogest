@@ -2,7 +2,11 @@
     <div>
         <Navbar :id="$route.params.id" />
         <v-card>
-            <v-img src="@/assets/informacoesdiversas.png"></v-img>
+            <v-img src="@/assets/informacoesdiversas.png">
+                <v-row align = "end" justify = "end">
+                    <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://ja.best-wallpaper.net/Blue-eyes-dog-rest-bench_wallpapers.html">hiperligação para a imagem original</v-btn>
+                </v-row>
+            </v-img>
         </v-card>
 
         <v-card flat height = "60"></v-card>

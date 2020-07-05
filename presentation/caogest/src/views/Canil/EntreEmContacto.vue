@@ -2,7 +2,11 @@
   <div id="entreemcontacto" class="entreemcontacto">
     <Navbar :id="$route.params.id" />
     <v-card>
-      <v-img src="@/assets/entreemcontacto.png"></v-img>
+      <v-img src="@/assets/entreemcontacto.png">
+        <v-row align = "end" justify = "end">
+          <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://besthqwallpapers.com/pt/download/original/76155">hiperligação para a imagem original</v-btn>
+        </v-row>
+      </v-img>
     </v-card>
     <v-card flat height="150" color="white"></v-card>
 

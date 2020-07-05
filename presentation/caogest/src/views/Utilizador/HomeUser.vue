@@ -9,6 +9,11 @@
             show-arrows-on-hover
         >
             <v-carousel-item src= '@/assets/sad2.jpg'>
+                <v-row align = "end" justify = "end">
+                    <v-card flat height= "400" max-width="800" color = "transparent">
+                        <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://www.zastavki.com/eng/Animals/Dogs/wallpaper-114760.htm">hiperligação para a imagem original</v-btn>
+                    </v-card>
+                </v-row>
                 <v-row
                     class="fill-height"
                     align="center"
@@ -18,6 +23,11 @@
                 </v-row>
             </v-carousel-item>
             <v-carousel-item src= '@/assets/sad.jpg'>
+                <v-row align = "end" justify = "end">
+                    <v-card flat height= "400" max-width="800" color = "transparent">
+                        <v-btn text class = "white--text overline font-weight-thin text--secondary" href="http://hddesktopwallpapers.in/dogs-and-cats-wallpapers/">hiperligação para a imagem original</v-btn>
+                    </v-card>
+                </v-row>
                 <v-row
                     class="fill-height"
                     align="center"
@@ -27,6 +37,11 @@
                 </v-row>
             </v-carousel-item>
             <v-carousel-item src= '@/assets/happy.jpg'>
+                <v-row align = "end" justify = "end">
+                    <v-card flat height= "400" max-width="800" color = "transparent">
+                        <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://www.tapeciarnia.pl/tapeta-dwa-psy-border-collie-na-pniu-i-spadajace-liscie">hiperligação para a imagem original</v-btn>
+                    </v-card>
+                </v-row>
                 <v-row
                     class="fill-height"
                     align="center"
@@ -36,6 +51,11 @@
                 </v-row>
             </v-carousel-item>
             <v-carousel-item src= '@/assets/happy2.jpg'>
+                <v-row align = "end" justify = "end">
+                    <v-card flat height= "400" max-width="800" color = "transparent">
+                        <v-btn text class = "white--text overline font-weight-thin text--secondary" href="https://www.wallpaperflare.com/two-adult-orange-black-and-white-border-collie-dog-animals-wallpaper-btb">hiperligação para a imagem original</v-btn>
+                    </v-card>
+                </v-row>
                 <v-row
                     class="fill-height"
                     align="center"
