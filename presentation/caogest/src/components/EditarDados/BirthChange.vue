@@ -106,6 +106,7 @@ import store from '@/store.js'
               sexo:this.utilizador.sexo,
               contacto: this.utilizador.contacto,
               encriptado: this.utilizador.encriptado,
+              nif: this.utilizador.nif,
             },
             {
               headers: { "Authorization": 'Bearer ' + store.getters.token }

@@ -100,6 +100,7 @@ const lhost = require("@/config/global").host;
               sexo:this.utilizador.sexo,
               contacto: this.form.contacto,
               encriptado: this.utilizador.encriptado,
+              nif: this.utilizador.nif,
             },
             {
               headers: { "Authorization": 'Bearer ' + store.getters.token }
