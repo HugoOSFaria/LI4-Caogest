@@ -47,7 +47,7 @@ namespace trial2.Controllers
                     nPedido = ad.nPedido,
                     data = ad.data,
                     estado = ad.estado,
-                    cao_idCao = ad.cao_idCao.ToString(),
+                    identificacao = ad.cao_idCao,
                     permissao = ad.permissao,
                     alergia = ad.alergia,
                     descAnimais = ad.descAnimais,
@@ -79,7 +79,6 @@ namespace trial2.Controllers
                                 where us.email == ad.utilizador_user_email
                                 select us.cc).FirstOrDefaultAsync();
                 res.cc = Encriptar.Decrypt(res.cc, "b32a1c");
-
                 AdReturn.Add(res);
             };
             return AdReturn;

@@ -8,6 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using trial2.Models;
 using trial2.Results;
+using MailKit.Net.Smtp;
+//using MailKit;
+using MimeKit;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
+using MailKit.Security;
+using System.Net.Mail;
+using System.Net.Mime;
 
 namespace trial2.Controllers
 {
@@ -53,6 +60,7 @@ namespace trial2.Controllers
 
         // GET: api/Canis/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<ReturnCanil>> GetCanil(string id)
         {
             var canil = await (from c in _context.Canil
@@ -122,6 +130,7 @@ namespace trial2.Controllers
             canil.nib = Encriptar.Encrypt(canilF.nib, "b32a1c");
             canil.nome = Encriptar.Encrypt(canilF.nome, "bac321");
             canil.contacto = Encriptar.Encrypt(canilF.contacto, "1c2b3a");
+            canil.estado = canilF.estado;
 
             _context.Entry(canil).State = EntityState.Modified;
 
@@ -147,6 +156,7 @@ namespace trial2.Controllers
         // POST: api/Canis
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<Canil>> PostCanil(RecieveCanil canilF)
         {
@@ -164,7 +174,7 @@ namespace trial2.Controllers
             canil.email = canilF.email;
             canil.nib = canilF.nib;
             canil.nome = canilF.nome;
-            canil.capacidadeOcupada = /*Int32.Parse(*/canilF.capacidadeOcupada;
+            canil.capacidadeOcupada = canilF.capacidadeOcupada;
             canil.capacidadeTotal = canilF.capacidadeTotal;
             canil.distrito = canilF.distrito;
             canil.rua = canilF.rua;
@@ -263,6 +273,49 @@ namespace trial2.Controllers
             await _horariosController.PostHorario(horario7);
 
             return CreatedAtAction("GetCanil", new { id = canil.email }, canil);
+        }
+
+        //GET: api/Canis/Mail
+        [HttpPost("Mail")]
+        [AllowAnonymous]
+        public async Task<ActionResult<string>> SendMail(RecieveMail info)
+        {
+
+            var aux = "/Users/carolina/Downloads/" + info.nome;
+
+
+            MailMessage message = new MailMessage(
+                 "caogest@outlook.com",
+                 info.mail,
+                 "Emissão Recibo Eletrónico - Donativo Monetário",
+                 "");
+            Attachment data = new Attachment(aux, MediaTypeNames.Application.Octet);
+
+            message.Attachments.Add(data);
+
+            var client = new System.Net.Mail.SmtpClient("SMTP.office365.com");
+            client.Port = 587;
+            client.UseDefaultCredentials = false;
+            client.EnableSsl = true;
+            System.Net.NetworkCredential basicAuthenticationInfo = new System.Net.NetworkCredential("caogest@outlook.com", "LaboratoriosI4");
+            client.Credentials = basicAuthenticationInfo;
+            await client.SendMailAsync(message);
+            client.Dispose();
+            message.Dispose();
+
+
+
+            System.IO.File.Delete(aux);
+            return "Worked";
+        }
+
+        //POST: api/Canis/String
+        [HttpPost("String")]
+        [AllowAnonymous]
+        public async Task<ActionResult<string>> FormatString(Canil address)
+        {
+            string res = address.rua.Replace(' ', '+');
+            return res;
         }
 
         // DELETE: api/Canis/5

@@ -50,9 +50,9 @@ namespace trial2.Controllers
                 res.porte = cao.porte;
                 res.email_canil = cao.canil_user_email;
                 var canil = await (from f in _context.Canil
-                                  where f.email == cao.canil_user_email
-                                  select f).FirstOrDefaultAsync();
-                
+                                   where f.email == cao.canil_user_email
+                                   select f).FirstOrDefaultAsync();
+
                 res.nome_canil = Encriptar.Decrypt(canil.nome, "bac321");
                 res.distrito = Encriptar.Decrypt(canil.distrito, "cba321");
                 var fotos = await (from f in _context.Fotografia
@@ -144,6 +144,83 @@ namespace trial2.Controllers
             return NoContent();
         }
 
+        // PUT: api/Caes/Adocao/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPut("Adocao/{id}")]
+        public async Task<IActionResult> PutCaoEsp(int id, Cao caoEs)
+        {
+            var cao = await (from c in _context.Cao
+                             where c.idCao == id
+                             select c).FirstOrDefaultAsync();
+
+            if (cao == null)
+            {
+                return NotFound();
+            }
+
+            cao.estado = caoEs.estado;
+
+            _context.Entry(cao).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CaoExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // PUT: api/Caes/Update/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPut("Update/{id}")]
+        public async Task<IActionResult> PutCaoEsp1(int id, RecieveCao caoEs)
+        {
+            var cao = await (from c in _context.Cao
+                             where c.idCao == id
+                             select c).FirstOrDefaultAsync();
+
+            if (cao == null)
+            {
+                return NotFound();
+            }
+
+            cao.idade = Int32.Parse(caoEs.idade);
+            cao.esterilizacao = caoEs.esterilizacao;
+
+            _context.Entry(cao).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CaoExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
         // POST: api/Caes
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -185,11 +262,6 @@ namespace trial2.Controllers
             _context.Cao.Add(res);
             await _context.SaveChangesAsync();
 
-            Fotografia foto = new Fotografia();
-            foto.path = cao.path;
-            foto.cao_idCao = res.idCao;
-            await _contextFoto.PostFotografia(foto);
-            
             return CreatedAtAction(nameof(GetCao), new { id = res.idCao }, res);
         }
 

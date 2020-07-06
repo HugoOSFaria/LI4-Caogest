@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using trial2.Models;
+using trial2.Results;
 
 namespace trial2.Controllers
 {
@@ -16,6 +17,7 @@ namespace trial2.Controllers
     public class ParceriasController : ControllerBase
     {
         private readonly trial2Context _context;
+        private readonly CPController _contextCP;
 
         public ParceriasController(trial2Context context)
         {
@@ -45,7 +47,7 @@ namespace trial2.Controllers
             return parceria;
         }
 
-  
+
 
         // PUT: api/Parcerias/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
@@ -83,12 +85,39 @@ namespace trial2.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Parceria>> PostParceria(Parceria parceria)
+        [AllowAnonymous]
+        public async Task<ActionResult<Canil_has_Parceria>> PostParceria(RecieveParceria parceria)
         {
-            _context.Parceria.Add(parceria);
+            var parcerias = await (from p in _context.Parceria
+                                   select p).ToListAsync();
+
+            Parceria res = new Parceria();
+            Canil_has_Parceria par = new Canil_has_Parceria();
+
+            if (parcerias == null)
+            {
+                res.identificacao = 1;
+                par.parceria_identificacao = 1;
+            }
+            else
+            {
+                res.identificacao = parcerias.Count() + 1;
+                par.parceria_identificacao = res.identificacao;
+            }
+            par.canil_user_email = parceria.canil_user_email;
+
+            res.nome = parceria.nome;
+            res.url = parceria.url;
+            res.pathLogo = parceria.pathLogo;
+
+            _context.Parceria.Add(res);
+
+            await _context.SaveChangesAsync();
+            _context.Canil_has_Parceria.Add(par);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetParceria", new { id = parceria.identificacao }, parceria);
+            return CreatedAtAction(nameof(GetParceria), new { id = res.identificacao }, res);
+            //return par;
         }
 
         // DELETE: api/Parcerias/5

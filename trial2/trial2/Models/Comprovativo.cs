@@ -7,9 +7,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace trial2.Models
 {
-    public class Canil_has_Parceria
+    public class Comprovativo
     {
-        public string canil_user_email { get; set; }
-        public int parceria_identificacao { get; set; }
+        [Key]
+        public int idComprovativo { get; set; }
+        public string path { get; set; }
+        public int adocao_NPedido { get; set; }
     }
 }

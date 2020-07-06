@@ -24,6 +24,7 @@ namespace trial2.Models
         public string contacto { get; set; }
         public List<Favoritos> favoritos { get; set; }
         public int encriptado { get; set; }
+        public string nif { get; set; }
     }
 
 

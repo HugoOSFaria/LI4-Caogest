@@ -19,6 +19,5 @@ namespace trial2.Results
         public string esterilizacao { get; set; }
         public string porte { get; set; }
         public string canil_user_email { get; set; }
-        public string path { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using trial2.Models;
+using trial2.Results;
 
 namespace trial2.Controllers
 {
@@ -68,6 +69,7 @@ namespace trial2.Controllers
                 don.canil_user_email = await (from us in _context.Canil
                                               where us.email == don.canil_user_email
                                               select us.nome).FirstOrDefaultAsync();
+
                 don.canil_user_email = Encriptar.Decrypt(don.canil_user_email, "bac321");
             }
 
@@ -77,6 +79,56 @@ namespace trial2.Controllers
             }
 
             return donativos;
+        }
+
+        // GET: api/Donativos/Info/5
+        [HttpGet("Info/{id}")]
+        //[AllowAnonymous]
+        public async Task<ActionResult<ReturnDonativos2>> GetInfoDonativos(int id)
+        {
+            var donativo = await (from d in _context.Donativos
+                                  where d.id == id
+                                  select d).FirstOrDefaultAsync();
+
+            if (donativo == null)
+            {
+                return NotFound();
+            }
+
+            var utilizador = await (from u in _context.Utilizador
+                                    where u.email == donativo.utilizador_user_email
+                                    select u).FirstOrDefaultAsync();
+
+            if (utilizador == null)
+            {
+                return NotFound();
+            }
+
+            var canil = await (from c in _context.Canil
+                               where c.email == donativo.canil_user_email
+                               select c).FirstOrDefaultAsync();
+
+            if (canil == null)
+            {
+                return NotFound();
+            }
+
+            ReturnDonativos2 res = new ReturnDonativos2();
+
+            res.data = donativo.data;
+            res.utilizador_nome = Encriptar.Decrypt(utilizador.nome, "1c2b3a");
+            res.utilizador_nif = utilizador.nif;
+            res.utilizador_user_email = utilizador.email;
+            res.canil_user_email = canil.email;
+            res.canil_nome = Encriptar.Decrypt(canil.nome, "bac321");
+            res.canil_rua = Encriptar.Decrypt(canil.rua, "1a2b3c");
+            res.canil_distrito = Encriptar.Decrypt(canil.distrito, "cba321");
+            res.canil_localidade = Encriptar.Decrypt(canil.localidade, "123abc");
+            res.canil_contacto = Encriptar.Decrypt(canil.contacto, "1c2b3a");
+            res.valor = donativo.valor;
+            res.descricao = donativo.descricao;
+
+            return res;
         }
 
         // PUT: api/Donativos/5
@@ -111,12 +163,57 @@ namespace trial2.Controllers
             return NoContent();
         }
 
+        // PUT: api/Donativos/Id
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost("Id")]
+        public async Task<ActionResult<int>> GetIDDonativos(RecieveDon donativos)
+        {
+
+            var donativo = await (from d in _context.Donativos
+                                  join u in _context.Utilizador on donativos.nif equals u.nif
+                                  where d.valor == Double.Parse(donativos.valor)
+                                  && d.descricao == donativos.descricao
+                                  && d.data.Date == DateTime.Parse(donativos.data).Date
+                                  && d.canil_user_email == donativos.canil_user_email
+                                  && d.utilizador_user_email == u.email
+                                  select d).FirstOrDefaultAsync();
+
+            if (donativo == null)
+            {
+                return BadRequest();
+            }
+
+            return donativo.id;
+        }
+
         // POST: api/Donativos
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Donativos>> PostDonativos(Donativos donativos)
+        public async Task<ActionResult<Donativos>> PostDonativos(ReceiveDonativo donativosF)
         {
+            Donativos donativos = new Donativos();
+            var donativo = await (from d in _context.Donativos
+                                  select d).ToListAsync();
+
+            donativos.id = donativo.Count() + 1;
+
+            var emailU = await (from u in _context.Utilizador
+                                where u.nif == donativosF.nif
+                                select u.email).FirstOrDefaultAsync();
+
+            if (emailU == null)
+            {
+                return NotFound();
+            }
+
+            donativos.utilizador_user_email = emailU;
+            donativos.canil_user_email = donativosF.canil_user_email;
+            donativos.valor = Double.Parse(donativosF.valor);
+            donativos.data = DateTime.Today;
+            donativos.descricao = donativosF.descricao;
+
             _context.Donativos.Add(donativos);
             try
             {

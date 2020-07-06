@@ -8,7 +8,7 @@ namespace trial2.Results
 {
     public class RecieveFoto
     {
+        public string cao_idCao { get; set; }
         public string path { get; set; }
-        public IFormCollection file { get; set; }
     }
 }

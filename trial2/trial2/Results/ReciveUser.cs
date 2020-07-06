@@ -19,5 +19,6 @@ namespace trial2.Results
         public string cc { get; set; }
         public string sexo { get; set; }
         public string contacto { get; set; }
+        public string nif { get; set;  }
     }
 }

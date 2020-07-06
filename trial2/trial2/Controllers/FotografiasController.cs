@@ -79,12 +79,11 @@ namespace trial2.Controllers
             return NoContent();
         }
 
-        // POST: api/Fotografias
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        // POST : api/Fotografias
         [HttpPost]
-        public async Task<ActionResult<string>> PostFotografia(Fotografia fotografia)
+        public async Task<ActionResult<string>> PostFotografia(RecieveFoto fotografia1)
         {
+            Fotografia fotografia = new Fotografia();
             var fotos = await (from f in _context.Fotografia
                                select f).ToListAsync();
             if (fotos == null)
@@ -95,26 +94,15 @@ namespace trial2.Controllers
             {
                 fotografia.idFotografia = fotos.Count() + 1;
             }
+            var cao = await (from f in _context.Cao
+                             select f).ToListAsync();
+
+            fotografia.cao_idCao = cao.Count();
+            fotografia.path = fotografia1.path;
+
             _context.Fotografia.Add(fotografia);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetFotografia", new { id = fotografia.idFotografia }, fotografia);
-        }
-
-
-        // POST: api/Fotografias
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost("File")]
-        public async Task<ActionResult<string>> PostFotografiaFile(/*RecieveFoto*/IFormCollection fotografia)
-        {
-            string file = "C:\\Users\\Pedro Duarte\\Desktop\\" + fotografia["path"];
-            using (var stream = System.IO.File.Create(file))
-            {
-
-                await fotografia.Files[0].CopyToAsync(stream);
-            }
-            return "Complete";
         }
 
         // DELETE: api/Fotografias/5

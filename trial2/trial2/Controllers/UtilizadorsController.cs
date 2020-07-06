@@ -116,6 +116,7 @@ namespace trial2.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<Utilizador>> PostUtilizador(ReciveUser utilizadorF)
         {
 
@@ -141,6 +142,7 @@ namespace trial2.Controllers
             utilizador.contacto = utilizadorF.contacto;
             utilizador.favoritos = null;
             utilizador.encriptado = 1;
+            utilizador.nif = utilizadorF.nif; 
 
             utilizador.localidade = Encriptar.Encrypt(utilizador.localidade, "123abc");
             utilizador.rua = Encriptar.Encrypt(utilizador.rua, "1a2b3c");

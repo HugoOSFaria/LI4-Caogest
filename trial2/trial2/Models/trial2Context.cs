@@ -21,14 +21,6 @@ namespace trial2.Models
             {
                 entity.HasKey(cp => new { cp.canil_user_email, cp.parceria_identificacao });
 
-                /*entity.HasOne(cp => cp.canil)
-                    .WithMany(c => c.parceria)
-                    .HasForeignKey(cp => cp.parceria_identificacao);
-
-                entity.HasOne(cp => cp.parceria_identificacao)
-                    .WithMany(p => p.parceria)
-                    .HasForeignKey(cp => cp.canil);*/
-
             });
             modelBuilder.Entity<Favoritos>(entity =>
             {
@@ -69,5 +61,6 @@ namespace trial2.Models
         public DbSet<trial2.Models.Voluntarios> Voluntarios { get; set; }
         public DbSet<trial2.Models.Sugestoes> Sugestoes { get; set; }
         public DbSet<trial2.Models.Documento> Documento { get; set; }
+        public DbSet<trial2.Models.Comprovativo> Comprovativo { get; set; }
     }
 }

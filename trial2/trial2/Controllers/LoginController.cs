@@ -29,39 +29,6 @@ namespace trial2.Controllers
             _context = context;
         }
 
-        /*public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            SecurityToken securityToken;
-            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
-            var jwtSecurityToken = securityToken as JwtSecurityToken;
-            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
-                throw new SecurityTokenException("Invalid token");
-
-            return principal;
-        }
-
-        public async Task<ActionResult<ReturnLogin>> RefreshToken(ReturnLogin login)
-        {
-            var principal = GetPrincipalFromExpiredToken(login.token);
-            var username = principal.Identity.Name; //this is mapped to the Name claim by default
-
-            var user = _context.UserRefreshTokens.SingleOrDefault(u => u.Username == username);
-            if (user == null || user.RefreshToken != refreshToken) return BadRequest();
-
-            var newJwtToken = _tokenService.GenerateAccessToken(principal.Claims);
-            var newRefreshToken = _tokenService.GenerateRefreshToken();
-
-            user.RefreshToken = newRefreshToken;
-            await _context.SaveChangesAsync();
-
-            return new ObjectResult(new
-            {
-                authenticationToken = newJwtToken,
-                refreshToken = newRefreshToken
-            });
-        }*/
-
         // POST: api/Login
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -95,7 +62,7 @@ namespace trial2.Controllers
                         issuer: "https://localhost:44321",
                         audience: "https://localhost:44321",
                         claims: claims,
-                        expires: DateTime.Now.AddMinutes(2),
+                        expires: DateTime.Now.AddMinutes(30),
                         signingCredentials: creds);
                     var token = new JwtSecurityTokenHandler().WriteToken(JWToken);
 
